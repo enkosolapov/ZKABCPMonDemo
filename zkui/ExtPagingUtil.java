@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,34 +12,34 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.impl.MeshElement;
 
-/** Временное решение с внешним страничным контроллером. */
+/** Р’СЂРµРјРµРЅРЅРѕРµ СЂРµС€РµРЅРёРµ СЃ РІРЅРµС€РЅРёРј СЃС‚СЂР°РЅРёС‡РЅС‹Рј РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј. */
 public class ExtPagingUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(ExtPagingUtil.class);
 	
-    /** Вкл./выкл. многостраничного режима для гриба/листбокса с внешним страничным скрываемым контроллером.
-     * RULE: Paging д.б. в sizeable-контейнере класса HtmlBasedComponent (напр., div).
-     * Размер страницы читается из настройки paginal.pageSize.
-     * Временно вынесено в статический метод. Постоянная реализация задумана как макрокомпонент.
-     * @param gridPaging Внешний (независимый) страничный контроллер. 
-     * @param host Grid / Listbox, к которому динамически подключаем Paging.
-     * @param tbb Элемент управления режимом (nullable). Вид читается из настроек: pagingToolBB.rollIcon в режиме прокрутки, pagingToolBB.pageIcon в страничном режиме.
+    /** Р’РєР»./РІС‹РєР». РјРЅРѕРіРѕСЃС‚СЂР°РЅРёС‡РЅРѕРіРѕ СЂРµР¶РёРјР° РґР»СЏ РіСЂРёР±Р°/Р»РёСЃС‚Р±РѕРєСЃР° СЃ РІРЅРµС€РЅРёРј СЃС‚СЂР°РЅРёС‡РЅС‹Рј СЃРєСЂС‹РІР°РµРјС‹Рј РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј.
+     * RULE: Paging Рґ.Р±. РІ sizeable-РєРѕРЅС‚РµР№РЅРµСЂРµ РєР»Р°СЃСЃР° HtmlBasedComponent (РЅР°РїСЂ., div).
+     * Р Р°Р·РјРµСЂ СЃС‚СЂР°РЅРёС†С‹ С‡РёС‚Р°РµС‚СЃСЏ РёР· РЅР°СЃС‚СЂРѕР№РєРё paginal.pageSize.
+     * Р’СЂРµРјРµРЅРЅРѕ РІС‹РЅРµСЃРµРЅРѕ РІ СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РјРµС‚РѕРґ. РџРѕСЃС‚РѕСЏРЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ Р·Р°РґСѓРјР°РЅР° РєР°Рє РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚.
+     * @param gridPaging Р’РЅРµС€РЅРёР№ (РЅРµР·Р°РІРёСЃРёРјС‹Р№) СЃС‚СЂР°РЅРёС‡РЅС‹Р№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ. 
+     * @param host Grid / Listbox, Рє РєРѕС‚РѕСЂРѕРјСѓ РґРёРЅР°РјРёС‡РµСЃРєРё РїРѕРґРєР»СЋС‡Р°РµРј Paging.
+     * @param tbb Р­Р»РµРјРµРЅС‚ СѓРїСЂР°РІР»РµРЅРёСЏ СЂРµР¶РёРјРѕРј (nullable). Р’РёРґ С‡РёС‚Р°РµС‚СЃСЏ РёР· РЅР°СЃС‚СЂРѕРµРє: pagingToolBB.rollIcon РІ СЂРµР¶РёРјРµ РїСЂРѕРєСЂСѓС‚РєРё, pagingToolBB.pageIcon РІ СЃС‚СЂР°РЅРёС‡РЅРѕРј СЂРµР¶РёРјРµ.
      */
-// ? макрокомпонент (div > paging) ? связь Paging с Grid / Listbox (их м.б. несколько одновременно ? или меняться последовательно) !
-	public static void changePaging(Paging gridPaging, MeshElement host, Toolbarbutton tbb) { // переключение между пейджированием и прокруткой грида
+// ? РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚ (div > paging) ? СЃРІСЏР·СЊ Paging СЃ Grid / Listbox (РёС… Рј.Р±. РЅРµСЃРєРѕР»СЊРєРѕ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ ? РёР»Рё РјРµРЅСЏС‚СЊСЃСЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ) !
+	public static void changePaging(Paging gridPaging, MeshElement host, Toolbarbutton tbb) { // РїРµСЂРµРєР»СЋС‡РµРЅРёРµ РјРµР¶РґСѓ РїРµР№РґР¶РёСЂРѕРІР°РЅРёРµРј Рё РїСЂРѕРєСЂСѓС‚РєРѕР№ РіСЂРёРґР°
 // see Concepts_and_Tricks.pdf (? Also, make sure you do NOT call box.setPaginal(paging) if you use this technique. ?)
-    	HtmlBasedComponent pagingHolder = (HtmlBasedComponent)gridPaging.getParent(); // RULE: Paging д.б. в sizeable-контейнере класса HtmlBasedComponent (напр., div)
-    	int savedPage = 0; // запоминаем (в атрибуте компонента) активную страницу для восстановления при переключении в режим пейджирования
+    	HtmlBasedComponent pagingHolder = (HtmlBasedComponent)gridPaging.getParent(); // RULE: Paging Рґ.Р±. РІ sizeable-РєРѕРЅС‚РµР№РЅРµСЂРµ РєР»Р°СЃСЃР° HtmlBasedComponent (РЅР°РїСЂ., div)
+    	int savedPage = 0; // Р·Р°РїРѕРјРёРЅР°РµРј (РІ Р°С‚СЂРёР±СѓС‚Рµ РєРѕРјРїРѕРЅРµРЅС‚Р°) Р°РєС‚РёРІРЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РїСЂРё РїРµСЂРµРєР»СЋС‡РµРЅРёРё РІ СЂРµР¶РёРј РїРµР№РґР¶РёСЂРѕРІР°РЅРёСЏ
     	try {
-//			Paging p = host.getPaginal(); // в ZUL грид не связан с внешним контроллером Paging (иначе глюки)
+//			Paging p = host.getPaginal(); // РІ ZUL РіСЂРёРґ РЅРµ СЃРІСЏР·Р°РЅ СЃ РІРЅРµС€РЅРёРј РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј Paging (РёРЅР°С‡Рµ РіР»СЋРєРё)
 	    	if (host.getMold() == "default") { // switch from scroll to paging
-// !!! со встроенным Paging из конца списка возникает ошибка в org.zkoss.zul.Paging.setActivePage (неверно определяет кол-во страниц ?) !!!
+// !!! СЃРѕ РІСЃС‚СЂРѕРµРЅРЅС‹Рј Paging РёР· РєРѕРЅС†Р° СЃРїРёСЃРєР° РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РІ org.zkoss.zul.Paging.setActivePage (РЅРµРІРµСЂРЅРѕ РѕРїСЂРµРґРµР»СЏРµС‚ РєРѕР»-РІРѕ СЃС‚СЂР°РЅРёС† ?) !!!
 	    		logger.trace("Before paging on.");
-// FIXME: высоту в настройки или авто !!
+// FIXME: РІС‹СЃРѕС‚Сѓ РІ РЅР°СЃС‚СЂРѕР№РєРё РёР»Рё Р°РІС‚Рѕ !!
 				pagingHolder.setHeight("38px");
 				gridPaging.setPageSize(Integer.valueOf(Labels.getLabel("paginal.pageSize", "50")).intValue());
 				if (host instanceof Grid) gridPaging.setTotalSize(((Grid)host).getModel().getSize()); else gridPaging.setTotalSize(((Listbox)host).getModel().getSize());// subjSummModel.getInFilterRowCount()
-// запоминаем и восстанавливаем страницу (если не превышает максимально доступную после сужения фильтра) в атрибуте контрола
+// Р·Р°РїРѕРјРёРЅР°РµРј Рё РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃС‚СЂР°РЅРёС†Сѓ (РµСЃР»Рё РЅРµ РїСЂРµРІС‹С€Р°РµС‚ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕСЃС‚СѓРїРЅСѓСЋ РїРѕСЃР»Рµ СЃСѓР¶РµРЅРёСЏ С„РёР»СЊС‚СЂР°) РІ Р°С‚СЂРёР±СѓС‚Рµ РєРѕРЅС‚СЂРѕР»Р°
 				savedPage = gridPaging.getAttribute("savedPage") != null ? ((Integer)gridPaging.getAttribute("savedPage")).intValue() : 0;
 				if (savedPage > gridPaging.getTotalSize()/gridPaging.getPageSize()) {
 					savedPage = 0;
@@ -49,18 +49,18 @@ public class ExtPagingUtil {
 					((Grid)host).setPaginal(gridPaging);
 				} else if (host instanceof Listbox) {
 					((Listbox)host).setPaginal(gridPaging);
-				} // _pgi = pgi (если не тот же); if (inPagingMold())..._pgi.setTotalSize, addPagingListener(_pgi), smartUpdate("paginal", _pgi) (иначе больше ничего)
+				} // _pgi = pgi (РµСЃР»Рё РЅРµ С‚РѕС‚ Р¶Рµ); if (inPagingMold())..._pgi.setTotalSize, addPagingListener(_pgi), smartUpdate("paginal", _pgi) (РёРЅР°С‡Рµ Р±РѕР»СЊС€Рµ РЅРёС‡РµРіРѕ)
 				host.setMold("paging"); // if (_pgi != null) addPagingListener(_pgi); else newInternalPaging()
 				gridPaging.setVisible(true);
 //				host.setPagingPosition("both");
-				Clients.resize(host); // HOWTO: при переключении режима пейджирования высота pagingHolder меняется, что приводит к глюкам с нижним hlayout (который выполняет функцию footer и где pmHolder) при его vflex="min"; лечится Clients.resize(subjSummGrid)
+				Clients.resize(host); // HOWTO: РїСЂРё РїРµСЂРµРєР»СЋС‡РµРЅРёРё СЂРµР¶РёРјР° РїРµР№РґР¶РёСЂРѕРІР°РЅРёСЏ РІС‹СЃРѕС‚Р° pagingHolder РјРµРЅСЏРµС‚СЃСЏ, С‡С‚Рѕ РїСЂРёРІРѕРґРёС‚ Рє РіР»СЋРєР°Рј СЃ РЅРёР¶РЅРёРј hlayout (РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅСЏРµС‚ С„СѓРЅРєС†РёСЋ footer Рё РіРґРµ pmHolder) РїСЂРё РµРіРѕ vflex="min"; Р»РµС‡РёС‚СЃСЏ Clients.resize(subjSummGrid)
 				if (tbb != null) {
 					tbb.setImage(Labels.getLabel("pagingToolBB.rollIcon", "/img/Letter-Open-icon(32).png"));
-	    			tbb.setTooltiptext("Режим прокрутки");
+	    			tbb.setTooltiptext("Р РµР¶РёРј РїСЂРѕРєСЂСѓС‚РєРё");
 				}
-//	    		p = subjSummGrid.getPagingChild(); // встроенный контроллер страниц
+//	    		p = subjSummGrid.getPagingChild(); // РІСЃС‚СЂРѕРµРЅРЅС‹Р№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ СЃС‚СЂР°РЅРёС†
 //    		p.setMold("os"); // default/os
-	    		// getActivePage(), getPageCount(), getPageSize() определены в AbstractListModel; не рекомендуется вызывать из грида
+	    		// getActivePage(), getPageCount(), getPageSize() РѕРїСЂРµРґРµР»РµРЅС‹ РІ AbstractListModel; РЅРµ СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РІС‹Р·С‹РІР°С‚СЊ РёР· РіСЂРёРґР°
 	    		logger.trace("After paging on. TotalSize = {}, PageCount = {}, PageSize = {}, ActivePage = {}, gridPaging = {}, host = {}, tbb = {}", gridPaging.getTotalSize(), gridPaging.getPageCount(), gridPaging.getPageSize(), gridPaging.getActivePage(), gridPaging, host, tbb);
 	    		//frozen columns="1" start="0"
 	    	} else { // switch from paging to scroll
@@ -74,11 +74,11 @@ public class ExtPagingUtil {
 					((Grid)host).setPaginal(null);
 				} else if (host instanceof Listbox) {
 					((Listbox)host).setPaginal(null);
-				}// !!! иначе не показывает при прокрутке нижние строки (после 50) !!!
-				Clients.resize(host); // HOWTO: при переключении режима пейджирования высота pagingHolder меняется, что приводит к глюкам с нижним hlayout (который выполняет функцию footer и где pmHolder) при его vflex="min"; лечится Clients.resize(subjSummGrid)
+				}// !!! РёРЅР°С‡Рµ РЅРµ РїРѕРєР°Р·С‹РІР°РµС‚ РїСЂРё РїСЂРѕРєСЂСѓС‚РєРµ РЅРёР¶РЅРёРµ СЃС‚СЂРѕРєРё (РїРѕСЃР»Рµ 50) !!!
+				Clients.resize(host); // HOWTO: РїСЂРё РїРµСЂРµРєР»СЋС‡РµРЅРёРё СЂРµР¶РёРјР° РїРµР№РґР¶РёСЂРѕРІР°РЅРёСЏ РІС‹СЃРѕС‚Р° pagingHolder РјРµРЅСЏРµС‚СЃСЏ, С‡С‚Рѕ РїСЂРёРІРѕРґРёС‚ Рє РіР»СЋРєР°Рј СЃ РЅРёР¶РЅРёРј hlayout (РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅСЏРµС‚ С„СѓРЅРєС†РёСЋ footer Рё РіРґРµ pmHolder) РїСЂРё РµРіРѕ vflex="min"; Р»РµС‡РёС‚СЃСЏ Clients.resize(subjSummGrid)
 				if (tbb != null) {
 					tbb.setImage(Labels.getLabel("pagingToolBB.pageIcon", "/img/Books-2-icon(32).png"));
-	    			tbb.setTooltiptext("Страничный режим");
+	    			tbb.setTooltiptext("РЎС‚СЂР°РЅРёС‡РЅС‹Р№ СЂРµР¶РёРј");
 				}
 	    	}
     	} catch (Exception e) {

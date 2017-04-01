@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,25 +18,25 @@ import basos.xe.data.dao.DealLastStateMapper;
 import basos.xe.data.ds.MyBatisSqlSessionFactory;
 import basos.xe.data.entity.DealLastState;
 
-/** Обеспечиваем лист-модель списком из DealLastState (все сделки без траншей в своём последнем состоянии), обёрнутых в GridData.
- * Источник OrclDataSource ("java:jboss/datasources/orcl"), мвью basos.mv_deals_last_state. Через MyBatis (маппер DealLastStateMapper; MyBatisSqlSessionFactory). Список типа ArrayList.
+/** РћР±РµСЃРїРµС‡РёРІР°РµРј Р»РёСЃС‚-РјРѕРґРµР»СЊ СЃРїРёСЃРєРѕРј РёР· DealLastState (РІСЃРµ СЃРґРµР»РєРё Р±РµР· С‚СЂР°РЅС€РµР№ РІ СЃРІРѕС‘Рј РїРѕСЃР»РµРґРЅРµРј СЃРѕСЃС‚РѕСЏРЅРёРё), РѕР±С‘СЂРЅСѓС‚С‹С… РІ GridData.
+ * РСЃС‚РѕС‡РЅРёРє OrclDataSource ("java:jboss/datasources/orcl"), РјРІСЊСЋ basos.mv_deals_last_state. Р§РµСЂРµР· MyBatis (РјР°РїРїРµСЂ DealLastStateMapper; MyBatisSqlSessionFactory). РЎРїРёСЃРѕРє С‚РёРїР° ArrayList.
  */
 @javax.enterprise.context.Dependent // RequestScoped
-@javax.inject.Named("dealsProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
-// вдруг возникло 01/03/17 !!! WELD-001503: Bean class which has interceptors cannot be declared final ???
+@javax.inject.Named("dealsProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
+// РІРґСЂСѓРі РІРѕР·РЅРёРєР»Рѕ 01/03/17 !!! WELD-001503: Bean class which has interceptors cannot be declared final ???
 public /*final*/ class GridDataProviderBatisDealLastState extends GridDataProviderWPk<DealLastState> implements Serializable {
 // <T extends Object & Serializable & Comparable<? super T>>
 	private static final long serialVersionUID = -9157131309867418543L;
 
 	private static final Logger logger = LoggerFactory.getLogger(GridDataProviderBatisDealLastState.class);
 	
-	private final boolean depersonalize; // требование обезличивания клиентских данных
+	private final boolean depersonalize; // С‚СЂРµР±РѕРІР°РЅРёРµ РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С…
 	
-	/** Обезличиваем по умолчанию клиентские данные. */
+	/** РћР±РµР·Р»РёС‡РёРІР°РµРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РєР»РёРµРЅС‚СЃРєРёРµ РґР°РЅРЅС‹Рµ. */
 	public GridDataProviderBatisDealLastState() { this(true/*false*/); }
 	
-	/** Тип бина - DealLastState. ПК изначально не устанавливается.
-	 * @param depersonalize Флаг обезличивания клиентских данных.
+	/** РўРёРї Р±РёРЅР° - DealLastState. РџРљ РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅРµ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ.
+	 * @param depersonalize Р¤Р»Р°Рі РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С….
 	 */	
 	public GridDataProviderBatisDealLastState(boolean depersonalize) {
 		super(DealLastState.class);
@@ -46,11 +46,11 @@ public /*final*/ class GridDataProviderBatisDealLastState extends GridDataProvid
 		//setPk(null, null);
 	}
 	
-	/** Сделаем здесь со строкой данных то, что не позволяет маппер (или генератор): обезличивание, десятичная точность и т.п. */
+	/** РЎРґРµР»Р°РµРј Р·РґРµСЃСЊ СЃРѕ СЃС‚СЂРѕРєРѕР№ РґР°РЅРЅС‹С… С‚Рѕ, С‡С‚Рѕ РЅРµ РїРѕР·РІРѕР»СЏРµС‚ РјР°РїРїРµСЂ (РёР»Рё РіРµРЅРµСЂР°С‚РѕСЂ): РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ, РґРµСЃСЏС‚РёС‡РЅР°СЏ С‚РѕС‡РЅРѕСЃС‚СЊ Рё С‚.Рї. */
 	private DealLastState finishBean(DealLastState dataBean) {
 		if (depersonalize) {
-			dataBean.setClnName("Заёмщик № "+dataBean.getClnId());
-			dataBean.setRsubjName("СПР № "+dataBean.getRsubjId());
+			dataBean.setClnName("Р—Р°С‘РјС‰РёРє в„– "+dataBean.getClnId());
+			dataBean.setRsubjName("РЎРџР  в„– "+dataBean.getRsubjId());
 		}
 		BigDecimal tmp;
 		
@@ -68,8 +68,8 @@ public /*final*/ class GridDataProviderBatisDealLastState extends GridDataProvid
 		return dataBean;
 	} // private DealLastState finishBean(DealLastState dataBean)
 	
-	/** Наполняет внутренный список (ArrayList) обёрток GridData бина DealLastState содержимым таблицы basos.mv_deals_last_state
-	 * из источника OrclDataSource ("java:jboss/datasources/orcl") с использованием MyBatis. Вызывается из {@link #getGridDataList}.
+	/** РќР°РїРѕР»РЅСЏРµС‚ РІРЅСѓС‚СЂРµРЅРЅС‹Р№ СЃРїРёСЃРѕРє (ArrayList) РѕР±С‘СЂС‚РѕРє GridData Р±РёРЅР° DealLastState СЃРѕРґРµСЂР¶РёРјС‹Рј С‚Р°Р±Р»РёС†С‹ basos.mv_deals_last_state
+	 * РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl") СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј MyBatis. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getGridDataList}.
 	 */
 	@Override
 	protected final List<GridData<DealLastState>> populateGridDataList() {
@@ -80,8 +80,8 @@ public /*final*/ class GridDataProviderBatisDealLastState extends GridDataProvid
 			if ( !sess.getConfiguration().hasMapper(DealLastStateMapper.class) ) {
 				sess.getConfiguration().addMapper(DealLastStateMapper.class);
 			}
-// ч/з ResultHandler, т.к. бин нужно заворачивать (лист-модель - список обёрток GridData сущностей DealLastState)
-// класс бина мутабельный, чтобы сделать обезличивание и установить scale для BigDecimal
+// С‡/Р· ResultHandler, С‚.Рє. Р±РёРЅ РЅСѓР¶РЅРѕ Р·Р°РІРѕСЂР°С‡РёРІР°С‚СЊ (Р»РёСЃС‚-РјРѕРґРµР»СЊ - СЃРїРёСЃРѕРє РѕР±С‘СЂС‚РѕРє GridData СЃСѓС‰РЅРѕСЃС‚РµР№ DealLastState)
+// РєР»Р°СЃСЃ Р±РёРЅР° РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ scale РґР»СЏ BigDecimal
 			sess.select("basos.xe.data.dao.DealLastStateMapper.selectAll", new ResultHandler<DealLastState>() {
 				@Override
 				public void handleResult(ResultContext<? extends DealLastState> resultContext) {
@@ -112,30 +112,30 @@ public /*final*/ class GridDataProviderBatisDealLastState extends GridDataProvid
 	}
 	
 	
-	/** Наполняет список (ArrayList) обёрток GridData бина DealLastState содержимым таблицы basos.mv_deals_last_state
-	 * по фильтру на значение индекса.
-	 * из источника OrclDataSource ("java:jboss/datasources/orcl") с использованием MyBatis. Вызывается из {@link #getRange(Object)}.
-	 * @param fieldName Название ключевого поля (сделки имеют Fk с полей rsubjId, clnId).
-	 * @param key Значение ключевого поля.
-	 * @return Может вернуть пустой список, но не null.
+	/** РќР°РїРѕР»РЅСЏРµС‚ СЃРїРёСЃРѕРє (ArrayList) РѕР±С‘СЂС‚РѕРє GridData Р±РёРЅР° DealLastState СЃРѕРґРµСЂР¶РёРјС‹Рј С‚Р°Р±Р»РёС†С‹ basos.mv_deals_last_state
+	 * РїРѕ С„РёР»СЊС‚СЂСѓ РЅР° Р·РЅР°С‡РµРЅРёРµ РёРЅРґРµРєСЃР°.
+	 * РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl") СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј MyBatis. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getRange(Object)}.
+	 * @param fieldName РќР°Р·РІР°РЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ (СЃРґРµР»РєРё РёРјРµСЋС‚ Fk СЃ РїРѕР»РµР№ rsubjId, clnId).
+	 * @param key Р—РЅР°С‡РµРЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ.
+	 * @return РњРѕР¶РµС‚ РІРµСЂРЅСѓС‚СЊ РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє, РЅРѕ РЅРµ null.
 	 */
 	@Override
 	protected List<GridData<DealLastState>> selectRange(String fieldName, Object key) {
 		List<GridData<DealLastState>> locGridDataArrayList = new ArrayList<>();
 		String methodName = "";
-		switch(fieldName) { // pk знаем и так (this.pk), но логикой управляет интерфейс
+		switch(fieldName) { // pk Р·РЅР°РµРј Рё С‚Р°Рє (this.pk), РЅРѕ Р»РѕРіРёРєРѕР№ СѓРїСЂР°РІР»СЏРµС‚ РёРЅС‚РµСЂС„РµР№СЃ
 			case "clnId" : methodName = "basos.xe.data.dao.DealLastStateMapper.selectByClnId"; break;
 			case "rsubjId" : methodName = "basos.xe.data.dao.DealLastStateMapper.selectByRsubjId"; break;
-			default : logger.error("Поиск сделок по полю '{}' не поддерживается", fieldName);
-				throw new UnsupportedOperationException("Поиск сделок не поддерживается по полю "+fieldName);
+			default : logger.error("РџРѕРёСЃРє СЃРґРµР»РѕРє РїРѕ РїРѕР»СЋ '{}' РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ", fieldName);
+				throw new UnsupportedOperationException("РџРѕРёСЃРє СЃРґРµР»РѕРє РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РїРѕ РїРѕР»СЋ "+fieldName);
 		}
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {
 			if ( !sess.getConfiguration().hasMapper(DealLastStateMapper.class) ) {
 				sess.getConfiguration().addMapper(DealLastStateMapper.class);
 			}
-// ч/з ResultHandler, т.к. бин нужно заворачивать (лист-модель - список обёрток GridData сущностей DealLastState)
-// класс бина мутабельный, чтобы сделать обезличивание и установить scale для BigDecimal
+// С‡/Р· ResultHandler, С‚.Рє. Р±РёРЅ РЅСѓР¶РЅРѕ Р·Р°РІРѕСЂР°С‡РёРІР°С‚СЊ (Р»РёСЃС‚-РјРѕРґРµР»СЊ - СЃРїРёСЃРѕРє РѕР±С‘СЂС‚РѕРє GridData СЃСѓС‰РЅРѕСЃС‚РµР№ DealLastState)
+// РєР»Р°СЃСЃ Р±РёРЅР° РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ scale РґР»СЏ BigDecimal
 			sess.select(methodName, key, new ResultHandler<DealLastState>() {
 				@Override
 				public void handleResult(ResultContext<? extends DealLastState> resultContext) {

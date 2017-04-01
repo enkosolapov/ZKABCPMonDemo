@@ -1,4 +1,4 @@
-package basos.xe.abcpmon.zkui;
+п»їpackage basos.xe.abcpmon.zkui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,23 +15,23 @@ import org.zkoss.zkplus.cdi.CDIUtil;
 import basos.zkui.AbstractComponentBehaveUtil;
 
 
-/** Размещаем свою логику уровня приложения при его инициализации (application scope initialization logic); данный листенер прописан в zk.xml.
- * Создаём поумолчательную логику для фильтр-контролов и помещаем таблицу в атрибут (уровня приложения) "defBehavMap";
- *  каждый контроллер с композитным фильтром (порождённый от FilterableGridDataComposer) копирует таблицу, далее
- *  может переопределять логику (подменять класс для соответсвующего типа фильтр-контрола).
+/** Р Р°Р·РјРµС‰Р°РµРј СЃРІРѕСЋ Р»РѕРіРёРєСѓ СѓСЂРѕРІРЅСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ РїСЂРё РµРіРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё (application scope initialization logic); РґР°РЅРЅС‹Р№ Р»РёСЃС‚РµРЅРµСЂ РїСЂРѕРїРёСЃР°РЅ РІ zk.xml.
+ * РЎРѕР·РґР°С‘Рј РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅСѓСЋ Р»РѕРіРёРєСѓ РґР»СЏ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ Рё РїРѕРјРµС‰Р°РµРј С‚Р°Р±Р»РёС†Сѓ РІ Р°С‚СЂРёР±СѓС‚ (СѓСЂРѕРІРЅСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ) "defBehavMap";
+ *  РєР°Р¶РґС‹Р№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ СЃ РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј (РїРѕСЂРѕР¶РґС‘РЅРЅС‹Р№ РѕС‚ FilterableGridDataComposer) РєРѕРїРёСЂСѓРµС‚ С‚Р°Р±Р»РёС†Сѓ, РґР°Р»РµРµ
+ *  РјРѕР¶РµС‚ РїРµСЂРµРѕРїСЂРµРґРµР»СЏС‚СЊ Р»РѕРіРёРєСѓ (РїРѕРґРјРµРЅСЏС‚СЊ РєР»Р°СЃСЃ РґР»СЏ СЃРѕРѕС‚РІРµС‚СЃРІСѓСЋС‰РµРіРѕ С‚РёРїР° С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»Р°).
  */
 public class AbcpmonWebAppInit implements WebAppInit {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbcpmonWebAppInit.class);
 	
 	
- 	/** Поведение фильтр-контролов по умолчанию заполняем проаннотированными бинами, поименованными SimpleName
- 	 * класса контрола (например "BetweenFilterMacro" или "Combobox"); выбором альтернативных реализаций можно
- 	 * управлять, исключая лишние (дубли по имени в @Named) в beans.xml; можно попробовать реализовать резолвер
- 	 * @Alternative при помощи BeanManager.resolve()
+ 	/** РџРѕРІРµРґРµРЅРёРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ Р·Р°РїРѕР»РЅСЏРµРј РїСЂРѕР°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹РјРё Р±РёРЅР°РјРё, РїРѕРёРјРµРЅРѕРІР°РЅРЅС‹РјРё SimpleName
+ 	 * РєР»Р°СЃСЃР° РєРѕРЅС‚СЂРѕР»Р° (РЅР°РїСЂРёРјРµСЂ "BetweenFilterMacro" РёР»Рё "Combobox"); РІС‹Р±РѕСЂРѕРј Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹С… СЂРµР°Р»РёР·Р°С†РёР№ РјРѕР¶РЅРѕ
+ 	 * СѓРїСЂР°РІР»СЏС‚СЊ, РёСЃРєР»СЋС‡Р°СЏ Р»РёС€РЅРёРµ (РґСѓР±Р»Рё РїРѕ РёРјРµРЅРё РІ @Named) РІ beans.xml; РјРѕР¶РЅРѕ РїРѕРїСЂРѕР±РѕРІР°С‚СЊ СЂРµР°Р»РёР·РѕРІР°С‚СЊ СЂРµР·РѕР»РІРµСЂ
+ 	 * @Alternative РїСЂРё РїРѕРјРѕС‰Рё BeanManager.resolve()
  	 */
     private Map<String, AbstractComponentBehaveUtil> createDefBehavMap() {
-// TODO: реализовать Multiton или вызывать через @Produces
+// TODO: СЂРµР°Р»РёР·РѕРІР°С‚СЊ Multiton РёР»Рё РІС‹Р·С‹РІР°С‚СЊ С‡РµСЂРµР· @Produces
 	    javax.enterprise.inject.spi.BeanManager _beanMgr;
 		_beanMgr = CDIUtil.getBeanManager();
 		final java.util.Set<javax.enterprise.inject.spi.Bean<?>> beans = _beanMgr.getBeans(AbstractComponentBehaveUtil.class);
@@ -39,7 +39,7 @@ public class AbcpmonWebAppInit implements WebAppInit {
 		Map<String, AbstractComponentBehaveUtil> defBehavMap = new HashMap<>((int)(beans.size()/0.5), 0.5f);
 		for (javax.enterprise.inject.spi.Bean<?> bean : beans) {
 			//behavMap.put(bean.getName(), AbstractComponentBehaveUtil.newInstance( (Class<AbstractComponentBehaveUtil>)bean.getBeanClass()) );
-// просто создаём новый экземпляр рефлективно и назначаем типу контрола по имени в аннотации
+// РїСЂРѕСЃС‚Рѕ СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ СЂРµС„Р»РµРєС‚РёРІРЅРѕ Рё РЅР°Р·РЅР°С‡Р°РµРј С‚РёРїСѓ РєРѕРЅС‚СЂРѕР»Р° РїРѕ РёРјРµРЅРё РІ Р°РЅРЅРѕС‚Р°С†РёРё
 			defBehavMap.put(bean.getName(), AbstractComponentBehaveUtil.newInstance( Generics.cast(bean.getBeanClass())) );
 			logger.trace("beans:  beanClassSimpleName: {}, name: {}, scopeSimpleName: {}, isAlternative: {}, isNullable: {}, injectionPoints_size: {}, qualifiers_size: {}, qualifiers: {}, stereotypes_size: {}, types_size: {}, types: {}", bean.getBeanClass().getSimpleName(), bean.getName(), bean.getScope().getSimpleName(), bean.isAlternative(), bean.isNullable(), bean.getInjectionPoints().size(), bean.getQualifiers().size(), bean.getQualifiers().stream().map((type)->type.getClass().getSimpleName()).collect(Collectors.joining(",", "{", "}")), bean.getStereotypes().size(), bean.getTypes().size(), bean.getTypes().stream().map((type)->((Class<?>)type).getSimpleName()).collect(Collectors.joining(",", "{", "}")) );
 		}
@@ -49,7 +49,7 @@ public class AbcpmonWebAppInit implements WebAppInit {
 	@Override
 	public void init(WebApp wapp) throws Exception {
 		logger.debug("AbcpmonWebAppInit.init");
-// создаём поумолчательную логику для фильтр-контролов и помещаем таблицу в атрибут (уровня приложения) "defBehavMap"; каждый контроллер с композитным фильтром (порождённый от FilterableGridDataComposer) копирует таблицу, далее может переопределять логику (подменять класс для соответсвующего типа фильтр-контрола)
+// СЃРѕР·РґР°С‘Рј РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅСѓСЋ Р»РѕРіРёРєСѓ РґР»СЏ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ Рё РїРѕРјРµС‰Р°РµРј С‚Р°Р±Р»РёС†Сѓ РІ Р°С‚СЂРёР±СѓС‚ (СѓСЂРѕРІРЅСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ) "defBehavMap"; РєР°Р¶РґС‹Р№ РєРѕРЅС‚СЂРѕР»Р»РµСЂ СЃ РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј (РїРѕСЂРѕР¶РґС‘РЅРЅС‹Р№ РѕС‚ FilterableGridDataComposer) РєРѕРїРёСЂСѓРµС‚ С‚Р°Р±Р»РёС†Сѓ, РґР°Р»РµРµ РјРѕР¶РµС‚ РїРµСЂРµРѕРїСЂРµРґРµР»СЏС‚СЊ Р»РѕРіРёРєСѓ (РїРѕРґРјРµРЅСЏС‚СЊ РєР»Р°СЃСЃ РґР»СЏ СЃРѕРѕС‚РІРµС‚СЃРІСѓСЋС‰РµРіРѕ С‚РёРїР° С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»Р°)
 		wapp.setAttribute("defBehavMap", createDefBehavMap());
 	}
 	

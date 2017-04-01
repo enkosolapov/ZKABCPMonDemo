@@ -1,4 +1,4 @@
-package basos.xe.abcpmon.zkui.compose;
+п»їpackage basos.xe.abcpmon.zkui.compose;
 
 import basos.data.GridData;
 import basos.data.dao.GridDataProviderWPk;
@@ -47,10 +47,10 @@ import org.zkoss.zul.impl.HeaderElement;
 import org.zkoss.zul.impl.MeshElement;
 
 
-/** Контроллер страницы dealsPage.
+/** РљРѕРЅС‚СЂРѕР»Р»РµСЂ СЃС‚СЂР°РЅРёС†С‹ dealsPage.
  *
  */
-@VariableResolver(org.zkoss.zkplus.cdi.DelegatingVariableResolver.class) // не рекомендуется делать контроллер бином и отдавать под управление Weld, а оставлять под управлением ZK, т.к. у него свой особый жизненный цикл
+@VariableResolver(org.zkoss.zkplus.cdi.DelegatingVariableResolver.class) // РЅРµ СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РґРµР»Р°С‚СЊ РєРѕРЅС‚СЂРѕР»Р»РµСЂ Р±РёРЅРѕРј Рё РѕС‚РґР°РІР°С‚СЊ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµ Weld, Р° РѕСЃС‚Р°РІР»СЏС‚СЊ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµРј ZK, С‚.Рє. Сѓ РЅРµРіРѕ СЃРІРѕР№ РѕСЃРѕР±С‹Р№ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР»
 public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 	private static final long serialVersionUID = 5043973253280324346L;
 
@@ -58,68 +58,68 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 	
 	//@WireVariable private Desktop desktop;
 	
-	//@Wire private Grid dealsGrid; // все сделки (без траншей; последние состояния)
+	//@Wire private Grid dealsGrid; // РІСЃРµ СЃРґРµР»РєРё (Р±РµР· С‚СЂР°РЅС€РµР№; РїРѕСЃР»РµРґРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ)
 	@Wire
-	private Listbox dealsLB; // все сделки (без траншей; последние состояния)
+	private Listbox dealsLB; // РІСЃРµ СЃРґРµР»РєРё (Р±РµР· С‚СЂР°РЅС€РµР№; РїРѕСЃР»РµРґРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ)
 	
-	@WireVariable("dealsProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
-	private GridDataProviderWPk<DealLastState> dealsProvider; // Провайдер данных для модели грида dealsLB (в т.ч. инфо о текущем ПК)
+	@WireVariable("dealsProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
+	private GridDataProviderWPk<DealLastState> dealsProvider; // РџСЂРѕРІР°Р№РґРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РјРѕРґРµР»Рё РіСЂРёРґР° dealsLB (РІ С‚.С‡. РёРЅС„Рѕ Рѕ С‚РµРєСѓС‰РµРј РџРљ)
 	
-	private GridDataModelMan<DealLastState> dealsListboxModelManager; // модель (на основе провайдера) для dealsLB
+	private GridDataModelMan<DealLastState> dealsListboxModelManager; // РјРѕРґРµР»СЊ (РЅР° РѕСЃРЅРѕРІРµ РїСЂРѕРІР°Р№РґРµСЂР°) РґР»СЏ dealsLB
 	
 	@Wire
-	private Label dealsFootLableSummary; // область под dealsLB, сюда выводим кол-во строк в гриде
+	private Label dealsFootLableSummary; // РѕР±Р»Р°СЃС‚СЊ РїРѕРґ dealsLB, СЃСЋРґР° РІС‹РІРѕРґРёРј РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ РіСЂРёРґРµ
 	
-	// кнопки toolbar принадлежат tabbox (вне tabpanels)
+	// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels)
 	//@Wire private Toolbarbutton toExcelToolBB;
 		
-	// Контейнер для динамически создаваемых элементов ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, т.е. вне грида)
+	// РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРё СЃРѕР·РґР°РІР°РµРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, С‚.Рµ. РІРЅРµ РіСЂРёРґР°)
 	@Wire
 	private Div dealsPmHolder;
 	
 
 	@Wire
-	private Listbox tranchesLB; // все транши; последние состояния (только как детали одной сделки)
+	private Listbox tranchesLB; // РІСЃРµ С‚СЂР°РЅС€Рё; РїРѕСЃР»РµРґРЅРёРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ (С‚РѕР»СЊРєРѕ РєР°Рє РґРµС‚Р°Р»Рё РѕРґРЅРѕР№ СЃРґРµР»РєРё)
 	
-	@WireVariable("tranchesProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
-	private GridDataProviderWPk<TrancheLastState> tranchesProvider; // Провайдер данных для модели грида tranchesLB (в т.ч. инфо о текущем ПК)
+	@WireVariable("tranchesProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
+	private GridDataProviderWPk<TrancheLastState> tranchesProvider; // РџСЂРѕРІР°Р№РґРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РјРѕРґРµР»Рё РіСЂРёРґР° tranchesLB (РІ С‚.С‡. РёРЅС„Рѕ Рѕ С‚РµРєСѓС‰РµРј РџРљ)
 	
-	private GridDataModelMan<TrancheLastState> tranchesListboxModelManager; // модель (на основе провайдера) для tranchesLB
+	private GridDataModelMan<TrancheLastState> tranchesListboxModelManager; // РјРѕРґРµР»СЊ (РЅР° РѕСЃРЅРѕРІРµ РїСЂРѕРІР°Р№РґРµСЂР°) РґР»СЏ tranchesLB
 	
 	@Wire
-	private Label tranchesFootLableSummary; // область под tranchesLB, сюда выводим кол-во строк в гриде
+	private Label tranchesFootLableSummary; // РѕР±Р»Р°СЃС‚СЊ РїРѕРґ tranchesLB, СЃСЋРґР° РІС‹РІРѕРґРёРј РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ РіСЂРёРґРµ
 	
-	// Контейнер для динамически создаваемых элементов ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, т.е. вне грида)
+	// РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРё СЃРѕР·РґР°РІР°РµРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, С‚.Рµ. РІРЅРµ РіСЂРёРґР°)
 	@Wire
 	private Div tranchesPmHolder;
 	
 	@Wire
-	private Grid dealRestHistGrid; // история остатков по сделке (только как детали одной сделки)
+	private Grid dealRestHistGrid; // РёСЃС‚РѕСЂРёСЏ РѕСЃС‚Р°С‚РєРѕРІ РїРѕ СЃРґРµР»РєРµ (С‚РѕР»СЊРєРѕ РєР°Рє РґРµС‚Р°Р»Рё РѕРґРЅРѕР№ СЃРґРµР»РєРё)
 	ListModelListExt<DealRestHistory> dealRestHistGridLMLX = new ListModelListExt<>();
 	
 	
-	private Tabpanel dealsTabpanel; // !! на основной (subjsPage) странице !!
+	private Tabpanel dealsTabpanel; // !! РЅР° РѕСЃРЅРѕРІРЅРѕР№ (subjsPage) СЃС‚СЂР°РЅРёС†Рµ !!
 
-	protected EventQueue<Event> interDeskEQ; // синхронная (UI) очередь inter-desktop задач - сериализуемая ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
+	protected EventQueue<Event> interDeskEQ; // СЃРёРЅС…СЂРѕРЅРЅР°СЏ (UI) РѕС‡РµСЂРµРґСЊ inter-desktop Р·Р°РґР°С‡ - СЃРµСЂРёР°Р»РёР·СѓРµРјР°СЏ ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
 	
 	@Override
     protected void initAfterCompose(Component comp) throws Exception { // implementation specific part of doAfterCompose (at the and of)
 		
-// листбокс со сделками
+// Р»РёСЃС‚Р±РѕРєСЃ СЃРѕ СЃРґРµР»РєР°РјРё
 		if (dealsProvider == null) dealsProvider = new basos.xe.data.dao.impl.GridDataProviderBatisDealLastState(false);
 //	    logger.debug( "DealsService().selectDealsByClnId(400): {}", String.valueOf(new DealsService().selectDealsByClnId(400)/*selectAllDeals().size()*/) );
 //	    dealsLB = (Listbox) Path.getComponent("//dealsPage/dealsLB");
 	    if (dealsLB != null && dealsProvider != null) {
 	    	//dealsGridLML = new ListModelListExt<GridData<DealLastState>>(dealsProvider.getGridDataList(), true/*live*/); // new ArrayList<GridData<DealLastState>>(dealsProvider.getGridDataList())
-// сразу сделки не грузим, создаём пустую модель; грузим все по кнопке или как детали субъектов
-	    	dealsProvider.setLoadAllForRange(false); // не грузить всё, а каждую порцию запрашивать в БД
-	    	//_use_stream = true; // времянка для GridDataProviderWPk.getRange()
+// СЃСЂР°Р·Сѓ СЃРґРµР»РєРё РЅРµ РіСЂСѓР·РёРј, СЃРѕР·РґР°С‘Рј РїСѓСЃС‚СѓСЋ РјРѕРґРµР»СЊ; РіСЂСѓР·РёРј РІСЃРµ РїРѕ РєРЅРѕРїРєРµ РёР»Рё РєР°Рє РґРµС‚Р°Р»Рё СЃСѓР±СЉРµРєС‚РѕРІ
+	    	dealsProvider.setLoadAllForRange(false); // РЅРµ РіСЂСѓР·РёС‚СЊ РІСЃС‘, Р° РєР°Р¶РґСѓСЋ РїРѕСЂС†РёСЋ Р·Р°РїСЂР°С€РёРІР°С‚СЊ РІ Р‘Р”
+	    	//_use_stream = true; // РІСЂРµРјСЏРЅРєР° РґР»СЏ GridDataProviderWPk.getRange()
 	    	dealsListboxModelManager = new GridDataModelMan<>(DealLastState.class, dealsProvider, GridDataModelMan.ModelInitTypes.INIT_BLANK);
 	    	dealsListboxModelManager.setModelFor(dealsLB);
-	    	dealsLB.setAttribute("GridDataModelMan", dealsListboxModelManager); // RULE: так связываем грид/листбокс с менеджером его лист-модели (GridDataModelMan)
-	    	dealsLB.setAttribute("SummaryLabel", dealsFootLableSummary); // RULE: так связываем грид/листбокс с меткой, в которую выводим итоги при изменении модели
-	    	dealsLB.setAttribute("PmHolder", dealsPmHolder); // RULE: так связываем грид/листбокс с контейнером для UI-элементов ZKWorkerWithTimerAndPM
-// TODO:HOWTO: ? почему строки иначе не прорисовываются ? решить проблему с рендерингом !
+	    	dealsLB.setAttribute("GridDataModelMan", dealsListboxModelManager); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµРЅРµРґР¶РµСЂРѕРј РµРіРѕ Р»РёСЃС‚-РјРѕРґРµР»Рё (GridDataModelMan)
+	    	dealsLB.setAttribute("SummaryLabel", dealsFootLableSummary); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµС‚РєРѕР№, РІ РєРѕС‚РѕСЂСѓСЋ РІС‹РІРѕРґРёРј РёС‚РѕРіРё РїСЂРё РёР·РјРµРЅРµРЅРёРё РјРѕРґРµР»Рё
+	    	dealsLB.setAttribute("PmHolder", dealsPmHolder); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РєРѕРЅС‚РµР№РЅРµСЂРѕРј РґР»СЏ UI-СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM
+// TODO:HOWTO: ? РїРѕС‡РµРјСѓ СЃС‚СЂРѕРєРё РёРЅР°С‡Рµ РЅРµ РїСЂРѕСЂРёСЃРѕРІС‹РІР°СЋС‚СЃСЏ ? СЂРµС€РёС‚СЊ РїСЂРѕР±Р»РµРјСѓ СЃ СЂРµРЅРґРµСЂРёРЅРіРѕРј !
 	    	((Listheader)dealsLB.getListhead().getFirstChild()).sort(true, true);
 	    }
 	    logger.debug("\nGridDataProviderBatisDealLastState."
@@ -131,30 +131,30 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 				+ "\n, PkClass: " + (dealsProvider.getPkClass().isPresent() ? dealsProvider.getPkClass().get().getName() : "<PK_not_defined>")
 				+ "\n, dealsLB: " + dealsLB
 		    );
-		dealsFootLableSummary.setValue("Всего сделок: " + dealsListboxModelManager.getCurRowCount());
-// FIXME: завершить если объекты не созданы !!
+		dealsFootLableSummary.setValue("Р’СЃРµРіРѕ СЃРґРµР»РѕРє: " + dealsListboxModelManager.getCurRowCount());
+// FIXME: Р·Р°РІРµСЂС€РёС‚СЊ РµСЃР»Рё РѕР±СЉРµРєС‚С‹ РЅРµ СЃРѕР·РґР°РЅС‹ !!
 		
 		if (dealRestHistGrid != null) {
 			dealRestHistGrid.setModel(dealRestHistGridLMLX);
-			//((Column)dealRestHistGrid.getColumns().getFirstChild()).sort(true, true); // TODO:HOWTO: ? почему строки иначе не прорисовываются ? решить проблему с рендерингом !
+			//((Column)dealRestHistGrid.getColumns().getFirstChild()).sort(true, true); // TODO:HOWTO: ? РїРѕС‡РµРјСѓ СЃС‚СЂРѕРєРё РёРЅР°С‡Рµ РЅРµ РїСЂРѕСЂРёСЃРѕРІС‹РІР°СЋС‚СЃСЏ ? СЂРµС€РёС‚СЊ РїСЂРѕР±Р»РµРјСѓ СЃ СЂРµРЅРґРµСЂРёРЅРіРѕРј !
 		}
 		
-// листбокс с траншами (детали)
+// Р»РёСЃС‚Р±РѕРєСЃ СЃ С‚СЂР°РЅС€Р°РјРё (РґРµС‚Р°Р»Рё)
 		//tranchesLB.getPagingChild().setMold("os");
 		if (tranchesProvider == null) tranchesProvider = new basos.xe.data.dao.impl.GridDataProviderBatisTrancheLastState(false);
 	    if (tranchesLB != null && tranchesProvider != null) {
-// транши используем как детали сделок (рамок); изначально создаётся пустая лист-модель, полный список у провайдера не запрашивается
-	    	tranchesProvider.setLoadAllForRange(false); // не грузить всё, а каждую порцию запрашивать в БД
+// С‚СЂР°РЅС€Рё РёСЃРїРѕР»СЊР·СѓРµРј РєР°Рє РґРµС‚Р°Р»Рё СЃРґРµР»РѕРє (СЂР°РјРѕРє); РёР·РЅР°С‡Р°Р»СЊРЅРѕ СЃРѕР·РґР°С‘С‚СЃСЏ РїСѓСЃС‚Р°СЏ Р»РёСЃС‚-РјРѕРґРµР»СЊ, РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє Сѓ РїСЂРѕРІР°Р№РґРµСЂР° РЅРµ Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ
+	    	tranchesProvider.setLoadAllForRange(false); // РЅРµ РіСЂСѓР·РёС‚СЊ РІСЃС‘, Р° РєР°Р¶РґСѓСЋ РїРѕСЂС†РёСЋ Р·Р°РїСЂР°С€РёРІР°С‚СЊ РІ Р‘Р”
 	    	tranchesListboxModelManager = new GridDataModelMan<>(TrancheLastState.class, tranchesProvider, GridDataModelMan.ModelInitTypes.INIT_BLANK);
 	    	tranchesListboxModelManager.setModelFor(tranchesLB);
-	    	tranchesLB.setAttribute("GridDataModelMan", tranchesListboxModelManager); // RULE: так связываем грид/листбокс с менеджером его лист-модели (GridDataModelMan)
-	    	tranchesLB.setAttribute("SummaryLabel", tranchesFootLableSummary); // RULE: так связываем грид/листбокс с меткой, в которую выводим итоги при изменении модели
-	    	tranchesLB.setAttribute("PmHolder", tranchesPmHolder); // RULE: так связываем грид/листбокс с контейнером для UI-элементов ZKWorkerWithTimerAndPM
-// TODO:HOWTO: ? почему строки иначе не прорисовываются ? решить проблему с рендерингом !
+	    	tranchesLB.setAttribute("GridDataModelMan", tranchesListboxModelManager); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµРЅРµРґР¶РµСЂРѕРј РµРіРѕ Р»РёСЃС‚-РјРѕРґРµР»Рё (GridDataModelMan)
+	    	tranchesLB.setAttribute("SummaryLabel", tranchesFootLableSummary); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµС‚РєРѕР№, РІ РєРѕС‚РѕСЂСѓСЋ РІС‹РІРѕРґРёРј РёС‚РѕРіРё РїСЂРё РёР·РјРµРЅРµРЅРёРё РјРѕРґРµР»Рё
+	    	tranchesLB.setAttribute("PmHolder", tranchesPmHolder); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РєРѕРЅС‚РµР№РЅРµСЂРѕРј РґР»СЏ UI-СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM
+// TODO:HOWTO: ? РїРѕС‡РµРјСѓ СЃС‚СЂРѕРєРё РёРЅР°С‡Рµ РЅРµ РїСЂРѕСЂРёСЃРѕРІС‹РІР°СЋС‚СЃСЏ ? СЂРµС€РёС‚СЊ РїСЂРѕР±Р»РµРјСѓ СЃ СЂРµРЅРґРµСЂРёРЅРіРѕРј !
 	    	((Listheader)tranchesLB.getListhead().getFirstChild()).sort(true, true);
 	    }
 	    logger.debug("\nGridDataProviderBatisTrancheLastState."
-// FIXME: getTotalRowCount() сейчас заполняется в getAll(), который я не хочу вызывать; использовать SQL-запрос с COUNT(*) 
+// FIXME: getTotalRowCount() СЃРµР№С‡Р°СЃ Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РІ getAll(), РєРѕС‚РѕСЂС‹Р№ СЏ РЅРµ С…РѕС‡Сѓ РІС‹Р·С‹РІР°С‚СЊ; РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ SQL-Р·Р°РїСЂРѕСЃ СЃ COUNT(*) 
 		    	+ "\n getTotalRowCount() = " + tranchesProvider.getTotalRowCount()
 		    	+ "\n getCurRowCount() = " + tranchesListboxModelManager.getCurRowCount()
 				+ "\n, tranchesProvider: " + tranchesProvider.getClass().getName()
@@ -164,11 +164,11 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 				+ "\n, PkClass: " + (tranchesProvider.getPkClass().isPresent() ? tranchesProvider.getPkClass().get().getName() : "<PK_not_defined>")
 				+ "\n, tranchesLB: " + tranchesLB
 		    );
-		tranchesFootLableSummary.setValue("Всего траншей: " + tranchesListboxModelManager.getCurRowCount());
+		tranchesFootLableSummary.setValue("Р’СЃРµРіРѕ С‚СЂР°РЅС€РµР№: " + tranchesListboxModelManager.getCurRowCount());
 		
-		interDeskEQ = EventQueues.lookup("interDeskEQ"); // синхронная (UI) очередь inter-desktop задач - сериализуемая ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
+		interDeskEQ = EventQueues.lookup("interDeskEQ"); // СЃРёРЅС…СЂРѕРЅРЅР°СЏ (UI) РѕС‡РµСЂРµРґСЊ inter-desktop Р·Р°РґР°С‡ - СЃРµСЂРёР°Р»РёР·СѓРµРјР°СЏ ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
 		
-		// сразу подписываемся на событие перехода к сделкам по внешнему ключу с другой страницы
+		// СЃСЂР°Р·Сѓ РїРѕРґРїРёСЃС‹РІР°РµРјСЃСЏ РЅР° СЃРѕР±С‹С‚РёРµ РїРµСЂРµС…РѕРґР° Рє СЃРґРµР»РєР°Рј РїРѕ РІРЅРµС€РЅРµРјСѓ РєР»СЋС‡Сѓ СЃ РґСЂСѓРіРѕР№ СЃС‚СЂР°РЅРёС†С‹
 		interDeskEQ.subscribe(new SerializableEventListener<Event>() {
 			private static final long serialVersionUID = -6678455287332246066L;
 			@Override
@@ -182,9 +182,9 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 			} // onEvent
 		}); // interDeskEQ.subscribe(new SerializableEventListener...)
 		
-// dealsTabpanel содержит условие fulfill="dealsTab.onSelect", т.е. создаётся (включая this) при первом посещении
-// при программной инициализации (dealsTab.setSelected + sendEvent(Events.ON_SELECT, dealsTab...)) приходится ждать
-// этого события перед тем, как продолжить действия с компонентами страницы (ON_FULFILL слишком рано)
+// dealsTabpanel СЃРѕРґРµСЂР¶РёС‚ СѓСЃР»РѕРІРёРµ fulfill="dealsTab.onSelect", С‚.Рµ. СЃРѕР·РґР°С‘С‚СЃСЏ (РІРєР»СЋС‡Р°СЏ this) РїСЂРё РїРµСЂРІРѕРј РїРѕСЃРµС‰РµРЅРёРё
+// РїСЂРё РїСЂРѕРіСЂР°РјРјРЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё (dealsTab.setSelected + sendEvent(Events.ON_SELECT, dealsTab...)) РїСЂРёС…РѕРґРёС‚СЃСЏ Р¶РґР°С‚СЊ
+// СЌС‚РѕРіРѕ СЃРѕР±С‹С‚РёСЏ РїРµСЂРµРґ С‚РµРј, РєР°Рє РїСЂРѕРґРѕР»Р¶РёС‚СЊ РґРµР№СЃС‚РІРёСЏ СЃ РєРѕРјРїРѕРЅРµРЅС‚Р°РјРё СЃС‚СЂР°РЅРёС†С‹ (ON_FULFILL СЃР»РёС€РєРѕРј СЂР°РЅРѕ)
 		Component tmp = Path.getComponent("//subjsPage/dealsTabpanel");
 		if (tmp instanceof Tabpanel) {
 			dealsTabpanel = (Tabpanel)tmp;
@@ -198,7 +198,7 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 	public void showAllDeals() {
 		if (dealsListboxModelManager.getModelState() != GridDataModelMan.ModelStates.ENTIRE_MUTABLE_STATE) {
 			dealsListboxModelManager.reinitModelByEntireList(GridDataModelMan.ModelInitTypes.INIT_ENTIRE_MUTABLE);
-			dealsFootLableSummary.setValue("Всего сделок: " + dealsListboxModelManager.getCurRowCount());
+			dealsFootLableSummary.setValue("Р’СЃРµРіРѕ СЃРґРµР»РѕРє: " + dealsListboxModelManager.getCurRowCount());
 			clearDetails();
 			logger.trace("showAllDeals: dealsListboxModelManager.reinitModelByEntireList(GridDataModelMan.ModelInitTypes.INIT_ENTIRE_MUTABLE)");
 		} else {
@@ -212,8 +212,8 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 		dealsLB.focus();
 		dealsProvider.setPk(indName/*, DealLastState.getPkComparatorByName(indName)*/);
 		dealsListboxModelManager.reinitModelByRange(indValue);
-		dealsFootLableSummary.setValue("Сделок с "+(indName == "clnId" ? "заёмщиком" : "риском на")+" ИД LM "+indValue+" : " + dealsListboxModelManager.getCurRowCount());
-//FIXME: или также показывать все по клиенту (транши) - другой индекс ???
+		dealsFootLableSummary.setValue("РЎРґРµР»РѕРє СЃ "+(indName == "clnId" ? "Р·Р°С‘РјС‰РёРєРѕРј" : "СЂРёСЃРєРѕРј РЅР°")+" РР” LM "+indValue+" : " + dealsListboxModelManager.getCurRowCount());
+//FIXME: РёР»Рё С‚Р°РєР¶Рµ РїРѕРєР°Р·С‹РІР°С‚СЊ РІСЃРµ РїРѕ РєР»РёРµРЅС‚Сѓ (С‚СЂР°РЅС€Рё) - РґСЂСѓРіРѕР№ РёРЅРґРµРєСЃ ???
 		clearDetails();
 		logger.trace("asSubjectDetails.  indName = '{}', indValue = '{}'", indName, indValue);
 	} // private void asSubjectDetails(String indName, Integer indValue)
@@ -224,11 +224,11 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 		dealRestHistGridLMLX.safeClear();
 	}
 	
-	/** По клику на сделке (строка листбокса) обновить детали в связанных таблицах (транши). */
+	/** РџРѕ РєР»РёРєСѓ РЅР° СЃРґРµР»РєРµ (СЃС‚СЂРѕРєР° Р»РёСЃС‚Р±РѕРєСЃР°) РѕР±РЅРѕРІРёС‚СЊ РґРµС‚Р°Р»Рё РІ СЃРІСЏР·Р°РЅРЅС‹С… С‚Р°Р±Р»РёС†Р°С… (С‚СЂР°РЅС€Рё). */
 	@Listen("onSelect=#dealsLB")
 	public void onSelectDeal( SelectEvent<Listitem, GridData<?>> sev ) {
-		Listitem ref = sev.getReference(); // непосредственно кликнутая строка
-// !!! глюк: при PgDn м.б. (не всегда !) видимое перемещение, но Listitem.value и все атрибуты пустые; при этом повторно эта же строка по клику не выбирается !!!
+		Listitem ref = sev.getReference(); // РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РєР»РёРєРЅСѓС‚Р°СЏ СЃС‚СЂРѕРєР°
+// !!! РіР»СЋРє: РїСЂРё PgDn Рј.Р±. (РЅРµ РІСЃРµРіРґР° !) РІРёРґРёРјРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ, РЅРѕ Listitem.value Рё РІСЃРµ Р°С‚СЂРёР±СѓС‚С‹ РїСѓСЃС‚С‹Рµ; РїСЂРё СЌС‚РѕРј РїРѕРІС‚РѕСЂРЅРѕ СЌС‚Р° Р¶Рµ СЃС‚СЂРѕРєР° РїРѕ РєР»РёРєСѓ РЅРµ РІС‹Р±РёСЂР°РµС‚СЃСЏ !!!
 		Object tmp = null;
 		GridData<?> gd = null;
 		tmp = ref.getValue();
@@ -247,7 +247,7 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 		}
     	//int rnAttr = (int)ref.getAttribute("rn")/*((ForEachStatus)r.getParent().getAttribute("forEachStatus")).getIndex()*/;
 // 94:50, 11652:41, 11655:2, 11663:138, 21804:0
-// TODO: протестировать для трёх вариантов (sql, stream, binary search) время и память в цикле по всем рамкам
+// TODO: РїСЂРѕС‚РµСЃС‚РёСЂРѕРІР°С‚СЊ РґР»СЏ С‚СЂС‘С… РІР°СЂРёР°РЅС‚РѕРІ (sql, stream, binary search) РІСЂРµРјСЏ Рё РїР°РјСЏС‚СЊ РІ С†РёРєР»Рµ РїРѕ РІСЃРµРј СЂР°РјРєР°Рј
 		//logger.trace("t1 = {}", System.currentTimeMillis());
 		/*alert("onSelectDeal ["+sev.getTarget().getId()+"]. Reference_sid/uid: "+sidAttr+"/"+uidAttr
 			+", GridData: "+gd
@@ -262,24 +262,24 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 		}
 		tranchesLB.setActivePage(0);
 		tranchesListboxModelManager.reinitModelByRange(sidAttr);
-// TODO: По договору LM ID () выдано () траншей на () USD в периоде с () по ()
-		tranchesFootLableSummary.setValue("Траншей к сделке ИД LM "+sidAttr+" : " + tranchesListboxModelManager.getCurRowCount());
+// TODO: РџРѕ РґРѕРіРѕРІРѕСЂСѓ LM ID () РІС‹РґР°РЅРѕ () С‚СЂР°РЅС€РµР№ РЅР° () USD РІ РїРµСЂРёРѕРґРµ СЃ () РїРѕ ()
+		tranchesFootLableSummary.setValue("РўСЂР°РЅС€РµР№ Рє СЃРґРµР»РєРµ РР” LM "+sidAttr+" : " + tranchesListboxModelManager.getCurRowCount());
 		//logger.trace("t2 = {}", System.currentTimeMillis());
 		dealRestHistGridLMLX.safeReplaceInnerList(DealDopService.getRestHistoryByIdDeal(sidAttr));
 	} // public void onSelectDeal(SelectEvent<Listitem,GridData<?>> sev)
 	
 	
-	/** При изменении состояния чекбокса в первой колонке грида ("крыж" выбора строки) обновлять поле GridData.sel.
-	 * Вызывает {@link GridDataModelMan#selectRow(boolean, int) GridDataModelMan.selectRow()} с блокировкой лист-модели через диспетчер {@link SimpleGridDataComposer#dispatchGridModelLockingTask(GridDataModelMan, Consumer, String, Runnable, Runnable) dispatchGridModelLockingTask()}.
+	/** РџСЂРё РёР·РјРµРЅРµРЅРёРё СЃРѕСЃС‚РѕСЏРЅРёСЏ С‡РµРєР±РѕРєСЃР° РІ РїРµСЂРІРѕР№ РєРѕР»РѕРЅРєРµ РіСЂРёРґР° ("РєСЂС‹Р¶" РІС‹Р±РѕСЂР° СЃС‚СЂРѕРєРё) РѕР±РЅРѕРІР»СЏС‚СЊ РїРѕР»Рµ GridData.sel.
+	 * Р’С‹Р·С‹РІР°РµС‚ {@link GridDataModelMan#selectRow(boolean, int) GridDataModelMan.selectRow()} СЃ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ Р»РёСЃС‚-РјРѕРґРµР»Рё С‡РµСЂРµР· РґРёСЃРїРµС‚С‡РµСЂ {@link SimpleGridDataComposer#dispatchGridModelLockingTask(GridDataModelMan, Consumer, String, Runnable, Runnable) dispatchGridModelLockingTask()}.
 	 */
-// FIXME: !! не загружать полный список если не загружен !!
+// FIXME: !! РЅРµ Р·Р°РіСЂСѓР¶Р°С‚СЊ РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РµСЃР»Рё РЅРµ Р·Р°РіСЂСѓР¶РµРЅ !!
 // FIXME: ? Pull Up ?
 	@Listen("onCheckRow=#dealsLB;onCheckRow=#tranchesLB")
-    public void onCheckRow(ForwardEvent fev) { // источник события - чекбокс в строке грида или в Listitem > Listcell листбокса, где listitem value="${each}" или row value="${each}" и лист-модель of GridData
+    public void onCheckRow(ForwardEvent fev) { // РёСЃС‚РѕС‡РЅРёРє СЃРѕР±С‹С‚РёСЏ - С‡РµРєР±РѕРєСЃ РІ СЃС‚СЂРѕРєРµ РіСЂРёРґР° РёР»Рё РІ Listitem > Listcell Р»РёСЃС‚Р±РѕРєСЃР°, РіРґРµ listitem value="${each}" РёР»Рё row value="${each}" Рё Р»РёСЃС‚-РјРѕРґРµР»СЊ of GridData
     	Checkbox cb = (Checkbox)fev.getOrigin().getTarget();
     	GridDataModelMan<?> gdm = (GridDataModelMan<?>)fev.getTarget().getAttribute("GridDataModelMan");
-    	boolean isChecked = cb.isChecked(); // Новое значение флага (true/false), которое нужно отразить в данных.
-    	GridData<?> gd = null; // строка лист-модели, в которой нужно синхронизировать значение крыжа
+    	boolean isChecked = cb.isChecked(); // РќРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° (true/false), РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ РѕС‚СЂР°Р·РёС‚СЊ РІ РґР°РЅРЅС‹С….
+    	GridData<?> gd = null; // СЃС‚СЂРѕРєР° Р»РёСЃС‚-РјРѕРґРµР»Рё, РІ РєРѕС‚РѕСЂРѕР№ РЅСѓР¶РЅРѕ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ Р·РЅР°С‡РµРЅРёРµ РєСЂС‹Р¶Р°
     	int sidAttr = -1, rnAttr = -1;
     	if (cb.getParent() instanceof Row) {
     		Row row = (Row)cb.getParent();
@@ -294,16 +294,16 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
         	rnAttr = (int)item.getAttribute("rn")/*((ForEachStatus)r.getParent().getAttribute("forEachStatus")).getIndex()*/;
     	}
     	if (gd == null) return;
-    	long uid = gd.getUid(); // (long)r.getAttribute("uid") // GridData.uid - порядковый номер созданного объекта, ПК модели по умолчанию. По номеру ищем строку в модели.
+    	long uid = gd.getUid(); // (long)r.getAttribute("uid") // GridData.uid - РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, РџРљ РјРѕРґРµР»Рё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ. РџРѕ РЅРѕРјРµСЂСѓ РёС‰РµРј СЃС‚СЂРѕРєСѓ РІ РјРѕРґРµР»Рё.
     	GridData<?> gdPar = gd;
-		//int irn = dealsListboxModelManager.selectRow(isChecked, uid); // Номер строки в гриде, зависит от фильтра, но соответствует модели (проблема с обновлением на стороне view, потому ищем в модели по uid)
+		//int irn = dealsListboxModelManager.selectRow(isChecked, uid); // РќРѕРјРµСЂ СЃС‚СЂРѕРєРё РІ РіСЂРёРґРµ, Р·Р°РІРёСЃРёС‚ РѕС‚ С„РёР»СЊС‚СЂР°, РЅРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРѕРґРµР»Рё (РїСЂРѕР±Р»РµРјР° СЃ РѕР±РЅРѕРІР»РµРЅРёРµРј РЅР° СЃС‚РѕСЂРѕРЅРµ view, РїРѕС‚РѕРјСѓ РёС‰РµРј РІ РјРѕРґРµР»Рё РїРѕ uid)
     	//logger.debug("onCheckRow(after). isChecked = {}, uid = {}, irn = {}", isChecked, uid, irn);
     	
     	logger.trace("det onCheckRow. target_id='{}', origin: '{}', row_value(GridData) ='{}', uid ='{}', isChecked ='{}', GridDataModelMan ='{}', beanClass = '{}', Pk = '{}', sidAttr ='{}', rnAttr ='{}'", fev.getTarget().getId(), fev.getOrigin(), gd, uid, isChecked, gdm, gdm.getBeanClass().getSimpleName(), ((GridDataProviderWPk<?>)gdm.getDataProvider()).getPk(), sidAttr, rnAttr );
     	String msg = "onCheckRow. uid="+uid+", new_state:"+isChecked+", rn="+rnAttr+", uid="+uid;
     	Consumer<Long> taskToRun = (stamp) -> {
     		try {
-    			int irn = gdm.selectRow(isChecked, Generics.cast(gdPar)/*uid*/); // Номер строки в гриде, зависит от фильтра, но соответствует модели (проблема с обновлением на стороне view, потому ищем в модели по uid)
+    			int irn = gdm.selectRow(isChecked, Generics.cast(gdPar)/*uid*/); // РќРѕРјРµСЂ СЃС‚СЂРѕРєРё РІ РіСЂРёРґРµ, Р·Р°РІРёСЃРёС‚ РѕС‚ С„РёР»СЊС‚СЂР°, РЅРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРѕРґРµР»Рё (РїСЂРѕР±Р»РµРјР° СЃ РѕР±РЅРѕРІР»РµРЅРёРµРј РЅР° СЃС‚РѕСЂРѕРЅРµ view, РїРѕС‚РѕРјСѓ РёС‰РµРј РІ РјРѕРґРµР»Рё РїРѕ uid)
     			logger.trace(concurMarker, "{} (UI)...taskToRun. After change data... irn = {}, stamp = {}", msg, irn, stamp);
     		} finally {
     			if (stamp != 0L) {
@@ -339,11 +339,11 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
     	int keyCode = kev.getKeyCode();
     	logger.debug("keyListener. target: {}, id: {}, keyCode: {}", mesh, mesh.getId(), keyCode);
     	//alert("keyCode = "+keyCode);
-    	if (keyCode == 50) { // ({@2}Alt+2: 50) запомнить ширины колонок (настраиваем интерактивно); !! выдать в формате файла properties названия колонок (типа deals_grid.col.dd_rest.label) и ширины (deals_grid.col.dd_rest.width) !!
+    	if (keyCode == 50) { // ({@2}Alt+2: 50) Р·Р°РїРѕРјРЅРёС‚СЊ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє (РЅР°СЃС‚СЂР°РёРІР°РµРј РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕ); !! РІС‹РґР°С‚СЊ РІ С„РѕСЂРјР°С‚Рµ С„Р°Р№Р»Р° properties РЅР°Р·РІР°РЅРёСЏ РєРѕР»РѕРЅРѕРє (С‚РёРїР° deals_grid.col.dd_rest.label) Рё С€РёСЂРёРЅС‹ (deals_grid.col.dd_rest.width) !!
     		UIUtil.writeMeshHeaderInfo(mesh);
-    	} // Alt+2 -> сохранить названия и текущие ширины колонок в файл deals.properties
-// FIXME: универсализировать для случая нескольких гридов (lmlx, holder)
-    	else if (keyCode == 116) { // ({@#f5}Alt+F5 : 116) выгрузить в Excel содержимое лист-модели грида
+    	} // Alt+2 -> СЃРѕС…СЂР°РЅРёС‚СЊ РЅР°Р·РІР°РЅРёСЏ Рё С‚РµРєСѓС‰РёРµ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє РІ С„Р°Р№Р» deals.properties
+// FIXME: СѓРЅРёРІРµСЂСЃР°Р»РёР·РёСЂРѕРІР°С‚СЊ РґР»СЏ СЃР»СѓС‡Р°СЏ РЅРµСЃРєРѕР»СЊРєРёС… РіСЂРёРґРѕРІ (lmlx, holder)
+    	else if (keyCode == 116) { // ({@#f5}Alt+F5 : 116) РІС‹РіСЂСѓР·РёС‚СЊ РІ Excel СЃРѕРґРµСЂР¶РёРјРѕРµ Р»РёСЃС‚-РјРѕРґРµР»Рё РіСЂРёРґР°
     		GridDataModelMan<?> gdm = (GridDataModelMan<?>)mesh.getAttribute("GridDataModelMan");
     		Component pmh = (Component)mesh.getAttribute("PmHolder");
     		Messagebox.show( "Download "+mesh.getId()+" to Excel ?"
@@ -361,8 +361,8 @@ public class DealsPageComposer extends SimpleGridDataComposer<Component> {
 								} // public void onEvent
     						} // SerializableEventListener
     		); // Messagebox.show
-    	} // ({@#f5}Alt+F5 : 116) выгрузить в Excel содержимое лист-модели грида
-    	else if ( keyCode == 27 && gridModelToExcelWorker != null ) { // Esc: прерывание выгрузки в Excel
+    	} // ({@#f5}Alt+F5 : 116) РІС‹РіСЂСѓР·РёС‚СЊ РІ Excel СЃРѕРґРµСЂР¶РёРјРѕРµ Р»РёСЃС‚-РјРѕРґРµР»Рё РіСЂРёРґР°
+    	else if ( keyCode == 27 && gridModelToExcelWorker != null ) { // Esc: РїСЂРµСЂС‹РІР°РЅРёРµ РІС‹РіСЂСѓР·РєРё РІ Excel
 			Messagebox.show( "Terminate downloading to XLSX ?" // DR p. 612
 					,"Confirmation"
 					,Messagebox.OK|Messagebox.CANCEL

@@ -1,4 +1,4 @@
-package basos.zkui.compose;
+п»їpackage basos.zkui.compose;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,9 +45,9 @@ import basos.zkui.util.GlobalCleaner;
 import basos.zkui.util.ZKWorkerWithTimerAndPM;
 
 
-/** Расширение {@link SelectorComposer} с поддержкой гридов/листбоксов с моделью {@link GridDataModelMan GridDataModelMan&lt;GridData&lt;T&gt;&gt;}.
- * Выгрузка в Excel. Диспетчеризация конкурирующих за лист-модель задач. Thread-safe сортировка заголовков.
- * Наследник должен переопределить абстрактный метод {@link #initAfterCompose}, который вызывается из {@link #doAfterCompose}.
+/** Р Р°СЃС€РёСЂРµРЅРёРµ {@link SelectorComposer} СЃ РїРѕРґРґРµСЂР¶РєРѕР№ РіСЂРёРґРѕРІ/Р»РёСЃС‚Р±РѕРєСЃРѕРІ СЃ РјРѕРґРµР»СЊСЋ {@link GridDataModelMan GridDataModelMan&lt;GridData&lt;T&gt;&gt;}.
+ * Р’С‹РіСЂСѓР·РєР° РІ Excel. Р”РёСЃРїРµС‚С‡РµСЂРёР·Р°С†РёСЏ РєРѕРЅРєСѓСЂРёСЂСѓСЋС‰РёС… Р·Р° Р»РёСЃС‚-РјРѕРґРµР»СЊ Р·Р°РґР°С‡. Thread-safe СЃРѕСЂС‚РёСЂРѕРІРєР° Р·Р°РіРѕР»РѕРІРєРѕРІ.
+ * РќР°СЃР»РµРґРЅРёРє РґРѕР»Р¶РµРЅ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ Р°Р±СЃС‚СЂР°РєС‚РЅС‹Р№ РјРµС‚РѕРґ {@link #initAfterCompose}, РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #doAfterCompose}.
  */
 public class SimpleGridDataComposer<T extends Component> extends SelectorComposer<Component> {
 	private static final long serialVersionUID = 5086794140452503736L;
@@ -58,7 +58,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 	@WireVariable // autowire implcit var
 	protected/*private*/ Desktop desktop;
 
-	// кнопки toolbar принадлежат tabbox (вне tabpanels)
+	// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels)
 	//@Wire private Toolbarbutton toExcelToolBB;
     
     /** Implementation specific part of doAfterCompose (exec at the and of). */
@@ -67,28 +67,28 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
     	super.doAfterCompose(comp);
-// FIXME: параметры (https://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/sys/DesktopCtrl.html#enableServerPush(org.zkoss.zk.ui.sys.ServerPush)) ?
-		((DesktopCtrl)desktop).enableServerPush(true, this/*иначе EventQueue выключает*/);
-    	initAfterCompose(comp); // частности
+// FIXME: РїР°СЂР°РјРµС‚СЂС‹ (https://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/sys/DesktopCtrl.html#enableServerPush(org.zkoss.zk.ui.sys.ServerPush)) ?
+		((DesktopCtrl)desktop).enableServerPush(true, this/*РёРЅР°С‡Рµ EventQueue РІС‹РєР»СЋС‡Р°РµС‚*/);
+    	initAfterCompose(comp); // С‡Р°СЃС‚РЅРѕСЃС‚Рё
 	} // public void doAfterCompose(Component comp) throws Exception
 	
 	
-	/** Desktop-level thread pool for WTs. Отложенная инициализация. Хранится в атрибуте десктопа "asyncExecutor".
-	 * При создании регистрируется финализирующая команда.
+	/** Desktop-level thread pool for WTs. РћС‚Р»РѕР¶РµРЅРЅР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ. РҐСЂР°РЅРёС‚СЃСЏ РІ Р°С‚СЂРёР±СѓС‚Рµ РґРµСЃРєС‚РѕРїР° "asyncExecutor".
+	 * РџСЂРё СЃРѕР·РґР°РЅРёРё СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚СЃСЏ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰Р°СЏ РєРѕРјР°РЅРґР°.
 	 */
-// TODO:HOWTO: уровень WebApp(!) ?? хранить в атрибутах WebApp(!)/Singleton; объявлять в WebAppInit; создавать сразу ! размер зависит от кол-ва пользователей (пиковая нагрузка; но тогда и высвобождения не будет) ?
-	public ExecutorService getAsyncExecutor() { // сейчас используется при выгрузке в Excel и диспетчером
+// TODO:HOWTO: СѓСЂРѕРІРµРЅСЊ WebApp(!) ?? С…СЂР°РЅРёС‚СЊ РІ Р°С‚СЂРёР±СѓС‚Р°С… WebApp(!)/Singleton; РѕР±СЉСЏРІР»СЏС‚СЊ РІ WebAppInit; СЃРѕР·РґР°РІР°С‚СЊ СЃСЂР°Р·Сѓ ! СЂР°Р·РјРµСЂ Р·Р°РІРёСЃРёС‚ РѕС‚ РєРѕР»-РІР° РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ (РїРёРєРѕРІР°СЏ РЅР°РіСЂСѓР·РєР°; РЅРѕ С‚РѕРіРґР° Рё РІС‹СЃРІРѕР±РѕР¶РґРµРЅРёСЏ РЅРµ Р±СѓРґРµС‚) ?
+	public ExecutorService getAsyncExecutor() { // СЃРµР№С‡Р°СЃ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРё РІС‹РіСЂСѓР·РєРµ РІ Excel Рё РґРёСЃРїРµС‚С‡РµСЂРѕРј
 		ExecutorService asyncExecutor = null;
 		Object tmp = desktop.getAttribute("asyncExecutor");
 		if (tmp == null) {
-			Object deskMutex = desktop.getAttribute("deskMutex"); // создаётся в AbcpmocDesktopInit
+			Object deskMutex = desktop.getAttribute("deskMutex"); // СЃРѕР·РґР°С‘С‚СЃСЏ РІ AbcpmocDesktopInit
 			if (deskMutex == null) {
 				logger.error("Desktop-level attribute 'deskMutex' not found.");
 				throw new InternalError("Desktop-level attribute 'deskMutex' not found.");
 			}
 			synchronized (deskMutex) {
 				tmp = desktop.getAttribute("asyncExecutor");
-				if (tmp == null) { // отложенная инициализация
+				if (tmp == null) { // РѕС‚Р»РѕР¶РµРЅРЅР°СЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 					int asyncExecutorFixedThreadPoolSize = Integer.valueOf(Labels.getLabel("dataGridComposer.asyncExecutorFixedThreadPoolSize", "3")).intValue();
 					asyncExecutor = Executors.newFixedThreadPool(asyncExecutorFixedThreadPoolSize)/*newSingleThreadExecutor()*/;
 					ExecutorService asyncExecutorParam = asyncExecutor;
@@ -98,7 +98,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 				   			asyncExecutorParam.shutdown();
 				   		}
 				    };
-					GlobalCleaner.registerCommand(cleanupCmndAE, DesktopCleanup.class); // вызывается при уходе со страницы, таймауте, закрытии вкладки(! в т.ч. timeout.zul) на пару, но после ExecutionCleanup; иногда дважды подряд в одном потоке
+					GlobalCleaner.registerCommand(cleanupCmndAE, DesktopCleanup.class); // РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ СЃРѕ СЃС‚СЂР°РЅРёС†С‹, С‚Р°Р№РјР°СѓС‚Рµ, Р·Р°РєСЂС‹С‚РёРё РІРєР»Р°РґРєРё(! РІ С‚.С‡. timeout.zul) РЅР° РїР°СЂСѓ, РЅРѕ РїРѕСЃР»Рµ ExecutionCleanup; РёРЅРѕРіРґР° РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ РІ РѕРґРЅРѕРј РїРѕС‚РѕРєРµ
 					desktop.setAttribute("asyncExecutor", asyncExecutor);
 					logger.trace("getAsyncExecutor.  ExecutorService was created with {} pool size for Desktop {}", asyncExecutorFixedThreadPoolSize, desktop.getId());
 				} else { asyncExecutor = (ExecutorService)tmp; }
@@ -108,7 +108,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 	} // public ExecutorService getAsyncExecutor()
 	
 	
-	protected transient volatile ZKWorkerWithTimerAndPM<AMedia> gridModelToExcelWorker; // создаётся заново при каждой выгрузке в Excel
+	protected transient volatile ZKWorkerWithTimerAndPM<AMedia> gridModelToExcelWorker; // СЃРѕР·РґР°С‘С‚СЃСЏ Р·Р°РЅРѕРІРѕ РїСЂРё РєР°Р¶РґРѕР№ РІС‹РіСЂСѓР·РєРµ РІ Excel
 
 	protected <U extends Object & Serializable & Comparable<? super U>> void downloadToExcel
 			( GridDataModelMan<U> lmlx
@@ -116,12 +116,12 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 			, Component holder
 			, Toolbarbutton tbb/*nullable*/) {
 		
-		if (gridModelToExcelWorker != null) { // разрешаем не более одной выгрузки в одно время
+		if (gridModelToExcelWorker != null) { // СЂР°Р·СЂРµС€Р°РµРј РЅРµ Р±РѕР»РµРµ РѕРґРЅРѕР№ РІС‹РіСЂСѓР·РєРё РІ РѕРґРЅРѕ РІСЂРµРјСЏ
 			Clients.showNotification("Parallel work prohibited !");
 			//logger.error("Inconsistency in downloadToExcel: gridModelToExcelWorker != null");
 			return;
 		}
-// FIXME: проверка входных параметров
+// FIXME: РїСЂРѕРІРµСЂРєР° РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ
 		if (lmlx == null) {
 			logger.error("Null argument 'lmlx' not allowed !");
 			throw new NullPointerException("Null argument 'lmlx' not allowed !");
@@ -157,7 +157,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 				Clients.showNotification("downloadToXLSX() was terminated !", Clients.NOTIFICATION_TYPE_INFO, null, null, 2000);
 			}
 			logger.trace("Supplier composer.downloadFile.  ret_res = {}, gridModelToExcelWorker.isCancelled() = {}", ret_res, gridModelToExcelWorker.isCancelled());
-			gridModelToExcelWorker = null; // ? (этот код при SP вызывает сам worker) ?
+			gridModelToExcelWorker = null; // ? (СЌС‚РѕС‚ РєРѕРґ РїСЂРё SP РІС‹Р·С‹РІР°РµС‚ СЃР°Рј worker) ?
 			return Integer.valueOf(ret_res);
 		}; // Supplier<Integer> downloadFile
 		
@@ -166,18 +166,18 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 			listModelToExcelWriter.setHeader(hdr);
 		}
 		if (tbb != null) {
-			tbb.setDisabled(true); // защита от повторного запуска (в ZUL autodisable="+self", т.е. нужно разрешить явно)
+			tbb.setDisabled(true); // Р·Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ Р·Р°РїСѓСЃРєР° (РІ ZUL autodisable="+self", С‚.Рµ. РЅСѓР¶РЅРѕ СЂР°Р·СЂРµС€РёС‚СЊ СЏРІРЅРѕ)
 		}
 			
-// запускаем в отдельном процессе (каждое событие обрабатывается в отдельном процессе, но последовательно, синхронно) !!!
-// вместо этого можно инициировать асинхронное событие (тоже working thread, см. Long Operations, EventQueues p. 264)
+// Р·Р°РїСѓСЃРєР°РµРј РІ РѕС‚РґРµР»СЊРЅРѕРј РїСЂРѕС†РµСЃСЃРµ (РєР°Р¶РґРѕРµ СЃРѕР±С‹С‚РёРµ РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚СЃСЏ РІ РѕС‚РґРµР»СЊРЅРѕРј РїСЂРѕС†РµСЃСЃРµ, РЅРѕ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ, СЃРёРЅС…СЂРѕРЅРЅРѕ) !!!
+// РІРјРµСЃС‚Рѕ СЌС‚РѕРіРѕ РјРѕР¶РЅРѕ РёРЅРёС†РёРёСЂРѕРІР°С‚СЊ Р°СЃРёРЅС…СЂРѕРЅРЅРѕРµ СЃРѕР±С‹С‚РёРµ (С‚РѕР¶Рµ working thread, СЃРј. Long Operations, EventQueues p. 264)
 		logger.trace("downloadToExcel. before construct Worker.  UIThread ? : {}", EventProcessor.inEventListener() );
 		
 		gridModelToExcelWorker = new ZKWorkerWithTimerAndPM<AMedia>(
 				() -> { return listModelToExcelWriter.exportModelDownloadExcel(gridModelToExcelWorker, null/*hdr*/); 
 				}
 			   ,() -> { int dfRes = downloadFile.get().intValue();
-			   			logger.trace("ZKWorkerWithTimerAndPM.downloadToExcel.userDoneUITask завершён с рез-том dfRes = {}", dfRes);
+			   			logger.trace("ZKWorkerWithTimerAndPM.downloadToExcel.userDoneUITask Р·Р°РІРµСЂС€С‘РЅ СЃ СЂРµР·-С‚РѕРј dfRes = {}", dfRes);
 			   	}
 			   ,holder);
 		
@@ -189,34 +189,34 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 	
 	private static ThreadLocalRandom rnd = ThreadLocalRandom.current();
 	
-	/** Диспетчер, через который запускаем на выполнение операции, меняющие лист-модель, обеспечивая синхронизацию.
+	/** Р”РёСЃРїРµС‚С‡РµСЂ, С‡РµСЂРµР· РєРѕС‚РѕСЂС‹Р№ Р·Р°РїСѓСЃРєР°РµРј РЅР° РІС‹РїРѕР»РЅРµРЅРёРµ РѕРїРµСЂР°С†РёРё, РјРµРЅСЏСЋС‰РёРµ Р»РёСЃС‚-РјРѕРґРµР»СЊ, РѕР±РµСЃРїРµС‡РёРІР°СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЋ.
 	 * Invoker that executes command taskToRun immediately or defers execution trying to acquire model lock in
 	 *  separate WT (first subscribes a synchronous listener) then publish event wich in turn run command in UI thread.
-	 * Задачи, меняющие дата-модель грида (и требующие эксклюзивной блокировки), запускаем сразу при свободном замке
-	 *  (самостоятельно управляя блокировкой) или ставим в очередь (рабочий поток - WT - ждёт блокировки),
-	 *  чтобы не держать UI-Thread (иначе интерфейс становтся неотзывчивым).
-	 * В случае отложенной задачи WT ждёт и лочит модель, передаёт штамп в обработчик события, который (не передавая
-	 *  его задаче, точнее, передавая 0L) разлочивает оконечно замок сам. Для надёжности WT синхронизируется с
-	 *  событием и сам разлочивает через 5 сек. при отсутствии сигнала начала выполнения события;
-	 *  т.о. гарантируется разблокировка, если событие не случилось или затянулось.
-	 * Событие отсылается посредством SP при активном Desktop, с чем есть проблемы, потому пытаемся в цикле.
+	 * Р—Р°РґР°С‡Рё, РјРµРЅСЏСЋС‰РёРµ РґР°С‚Р°-РјРѕРґРµР»СЊ РіСЂРёРґР° (Рё С‚СЂРµР±СѓСЋС‰РёРµ СЌРєСЃРєР»СЋР·РёРІРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРё), Р·Р°РїСѓСЃРєР°РµРј СЃСЂР°Р·Сѓ РїСЂРё СЃРІРѕР±РѕРґРЅРѕРј Р·Р°РјРєРµ
+	 *  (СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ СѓРїСЂР°РІР»СЏСЏ Р±Р»РѕРєРёСЂРѕРІРєРѕР№) РёР»Рё СЃС‚Р°РІРёРј РІ РѕС‡РµСЂРµРґСЊ (СЂР°Р±РѕС‡РёР№ РїРѕС‚РѕРє - WT - Р¶РґС‘С‚ Р±Р»РѕРєРёСЂРѕРІРєРё),
+	 *  С‡С‚РѕР±С‹ РЅРµ РґРµСЂР¶Р°С‚СЊ UI-Thread (РёРЅР°С‡Рµ РёРЅС‚РµСЂС„РµР№СЃ СЃС‚Р°РЅРѕРІС‚СЃСЏ РЅРµРѕС‚Р·С‹РІС‡РёРІС‹Рј).
+	 * Р’ СЃР»СѓС‡Р°Рµ РѕС‚Р»РѕР¶РµРЅРЅРѕР№ Р·Р°РґР°С‡Рё WT Р¶РґС‘С‚ Рё Р»РѕС‡РёС‚ РјРѕРґРµР»СЊ, РїРµСЂРµРґР°С‘С‚ С€С‚Р°РјРї РІ РѕР±СЂР°Р±РѕС‚С‡РёРє СЃРѕР±С‹С‚РёСЏ, РєРѕС‚РѕСЂС‹Р№ (РЅРµ РїРµСЂРµРґР°РІР°СЏ
+	 *  РµРіРѕ Р·Р°РґР°С‡Рµ, С‚РѕС‡РЅРµРµ, РїРµСЂРµРґР°РІР°СЏ 0L) СЂР°Р·Р»РѕС‡РёРІР°РµС‚ РѕРєРѕРЅРµС‡РЅРѕ Р·Р°РјРѕРє СЃР°Рј. Р”Р»СЏ РЅР°РґС‘Р¶РЅРѕСЃС‚Рё WT СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚СЃСЏ СЃ
+	 *  СЃРѕР±С‹С‚РёРµРј Рё СЃР°Рј СЂР°Р·Р»РѕС‡РёРІР°РµС‚ С‡РµСЂРµР· 5 СЃРµРє. РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё СЃРёРіРЅР°Р»Р° РЅР°С‡Р°Р»Р° РІС‹РїРѕР»РЅРµРЅРёСЏ СЃРѕР±С‹С‚РёСЏ;
+	 *  С‚.Рѕ. РіР°СЂР°РЅС‚РёСЂСѓРµС‚СЃСЏ СЂР°Р·Р±Р»РѕРєРёСЂРѕРІРєР°, РµСЃР»Рё СЃРѕР±С‹С‚РёРµ РЅРµ СЃР»СѓС‡РёР»РѕСЃСЊ РёР»Рё Р·Р°С‚СЏРЅСѓР»РѕСЃСЊ.
+	 * РЎРѕР±С‹С‚РёРµ РѕС‚СЃС‹Р»Р°РµС‚СЃСЏ РїРѕСЃСЂРµРґСЃС‚РІРѕРј SP РїСЂРё Р°РєС‚РёРІРЅРѕРј Desktop, СЃ С‡РµРј РµСЃС‚СЊ РїСЂРѕР±Р»РµРјС‹, РїРѕС‚РѕРјСѓ РїС‹С‚Р°РµРјСЃСЏ РІ С†РёРєР»Рµ.
 	 * (DR p.280) [Since ZK 7.0.0 deprecated to enable the event thread according to Java Servlet Specification that may prohibit the creation of new threads]
-	 * @param gdm Лист-модель, операции по изменению которой синхронизируем.
-	 * @param taskToRun Основная команда.
-	 * @param msg Текстовое сообщение (основа), выводимое в лог и на экран (Clients.showNotification()).
-	 * @param beforePostpone Команда (nullable), выполняемая в случае отложенного запуска сразу (online, в вызывающем UI-потоке), до ожидания блокировки в WT. Например, блокировка контролов на период ожидания.
-	 * @param beforeDeferredRun Команда (nullable), выполняемая в случае отложенного запуска в синхронном обработчике непосредственно перед выполнением основной команды. Например, разблокировка контролов, зблокированных в beforePostpone.
+	 * @param gdm Р›РёСЃС‚-РјРѕРґРµР»СЊ, РѕРїРµСЂР°С†РёРё РїРѕ РёР·РјРµРЅРµРЅРёСЋ РєРѕС‚РѕСЂРѕР№ СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј.
+	 * @param taskToRun РћСЃРЅРѕРІРЅР°СЏ РєРѕРјР°РЅРґР°.
+	 * @param msg РўРµРєСЃС‚РѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ (РѕСЃРЅРѕРІР°), РІС‹РІРѕРґРёРјРѕРµ РІ Р»РѕРі Рё РЅР° СЌРєСЂР°РЅ (Clients.showNotification()).
+	 * @param beforePostpone РљРѕРјР°РЅРґР° (nullable), РІС‹РїРѕР»РЅСЏРµРјР°СЏ РІ СЃР»СѓС‡Р°Рµ РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ Р·Р°РїСѓСЃРєР° СЃСЂР°Р·Сѓ (online, РІ РІС‹Р·С‹РІР°СЋС‰РµРј UI-РїРѕС‚РѕРєРµ), РґРѕ РѕР¶РёРґР°РЅРёСЏ Р±Р»РѕРєРёСЂРѕРІРєРё РІ WT. РќР°РїСЂРёРјРµСЂ, Р±Р»РѕРєРёСЂРѕРІРєР° РєРѕРЅС‚СЂРѕР»РѕРІ РЅР° РїРµСЂРёРѕРґ РѕР¶РёРґР°РЅРёСЏ.
+	 * @param beforeDeferredRun РљРѕРјР°РЅРґР° (nullable), РІС‹РїРѕР»РЅСЏРµРјР°СЏ РІ СЃР»СѓС‡Р°Рµ РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ Р·Р°РїСѓСЃРєР° РІ СЃРёРЅС…СЂРѕРЅРЅРѕРј РѕР±СЂР°Р±РѕС‚С‡РёРєРµ РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РїРµСЂРµРґ РІС‹РїРѕР»РЅРµРЅРёРµРј РѕСЃРЅРѕРІРЅРѕР№ РєРѕРјР°РЅРґС‹. РќР°РїСЂРёРјРµСЂ, СЂР°Р·Р±Р»РѕРєРёСЂРѕРІРєР° РєРѕРЅС‚СЂРѕР»РѕРІ, Р·Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹С… РІ beforePostpone.
 	 */
 	protected void dispatchGridModelLockingTask(GridDataModelMan<?> gdm, Consumer<Long> taskToRun, String msg, Runnable beforePostpone, Runnable beforeDeferredRun) {
-// FIXME: проверка входных параметров !!
-// TODO: контролируем, что вызов в UIThread (EventProcessor.inEventListener()) !!
-// FIXME: очередь на блокирующей очереди и ОДНОМ рабочем потоке-диспетчере !! Ещё есть длительные асинхронные операции блокировкой на чтение в пуле рабочих потоков !
-// TODO: оптимизация: из накопившихся однотипных задач (сортировка, применение фильтра) имеет смысл запускать только последнюю !!
+// FIXME: РїСЂРѕРІРµСЂРєР° РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ !!
+// TODO: РєРѕРЅС‚СЂРѕР»РёСЂСѓРµРј, С‡С‚Рѕ РІС‹Р·РѕРІ РІ UIThread (EventProcessor.inEventListener()) !!
+// FIXME: РѕС‡РµСЂРµРґСЊ РЅР° Р±Р»РѕРєРёСЂСѓСЋС‰РµР№ РѕС‡РµСЂРµРґРё Рё РћР”РќРћРњ СЂР°Р±РѕС‡РµРј РїРѕС‚РѕРєРµ-РґРёСЃРїРµС‚С‡РµСЂРµ !! Р•С‰С‘ РµСЃС‚СЊ РґР»РёС‚РµР»СЊРЅС‹Рµ Р°СЃРёРЅС…СЂРѕРЅРЅС‹Рµ РѕРїРµСЂР°С†РёРё Р±Р»РѕРєРёСЂРѕРІРєРѕР№ РЅР° С‡С‚РµРЅРёРµ РІ РїСѓР»Рµ СЂР°Р±РѕС‡РёС… РїРѕС‚РѕРєРѕРІ !
+// TODO: РѕРїС‚РёРјРёР·Р°С†РёСЏ: РёР· РЅР°РєРѕРїРёРІС€РёС…СЃСЏ РѕРґРЅРѕС‚РёРїРЅС‹С… Р·Р°РґР°С‡ (СЃРѕСЂС‚РёСЂРѕРІРєР°, РїСЂРёРјРµРЅРµРЅРёРµ С„РёР»СЊС‚СЂР°) РёРјРµРµС‚ СЃРјС‹СЃР» Р·Р°РїСѓСЃРєР°С‚СЊ С‚РѕР»СЊРєРѕ РїРѕСЃР»РµРґРЅСЋСЋ !!
     	logger.trace(concurMarker, "{} (UI)...entry...isLocked: {}", msg, gdm.isModelLocked());
 		
     	if ( gdm.isModelLocked() ) {
     		
-    	    EventQueue<Event> syncEQ = EventQueues.lookup("syncEQ"); // синхронная (UI) очередь отложенных задач - сериализуемая ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
+    	    EventQueue<Event> syncEQ = EventQueues.lookup("syncEQ"); // СЃРёРЅС…СЂРѕРЅРЅР°СЏ (UI) РѕС‡РµСЂРµРґСЊ РѕС‚Р»РѕР¶РµРЅРЅС‹С… Р·Р°РґР°С‡ - СЃРµСЂРёР°Р»РёР·СѓРµРјР°СЏ ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
 			Object synchroStuff = new Object();
 			String uniqueEventName = UUID.randomUUID().toString();
 			AtomicReference<Thread> evThread = new AtomicReference<>();
@@ -233,7 +233,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 							//synchronized(synchroStuff) {TimeUnit.MILLISECONDS.timedWait(synchroStuff, 7000);}
 							if (stamp != 0L) synchronized(synchroStuff) {
 								evThread.set(Thread.currentThread());
-								synchroStuff.notifyAll(); // сообщаем ланчеру, что всё пучком - можно завершаться: замок будет гарантированно разлочен
+								synchroStuff.notifyAll(); // СЃРѕРѕР±С‰Р°РµРј Р»Р°РЅС‡РµСЂСѓ, С‡С‚Рѕ РІСЃС‘ РїСѓС‡РєРѕРј - РјРѕР¶РЅРѕ Р·Р°РІРµСЂС€Р°С‚СЊСЃСЏ: Р·Р°РјРѕРє Р±СѓРґРµС‚ РіР°СЂР°РЅС‚РёСЂРѕРІР°РЅРЅРѕ СЂР°Р·Р»РѕС‡РµРЅ
 							}
 							if (beforeDeferredRun != null) beforeDeferredRun.run();
 							if ( !gdm.isModelLocked() ) {
@@ -242,7 +242,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 								return;
 							}
 							Clients.showNotification("Grid data model is unlocked, do postponed task "+uniqueEventName, Clients.NOTIFICATION_TYPE_INFO, null, null, 2000);
-							taskToRun.accept(0L/*stamp*/); // задача замок не получает; синхронизируем всю задачу из обработчика события
+							taskToRun.accept(0L/*stamp*/); // Р·Р°РґР°С‡Р° Р·Р°РјРѕРє РЅРµ РїРѕР»СѓС‡Р°РµС‚; СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРј РІСЃСЋ Р·Р°РґР°С‡Сѓ РёР· РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРѕР±С‹С‚РёСЏ
 							//synchronized(synchroStuff) {TimeUnit.MILLISECONDS.timedWait(synchroStuff, 7000);}
 						//} catch(InterruptedException e) {
 						} finally {
@@ -264,12 +264,12 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 			if (beforePostpone != null) beforePostpone.run();
 			Clients.showNotification("Grid data model is locked, postpone task "+uniqueEventName, Clients.NOTIFICATION_TYPE_INFO, null, null, 2000);
 			
-			getAsyncExecutor().execute( () -> { // в рабочем потоке (ланчере) ждём освобождения модели, после чего публикуем событие, обработчик которого запустит отложенную задачу в новом UI Thread (UI поток не должен висеть и ждать блокировки !)
+			getAsyncExecutor().execute( () -> { // РІ СЂР°Р±РѕС‡РµРј РїРѕС‚РѕРєРµ (Р»Р°РЅС‡РµСЂРµ) Р¶РґС‘Рј РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РјРѕРґРµР»Рё, РїРѕСЃР»Рµ С‡РµРіРѕ РїСѓР±Р»РёРєСѓРµРј СЃРѕР±С‹С‚РёРµ, РѕР±СЂР°Р±РѕС‚С‡РёРє РєРѕС‚РѕСЂРѕРіРѕ Р·Р°РїСѓСЃС‚РёС‚ РѕС‚Р»РѕР¶РµРЅРЅСѓСЋ Р·Р°РґР°С‡Сѓ РІ РЅРѕРІРѕРј UI Thread (UI РїРѕС‚РѕРє РЅРµ РґРѕР»Р¶РµРЅ РІРёСЃРµС‚СЊ Рё Р¶РґР°С‚СЊ Р±Р»РѕРєРёСЂРѕРІРєРё !)
 				logger.trace(concurMarker, "{} (ASYNC)...waiting for WriteLock before send event {}", msg, uniqueEventName);
-	    		long stamp = gdm.getModelRWLock().writeLock(); // StampedLock с передачей штампа в UIThread (чтобы гарантировать перевоочередную обработку своего события)
+	    		long stamp = gdm.getModelRWLock().writeLock(); // StampedLock СЃ РїРµСЂРµРґР°С‡РµР№ С€С‚Р°РјРїР° РІ UIThread (С‡С‚РѕР±С‹ РіР°СЂР°РЅС‚РёСЂРѕРІР°С‚СЊ РїРµСЂРµРІРѕРѕС‡РµСЂРµРґРЅСѓСЋ РѕР±СЂР°Р±РѕС‚РєСѓ СЃРІРѕРµРіРѕ СЃРѕР±С‹С‚РёСЏ)
 	    		boolean activated = false;
 	    		try {
-					for (int round = 3; round-- > 0; ) { // 1) иначе не выполнить syncEQ.publish(); 2) берегись deadlock !!!
+					for (int round = 3; round-- > 0; ) { // 1) РёРЅР°С‡Рµ РЅРµ РІС‹РїРѕР»РЅРёС‚СЊ syncEQ.publish(); 2) Р±РµСЂРµРіРёСЃСЊ deadlock !!!
 						logger.trace(concurMarker, "{} (ASYNC)...acquire WriteLock, stamp = {}, wait for desktop activation...round {} of 3", msg, stamp, (3-round));
 						activated = Executions.activate(desktop, rnd.nextInt(1300, 2000)); // DR p.339
 						if (activated || round <= 0) break;
@@ -297,7 +297,7 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 							}
 						} catch (InterruptedException e) {
 						} finally {
-							if ( evThread.get() == null ) { // не дождались запуска события
+							if ( evThread.get() == null ) { // РЅРµ РґРѕР¶РґР°Р»РёСЃСЊ Р·Р°РїСѓСЃРєР° СЃРѕР±С‹С‚РёСЏ
 		    					syncEQ.unsubscribe(listener);
 		    					boolean unlock = false;
 		    					try {
@@ -308,21 +308,21 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
 		    					}
 		    					logger.warn(concurMarker, "{} (ASYNC)...event didn't occur within 5 sec. -> drop event {} & {} release WriteLock with stamp {}, syncEQ.isIdle() ? {}", msg, uniqueEventName, (unlock ? "successfully":"can't"), stamp, ((DesktopEventQueue<Event>)syncEQ).isIdle());
 							} else {
-								// FIXME: проверить syncEQ на утечку ! (https://en.wikipedia.org/wiki/Lapsed_listener_problem)
+								// FIXME: РїСЂРѕРІРµСЂРёС‚СЊ syncEQ РЅР° СѓС‚РµС‡РєСѓ ! (https://en.wikipedia.org/wiki/Lapsed_listener_problem)
 							}
 						}
-	    			} else { // замок захватили, но десктоп активировать не смогли
+	    			} else { // Р·Р°РјРѕРє Р·Р°С…РІР°С‚РёР»Рё, РЅРѕ РґРµСЃРєС‚РѕРї Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ РЅРµ СЃРјРѕРіР»Рё
 	    				syncEQ.unsubscribe(listener);
 	    				gdm.getModelRWLock().unlock(stamp);
 	    				logger.warn(concurMarker, "{} (ASYNC)...unable to activate desktop -> drop event {} & RELEASE WriteLock with stamp {}, syncEQ.isIdle() ? {}", msg, uniqueEventName, stamp, ((DesktopEventQueue<Event>)syncEQ).isIdle());	    				
 	    			}
 	    		} // finally
 			}); // execute luncher
-		} else { // FIXME: (запуск в текущем UI-потоке в отсутствие блокировки) всё меняется, делать tryLock, если уже захвачен - идти по ветке ланчера !!
+		} else { // FIXME: (Р·Р°РїСѓСЃРє РІ С‚РµРєСѓС‰РµРј UI-РїРѕС‚РѕРєРµ РІ РѕС‚СЃСѓС‚СЃС‚РІРёРµ Р±Р»РѕРєРёСЂРѕРІРєРё) РІСЃС‘ РјРµРЅСЏРµС‚СЃСЏ, РґРµР»Р°С‚СЊ tryLock, РµСЃР»Рё СѓР¶Рµ Р·Р°С…РІР°С‡РµРЅ - РёРґС‚Рё РїРѕ РІРµС‚РєРµ Р»Р°РЅС‡РµСЂР° !!
 			long stamp = gdm.getModelRWLock().writeLock();
 			logger.trace(concurMarker, "{} (UI)...acquire WriteLock; stamp = {}", msg, stamp);
 			try {
-				taskToRun.accept(0L/*stamp*/); // замок модели был свободен - запускаем задачу сразу (в этом UI-потоке)
+				taskToRun.accept(0L/*stamp*/); // Р·Р°РјРѕРє РјРѕРґРµР»Рё Р±С‹Р» СЃРІРѕР±РѕРґРµРЅ - Р·Р°РїСѓСЃРєР°РµРј Р·Р°РґР°С‡Сѓ СЃСЂР°Р·Сѓ (РІ СЌС‚РѕРј UI-РїРѕС‚РѕРєРµ)
 			} finally {
 				gdm.getModelRWLock().unlock(stamp);
 				logger.trace(concurMarker, "{} (UI)...release WriteLock after complete (right away) task; stamp = {}", msg, stamp);
@@ -331,10 +331,10 @@ public class SimpleGridDataComposer<T extends Component> extends SelectorCompose
     } // void dispatchGridModelLockingTask
 	
 	
-	/** Сортировка колонки грида/листбокса с синхронизацией лист-модели.
-	 * @param hdr Колонка, в которой нужно сортировать.
-	 * @param isAsc Направление сортировки.
-	 * @param lmlx Лист-модель грида/листбокса.
+	/** РЎРѕСЂС‚РёСЂРѕРІРєР° РєРѕР»РѕРЅРєРё РіСЂРёРґР°/Р»РёСЃС‚Р±РѕРєСЃР° СЃ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРµР№ Р»РёСЃС‚-РјРѕРґРµР»Рё.
+	 * @param hdr РљРѕР»РѕРЅРєР°, РІ РєРѕС‚РѕСЂРѕР№ РЅСѓР¶РЅРѕ СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ.
+	 * @param isAsc РќР°РїСЂР°РІР»РµРЅРёРµ СЃРѕСЂС‚РёСЂРѕРІРєРё.
+	 * @param lmlx Р›РёСЃС‚-РјРѕРґРµР»СЊ РіСЂРёРґР°/Р»РёСЃС‚Р±РѕРєСЃР°.
 	 */
 	public void safeSort(HeaderElement hdr, boolean isAsc, GridDataModelMan<?> lmlx) {
 		if ( hdr instanceof Listheader ) {

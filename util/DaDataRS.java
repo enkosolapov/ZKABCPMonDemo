@@ -1,4 +1,4 @@
-package basos.util;
+п»їpackage basos.util;
 
 import java.io.IOException;
 
@@ -30,37 +30,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-/** Получение данных по юрлицам из API Подсказок (https://dadata.ru/api/suggest/#request-party) через JAX-RS 2.0.
+/** РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… РїРѕ СЋСЂР»РёС†Р°Рј РёР· API РџРѕРґСЃРєР°Р·РѕРє (https://dadata.ru/api/suggest/#request-party) С‡РµСЂРµР· JAX-RS 2.0.
  * 
  */
 /* https://confluence.hflabs.ru/pages/viewpage.action?pageId=466681947
-* !! пример на Java (из другого раздела, потому не сразу нашёл): https://github.com/leon0399/dadata
+* !! РїСЂРёРјРµСЂ РЅР° Java (РёР· РґСЂСѓРіРѕРіРѕ СЂР°Р·РґРµР»Р°, РїРѕС‚РѕРјСѓ РЅРµ СЃСЂР°Р·Сѓ РЅР°С€С‘Р»): https://github.com/leon0399/dadata
 */
 
-// TODO: прогнать по части субъектов (ИНН на определённую цифру)
+// TODO: РїСЂРѕРіРЅР°С‚СЊ РїРѕ С‡Р°СЃС‚Рё СЃСѓР±СЉРµРєС‚РѕРІ (РРќРќ РЅР° РѕРїСЂРµРґРµР»С‘РЅРЅСѓСЋ С†РёС„СЂСѓ)
 public class DaDataRS {
 	private static final Logger logger = LoggerFactory.getLogger(DaDataRS.class);
 
-// FIXME: хранить в настройках; устанавливать в конструкторе (?)
+// FIXME: С…СЂР°РЅРёС‚СЊ РІ РЅР°СЃС‚СЂРѕР№РєР°С…; СѓСЃС‚Р°РЅР°РІР»РёРІР°С‚СЊ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ (?)
 	private static final String SUGGEST_API_KEY = "Token be456659ebc263828636ae120112b8b6eccbc8c2";
 	private static final String SUGGEST_TARGET_URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party"; // http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party
 	
-	/** Дернуть сервис по ИНН.
-	 * @return Json-ответ или пустая строка ("") при неуспехе или пустом ответе.
+	/** Р”РµСЂРЅСѓС‚СЊ СЃРµСЂРІРёСЃ РїРѕ РРќРќ.
+	 * @return Json-РѕС‚РІРµС‚ РёР»Рё РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР° ("") РїСЂРё РЅРµСѓСЃРїРµС…Рµ РёР»Рё РїСѓСЃС‚РѕРј РѕС‚РІРµС‚Рµ.
 	 */
 	public static String getSuggestionByInn(String inn) {
     	/*Resteasy*/Client rc = null;
     	Response resp = null;
     	String val = null;
 	    try {
-/* Примеры JAX_RS 2.0 клиента: http://www.benchresources.net/resteasy-jax-rs-web-service-using-jaxb-json-example/
+/* РџСЂРёРјРµСЂС‹ JAX_RS 2.0 РєР»РёРµРЅС‚Р°: http://www.benchresources.net/resteasy-jax-rs-web-service-using-jaxb-json-example/
  * https://docs.oracle.com/javaee/7/tutorial/jaxrs-client002.htm#BABJCIJC
  */
 /*
 // Fake service http://jsonplaceholder.typicode.com
         ResteasyClient rc = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = rc.target("http://jsonplaceholder.typicode.com/posts");
-    	String prm = "{\"title\": \"заголовОК\", \"body\": \"туловИще\", \"userId\": "+inn+"}";
+    	String prm = "{\"title\": \"Р·Р°РіРѕР»РѕРІРћРљ\", \"body\": \"С‚СѓР»РѕРІРС‰Рµ\", \"userId\": "+inn+"}";
     	Response resp = target.property("Content-Type", MediaType.APPLICATION_JSON)  // MediaType.APPLICATION_JSON // MediaType.APPLICATION_FORM_URLENCODED
     						  .property("Accept", MediaType.APPLICATION_JSON) // MediaType.APPLICATION_JSON
     						  .request() // FORM_CONTENT_TYPE_WITH_CHARSET // MediaType.APPLICATION_FORM_URLENCODED
@@ -68,11 +68,11 @@ public class DaDataRS {
     						  //.get();
 */    						  
 			
-// FIXME: уровень приложения; одна подготовка, много вызовов
+// FIXME: СѓСЂРѕРІРµРЅСЊ РїСЂРёР»РѕР¶РµРЅРёСЏ; РѕРґРЅР° РїРѕРґРіРѕС‚РѕРІРєР°, РјРЅРѕРіРѕ РІС‹Р·РѕРІРѕРІ
 	    	rc = /*new ResteasyClientBuilder()*/ClientBuilder.newClient();/*.newBuilder().sslContext(getSslContext())
 	    												.hostnameVerifier(getHostnameVerifier())
 	    												.build();*/
-/* Token передавать так, а не через target.property(), иначе сервис отвечал 401
+/* Token РїРµСЂРµРґР°РІР°С‚СЊ С‚Р°Рє, Р° РЅРµ С‡РµСЂРµР· target.property(), РёРЅР°С‡Рµ СЃРµСЂРІРёСЃ РѕС‚РІРµС‡Р°Р» 401
  * http://stackoverflow.com/questions/21763700/how-to-set-http-header-in-resteasy-3-0-client-framework-with-resteasyclientbuil
  * http://stackoverflow.com/questions/6929378/how-to-set-http-header-in-resteasy-client-framework
  * http://stackoverflow.com/questions/1885844/resteasy-client-framework-authentication-credentials
@@ -97,7 +97,7 @@ public class DaDataRS {
 	    	}
 	    	
 	    	int responseCode = resp.getStatus();
-// ?? HOWTO оптимальнее ??
+// ?? HOWTO РѕРїС‚РёРјР°Р»СЊРЅРµРµ ??
 	    	//Json val = resp.readEntity(Json.class);
 	        val = resp.readEntity(String.class); // Read output in string format
 			
@@ -121,8 +121,8 @@ public class DaDataRS {
 	} // public static String getSuggestionByInn(String inn)
 	
 /* How to configure wildfly to use https with ClientBuilder in resteasy ? http://stackoverflow.com/questions/30660860/how-to-configure-wildfly-to-use-https-with-clientbuilder-in-resteasy
- * А здесь недостающая в пред. статье реализация SecureTrustManager: http://stackoverflow.com/questions/10415607/jersey-client-set-proxy
- * Но в моём случае всё работает и без этого.
+ * Рђ Р·РґРµСЃСЊ РЅРµРґРѕСЃС‚Р°СЋС‰Р°СЏ РІ РїСЂРµРґ. СЃС‚Р°С‚СЊРµ СЂРµР°Р»РёР·Р°С†РёСЏ SecureTrustManager: http://stackoverflow.com/questions/10415607/jersey-client-set-proxy
+ * РќРѕ РІ РјРѕС‘Рј СЃР»СѓС‡Р°Рµ РІСЃС‘ СЂР°Р±РѕС‚Р°РµС‚ Рё Р±РµР· СЌС‚РѕРіРѕ.
  */ 
 /*    
 	public static HostnameVerifier getHostnameVerifier() {
@@ -170,7 +170,7 @@ public class DaDataRS {
 	} // public static SSLContext getSslContext()
 */	
 	
-/*	// Проблемы передачи utf-8 в JAX-RS: https://habrahabr.ru/post/140270/
+/*	// РџСЂРѕР±Р»РµРјС‹ РїРµСЂРµРґР°С‡Рё utf-8 РІ JAX-RS: https://habrahabr.ru/post/140270/
 	public static final String FORM_CONTENT_TYPE_WITH_CHARSET = "application/x-www-form-urlencoded; charset=utf-8";
 	public static final String APPLICATION_JSON_WITH_CHARSET = "application/json; charset=utf-8";
 */	

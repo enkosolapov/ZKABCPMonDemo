@@ -1,4 +1,4 @@
-package basos.data.dao;
+п»їpackage basos.data.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -22,23 +22,23 @@ import org.slf4j.LoggerFactory;
 import basos.data.GridData;
 
 
-// FIXME: ? обеспечить неизменность данных (хотя бы колонки ПК) ?
-// FIXME: ? где практически использовать ПК ?
+// FIXME: ? РѕР±РµСЃРїРµС‡РёС‚СЊ РЅРµРёР·РјРµРЅРЅРѕСЃС‚СЊ РґР°РЅРЅС‹С… (С…РѕС‚СЏ Р±С‹ РєРѕР»РѕРЅРєРё РџРљ) ?
+// FIXME: ? РіРґРµ РїСЂР°РєС‚РёС‡РµСЃРєРё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РџРљ ?
 
-/* TODO: Структура "ключа" (внутренний класс): наименование поля, тип поля, экземпляр компаратора (ленивый),
-тип (Pk, Fk, Index), класс родителя (Fk), название родительского поля (Fk). -Поддержка составных ключей ?
-Компаратор получаем по первому требованию, список ключей сразу (-от бина) (?). Бин определяет только нестандартные
-компараторы, иначе (метод ниже ничего не вернул и тип поля Comparable) генерим экземпляр внутреннего класс (метод
-setName получает имя поля, определяет геттер, compare использует его для получения значений, которые сравнивает
-через compareTo)
+/* TODO: РЎС‚СЂСѓРєС‚СѓСЂР° "РєР»СЋС‡Р°" (РІРЅСѓС‚СЂРµРЅРЅРёР№ РєР»Р°СЃСЃ): РЅР°РёРјРµРЅРѕРІР°РЅРёРµ РїРѕР»СЏ, С‚РёРї РїРѕР»СЏ, СЌРєР·РµРјРїР»СЏСЂ РєРѕРјРїР°СЂР°С‚РѕСЂР° (Р»РµРЅРёРІС‹Р№),
+С‚РёРї (Pk, Fk, Index), РєР»Р°СЃСЃ СЂРѕРґРёС‚РµР»СЏ (Fk), РЅР°Р·РІР°РЅРёРµ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РїРѕР»СЏ (Fk). -РџРѕРґРґРµСЂР¶РєР° СЃРѕСЃС‚Р°РІРЅС‹С… РєР»СЋС‡РµР№ ?
+РљРѕРјРїР°СЂР°С‚РѕСЂ РїРѕР»СѓС‡Р°РµРј РїРѕ РїРµСЂРІРѕРјСѓ С‚СЂРµР±РѕРІР°РЅРёСЋ, СЃРїРёСЃРѕРє РєР»СЋС‡РµР№ СЃСЂР°Р·Сѓ (-РѕС‚ Р±РёРЅР°) (?). Р‘РёРЅ РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕР»СЊРєРѕ РЅРµСЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ
+РєРѕРјРїР°СЂР°С‚РѕСЂС‹, РёРЅР°С‡Рµ (РјРµС‚РѕРґ РЅРёР¶Рµ РЅРёС‡РµРіРѕ РЅРµ РІРµСЂРЅСѓР» Рё С‚РёРї РїРѕР»СЏ Comparable) РіРµРЅРµСЂРёРј СЌРєР·РµРјРїР»СЏСЂ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РєР»Р°СЃСЃ (РјРµС‚РѕРґ
+setName РїРѕР»СѓС‡Р°РµС‚ РёРјСЏ РїРѕР»СЏ, РѕРїСЂРµРґРµР»СЏРµС‚ РіРµС‚С‚РµСЂ, compare РёСЃРїРѕР»СЊР·СѓРµС‚ РµРіРѕ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёР№, РєРѕС‚РѕСЂС‹Рµ СЃСЂР°РІРЅРёРІР°РµС‚
+С‡РµСЂРµР· compareTo)
 */	
 
 
-/** Реализация интерфейса GridDataProvider - поставщика list of GridData, расширенная концепцией Первичного Ключа данных (PK).
- * При установлении ПК список Провайдера автоматически сортируется по ПК, что обеспечивает быстрый поиск (если список RandomAccess).
- * Конкретный класс должен реализовать определённый здесь абстрактный защищённый метод populateGridDataList() наполнения
- *  списка, который вызывается в getGridDataList() - геттере ленивого self-incapsulated fixed-size List<GridData<T>>.
- * Реализация должна явно задать класс бина (доменного объекта) для его оболочки GridData через конструктор с единственным параметром типа Class<T>.
+/** Р РµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР° GridDataProvider - РїРѕСЃС‚Р°РІС‰РёРєР° list of GridData, СЂР°СЃС€РёСЂРµРЅРЅР°СЏ РєРѕРЅС†РµРїС†РёРµР№ РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° РґР°РЅРЅС‹С… (PK).
+ * РџСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРёРё РџРљ СЃРїРёСЃРѕРє РџСЂРѕРІР°Р№РґРµСЂР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРѕСЂС‚РёСЂСѓРµС‚СЃСЏ РїРѕ РџРљ, С‡С‚Рѕ РѕР±РµСЃРїРµС‡РёРІР°РµС‚ Р±С‹СЃС‚СЂС‹Р№ РїРѕРёСЃРє (РµСЃР»Рё СЃРїРёСЃРѕРє RandomAccess).
+ * РљРѕРЅРєСЂРµС‚РЅС‹Р№ РєР»Р°СЃСЃ РґРѕР»Р¶РµРЅ СЂРµР°Р»РёР·РѕРІР°С‚СЊ РѕРїСЂРµРґРµР»С‘РЅРЅС‹Р№ Р·РґРµСЃСЊ Р°Р±СЃС‚СЂР°РєС‚РЅС‹Р№ Р·Р°С‰РёС‰С‘РЅРЅС‹Р№ РјРµС‚РѕРґ populateGridDataList() РЅР°РїРѕР»РЅРµРЅРёСЏ
+ *  СЃРїРёСЃРєР°, РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚СЃСЏ РІ getGridDataList() - РіРµС‚С‚РµСЂРµ Р»РµРЅРёРІРѕРіРѕ self-incapsulated fixed-size List<GridData<T>>.
+ * Р РµР°Р»РёР·Р°С†РёСЏ РґРѕР»Р¶РЅР° СЏРІРЅРѕ Р·Р°РґР°С‚СЊ РєР»Р°СЃСЃ Р±РёРЅР° (РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°) РґР»СЏ РµРіРѕ РѕР±РѕР»РѕС‡РєРё GridData С‡РµСЂРµР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РµРґРёРЅСЃС‚РІРµРЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂРѕРј С‚РёРїР° Class<T>.
  */
 public abstract class GridDataProviderWPk<T extends Object & Serializable & Comparable<? super T>>
 		implements GridDataProvider<T>, Serializable {
@@ -49,77 +49,77 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	protected final Class<T> beanClass;
 	
 	/** Lazy init self-incapsulated fixed-size (set & sord enabled).
-	 * Создаётся абстрактным методом populateGridDataList() при первом вызове getGridDataList();
-	 *  в нём же определяется конткретный тип списка.
+	 * РЎРѕР·РґР°С‘С‚СЃСЏ Р°Р±СЃС‚СЂР°РєС‚РЅС‹Рј РјРµС‚РѕРґРѕРј populateGridDataList() РїСЂРё РїРµСЂРІРѕРј РІС‹Р·РѕРІРµ getGridDataList();
+	 *  РІ РЅС‘Рј Р¶Рµ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РєРѕРЅС‚РєСЂРµС‚РЅС‹Р№ С‚РёРї СЃРїРёСЃРєР°.
 	 */
 	private List<GridData<T>> gridDataArrayList;
 	
 	protected int totalRowCount;
 	
-	/** Название поля - первичного ключа (or null, тогда сортируем по GridData.uid).
-	 * Консистентность с компаратором должна обеспечиваться при установлении ПК в {@link #setPk(String, Comparator)}.
+	/** РќР°Р·РІР°РЅРёРµ РїРѕР»СЏ - РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° (or null, С‚РѕРіРґР° СЃРѕСЂС‚РёСЂСѓРµРј РїРѕ GridData.uid).
+	 * РљРѕРЅСЃРёСЃС‚РµРЅС‚РЅРѕСЃС‚СЊ СЃ РєРѕРјРїР°СЂР°С‚РѕСЂРѕРј РґРѕР»Р¶РЅР° РѕР±РµСЃРїРµС‡РёРІР°С‚СЊСЃСЏ РїСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРёРё РџРљ РІ {@link #setPk(String, Comparator)}.
 	 */
 	protected String pk;
 	
-	/** Компаратор бинов в соответствии с установленным ПК. */
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ Р±РёРЅРѕРІ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рј РџРљ. */
 	protected Comparator<T> beanPkComparator;
 	
-	/** Компаратор (ленивый) GridData. Делегирует сравнение компаратору бинов при установленном ПК, иначе сравнивает по GridData.uid. */
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ (Р»РµРЅРёРІС‹Р№) GridData. Р”РµР»РµРіРёСЂСѓРµС‚ СЃСЂР°РІРЅРµРЅРёРµ РєРѕРјРїР°СЂР°С‚РѕСЂСѓ Р±РёРЅРѕРІ РїСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРј РџРљ, РёРЅР°С‡Рµ СЃСЂР°РІРЅРёРІР°РµС‚ РїРѕ GridData.uid. */
 	protected Comparator<GridData<T>> pkComparator;
 	
-	/** Название геттера поля ПК бина (определяется в setPk()). */
+	/** РќР°Р·РІР°РЅРёРµ РіРµС‚С‚РµСЂР° РїРѕР»СЏ РџРљ Р±РёРЅР° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	protected String pkGetterName;
 	
-	/** Метод геттера поля ПК бина (определяется в setPk()). */
+	/** РњРµС‚РѕРґ РіРµС‚С‚РµСЂР° РїРѕР»СЏ РџРљ Р±РёРЅР° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	protected Method pkGetterMethod;
 	
-	/** Тип данных поля первичного ключа (определяется в setPk()). */
+	/** РўРёРї РґР°РЅРЅС‹С… РїРѕР»СЏ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	protected Class<?> pkClass; // Class<Comparable<?>>
 	
-	/** Грузить ли полный список при запросе подмножества по ключу. Иначе запрашивается из БД. */
+	/** Р“СЂСѓР·РёС‚СЊ Р»Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РїСЂРё Р·Р°РїСЂРѕСЃРµ РїРѕРґРјРЅРѕР¶РµСЃС‚РІР° РїРѕ РєР»СЋС‡Сѓ. РРЅР°С‡Рµ Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ РёР· Р‘Р”. */
 	protected boolean loadAllForRange = true;
 	
 	
-	/** Реализация Провайдера должна явно задать класс бина (доменного объекта) для его оболочки GridData. */
+	/** Р РµР°Р»РёР·Р°С†РёСЏ РџСЂРѕРІР°Р№РґРµСЂР° РґРѕР»Р¶РЅР° СЏРІРЅРѕ Р·Р°РґР°С‚СЊ РєР»Р°СЃСЃ Р±РёРЅР° (РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°) РґР»СЏ РµРіРѕ РѕР±РѕР»РѕС‡РєРё GridData. */
 	protected GridDataProviderWPk(Class<T> beanClass) { // http://stackoverflow.com/questions/260666/can-an-abstract-class-have-a-constructor
 		this.beanClass = beanClass;
 	}
 	
-	/** Загружен ли уже полный список (другого и нет). */
+	/** Р—Р°РіСЂСѓР¶РµРЅ Р»Рё СѓР¶Рµ РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє (РґСЂСѓРіРѕРіРѕ Рё РЅРµС‚). */
 	public boolean isAllLoaded() {
 		return (gridDataArrayList != null);
 	}
 	
-	/** Установка Первичного Ключа данных и соответствующего компаратора бинов.
-	 * Список Провайдера автоматически сортируется по ПК, что обеспечивает быстрый поиск (если список RandomAccess).
-	 * Для сброса первичного ключа оба параметра должны быть null, тогда список будет отсортирован по GridData.uid.
+	/** РЈСЃС‚Р°РЅРѕРІРєР° РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° РґР°РЅРЅС‹С… Рё СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РєРѕРјРїР°СЂР°С‚РѕСЂР° Р±РёРЅРѕРІ.
+	 * РЎРїРёСЃРѕРє РџСЂРѕРІР°Р№РґРµСЂР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРѕСЂС‚РёСЂСѓРµС‚СЃСЏ РїРѕ РџРљ, С‡С‚Рѕ РѕР±РµСЃРїРµС‡РёРІР°РµС‚ Р±С‹СЃС‚СЂС‹Р№ РїРѕРёСЃРє (РµСЃР»Рё СЃРїРёСЃРѕРє RandomAccess).
+	 * Р”Р»СЏ СЃР±СЂРѕСЃР° РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° РѕР±Р° РїР°СЂР°РјРµС‚СЂР° РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ null, С‚РѕРіРґР° СЃРїРёСЃРѕРє Р±СѓРґРµС‚ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ РїРѕ GridData.uid.
 	 */
-// FIXME: валидация и всё такое (типы, существование, unique & not null); проверка правильности сортировки !
-// FIXME: разделить ПК и неуникальный индекс (разные проверки, ПК используется в композитном фильтре)
+// FIXME: РІР°Р»РёРґР°С†РёСЏ Рё РІСЃС‘ С‚Р°РєРѕРµ (С‚РёРїС‹, СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ, unique & not null); РїСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё СЃРѕСЂС‚РёСЂРѕРІРєРё !
+// FIXME: СЂР°Р·РґРµР»РёС‚СЊ РџРљ Рё РЅРµСѓРЅРёРєР°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (СЂР°Р·РЅС‹Рµ РїСЂРѕРІРµСЂРєРё, РџРљ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РєРѕРјРїРѕР·РёС‚РЅРѕРј С„РёР»СЊС‚СЂРµ)
 	public void setPk(String pk, Comparator<T> beanPkComparator) {
 		if (pk != null && beanPkComparator == null) {
-			logger.error("setPk. Требуется компаратор для указанного первичного ключа '{}' в setPk", pk);
-			throw new IllegalArgumentException("setPk. Требуется компаратор для указанного первичного '"+pk+"' ключа в setPk");
+			logger.error("setPk. РўСЂРµР±СѓРµС‚СЃСЏ РєРѕРјРїР°СЂР°С‚РѕСЂ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° '{}' РІ setPk", pk);
+			throw new IllegalArgumentException("setPk. РўСЂРµР±СѓРµС‚СЃСЏ РєРѕРјРїР°СЂР°С‚РѕСЂ РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїРµСЂРІРёС‡РЅРѕРіРѕ '"+pk+"' РєР»СЋС‡Р° РІ setPk");
 		}
 		if (pk == null && beanPkComparator != null) {
-			logger.error("setPk. Для сброса первичного ключа оба параметра должны быть null в setPk");
-			throw new IllegalArgumentException("setPk. Для сброса первичного ключа оба параметра должны быть null в setPk");
+			logger.error("setPk. Р”Р»СЏ СЃР±СЂРѕСЃР° РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° РѕР±Р° РїР°СЂР°РјРµС‚СЂР° РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ null РІ setPk");
+			throw new IllegalArgumentException("setPk. Р”Р»СЏ СЃР±СЂРѕСЃР° РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° РѕР±Р° РїР°СЂР°РјРµС‚СЂР° РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ null РІ setPk");
 		}
 		if (pk == null && this.pk == null || pk != null && pk.equals(this.pk) && beanPkComparator == this.beanPkComparator) {
-			logger.debug("setPk.  Ключ не изменился - pk = '{}'", pk);
+			logger.debug("setPk.  РљР»СЋС‡ РЅРµ РёР·РјРµРЅРёР»СЃСЏ - pk = '{}'", pk);
 			return;
 		}
-		this.pkComparator = null; // он использует beanPkComparator, но он ленив
+		this.pkComparator = null; // РѕРЅ РёСЃРїРѕР»СЊР·СѓРµС‚ beanPkComparator, РЅРѕ РѕРЅ Р»РµРЅРёРІ
 		this.pk = pk;
 		this.beanPkComparator = beanPkComparator;
 		if (pk == null) {
 			pkGetterName = null;
 			pkGetterMethod = null; 
 			pkClass = null;
-		} else /*if (!(beanPkComparator instanceof GridDataProviderWPk.CompareComparable))*/ { // в конструкторе CompareComparable reflectPk() уже вызван
+		} else /*if (!(beanPkComparator instanceof GridDataProviderWPk.CompareComparable))*/ { // РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ CompareComparable reflectPk() СѓР¶Рµ РІС‹Р·РІР°РЅ
 			reflectPkGetter(pk);
 		}
-		if (gridDataArrayList != null) { // при установке ПК сортировку откладываем до получения полного списка
+		if (gridDataArrayList != null) { // РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РџРљ СЃРѕСЂС‚РёСЂРѕРІРєСѓ РѕС‚РєР»Р°РґС‹РІР°РµРј РґРѕ РїРѕР»СѓС‡РµРЅРёСЏ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°
 			getAll().sort(getPkComparator());
 		}
 		logger.debug("{}.setPk. PK: {}, BeanPkComparator: {}, PkClass: {}, PkComparator: {}, extractComparatorFromBeanClassByPkName: {}", this.getClass().getName(), getPk().orElse("<PK_no_defined>"), (getBeanPkComparator().isPresent() ? getBeanPkComparator().get().getClass().getName() : "<none>"), (getPkClass().isPresent() ? getPkClass().get().getName() : "<none>"), getPkComparator().getClass().getName(), (getPk().isPresent() ? extractComparatorFromBeanClassByPkName(pk) : null) );
@@ -134,21 +134,21 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 			throw new InternalError("reflectPk. Exception on invoke "+pkGetterName, e);
 		}
 		pkClass = pkGetterMethod.getReturnType();
-		// проверить класс: Comparable; int, Integer(Number), String
+		// РїСЂРѕРІРµСЂРёС‚СЊ РєР»Р°СЃСЃ: Comparable; int, Integer(Number), String
 	}
 	
-	/** Установка Первичного Ключа данных, компаратора бинов определяется/создаётся автоматически.
-	 * Компаратор определяется из класса бина (рефлексивно через статический метод getPkComparatorByName) или
-	 * создаётся для Comparable-полей с использованием {@link Comparable#compareTo(Object) compareTo} для сравнения
-	 * значений ключевых полей, полученных рефлексивно.
+	/** РЈСЃС‚Р°РЅРѕРІРєР° РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° РґР°РЅРЅС‹С…, РєРѕРјРїР°СЂР°С‚РѕСЂР° Р±РёРЅРѕРІ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ/СЃРѕР·РґР°С‘С‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
+	 * РљРѕРјРїР°СЂР°С‚РѕСЂ РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РёР· РєР»Р°СЃСЃР° Р±РёРЅР° (СЂРµС„Р»РµРєСЃРёРІРЅРѕ С‡РµСЂРµР· СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РјРµС‚РѕРґ getPkComparatorByName) РёР»Рё
+	 * СЃРѕР·РґР°С‘С‚СЃСЏ РґР»СЏ Comparable-РїРѕР»РµР№ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј {@link Comparable#compareTo(Object) compareTo} РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ
+	 * Р·РЅР°С‡РµРЅРёР№ РєР»СЋС‡РµРІС‹С… РїРѕР»РµР№, РїРѕР»СѓС‡РµРЅРЅС‹С… СЂРµС„Р»РµРєСЃРёРІРЅРѕ.
 	 */
 	public void setPk(String pk) {
-		if (pk == null) { // сброс - сортировка по GridData.uid
+		if (pk == null) { // СЃР±СЂРѕСЃ - СЃРѕСЂС‚РёСЂРѕРІРєР° РїРѕ GridData.uid
 			setPk(null, null);
 			return;
 		}
 		Comparator<T> cmp = extractComparatorFromBeanClassByPkName(pk);
-		if (cmp != null) { // компаратор определён для заданного поля в классе бина
+		if (cmp != null) { // РєРѕРјРїР°СЂР°С‚РѕСЂ РѕРїСЂРµРґРµР»С‘РЅ РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ РїРѕР»СЏ РІ РєР»Р°СЃСЃРµ Р±РёРЅР°
 			setPk(pk, cmp);
 			return;
 		}
@@ -157,10 +157,10 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	} // public void setPk(String pk)
 	
 	
-	/** Компаратор (ленивый) GridData.
-	 * Делегирует сравнение компаратору бинов при установленном ПК, иначе сравнивает по GridData.uid.
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ (Р»РµРЅРёРІС‹Р№) GridData.
+	 * Р”РµР»РµРіРёСЂСѓРµС‚ СЃСЂР°РІРЅРµРЅРёРµ РєРѕРјРїР°СЂР°С‚РѕСЂСѓ Р±РёРЅРѕРІ РїСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРј РџРљ, РёРЅР°С‡Рµ СЃСЂР°РІРЅРёРІР°РµС‚ РїРѕ GridData.uid.
 	 */
-	// используется в дата-провайдере для бинарного поиска в get()
+	// РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРµ РґР»СЏ Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕРёСЃРєР° РІ get()
 	public Comparator<GridData<T>> getPkComparator() {
 		if (pkComparator == null) {
 			if (pk != null)
@@ -172,22 +172,22 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		return pkComparator;
 	} // public Comparator<GridData<T>> getPkComparator()
 	
-	/** Метод геттера поля ПК бина (определяется в setPk()). */
+	/** РњРµС‚РѕРґ РіРµС‚С‚РµСЂР° РїРѕР»СЏ РџРљ Р±РёРЅР° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	/*public Optional<Method> getPkGetterMethod() {
 		return Optional.ofNullable(pkGetterMethod);
 	}*/
 	
-	/** Название геттера поля ПК бина (определяется в setPk()). */
+	/** РќР°Р·РІР°РЅРёРµ РіРµС‚С‚РµСЂР° РїРѕР»СЏ РџРљ Р±РёРЅР° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	/*public Optional<String> getPkGetterName() {
 		return Optional.ofNullable(pkGetterName);
 	}*/
 	
-	/** Тип данных поля первичного ключа (определяется в setPk()). */
+	/** РўРёРї РґР°РЅРЅС‹С… РїРѕР»СЏ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° (РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РІ setPk()). */
 	public Optional<Class<?>> getPkClass() { // Optional<Class<Comparable<?>>>
 		return Optional.ofNullable(pkClass);
 	}
 	
-	/** Компаратор GridData, делегирующий сравнение компаратору бинов - beanPkComparator. */
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ GridData, РґРµР»РµРіРёСЂСѓСЋС‰РёР№ СЃСЂР°РІРЅРµРЅРёРµ РєРѕРјРїР°СЂР°С‚РѕСЂСѓ Р±РёРЅРѕРІ - beanPkComparator. */
 	private final class CompareByPK implements Comparator<GridData<T>>, Serializable { // https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html#compare-T-T-
 		private static final long serialVersionUID = 6011792781710678748L;
 		public int compare(GridData<T> o1, GridData<T> o2) {
@@ -199,7 +199,7 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		}
 	}
 	
-	/** Компаратор бинов в соответствии с установленным ПК. */
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ Р±РёРЅРѕРІ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹Рј РџРљ. */
 	public Optional<Comparator<T>> getBeanPkComparator() {
 		return Optional.ofNullable((Comparator<T>)beanPkComparator);
 	}
@@ -210,15 +210,15 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	}
     
     
-	/** Компаратор бинов, получающий название ключевого поля в конструкторе и использующий для сравнения
-	 * compareTo() рефлексивно полученных значений ключевого поля.
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ Р±РёРЅРѕРІ, РїРѕР»СѓС‡Р°СЋС‰РёР№ РЅР°Р·РІР°РЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ Рё РёСЃРїРѕР»СЊР·СѓСЋС‰РёР№ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ
+	 * compareTo() СЂРµС„Р»РµРєСЃРёРІРЅРѕ РїРѕР»СѓС‡РµРЅРЅС‹С… Р·РЅР°С‡РµРЅРёР№ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ.
 	 */
 	private final class CompareComparable implements Comparator<T>, Serializable {
 		private static final long serialVersionUID = -6151389573231832609L;
 		/*String pkFieldName;
 		private CompareComparable(String fn) {
 			pkFieldName = fn;
-			reflectPkGetter(fn); // определяется pkGetterMethod, pkClass
+			reflectPkGetter(fn); // РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ pkGetterMethod, pkClass
 		}*/
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public int compare(T o1, T o2) {
@@ -244,15 +244,15 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	} // private final class CompareComparable implements Comparator<T>, Serializable
 	
 	
-	/** Таблица названий полей Первичных Ключей (только ПК, не всех индексов!), поддерживаемых бином.
-	 * (Это часть статического интерфейса бина. NOT null, но м.б. пустой массив.)
-	 * @return При любой неудаче возвращаем пустой массив.
+	/** РўР°Р±Р»РёС†Р° РЅР°Р·РІР°РЅРёР№ РїРѕР»РµР№ РџРµСЂРІРёС‡РЅС‹С… РљР»СЋС‡РµР№ (С‚РѕР»СЊРєРѕ РџРљ, РЅРµ РІСЃРµС… РёРЅРґРµРєСЃРѕРІ!), РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… Р±РёРЅРѕРј.
+	 * (Р­С‚Рѕ С‡Р°СЃС‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° Р±РёРЅР°. NOT null, РЅРѕ Рј.Р±. РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ.)
+	 * @return РџСЂРё Р»СЋР±РѕР№ РЅРµСѓРґР°С‡Рµ РІРѕР·РІСЂР°С‰Р°РµРј РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ.
 	 */
 	public @NotNull String[] getPkNames() {
 		String[] namesArr = {};
     	Method m = null;
     	try {
-// FIXME: получать только один раз (поле экземпляра)
+// FIXME: РїРѕР»СѓС‡Р°С‚СЊ С‚РѕР»СЊРєРѕ РѕРґРёРЅ СЂР°Р· (РїРѕР»Рµ СЌРєР·РµРјРїР»СЏСЂР°)
 			m = beanClass.getMethod("getPkNames");
 		} catch (NoSuchMethodException | SecurityException e) {
 			logger.error("getPkNames. error on getMethod", e);
@@ -278,18 +278,18 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	} // public String[] getPkNames()
 	
 	
-	/** Получить (оригинальный) компаратор по ПК (индексу).
-	 * (Это часть статического интерфейса бина. nullable. Компаратор в классе бина имеет смысл реализовывать
-	 *  для примитивов и non-Comparable полей.)
-	 * @param pkPar Название поля Pk, not null.
-	 * @return При любой неудаче возвращаем null.
+	/** РџРѕР»СѓС‡РёС‚СЊ (РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№) РєРѕРјРїР°СЂР°С‚РѕСЂ РїРѕ РџРљ (РёРЅРґРµРєСЃСѓ).
+	 * (Р­С‚Рѕ С‡Р°СЃС‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° Р±РёРЅР°. nullable. РљРѕРјРїР°СЂР°С‚РѕСЂ РІ РєР»Р°СЃСЃРµ Р±РёРЅР° РёРјРµРµС‚ СЃРјС‹СЃР» СЂРµР°Р»РёР·РѕРІС‹РІР°С‚СЊ
+	 *  РґР»СЏ РїСЂРёРјРёС‚РёРІРѕРІ Рё non-Comparable РїРѕР»РµР№.)
+	 * @param pkPar РќР°Р·РІР°РЅРёРµ РїРѕР»СЏ Pk, not null.
+	 * @return РџСЂРё Р»СЋР±РѕР№ РЅРµСѓРґР°С‡Рµ РІРѕР·РІСЂР°С‰Р°РµРј null.
 	 */
     @SuppressWarnings("unchecked")
 	private Comparator<T> extractComparatorFromBeanClassByPkName(@NotNull String pkPar) {
     	assert(pkPar != null):"NPE";
     	Method m = null;
     	try {
-// FIXME: получать только один раз (поле экземпляра)
+// FIXME: РїРѕР»СѓС‡Р°С‚СЊ С‚РѕР»СЊРєРѕ РѕРґРёРЅ СЂР°Р· (РїРѕР»Рµ СЌРєР·РµРјРїР»СЏСЂР°)
 			m = beanClass.getMethod("getPkComparatorByName", String.class);
 		} catch (NoSuchMethodException | SecurityException e) {
 			logger.error("extractComparatorFromBeanClassByPkName. error on getMethod", e);
@@ -308,25 +308,25 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
     } // public Comparator<T> extractComparatorFromBeanClassByPkName(String pkPar)
 	
     
-    /** Грузить ли полный список при запросе подмножества по ключу (по умолчанию). Иначе запрашивается из БД. */
+    /** Р“СЂСѓР·РёС‚СЊ Р»Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РїСЂРё Р·Р°РїСЂРѕСЃРµ РїРѕРґРјРЅРѕР¶РµСЃС‚РІР° РїРѕ РєР»СЋС‡Сѓ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ). РРЅР°С‡Рµ Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ РёР· Р‘Р”. */
     public boolean isLoadAllForRange() {
 		return loadAllForRange;
 	}
 	
-    /** Грузить ли полный список при запросе подмножества по ключу (по умолчанию). Иначе запрашивается из БД.
-     * Чтобы не грузить в память полный список, нужно не вызывать {@link #getAll()} (и {@link #getTotalRowCount},
-     *  {@link #setPk}, {@link #get}, {@link #getByPk}, {@link #indexOf}) и сбросить флаг loadAllForRange до первого вызова {@link #getRange(Object) getRange}.
+    /** Р“СЂСѓР·РёС‚СЊ Р»Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РїСЂРё Р·Р°РїСЂРѕСЃРµ РїРѕРґРјРЅРѕР¶РµСЃС‚РІР° РїРѕ РєР»СЋС‡Сѓ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ). РРЅР°С‡Рµ Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ РёР· Р‘Р”.
+     * Р§С‚РѕР±С‹ РЅРµ РіСЂСѓР·РёС‚СЊ РІ РїР°РјСЏС‚СЊ РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє, РЅСѓР¶РЅРѕ РЅРµ РІС‹Р·С‹РІР°С‚СЊ {@link #getAll()} (Рё {@link #getTotalRowCount},
+     *  {@link #setPk}, {@link #get}, {@link #getByPk}, {@link #indexOf}) Рё СЃР±СЂРѕСЃРёС‚СЊ С„Р»Р°Рі loadAllForRange РґРѕ РїРµСЂРІРѕРіРѕ РІС‹Р·РѕРІР° {@link #getRange(Object) getRange}.
      */
 	public void setLoadAllForRange(boolean loadAllForRange) {
 		this.loadAllForRange = loadAllForRange;
 	}
 	
-    /** Метод должен создавать (желательно RandomAccess), наполнять и возвращать список объектов GridData<T>, который будет доступен getGridDataList(). Вызывается однажды. */
+    /** РњРµС‚РѕРґ РґРѕР»Р¶РµРЅ СЃРѕР·РґР°РІР°С‚СЊ (Р¶РµР»Р°С‚РµР»СЊРЅРѕ RandomAccess), РЅР°РїРѕР»РЅСЏС‚СЊ Рё РІРѕР·РІСЂР°С‰Р°С‚СЊ СЃРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ GridData<T>, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РґРѕСЃС‚СѓРїРµРЅ getGridDataList(). Р’С‹Р·С‹РІР°РµС‚СЃСЏ РѕРґРЅР°Р¶РґС‹. */
     protected abstract List<GridData<T>> populateGridDataList(); // run once !
     
     /** {@inheritDoc}
-     * Список наполняется в абстрактном методе populateGridDataList() единожды при первом обращении.
-     * Возвращает оригинальный список (live, не копию), обёрнутый в {@link ListUtils#fixedSizeList(List)}.
+     * РЎРїРёСЃРѕРє РЅР°РїРѕР»РЅСЏРµС‚СЃСЏ РІ Р°Р±СЃС‚СЂР°РєС‚РЅРѕРј РјРµС‚РѕРґРµ populateGridDataList() РµРґРёРЅРѕР¶РґС‹ РїСЂРё РїРµСЂРІРѕРј РѕР±СЂР°С‰РµРЅРёРё.
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ СЃРїРёСЃРѕРє (live, РЅРµ РєРѕРїРёСЋ), РѕР±С‘СЂРЅСѓС‚С‹Р№ РІ {@link ListUtils#fixedSizeList(List)}.
      */
 	@Override
 	public List<GridData<T>> getAll() { // lazy; wrap the list returned populateGridDataList() a fixed-dimension list through ListUtils.FixedSizeList<GridData<T>>
@@ -334,19 +334,19 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		if (gridDataArrayList == null) {
 			gridDataArrayList = ListUtils.fixedSizeList(populateGridDataList()); // vs Collections.unmodifiableList() prohibits set(), sort()
 			totalRowCount = gridDataArrayList.size();
-			if (true/*pk != null*/) { // при установке ПК сортировку откладываем до получения полного списка; изначально устанавливаем сортировку по uid
+			if (true/*pk != null*/) { // РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РџРљ СЃРѕСЂС‚РёСЂРѕРІРєСѓ РѕС‚РєР»Р°РґС‹РІР°РµРј РґРѕ РїРѕР»СѓС‡РµРЅРёСЏ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°; РёР·РЅР°С‡Р°Р»СЊРЅРѕ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРѕСЂС‚РёСЂРѕРІРєСѓ РїРѕ uid
 				gridDataArrayList.sort(getPkComparator());
-				logger.trace("getAll.  Отсортировали список '{}' по ключу '{}' при первом получении", beanClass.getSimpleName(), pk);
+				logger.trace("getAll.  РћС‚СЃРѕСЂС‚РёСЂРѕРІР°Р»Рё СЃРїРёСЃРѕРє '{}' РїРѕ РєР»СЋС‡Сѓ '{}' РїСЂРё РїРµСЂРІРѕРј РїРѕР»СѓС‡РµРЅРёРё", beanClass.getSimpleName(), pk);
 			}
 		}
 		if (gridDataArrayList == null) {
-			logger.error("getGridDataList. Внутренняя ошибка: populateGridDataList() вернул пустой gridDataArrayList");
-			throw new IllegalStateException("getGridDataList. Внутренняя ошибка: populateGridDataList() вернул пустой gridDataArrayList");
+			logger.error("getGridDataList. Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР°: populateGridDataList() РІРµСЂРЅСѓР» РїСѓСЃС‚РѕР№ gridDataArrayList");
+			throw new IllegalStateException("getGridDataList. Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР°: populateGridDataList() РІРµСЂРЅСѓР» РїСѓСЃС‚РѕР№ gridDataArrayList");
 		}
 		return gridDataArrayList; // live !
 	}
 	
-	/** {@inheritDoc} Если полный список не загружен, получаем запросом к БД (требуется реализация {@link #selectRowCount()}). */
+	/** {@inheritDoc} Р•СЃР»Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РЅРµ Р·Р°РіСЂСѓР¶РµРЅ, РїРѕР»СѓС‡Р°РµРј Р·Р°РїСЂРѕСЃРѕРј Рє Р‘Р” (С‚СЂРµР±СѓРµС‚СЃСЏ СЂРµР°Р»РёР·Р°С†РёСЏ {@link #selectRowCount()}). */
 	@Override
 	public int getTotalRowCount() { // cached size of gridDataArrayList
 		if (gridDataArrayList == null) {
@@ -355,12 +355,12 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		return totalRowCount/*getAll().size()*/;
 	}
 	
-	/** Получить кол-во строк из БД. Вызывается из {@link #getTotalRowCount()} если полный список не сформирован.
-	 * Необязателен к переопределению, в таком случае возвращает 0.
+	/** РџРѕР»СѓС‡РёС‚СЊ РєРѕР»-РІРѕ СЃС‚СЂРѕРє РёР· Р‘Р”. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getTotalRowCount()} РµСЃР»Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РЅРµ СЃС„РѕСЂРјРёСЂРѕРІР°РЅ.
+	 * РќРµРѕР±СЏР·Р°С‚РµР»РµРЅ Рє РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёСЋ, РІ С‚Р°РєРѕРј СЃР»СѓС‡Р°Рµ РІРѕР·РІСЂР°С‰Р°РµС‚ 0.
 	 */
 	protected int selectRowCount() {return 0;}
 	
-	/** Название поля Первичного Ключа если PK установлен. */
+	/** РќР°Р·РІР°РЅРёРµ РїРѕР»СЏ РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° РµСЃР»Рё PK СѓСЃС‚Р°РЅРѕРІР»РµРЅ. */
 	public Optional<String> getPk() {
 		return Optional.ofNullable(pk);
 	}
@@ -373,7 +373,7 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		return getAll().get(idx);
 	}
 	
-	/** Быстрый (in RandomAccess case) поиск в отсортированном по полю PK (- авто при установке ПК) списке с использованием компаратора доменного класса по первичному ключу.
+	/** Р‘С‹СЃС‚СЂС‹Р№ (in RandomAccess case) РїРѕРёСЃРє РІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј РїРѕ РїРѕР»СЋ PK (- Р°РІС‚Рѕ РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РџРљ) СЃРїРёСЃРєРµ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј РєРѕРјРїР°СЂР°С‚РѕСЂР° РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР° РїРѕ РїРµСЂРІРёС‡РЅРѕРјСѓ РєР»СЋС‡Сѓ.
 	 * @see Collections#binarySearch(List, Object, Comparator)
 	 */
 	@Override
@@ -382,25 +382,25 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	};
     
 	
-	/** Быстрый (in RandomAccess case) поиск по значению Первичного Ключа.
-	 * ПК по соответствующему полю должен быть предварительно установлен вызовом {@link #setPk(String, Comparator) setPk()}.
-	 * @return Единственный элемент со значением ключевого поля равным параметру. Или null.
+	/** Р‘С‹СЃС‚СЂС‹Р№ (in RandomAccess case) РїРѕРёСЃРє РїРѕ Р·РЅР°С‡РµРЅРёСЋ РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р°.
+	 * РџРљ РїРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРјСѓ РїРѕР»СЋ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ СѓСЃС‚Р°РЅРѕРІР»РµРЅ РІС‹Р·РѕРІРѕРј {@link #setPk(String, Comparator) setPk()}.
+	 * @return Р•РґРёРЅСЃС‚РІРµРЅРЅС‹Р№ СЌР»РµРјРµРЅС‚ СЃРѕ Р·РЅР°С‡РµРЅРёРµРј РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ СЂР°РІРЅС‹Рј РїР°СЂР°РјРµС‚СЂСѓ. РР»Рё null.
 	 */
-// TESTME: не используется
+// TESTME: РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
 	public <U extends Object & Comparable<? super U>> GridData<T> getByPk(U pkVal) {
     	if (pk == null && beanPkComparator == null) {
-    		logger.error("getByPk. Требуется предварительная установка первичного ключа");
-    		throw new UnsupportedOperationException("getByPk. Требуется предварительная установка первичного ключа");
+    		logger.error("getByPk. РўСЂРµР±СѓРµС‚СЃСЏ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р°");
+    		throw new UnsupportedOperationException("getByPk. РўСЂРµР±СѓРµС‚СЃСЏ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р°");
     	}
     	if (pkVal == null) {
-    		logger.error("getByPk. Пустое значение первичного ключа (pkVal) недопустимо");
-    		throw new NullPointerException("getByPk. Пустое значение первичного ключа (pkVal) недопустимо");
+    		logger.error("getByPk. РџСѓСЃС‚РѕРµ Р·РЅР°С‡РµРЅРёРµ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° (pkVal) РЅРµРґРѕРїСѓСЃС‚РёРјРѕ");
+    		throw new NullPointerException("getByPk. РџСѓСЃС‚РѕРµ Р·РЅР°С‡РµРЅРёРµ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° (pkVal) РЅРµРґРѕРїСѓСЃС‚РёРјРѕ");
     	}
     	if (!pkVal.getClass().equals(pkClass)) {
     		logger.error("getByPk. Argument type '{}' should be same as pkClass = '{}'", pkVal.getClass().getName(), pkClass.getName());
     		throw new IllegalArgumentException("getByPk. Argument type '"+pkVal.getClass().getName()+"' should be same as pkClass = '"+pkClass.getName()+"'");
     	}
-// FIXME: см. Collections.binarySearch: if (getGridDataList() instanceof RandomAccess || getGridDataList().size() < BINARYSEARCH_THRESHOLD(= 5000))
+// FIXME: СЃРј. Collections.binarySearch: if (getGridDataList() instanceof RandomAccess || getGridDataList().size() < BINARYSEARCH_THRESHOLD(= 5000))
     	int ind = indexedBinarySearchByPk(getAll(), 0, getAll().size(), pkVal);
     	if (ind < 0) {
     		return null;
@@ -410,22 +410,22 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 	
 //	public GridData<T> getByIntPk(int pkIntVal)
 	
-	/** Быстрый поиск по значению ПК в отсортированном по ПК списке.
-	 * @param <U> Тип значения поля ПК.
+	/** Р‘С‹СЃС‚СЂС‹Р№ РїРѕРёСЃРє РїРѕ Р·РЅР°С‡РµРЅРёСЋ РџРљ РІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј РїРѕ РџРљ СЃРїРёСЃРєРµ.
+	 * @param <U> РўРёРї Р·РЅР°С‡РµРЅРёСЏ РїРѕР»СЏ РџРљ.
 	 */
-// вызывается из getByPk (не исп-ся), getRange
-// на основе Collections.indexedBinarySearch()
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· getByPk (РЅРµ РёСЃРї-СЃСЏ), getRange
+// РЅР° РѕСЃРЅРѕРІРµ Collections.indexedBinarySearch()
 	@SuppressWarnings("unchecked")
 	public <U extends Object & Comparable<? super U>>
 	  int indexedBinarySearchByPk(List<GridData<T>> a, int fromIndex, int toIndex, U key) {
-// FIXME: проверять на RandomAccess
+// FIXME: РїСЂРѕРІРµСЂСЏС‚СЊ РЅР° RandomAccess
 		U midVal = null;
 		int low = 0;
 		int high = toIndex - 1;
 		while (low <= high) {
 			int mid = (low + high) >>> 1;
 			try {
-				midVal = (U)pkGetterMethod.invoke(a.get(mid).getBean()); // значение ключевого поля доменного объекта (его тип д.б. Comparable !)
+				midVal = (U)pkGetterMethod.invoke(a.get(mid).getBean()); // Р·РЅР°С‡РµРЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° (РµРіРѕ С‚РёРї Рґ.Р±. Comparable !)
 			} catch ( IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException e) {
 				logger.error("indexedBinarySearchByPk. Exception on invoke {}", pkGetterName, e);
 				throw new InternalError("indexedBinarySearchByPk. Exception on invoke "+pkGetterName, e);
@@ -446,27 +446,27 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		return -(low + 1);  // key not found
     } // indexedBinarySearchByPk
 	
-// FIXME: !!! убрать после замеров !!!
+// FIXME: !!! СѓР±СЂР°С‚СЊ РїРѕСЃР»Рµ Р·Р°РјРµСЂРѕРІ !!!
 	public boolean _use_stream = false;
 	
-	/** Получить все строки с заданным значением ключевого поля.
-	 * Используется полный список или производится запрос к БД через реализацию {@link #selectRange(String, Object) selectRange}.
-	 * @return Пустой список, если не найдено.
+	/** РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ СЃС‚СЂРѕРєРё СЃ Р·Р°РґР°РЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ.
+	 * РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РёР»Рё РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ Р·Р°РїСЂРѕСЃ Рє Р‘Р” С‡РµСЂРµР· СЂРµР°Р»РёР·Р°С†РёСЋ {@link #selectRange(String, Object) selectRange}.
+	 * @return РџСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє, РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ.
 	 */
 	@Override
 	public @NotNull <U extends Object & Comparable<? super U>> List<GridData<T>> getRange(U key) { // Comparable
 		List<GridData<T>> l = null;
-		if (gridDataArrayList == null && !loadAllForRange) { // полный список не загружен, получаем данные из БД
+		if (gridDataArrayList == null && !loadAllForRange) { // РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РЅРµ Р·Р°РіСЂСѓР¶РµРЅ, РїРѕР»СѓС‡Р°РµРј РґР°РЅРЅС‹Рµ РёР· Р‘Р”
 			l = selectRange(pk, key);
 			if (l == null) {
 				l = new ArrayList<>();
 			}
 			return l;
 		}
-// подмножество полного списка
-		Predicate<GridData<T>> predic = gdt -> { // сравнить ключевое поле бина заданного GridData с параметром key
+// РїРѕРґРјРЅРѕР¶РµСЃС‚РІРѕ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°
+		Predicate<GridData<T>> predic = gdt -> { // СЃСЂР°РІРЅРёС‚СЊ РєР»СЋС‡РµРІРѕРµ РїРѕР»Рµ Р±РёРЅР° Р·Р°РґР°РЅРЅРѕРіРѕ GridData СЃ РїР°СЂР°РјРµС‚СЂРѕРј key
 			try {
-				Object val = pkGetterMethod.invoke(gdt.getBean()); // значение ключевого поля доменного объекта
+				Object val = pkGetterMethod.invoke(gdt.getBean()); // Р·РЅР°С‡РµРЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 				return val.equals(key); //val.compareTo(key) == 0;
 			} catch ( IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException e) {
 				logger.error("getRange. Exception on invoke {}", pkGetterName, e);
@@ -479,7 +479,7 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		l = getAll().stream().filter(predic).collect(Collectors.toList());
 	} else {
 // v2. binary search
-		int ind = indexedBinarySearchByPk(getAll(), 0, getAll().size(), key); // попадание (если) в произвольный элемент нужного диапазона элементов с совпадающим значением ключевого поля
+		int ind = indexedBinarySearchByPk(getAll(), 0, getAll().size(), key); // РїРѕРїР°РґР°РЅРёРµ (РµСЃР»Рё) РІ РїСЂРѕРёР·РІРѕР»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РЅСѓР¶РЅРѕРіРѕ РґРёР°РїР°Р·РѕРЅР° СЌР»РµРјРµРЅС‚РѕРІ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј Р·РЅР°С‡РµРЅРёРµРј РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ
 		l = new ArrayList<>();
 		if (ind < 0) {
 			return l;
@@ -501,12 +501,12 @@ public abstract class GridDataProviderWPk<T extends Object & Serializable & Comp
 		return l;
 	}; // public List<GridData<T>> getRange(Object key)
 	
-	/** Получить непосредственно из БД все строки с заданным значением ключевого поля. Вызывается из {@link #getRange(Object) getRange}. */
+	/** РџРѕР»СѓС‡РёС‚СЊ РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РёР· Р‘Р” РІСЃРµ СЃС‚СЂРѕРєРё СЃ Р·Р°РґР°РЅРЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getRange(Object) getRange}. */
 	protected abstract List<GridData<T>> selectRange(String fieldName, Object key);
 
 	
-	/** Вернуть значение текущего ПК-поля частного объекта.
-	 * {@link UnsupportedOperationException} если Pk не устанвлен на момент вызова.
+	/** Р’РµСЂРЅСѓС‚СЊ Р·РЅР°С‡РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РџРљ-РїРѕР»СЏ С‡Р°СЃС‚РЅРѕРіРѕ РѕР±СЉРµРєС‚Р°.
+	 * {@link UnsupportedOperationException} РµСЃР»Рё Pk РЅРµ СѓСЃС‚Р°РЅРІР»РµРЅ РЅР° РјРѕРјРµРЅС‚ РІС‹Р·РѕРІР°.
 	 */
 	public Object getPkValue(T bean) {
 		if (bean == null) {

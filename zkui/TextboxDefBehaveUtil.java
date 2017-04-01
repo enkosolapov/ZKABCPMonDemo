@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,7 +10,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.impl.InputElement;
 
 
-/** Реализация поумолчательных поведенческих методов интерфейса AbstractComponentBehaveUtil для компонента org.zkoss.zul.Textbox.
+/** Р РµР°Р»РёР·Р°С†РёСЏ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… РїРѕРІРµРґРµРЅС‡РµСЃРєРёС… РјРµС‚РѕРґРѕРІ РёРЅС‚РµСЂС„РµР№СЃР° AbstractComponentBehaveUtil РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р° org.zkoss.zul.Textbox.
  * Singleton, use getInstance().
  * @author basos
 */
@@ -76,8 +76,8 @@ public class TextboxDefBehaveUtil extends AbstractComponentBehaveUtil {
 	}
 	
 	
-	/** Не чувствительная к регистру проверка на вхождение первой строки во вторую.
-	 * @return Истина для пустого значения компонента ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}) и если значение компонента является подстрокой другого значения (contains) без учёта регистра.
+	/** РќРµ С‡СѓРІСЃС‚РІРёС‚РµР»СЊРЅР°СЏ Рє СЂРµРіРёСЃС‚СЂСѓ РїСЂРѕРІРµСЂРєР° РЅР° РІС…РѕР¶РґРµРЅРёРµ РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё РІРѕ РІС‚РѕСЂСѓСЋ.
+	 * @return РСЃС‚РёРЅР° РґР»СЏ РїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}) Рё РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚Р° СЏРІР»СЏРµС‚СЃСЏ РїРѕРґСЃС‚СЂРѕРєРѕР№ РґСЂСѓРіРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ (contains) Р±РµР· СѓС‡С‘С‚Р° СЂРµРіРёСЃС‚СЂР°.
 	 * @see StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()
 	 */
 	@Override
@@ -85,8 +85,8 @@ public class TextboxDefBehaveUtil extends AbstractComponentBehaveUtil {
 		return ( StringUtils.isEmpty((String)componentValue) || otherValue != null && ((String)otherValue).toUpperCase().contains(((String)componentValue).toUpperCase()) );
 	}
 	
-	/** Чувствительная к регистру проверка на строгое соответствие двух строк.
-	 * @return Ложь если одно из значений null, истина при точном совпадении двух ненулевых строк.
+	/** Р§СѓРІСЃС‚РІРёС‚РµР»СЊРЅР°СЏ Рє СЂРµРіРёСЃС‚СЂСѓ РїСЂРѕРІРµСЂРєР° РЅР° СЃС‚СЂРѕРіРѕРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ РґРІСѓС… СЃС‚СЂРѕРє.
+	 * @return Р›РѕР¶СЊ РµСЃР»Рё РѕРґРЅРѕ РёР· Р·РЅР°С‡РµРЅРёР№ null, РёСЃС‚РёРЅР° РїСЂРё С‚РѕС‡РЅРѕРј СЃРѕРІРїР°РґРµРЅРёРё РґРІСѓС… РЅРµРЅСѓР»РµРІС‹С… СЃС‚СЂРѕРє.
 	 */
 	@Override
 	public boolean exactMatch(Object componentValue, Object otherValue) {

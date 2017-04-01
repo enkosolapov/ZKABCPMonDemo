@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import basos.xe.data.dao.DealLastStateMapper;
 import basos.xe.data.ds.MyBatisSqlSessionFactory;
 import basos.xe.data.entity.DealLastState;
 
-/** Вызов реализации DealLastStateMapper. <b>Не используется.</b>
- * Сервисные методы делегируются реализации "Mapper interface", получаемую через MyBatis SqlSession (см. MapperProxyFactory).
- * НО, доменные объекты в чистом виде не используем, только завёрнутые в GridData.
- * А там требуется обработка каждой строки, применяется SqlSession.select (не кэширует строки !!) с параметром ResultHandler.
+/** Р’С‹Р·РѕРІ СЂРµР°Р»РёР·Р°С†РёРё DealLastStateMapper. <b>РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ.</b>
+ * РЎРµСЂРІРёСЃРЅС‹Рµ РјРµС‚РѕРґС‹ РґРµР»РµРіРёСЂСѓСЋС‚СЃСЏ СЂРµР°Р»РёР·Р°С†РёРё "Mapper interface", РїРѕР»СѓС‡Р°РµРјСѓСЋ С‡РµСЂРµР· MyBatis SqlSession (СЃРј. MapperProxyFactory).
+ * РќРћ, РґРѕРјРµРЅРЅС‹Рµ РѕР±СЉРµРєС‚С‹ РІ С‡РёСЃС‚РѕРј РІРёРґРµ РЅРµ РёСЃРїРѕР»СЊР·СѓРµРј, С‚РѕР»СЊРєРѕ Р·Р°РІС‘СЂРЅСѓС‚С‹Рµ РІ GridData.
+ * Рђ С‚Р°Рј С‚СЂРµР±СѓРµС‚СЃСЏ РѕР±СЂР°Р±РѕС‚РєР° РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё, РїСЂРёРјРµРЅСЏРµС‚СЃСЏ SqlSession.select (РЅРµ РєСЌС€РёСЂСѓРµС‚ СЃС‚СЂРѕРєРё !!) СЃ РїР°СЂР°РјРµС‚СЂРѕРј ResultHandler.
  * Session per request.
  */
 public class DealsService {

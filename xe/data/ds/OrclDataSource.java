@@ -1,4 +1,4 @@
-package basos.xe.data.ds;
+п»їpackage basos.xe.data.ds;
 
 //import javax.annotation.Resource;
 import javax.naming.Context;
@@ -9,20 +9,20 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Соединение с БД Oracle под названием "java:jboss/datasources/orcl", разрешается через JNDI. Singleton. */
+/** РЎРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р” Oracle РїРѕРґ РЅР°Р·РІР°РЅРёРµРј "java:jboss/datasources/orcl", СЂР°Р·СЂРµС€Р°РµС‚СЃСЏ С‡РµСЂРµР· JNDI. Singleton. */
 public final class OrclDataSource {
 	private static final Logger logger = LoggerFactory.getLogger(OrclDataSource.class);
-// FIXME: разные JNDIName для разных серверов приложения (идентифицировать его по pmDesktop.getWebApp().getServletContext().getServerInfo()) ?
+// FIXME: СЂР°Р·РЅС‹Рµ JNDIName РґР»СЏ СЂР°Р·РЅС‹С… СЃРµСЂРІРµСЂРѕРІ РїСЂРёР»РѕР¶РµРЅРёСЏ (РёРґРµРЅС‚РёС„РёС†РёСЂРѕРІР°С‚СЊ РµРіРѕ РїРѕ pmDesktop.getWebApp().getServletContext().getServerInfo()) ?
 	private static final String orclDataSourceJNDIName = "java:jboss/datasources/orcl";
 // https://docs.oracle.com/javase/tutorial/jdbc/basics/sqldatasources.html
-// HOWTO: как мониторить пул соединений ?
+// HOWTO: РєР°Рє РјРѕРЅРёС‚РѕСЂРёС‚СЊ РїСѓР» СЃРѕРµРґРёРЅРµРЅРёР№ ?
 	private static /*final*/ Context ctx;
 	//@Resource(name=orclDataSourceJNDIName) // Resource injection enables you to inject any resource available in the JNDI namespace into any container-managed object, such as a servlet, an enterprise bean, or a managed bean.
 	private static /*final*/ DataSource ds;
 	static {
 		try {
 			ctx = new InitialContext();
-			ds = (DataSource)ctx.lookup(orclDataSourceJNDIName); // FIXME: не работает под Jetty !
+			ds = (DataSource)ctx.lookup(orclDataSourceJNDIName); // FIXME: РЅРµ СЂР°Р±РѕС‚Р°РµС‚ РїРѕРґ Jetty !
 		} catch (NamingException e) {
 			logger.error("NamingException on lookup DataSource '{}'", orclDataSourceJNDIName, e);
 			throw new InternalError("NamingException on lookup DataSource '"+orclDataSourceJNDIName+"'", e);
@@ -31,7 +31,7 @@ public final class OrclDataSource {
 	
 	private OrclDataSource () {}
 	
-	/** Возвращает (единственный) экземпляр "java:jboss/datasources/orcl". */
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ (РµРґРёРЅСЃС‚РІРµРЅРЅС‹Р№) СЌРєР·РµРјРїР»СЏСЂ "java:jboss/datasources/orcl". */
 	public static DataSource getDataSource() {
 		return ds;
 	}

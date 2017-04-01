@@ -1,4 +1,4 @@
-package basos.zkui.compose;
+п»їpackage basos.zkui.compose;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ import basos.zkui.GridDataFilter;
 import basos.zkui.UIUtil;
 
 
-/** Дальнейшее расширение SelectorComposer для управление гридами/листбоксами с композитным фильтром ({@link GridDataFilter}).
+/** Р”Р°Р»СЊРЅРµР№С€РµРµ СЂР°СЃС€РёСЂРµРЅРёРµ SelectorComposer РґР»СЏ СѓРїСЂР°РІР»РµРЅРёРµ РіСЂРёРґР°РјРё/Р»РёСЃС‚Р±РѕРєСЃР°РјРё СЃ РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј ({@link GridDataFilter}).
  *
  */
 public class FilterableGridDataComposer<T extends Component> extends SimpleGridDataComposer<Component> {
@@ -49,7 +49,7 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
 	private static final Logger logger = LoggerFactory.getLogger(FilterableGridDataComposer.class);
 	
 	
-    /** Имея грид/листбокс с набором фильтр-контролов в заголовке и дата-провайдер, создаём модель, фильтр, менеджер и т.п.
+    /** РРјРµСЏ РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РЅР°Р±РѕСЂРѕРј С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ РІ Р·Р°РіРѕР»РѕРІРєРµ Рё РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂ, СЃРѕР·РґР°С‘Рј РјРѕРґРµР»СЊ, С„РёР»СЊС‚СЂ, РјРµРЅРµРґР¶РµСЂ Рё С‚.Рї.
      * @param 
      */
     protected <U extends Object & Serializable & Comparable<? super U>>
@@ -60,17 +60,17 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     		   ,Label footer
     		   ,Component pmh) {
     	
-// FIXME: проверка параметров
+// FIXME: РїСЂРѕРІРµСЂРєР° РїР°СЂР°РјРµС‚СЂРѕРІ
     	GridDataFilterableModelMan<U> mmm = null;
     	Class<U> beanClass = prov.getBeanClass();
     	GridDataFilter fltf = null;
     	
-// копируем таблицу поумолчательного поведения, далее можно кастомизировать логику для каждого фильтра, переопределяя нужный класс; таблицу можно получить из фильтра, а фильтр из модели
+// РєРѕРїРёСЂСѓРµРј С‚Р°Р±Р»РёС†Сѓ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅРѕРіРѕ РїРѕРІРµРґРµРЅРёСЏ, РґР°Р»РµРµ РјРѕР¶РЅРѕ РєР°СЃС‚РѕРјРёР·РёСЂРѕРІР°С‚СЊ Р»РѕРіРёРєСѓ РґР»СЏ РєР°Р¶РґРѕРіРѕ С„РёР»СЊС‚СЂР°, РїРµСЂРµРѕРїСЂРµРґРµР»СЏСЏ РЅСѓР¶РЅС‹Р№ РєР»Р°СЃСЃ; С‚Р°Р±Р»РёС†Сѓ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёР· С„РёР»СЊС‚СЂР°, Р° С„РёР»СЊС‚СЂ РёР· РјРѕРґРµР»Рё
      	Map<String, AbstractComponentBehaveUtil> behavMap = cloneDefBehavMap();
 		
 		AbstractComponent[] filterComps = extractFilterControlsFromAuxhead(mesh);
 
-// FIXME: параметризовать фильтр типом бина ???
+// FIXME: РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°С‚СЊ С„РёР»СЊС‚СЂ С‚РёРїРѕРј Р±РёРЅР° ???
 		try {
 			fltf = new GridDataFilter(prov, behavMap, filterComps   /*lmc_rowidTB, cluidTB, idlimitIB, is_riskCHB, s_usd_balFltr, rest_msfo_usdFltr, dd_probl_proj_beginFltr, selFilterCHB, subj_idIB, subj_nameTB, gr_nameTB, ko_fioTB, curator_fioTB, acd_prodTB, yak_nameCombo, br_nameCombo, cityCombo, kko_otdelCombo, kko_upravlCombo, cat_nameCombo, clibr_nameCombo, b2segmCombo, asv_name_okeqCombo*/ /*new ArrayList<AbstractComponent>(Arrays.asList(selFilterCHB, subj_idIB, subj_nameTB, gr_nameTB, ko_fioTB, curator_fioTB, acd_prodTB, yak_nameCombo, br_nameCombo, cityCombo, kko_otdelCombo, kko_upravlCombo, cat_nameCombo, clibr_nameCombo, b2segmCombo, asv_name_okeqCombo)).toArray(new AbstractComponent[0])*/);
 		} catch (Throwable e) {
@@ -82,26 +82,26 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
 		mmm = new GridDataFilterableModelMan<U>(beanClass, prov, fltf);
 		
 		if (mesh instanceof Grid) {
-			mmm.setModelFor((Grid)mesh); // лист-модель грида на данных, предоставленных провайдером (изначально содержит копию полного списка) и управляемая фильтром
+			mmm.setModelFor((Grid)mesh); // Р»РёСЃС‚-РјРѕРґРµР»СЊ РіСЂРёРґР° РЅР° РґР°РЅРЅС‹С…, РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅС‹С… РїСЂРѕРІР°Р№РґРµСЂРѕРј (РёР·РЅР°С‡Р°Р»СЊРЅРѕ СЃРѕРґРµСЂР¶РёС‚ РєРѕРїРёСЋ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°) Рё СѓРїСЂР°РІР»СЏРµРјР°СЏ С„РёР»СЊС‚СЂРѕРј
 		} else if (mesh instanceof Listbox) {
-			mmm.setModelFor((Listbox)mesh); // лист-модель грида на данных, предоставленных провайдером (изначально содержит копию полного списка) и управляемая фильтром
+			mmm.setModelFor((Listbox)mesh); // Р»РёСЃС‚-РјРѕРґРµР»СЊ РіСЂРёРґР° РЅР° РґР°РЅРЅС‹С…, РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅС‹С… РїСЂРѕРІР°Р№РґРµСЂРѕРј (РёР·РЅР°С‡Р°Р»СЊРЅРѕ СЃРѕРґРµСЂР¶РёС‚ РєРѕРїРёСЋ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°) Рё СѓРїСЂР°РІР»СЏРµРјР°СЏ С„РёР»СЊС‚СЂРѕРј
 		}
 	    
-	    mesh.setAttribute("GridDataModelMan", mmm); // RULE: так связываем грид/листбокс с менеджером его лист-модели (GridDataModelMan)
-	    mesh.setAttribute("ExtPaging", pgctrl); // RULE: так связываем грид/листбокс с внешним страничным контроллером
-	    mesh.setAttribute("SummaryLabel", footer); // RULE: так связываем грид/листбокс с меткой, в которую выводим итоги при изменении модели
-	    mesh.setAttribute("PmHolder", pmh); // RULE: так связываем грид/листбокс с контейнером для UI-элементов ZKWorkerWithTimerAndPM 
+	    mesh.setAttribute("GridDataModelMan", mmm); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµРЅРµРґР¶РµСЂРѕРј РµРіРѕ Р»РёСЃС‚-РјРѕРґРµР»Рё (GridDataModelMan)
+	    mesh.setAttribute("ExtPaging", pgctrl); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РІРЅРµС€РЅРёРј СЃС‚СЂР°РЅРёС‡РЅС‹Рј РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј
+	    mesh.setAttribute("SummaryLabel", footer); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµС‚РєРѕР№, РІ РєРѕС‚РѕСЂСѓСЋ РІС‹РІРѕРґРёРј РёС‚РѕРіРё РїСЂРё РёР·РјРµРЅРµРЅРёРё РјРѕРґРµР»Рё
+	    mesh.setAttribute("PmHolder", pmh); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РєРѕРЅС‚РµР№РЅРµСЂРѕРј РґР»СЏ UI-СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM 
 	    
 	    consolidateFilterEvents(filterComps, mesh);
 	    
-	    footer.setValue("Всего строк: " + mmm.getCurRowCount()); // TODO: (low) перенести на клиента (onAfterRender)
+	    footer.setValue("Р’СЃРµРіРѕ СЃС‚СЂРѕРє: " + mmm.getCurRowCount()); // TODO: (low) РїРµСЂРµРЅРµСЃС‚Рё РЅР° РєР»РёРµРЅС‚Р° (onAfterRender)
 
     	return mmm;
     } // protected ... GridDataFilterableModelMan<U> initFilterableMesh(...)
     
 	
- 	/** Клонируем таблицу с поведение фильтр-контролов по умолчанию (из атрибута 'defBehavMap' приложения, который 
- 	 * заполнен в {@link AbcpmonWebAppInit#init}) для использования с конкретным композитным фильтром (вызывается из {@link #initFilterableMesh}).
+ 	/** РљР»РѕРЅРёСЂСѓРµРј С‚Р°Р±Р»РёС†Сѓ СЃ РїРѕРІРµРґРµРЅРёРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РёР· Р°С‚СЂРёР±СѓС‚Р° 'defBehavMap' РїСЂРёР»РѕР¶РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ 
+ 	 * Р·Р°РїРѕР»РЅРµРЅ РІ {@link AbcpmonWebAppInit#init}) РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЃ РєРѕРЅРєСЂРµС‚РЅС‹Рј РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј (РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #initFilterableMesh}).
  	 */
 	protected Map<String, AbstractComponentBehaveUtil> cloneDefBehavMap() {
     	Map<String, AbstractComponentBehaveUtil> behavMap = null;
@@ -122,8 +122,8 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
 		}
     }
     
-    /** Вызов с параметрами применения фильтра: force=false, rn=Optional.empty(). */
-// запрет на контролы фильтра не работает (прменяется после отрабатывания логики) при отсутствии блокировки и откладывания
+    /** Р’С‹Р·РѕРІ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°: force=false, rn=Optional.empty(). */
+// Р·Р°РїСЂРµС‚ РЅР° РєРѕРЅС‚СЂРѕР»С‹ С„РёР»СЊС‚СЂР° РЅРµ СЂР°Р±РѕС‚Р°РµС‚ (РїСЂРјРµРЅСЏРµС‚СЃСЏ РїРѕСЃР»Рµ РѕС‚СЂР°Р±Р°С‚С‹РІР°РЅРёСЏ Р»РѕРіРёРєРё) РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё Р±Р»РѕРєРёСЂРѕРІРєРё Рё РѕС‚РєР»Р°РґС‹РІР°РЅРёСЏ
     protected boolean safeApplyFilter(Component comp, Toolbarbutton cftbb) {
     	return safeApplyFilter(comp, false, Optional.empty(), cftbb);
     }
@@ -155,7 +155,7 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     	GridDataFilterableModelMan<?> gdm = getFilterableModelMan(host);
     	if (gdm == null) return false;
     	GridDataFilter fltr = gdm.getDataFilter();
-    	if ( fltr.getComponentIndex((AbstractComponent)comp) < 0 ) { // проверяем, что источник события входит в фильтр
+    	if ( fltr.getComponentIndex((AbstractComponent)comp) < 0 ) { // РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РёСЃС‚РѕС‡РЅРёРє СЃРѕР±С‹С‚РёСЏ РІС…РѕРґРёС‚ РІ С„РёР»СЊС‚СЂ
     		return false;
     	}
     	safeApplyFilter(fltr, gdm, host, force, rn, cftbb);
@@ -170,7 +170,7 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     }
     
     /**  */
-// вызывается по команде clear (событие не связано с компонентом заголовка - участником фильтра; синхронизация)
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РїРѕ РєРѕРјР°РЅРґРµ clear (СЃРѕР±С‹С‚РёРµ РЅРµ СЃРІСЏР·Р°РЅРѕ СЃ РєРѕРјРїРѕРЅРµРЅС‚РѕРј Р·Р°РіРѕР»РѕРІРєР° - СѓС‡Р°СЃС‚РЅРёРєРѕРј С„РёР»СЊС‚СЂР°; СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ)
     protected void safeApplyFilter(GridDataFilter fltr, GridDataFilterableModelMan<?> gdm, MeshElement host, Toolbarbutton cftbb) {
     	safeApplyFilter(fltr, gdm, host, false, Optional.empty(), cftbb);
     }
@@ -184,38 +184,38 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
 			applyFilter(gdm, host, force, rn, stamp);
 		};
 		Runnable beforePostpone = () -> {
-			fltr.disableComps(true, true); // на время ожидания блокируем ВСЕ фильтр-контролы
+			fltr.disableComps(true, true); // РЅР° РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ Р±Р»РѕРєРёСЂСѓРµРј Р’РЎР• С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹
     		if (cftbb != null) cftbb.setDisabled(true);
 		}, beforeDeferredRun = () -> {
-			fltr.disableComps(false, true); // ожидание закончилось - разблокируем ВСЕ фильтр-контролы (процедура сортировки тоже управляет ими)
+			fltr.disableComps(false, true); // РѕР¶РёРґР°РЅРёРµ Р·Р°РєРѕРЅС‡РёР»РѕСЃСЊ - СЂР°Р·Р±Р»РѕРєРёСЂСѓРµРј Р’РЎР• С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹ (РїСЂРѕС†РµРґСѓСЂР° СЃРѕСЂС‚РёСЂРѕРІРєРё С‚РѕР¶Рµ СѓРїСЂР°РІР»СЏРµС‚ РёРјРё)
 			if (cftbb != null) cftbb.setDisabled(false);
 		};
 		String msg = "safeApplyFilter::";
 		dispatchGridModelLockingTask(gdm, taskToRun, msg, beforePostpone, beforeDeferredRun);
     }
 	
-	/** После изменения набора строк грида/листбокса освежить инфу в футере ("SummaryLabel" - кол-во строк в фильтре)
-	 * и восстановить сортировку (см. {@link UIUtil#provokeAutoSort(MeshElement)}).
-	 * @param mesh Грид/листбокс, набор строк модели которого изменился.
-	 * @param gdm Соответствующий менеджер модели.
+	/** РџРѕСЃР»Рµ РёР·РјРµРЅРµРЅРёСЏ РЅР°Р±РѕСЂР° СЃС‚СЂРѕРє РіСЂРёРґР°/Р»РёСЃС‚Р±РѕРєСЃР° РѕСЃРІРµР¶РёС‚СЊ РёРЅС„Сѓ РІ С„СѓС‚РµСЂРµ ("SummaryLabel" - РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ С„РёР»СЊС‚СЂРµ)
+	 * Рё РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕСЂС‚РёСЂРѕРІРєСѓ (СЃРј. {@link UIUtil#provokeAutoSort(MeshElement)}).
+	 * @param mesh Р“СЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ, РЅР°Р±РѕСЂ СЃС‚СЂРѕРє РјРѕРґРµР»Рё РєРѕС‚РѕСЂРѕРіРѕ РёР·РјРµРЅРёР»СЃСЏ.
+	 * @param gdm РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ РјРµРЅРµРґР¶РµСЂ РјРѕРґРµР»Рё.
 	 */
     protected void refreshAfterDataChange(MeshElement mesh, GridDataModelMan<?> gdm) {
-    	//GridDataModelMan<?> gdm = (GridDataModelMan<?>)mesh.getAttribute("GridDataModelMan"); // вызывается из applyFilter, а там уже вычислен менеджер модели
+    	//GridDataModelMan<?> gdm = (GridDataModelMan<?>)mesh.getAttribute("GridDataModelMan"); // РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· applyFilter, Р° С‚Р°Рј СѓР¶Рµ РІС‹С‡РёСЃР»РµРЅ РјРµРЅРµРґР¶РµСЂ РјРѕРґРµР»Рё
     	Label ft = (Label)mesh.getAttribute("SummaryLabel");
-		logger.trace("refreshAfterDataChange. Всего строк: {}", gdm.getCurRowCount());
-// TODO: более интересная статистика (суммы под колонками)
+		logger.trace("refreshAfterDataChange. Р’СЃРµРіРѕ СЃС‚СЂРѕРє: {}", gdm.getCurRowCount());
+// TODO: Р±РѕР»РµРµ РёРЅС‚РµСЂРµСЃРЅР°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР° (СЃСѓРјРјС‹ РїРѕРґ РєРѕР»РѕРЅРєР°РјРё)
 		if (ft != null) {
-			ft.setValue("Всего строк: " + gdm.getCurRowCount()); // TODO: (low) перенести на клиента (onAfterRender)
+			ft.setValue("Р’СЃРµРіРѕ СЃС‚СЂРѕРє: " + gdm.getCurRowCount()); // TODO: (low) РїРµСЂРµРЅРµСЃС‚Рё РЅР° РєР»РёРµРЅС‚Р° (onAfterRender)
 		}
     	UIUtil.provokeAutoSort(mesh);
     } // protected void refreshAfterDataChange(MeshElement mesh, GridDataModelMan<?> gdm)
     
     
-	/** Для грида находим расширенный заголовок (Auxhead), в котором по одному на Auxheader вложены фильтр-контролы.
-     * Найденные компоненты возвращаем в массиве, которым потом инициализируем композитный фильтр.
+	/** Р”Р»СЏ РіСЂРёРґР° РЅР°С…РѕРґРёРј СЂР°СЃС€РёСЂРµРЅРЅС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє (Auxhead), РІ РєРѕС‚РѕСЂРѕРј РїРѕ РѕРґРЅРѕРјСѓ РЅР° Auxheader РІР»РѕР¶РµРЅС‹ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹.
+     * РќР°Р№РґРµРЅРЅС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РІРѕР·РІСЂР°С‰Р°РµРј РІ РјР°СЃСЃРёРІРµ, РєРѕС‚РѕСЂС‹Рј РїРѕС‚РѕРј РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РєРѕРјРїРѕР·РёС‚РЅС‹Р№ С„РёР»СЊС‚СЂ.
      */
     public static AbstractComponent[] extractFilterControlsFromAuxhead(MeshElement dataGrid) {
-// FIXME: проверка параметров, array bounds
+// FIXME: РїСЂРѕРІРµСЂРєР° РїР°СЂР°РјРµС‚СЂРѕРІ, array bounds
     	AbstractComponent[] fc = new AbstractComponent[32];
     	Auxhead ahd = null;
     	int idx = -1;
@@ -228,7 +228,7 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     	for(Component comp : ahd.getChildren()) {
     		if (! (comp instanceof Auxheader)) continue;
     		//Auxheader cur = (Auxheader)comp;
-    		Component ch = comp.getFirstChild(); // считаем, что у Auxheader м.б. не более одного дочернего контрола и это фильтр-контрол
+    		Component ch = comp.getFirstChild(); // СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ Сѓ Auxheader Рј.Р±. РЅРµ Р±РѕР»РµРµ РѕРґРЅРѕРіРѕ РґРѕС‡РµСЂРЅРµРіРѕ РєРѕРЅС‚СЂРѕР»Р° Рё СЌС‚Рѕ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»
     		if (ch != null) {
     			fc[++idx] = (AbstractComponent)ch;
     		}
@@ -237,13 +237,13 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     } // public static AbstractComponent[] extractFilterControlsFromAuxhead(MeshElement dataGrid)
     
     
-    /** Перенаправление всех событий, последующих за возможным изменением значения компонента, от контролов
-     * композитного фильтра в одно событие onApplyFilter.
+    /** РџРµСЂРµРЅР°РїСЂР°РІР»РµРЅРёРµ РІСЃРµС… СЃРѕР±С‹С‚РёР№, РїРѕСЃР»РµРґСѓСЋС‰РёС… Р·Р° РІРѕР·РјРѕР¶РЅС‹Рј РёР·РјРµРЅРµРЅРёРµРј Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р°, РѕС‚ РєРѕРЅС‚СЂРѕР»РѕРІ
+     * РєРѕРјРїРѕР·РёС‚РЅРѕРіРѕ С„РёР»СЊС‚СЂР° РІ РѕРґРЅРѕ СЃРѕР±С‹С‚РёРµ onApplyFilter.
      */
     public static void consolidateFilterEvents(AbstractComponent[] members, Component target) {
     	for (AbstractComponent comp : members) {
     		logger.trace("consolidateFilterEvents.  comp = '{}'", comp);
-    		if (comp == null) continue; // массив фильтр-контролов фиксированной размерности и содержит пустые ячейки в хвосте
+    		if (comp == null) continue; // РјР°СЃСЃРёРІ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ С„РёРєСЃРёСЂРѕРІР°РЅРЅРѕР№ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё Рё СЃРѕРґРµСЂР¶РёС‚ РїСѓСЃС‚С‹Рµ СЏС‡РµР№РєРё РІ С…РІРѕСЃС‚Рµ
     		switch ( comp.getClass().getSimpleName() ) {
 				case "BetweenFilterMacro":
 					comp.addForward("onApply", target, "onApplyFilter");
@@ -260,9 +260,9 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
 					//comp.addForward(Events.ON_OK, target, "onApplyFilter");
 					break;
 				case "Combobox":
-					//comp.addForward(Events.ON_CHANGE, target, "onApplyFilter"); // !! только при Enter или потере фокуса (Tab), сейчас вызывается при листании закрытого списка !!
-// HOWTO: ? как определить элемент, имеющий фокус (see Concepts_and_Tricks.pdf !! see Deferrable) ?
-					comp.addForward(Events.ON_OK, target, "onApplyFilter"); // по нажатию Enter событие onCange не срабатывает, но при наличии ПУСТОГО обработчика onOK - срабатывает !
+					//comp.addForward(Events.ON_CHANGE, target, "onApplyFilter"); // !! С‚РѕР»СЊРєРѕ РїСЂРё Enter РёР»Рё РїРѕС‚РµСЂРµ С„РѕРєСѓСЃР° (Tab), СЃРµР№С‡Р°СЃ РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё Р»РёСЃС‚Р°РЅРёРё Р·Р°РєСЂС‹С‚РѕРіРѕ СЃРїРёСЃРєР° !!
+// HOWTO: ? РєР°Рє РѕРїСЂРµРґРµР»РёС‚СЊ СЌР»РµРјРµРЅС‚, РёРјРµСЋС‰РёР№ С„РѕРєСѓСЃ (see Concepts_and_Tricks.pdf !! see Deferrable) ?
+					comp.addForward(Events.ON_OK, target, "onApplyFilter"); // РїРѕ РЅР°Р¶Р°С‚РёСЋ Enter СЃРѕР±С‹С‚РёРµ onCange РЅРµ СЃСЂР°Р±Р°С‚С‹РІР°РµС‚, РЅРѕ РїСЂРё РЅР°Р»РёС‡РёРё РџРЈРЎРўРћР“Рћ РѕР±СЂР°Р±РѕС‚С‡РёРєР° onOK - СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ !
 					comp.addForward(Events.ON_BLUR, target, "onApplyFilter");
 					comp.addForward(Events.ON_OPEN, target, "onApplyFilter");
 					break;
@@ -276,39 +276,39 @@ public class FilterableGridDataComposer<T extends Component> extends SimpleGridD
     
     @Listen("onOK = auxheader > intbox")
     public void onOKIB(/*KeyEvent kev*/) {
-// по нажатию Enter событие onCange не срабатывает, но при наличии ПУСТОГО обработчика onOK - срабатывает !
+// РїРѕ РЅР°Р¶Р°С‚РёСЋ Enter СЃРѕР±С‹С‚РёРµ onCange РЅРµ СЃСЂР°Р±Р°С‚С‹РІР°РµС‚, РЅРѕ РїСЂРё РЅР°Р»РёС‡РёРё РџРЈРЎРўРћР“Рћ РѕР±СЂР°Р±РѕС‚С‡РёРєР° onOK - СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ !
 //    	kev.stopPropagation();
-//    	Events.sendEvent(new InputEvent(Events.ON_CHANGE, subj_nameTB, subj_nameTB.getValue(), null)); // Enter=Tab - выход из поля и применение фильтра
+//    	Events.sendEvent(new InputEvent(Events.ON_CHANGE, subj_nameTB, subj_nameTB.getValue(), null)); // Enter=Tab - РІС‹С…РѕРґ РёР· РїРѕР»СЏ Рё РїСЂРёРјРµРЅРµРЅРёРµ С„РёР»СЊС‚СЂР°
     }
     
     @Listen("onOK = auxheader > textbox")
     public void onOKTB(/*KeyEvent kev*/) {
-// по нажатию Enter событие onCange не срабатывает, но при наличии ПУСТОГО обработчика onOK - срабатывает !
+// РїРѕ РЅР°Р¶Р°С‚РёСЋ Enter СЃРѕР±С‹С‚РёРµ onCange РЅРµ СЃСЂР°Р±Р°С‚С‹РІР°РµС‚, РЅРѕ РїСЂРё РЅР°Р»РёС‡РёРё РџРЈРЎРўРћР“Рћ РѕР±СЂР°Р±РѕС‚С‡РёРєР° onOK - СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ !
 //    	kev.stopPropagation();
-//    	Events.sendEvent(new InputEvent(Events.ON_CHANGE, subj_nameTB, subj_nameTB.getValue(), null)); // Enter=Tab - выход из поля и применение фильтра
+//    	Events.sendEvent(new InputEvent(Events.ON_CHANGE, subj_nameTB, subj_nameTB.getValue(), null)); // Enter=Tab - РІС‹С…РѕРґ РёР· РїРѕР»СЏ Рё РїСЂРёРјРµРЅРµРЅРёРµ С„РёР»СЊС‚СЂР°
     }
     
-    /** Очистка невалидного значения комбика в фильтре при потере фокуса. */
-    @Listen("onBlur = auxheader > combobox") // потеря фокуса (в т.ч. переключение на другое приложение !!)
-    public void onBlurCombo(Event ev) { // для onChanging iev.getValue даёт временное значение строки ввода, которое не присвоено value компонента и не передано на сервер
+    /** РћС‡РёСЃС‚РєР° РЅРµРІР°Р»РёРґРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјР±РёРєР° РІ С„РёР»СЊС‚СЂРµ РїСЂРё РїРѕС‚РµСЂРµ С„РѕРєСѓСЃР°. */
+    @Listen("onBlur = auxheader > combobox") // РїРѕС‚РµСЂСЏ С„РѕРєСѓСЃР° (РІ С‚.С‡. РїРµСЂРµРєР»СЋС‡РµРЅРёРµ РЅР° РґСЂСѓРіРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ !!)
+    public void onBlurCombo(Event ev) { // РґР»СЏ onChanging iev.getValue РґР°С‘С‚ РІСЂРµРјРµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃС‚СЂРѕРєРё РІРІРѕРґР°, РєРѕС‚РѕСЂРѕРµ РЅРµ РїСЂРёСЃРІРѕРµРЅРѕ value РєРѕРјРїРѕРЅРµРЅС‚Р° Рё РЅРµ РїРµСЂРµРґР°РЅРѕ РЅР° СЃРµСЂРІРµСЂ
     	Combobox combo = (Combobox)ev.getTarget();
     	ListModelList<Object> comboModel = (ListModelList<Object>)combo.getModel();
     	String val = combo.getValue();
 		logger.debug("onBlurCombo. comboID: '{}', value = '{}'; comboModel: {}", combo.getId(), val, comboModel);
-		if ( !StringUtils.isEmpty(val) && (comboModel == null || !comboModel.contains(val)) ){ // значение не выбрано из списка, а нафигачено от балды - очищаем перед уходом
-			combo.setValue(null); // другой вариант - выбросить WrongValueException
+		if ( !StringUtils.isEmpty(val) && (comboModel == null || !comboModel.contains(val)) ){ // Р·РЅР°С‡РµРЅРёРµ РЅРµ РІС‹Р±СЂР°РЅРѕ РёР· СЃРїРёСЃРєР°, Р° РЅР°С„РёРіР°С‡РµРЅРѕ РѕС‚ Р±Р°Р»РґС‹ - РѕС‡РёС‰Р°РµРј РїРµСЂРµРґ СѓС…РѕРґРѕРј
+			combo.setValue(null); // РґСЂСѓРіРѕР№ РІР°СЂРёР°РЅС‚ - РІС‹Р±СЂРѕСЃРёС‚СЊ WrongValueException
 			logger.debug("onBlurCombo. Invalid value was cleared.");
 		}
     } // public void onBlurCombo(Event ev)
     
     
-    /** Формирование дата-модели комбобокса в фильтре при открытии.
+    /** Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РґР°С‚Р°-РјРѕРґРµР»Рё РєРѕРјР±РѕР±РѕРєСЃР° РІ С„РёР»СЊС‚СЂРµ РїСЂРё РѕС‚РєСЂС‹С‚РёРё.
      * @see GridDataFilterableModelMan#setComboModel(Combobox)
      */
     @Listen("onOpen = auxheader > combobox")
     public void onOpenCombo(OpenEvent oev) {
 		logger.debug("onOpenCombo. targetID: '{}', value = '{}', isOpen ?: {}; ev_class: {}", oev.getTarget().getId(), ((Combobox)oev.getTarget()).getValue(), oev.isOpen(), oev.getClass().getName());
-    	if (oev.isOpen()) { // открытие, а не закрытие
+    	if (oev.isOpen()) { // РѕС‚РєСЂС‹С‚РёРµ, Р° РЅРµ Р·Р°РєСЂС‹С‚РёРµ
     		MeshElement host = getFilterCompMesh(oev.getTarget());
     		if (host == null) return;
     		GridDataFilterableModelMan<?> mmm = getFilterableModelMan(host);

@@ -1,4 +1,4 @@
-package basos.util;
+п»їpackage basos.util;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 //import org.zkoss.zk.ui.impl.EventProcessor;
 
 
-/** Запуск асинхронной прерываемой возвращающей результат типа V задачи, запускаемой в рабочем (не UI) потоке.
- * Безаргументный конструктор назначает задачей вызов doInBackground(), в котором д.б. описана пользовательская логика.
- * Используется механизм событий java.beans (bound properties). Слушатели должны реализовать PropertyChangeListener.
- * В конце done() публикует событие "progress_down" (встроено в наследника FutureTask, которому делегируем все вызовы интерфейса RunnableFuture).
- * Не расширяем FutureTask, а декорируем его, чтобы использовать безаргументный конструктор, обеспечивающий выполнение
- *  пользовательской задачи в (по сути абстрактном) методе doInBackground().
- * Не делаем doInBackground() абстрактным, чтобы можно было использовать традиционные для FutureTask конструкторы.
+/** Р—Р°РїСѓСЃРє Р°СЃРёРЅС…СЂРѕРЅРЅРѕР№ РїСЂРµСЂС‹РІР°РµРјРѕР№ РІРѕР·РІСЂР°С‰Р°СЋС‰РµР№ СЂРµР·СѓР»СЊС‚Р°С‚ С‚РёРїР° V Р·Р°РґР°С‡Рё, Р·Р°РїСѓСЃРєР°РµРјРѕР№ РІ СЂР°Р±РѕС‡РµРј (РЅРµ UI) РїРѕС‚РѕРєРµ.
+ * Р‘РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РЅР°Р·РЅР°С‡Р°РµС‚ Р·Р°РґР°С‡РµР№ РІС‹Р·РѕРІ doInBackground(), РІ РєРѕС‚РѕСЂРѕРј Рґ.Р±. РѕРїРёСЃР°РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ Р»РѕРіРёРєР°.
+ * РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РјРµС…Р°РЅРёР·Рј СЃРѕР±С‹С‚РёР№ java.beans (bound properties). РЎР»СѓС€Р°С‚РµР»Рё РґРѕР»Р¶РЅС‹ СЂРµР°Р»РёР·РѕРІР°С‚СЊ PropertyChangeListener.
+ * Р’ РєРѕРЅС†Рµ done() РїСѓР±Р»РёРєСѓРµС‚ СЃРѕР±С‹С‚РёРµ "progress_down" (РІСЃС‚СЂРѕРµРЅРѕ РІ РЅР°СЃР»РµРґРЅРёРєР° FutureTask, РєРѕС‚РѕСЂРѕРјСѓ РґРµР»РµРіРёСЂСѓРµРј РІСЃРµ РІС‹Р·РѕРІС‹ РёРЅС‚РµСЂС„РµР№СЃР° RunnableFuture).
+ * РќРµ СЂР°СЃС€РёСЂСЏРµРј FutureTask, Р° РґРµРєРѕСЂРёСЂСѓРµРј РµРіРѕ, С‡С‚РѕР±С‹ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, РѕР±РµСЃРїРµС‡РёРІР°СЋС‰РёР№ РІС‹РїРѕР»РЅРµРЅРёРµ
+ *  РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ Р·Р°РґР°С‡Рё РІ (РїРѕ СЃСѓС‚Рё Р°Р±СЃС‚СЂР°РєС‚РЅРѕРј) РјРµС‚РѕРґРµ doInBackground().
+ * РќРµ РґРµР»Р°РµРј doInBackground() Р°Р±СЃС‚СЂР°РєС‚РЅС‹Рј, С‡С‚РѕР±С‹ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚СЂР°РґРёС†РёРѕРЅРЅС‹Рµ РґР»СЏ FutureTask РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹.
  * @param <V> The result type returned by this Future's get method.
  * @see RunnableFuture
  * @see FutureTask
@@ -46,7 +46,7 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
 	    protected void done() {
 	    	firePropertyChange("progress_down", false, true);
 			AsyncTask.this.done();
-//	    	workingThread = null; // на случай сбоя отсюда до конца метода; проверять .isAlive() !
+//	    	workingThread = null; // РЅР° СЃР»СѓС‡Р°Р№ СЃР±РѕСЏ РѕС‚СЃСЋРґР° РґРѕ РєРѕРЅС†Р° РјРµС‚РѕРґР°; РїСЂРѕРІРµСЂСЏС‚СЊ .isAlive() !
 	    }		
 	} // private class FarFutureTask<W> extends FutureTask<W>
 	
@@ -57,41 +57,41 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
     /** @see FutureTask#FutureTask(Callable) */
     public AsyncTask(Callable<V> callable) {
     	ft = new FarFutureTask<V>(callable);
-//		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? в SwingWorker своя реализация - SwingWorkerPropertyChangeSupport (переопределён firePropertyChange)
+//		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? РІ SwingWorker СЃРІРѕСЏ СЂРµР°Р»РёР·Р°С†РёСЏ - SwingWorkerPropertyChangeSupport (РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ firePropertyChange)
     }
     
     /** @see FutureTask#FutureTask(Runnable, Object) */
     public AsyncTask(Runnable runnable, V result) {
     	ft = new FarFutureTask<V>(runnable, result);
-//		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? в SwingWorker своя реализация - SwingWorkerPropertyChangeSupport (переопределён firePropertyChange)
+//		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? РІ SwingWorker СЃРІРѕСЏ СЂРµР°Р»РёР·Р°С†РёСЏ - SwingWorkerPropertyChangeSupport (РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ firePropertyChange)
     }
     
-    /** Безаргументный конструктор назначает задачей вызов doInBackground(), в котором д.б. описана пользовательская логика. */
+    /** Р‘РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РЅР°Р·РЅР°С‡Р°РµС‚ Р·Р°РґР°С‡РµР№ РІС‹Р·РѕРІ doInBackground(), РІ РєРѕС‚РѕСЂРѕРј Рґ.Р±. РѕРїРёСЃР°РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ Р»РѕРіРёРєР°. */
 	public AsyncTask() {
     	ft = new FarFutureTask<V>(() -> {
     		//setWorkingThread(Thread.currentThread());
     		return doInBackground();
         });
 
-// проверить, что doInBackground переопределён (он обязательно д.б. переопределён хотя бы в одном подклассе, как будто бы abstract) -> этот конструктор не должен вызываться из корня иерархии - ZKWork
+// РїСЂРѕРІРµСЂРёС‚СЊ, С‡С‚Рѕ doInBackground РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ (РѕРЅ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ Рґ.Р±. РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ С…РѕС‚СЏ Р±С‹ РІ РѕРґРЅРѕРј РїРѕРґРєР»Р°СЃСЃРµ, РєР°Рє Р±СѓРґС‚Рѕ Р±С‹ abstract) -> СЌС‚РѕС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РЅРµ РґРѕР»Р¶РµРЅ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РёР· РєРѕСЂРЅСЏ РёРµСЂР°СЂС…РёРё - ZKWork
     	if (this.getClass().equals(AsyncTask.class)) {
     		logger.error("This non-arg type of AsyncTask() constructor not allowed from root AsyncTask class, only from subclass with overriden doInBackground() method (must contain task logic) !!!");
     		throw new InstantiationError("This non-arg type of AsyncTask() constructor not allowed from root AsyncTask class, only from subclass with overriden doInBackground() method (must contain task logic) !!!"); // IllegalStateException
     	}
-    	// вызывается из подкласса, но doInBackground() может быть не переопределён (не обязательно переопределять в классе вызывающего объекта, можно в одном из промежуточных)
+    	// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РїРѕРґРєР»Р°СЃСЃР°, РЅРѕ doInBackground() РјРѕР¶РµС‚ Р±С‹С‚СЊ РЅРµ РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ (РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РїРµСЂРµРѕРїСЂРµРґРµР»СЏС‚СЊ РІ РєР»Р°СЃСЃРµ РІС‹Р·С‹РІР°СЋС‰РµРіРѕ РѕР±СЉРµРєС‚Р°, РјРѕР¶РЅРѕ РІ РѕРґРЅРѕРј РёР· РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹С…)
     	Method dm = null;
     	try {
-    		dm = this.getClass().getDeclaredMethod("doInBackground"); // определённый в классе вызывающего объекта
+    		dm = this.getClass().getDeclaredMethod("doInBackground"); // РѕРїСЂРµРґРµР»С‘РЅРЅС‹Р№ РІ РєР»Р°СЃСЃРµ РІС‹Р·С‹РІР°СЋС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
     		logger.trace("AsyncTask() constructor. Right branch - fresh override :) className: '{}', superClassName: '{}', doInBackground declared at '{}'", this.getClass().getName(), this.getClass().getSuperclass(), dm.getDeclaringClass().getName());
-    	} catch (NoSuchMethodException e) { // doInBackground() не переопределён в классе вызывающего объекта
+    	} catch (NoSuchMethodException e) { // doInBackground() РЅРµ РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ РІ РєР»Р°СЃСЃРµ РІС‹Р·С‹РІР°СЋС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
     		try {
     			dm = this.getClass().getMethod("doInBackground"); // only PUBLIC member method of the class or interface
-    			if (dm.getDeclaringClass().equals(AsyncTask.class)) { // ! сюда не должен попасть, т.к. из подклассов уже не увидит protected корневой метод !
+    			if (dm.getDeclaringClass().equals(AsyncTask.class)) { // ! СЃСЋРґР° РЅРµ РґРѕР»Р¶РµРЅ РїРѕРїР°СЃС‚СЊ, С‚.Рє. РёР· РїРѕРґРєР»Р°СЃСЃРѕРІ СѓР¶Рµ РЅРµ СѓРІРёРґРёС‚ protected РєРѕСЂРЅРµРІРѕР№ РјРµС‚РѕРґ !
     				logger.error("AsyncTask() constructor. Wrong branch (but UNREAL !)... className: '{}', superClassName: '{}', doInBackground declared at '{}'", this.getClass().getName(), this.getClass().getSuperclass(), dm.getDeclaringClass().getName());
 					throw new InstantiationError("Unable to construct AsyncTask without overriding doInBackground() method (must contain task logic) !"); // IllegalStateException
     			}
     			logger.trace("AsyncTask() constructor. Right branch. className: '{}', superClassName: '{}', doInBackground declared at '{}'", this.getClass().getName(), this.getClass().getSuperclass(), dm.getDeclaringClass().getName());
-    		} catch (NoSuchMethodException ee) { // ? сюда может ошибочно попасть, если метод doInBackground переопределён в промежуточном классе, но не public ?
+    		} catch (NoSuchMethodException ee) { // ? СЃСЋРґР° РјРѕР¶РµС‚ РѕС€РёР±РѕС‡РЅРѕ РїРѕРїР°СЃС‚СЊ, РµСЃР»Рё РјРµС‚РѕРґ doInBackground РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ РІ РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅРѕРј РєР»Р°СЃСЃРµ, РЅРѕ РЅРµ public ?
     			logger.error("AsyncTask() constructor. No public doInBackground() at all.  className: '{}', superClassName: '{}', methods: {}", this.getClass().getName(), this.getClass().getSuperclass(), Arrays.deepToString(this.getClass().getMethods()));
 				throw new InstantiationError("Unable to construct AsyncTask without overrided doInBackground() method (must contain task logic) !"); // IllegalStateException
     		}
@@ -103,13 +103,13 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
 //		propertyChangeSupport = new PropertyChangeSupport(this);
     } // public AsyncTask()
 	
-	/** Вызывать только из рабочего (не UI) потока. {@inheritDoc} Основная задача (назначенная в конструкторе, {@link #doInBackground()} для безаргументного конструктора) вызывается в конце. */
+	/** Р’С‹Р·С‹РІР°С‚СЊ С‚РѕР»СЊРєРѕ РёР· СЂР°Р±РѕС‡РµРіРѕ (РЅРµ UI) РїРѕС‚РѕРєР°. {@inheritDoc} РћСЃРЅРѕРІРЅР°СЏ Р·Р°РґР°С‡Р° (РЅР°Р·РЅР°С‡РµРЅРЅР°СЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ, {@link #doInBackground()} РґР»СЏ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅРѕРіРѕ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°) РІС‹Р·С‹РІР°РµС‚СЃСЏ РІ РєРѕРЅС†Рµ. */
 	@Override
 	public void run() {
-		//assert( !EventProcessor.inEventListener() ); // проверить, что не UI-поток !
+		//assert( !EventProcessor.inEventListener() ); // РїСЂРѕРІРµСЂРёС‚СЊ, С‡С‚Рѕ РЅРµ UI-РїРѕС‚РѕРє !
 		setWorkingThread(Thread.currentThread());
-		logger.trace("AsyncTask.run().  выполнили setWorkingThread, далее вызовем FarFutureTask.run(), который вызовет Callable, в котором вызывается doInBackground(), который вызывает ZKWorkerWithTimerAndPM.userMainWTask");
-		ft.run(); // здесь вызывается Callable
+		logger.trace("AsyncTask.run().  РІС‹РїРѕР»РЅРёР»Рё setWorkingThread, РґР°Р»РµРµ РІС‹Р·РѕРІРµРј FarFutureTask.run(), РєРѕС‚РѕСЂС‹Р№ РІС‹Р·РѕРІРµС‚ Callable, РІ РєРѕС‚РѕСЂРѕРј РІС‹Р·С‹РІР°РµС‚СЃСЏ doInBackground(), РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚ ZKWorkerWithTimerAndPM.userMainWTask");
+		ft.run(); // Р·РґРµСЃСЊ РІС‹Р·С‹РІР°РµС‚СЃСЏ Callable
 	}
 	
 	@Override
@@ -137,22 +137,22 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
 		return ft.isDone();
 	}
 
-	/** Для случая безаргументного конструктора здесь реализуется пользовательская логика. */
-    protected V doInBackground() throws Exception { // не делаем abstract чтобы была возможность исп-ть унаследованные конструкторы
-    	assert(false) : "doInBackground() должен быть переопределён !";
+	/** Р”Р»СЏ СЃР»СѓС‡Р°СЏ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅРѕРіРѕ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° Р·РґРµСЃСЊ СЂРµР°Р»РёР·СѓРµС‚СЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ Р»РѕРіРёРєР°. */
+    protected V doInBackground() throws Exception { // РЅРµ РґРµР»Р°РµРј abstract С‡С‚РѕР±С‹ Р±С‹Р»Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РёСЃРї-С‚СЊ СѓРЅР°СЃР»РµРґРѕРІР°РЅРЅС‹Рµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+    	assert(false) : "doInBackground() РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ !";
     	return null;
     }
     
-    /** Вызывается в конце (каждого из) run() -> set()/setException(...)/cancel(...) -> finishCompletion()
-     *  при переходе в статус isDone()==true (whether normally or via cancellation).
-     * Непосредственно перед этим вызовом в родителе (поле, производном от FutureTask, которому делегируются логика FutureTask) создаётся событие "progress_down".
+    /** Р’С‹Р·С‹РІР°РµС‚СЃСЏ РІ РєРѕРЅС†Рµ (РєР°Р¶РґРѕРіРѕ РёР·) run() -> set()/setException(...)/cancel(...) -> finishCompletion()
+     *  РїСЂРё РїРµСЂРµС…РѕРґРµ РІ СЃС‚Р°С‚СѓСЃ isDone()==true (whether normally or via cancellation).
+     * РќРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РїРµСЂРµРґ СЌС‚РёРј РІС‹Р·РѕРІРѕРј РІ СЂРѕРґРёС‚РµР»Рµ (РїРѕР»Рµ, РїСЂРѕРёР·РІРѕРґРЅРѕРј РѕС‚ FutureTask, РєРѕС‚РѕСЂРѕРјСѓ РґРµР»РµРіРёСЂСѓСЋС‚СЃСЏ Р»РѕРіРёРєР° FutureTask) СЃРѕР·РґР°С‘С‚СЃСЏ СЃРѕР±С‹С‚РёРµ "progress_down".
      */
 //    @Override
     protected void done() {
     	//ft.done();
     }
     
-    /** Поток, в котором работает AsyncTask. */
+    /** РџРѕС‚РѕРє, РІ РєРѕС‚РѕСЂРѕРј СЂР°Р±РѕС‚Р°РµС‚ AsyncTask. */
 	public Thread getWorkingThread() {
 		return workingThread;
 	}
@@ -162,13 +162,13 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
 		logger.trace("AsyncTask.setWorkingThread: {}", workingThread);
 	}
 
-	/** Посылаем слушателям событие через делегата типа {@link java.beans.PropertyChangeSupport}.
-	 * Предполагается, что запускаем из рабочего потока (из него нельзя обращаться к UI без SP).
-	 * Аргументы должны быть не null, старое и новое значения должны отличаться (иначе ничего не произойдёт).
+	/** РџРѕСЃС‹Р»Р°РµРј СЃР»СѓС€Р°С‚РµР»СЏРј СЃРѕР±С‹С‚РёРµ С‡РµСЂРµР· РґРµР»РµРіР°С‚Р° С‚РёРїР° {@link java.beans.PropertyChangeSupport}.
+	 * РџСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ, С‡С‚Рѕ Р·Р°РїСѓСЃРєР°РµРј РёР· СЂР°Р±РѕС‡РµРіРѕ РїРѕС‚РѕРєР° (РёР· РЅРµРіРѕ РЅРµР»СЊР·СЏ РѕР±СЂР°С‰Р°С‚СЊСЃСЏ Рє UI Р±РµР· SP).
+	 * РђСЂРіСѓРјРµРЅС‚С‹ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РЅРµ null, СЃС‚Р°СЂРѕРµ Рё РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёСЏ РґРѕР»Р¶РЅС‹ РѕС‚Р»РёС‡Р°С‚СЊСЃСЏ (РёРЅР°С‡Рµ РЅРёС‡РµРіРѕ РЅРµ РїСЂРѕРёР·РѕР№РґС‘С‚).
 	 * @see PropertyChangeSupport#firePropertyChange(String, Object, Object)
 	 */
     public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-// В оригинале метод перегружен для Object, int, boolean (но в событии всё превращается в Object)
+// Р’ РѕСЂРёРіРёРЅР°Р»Рµ РјРµС‚РѕРґ РїРµСЂРµРіСЂСѓР¶РµРЅ РґР»СЏ Object, int, boolean (РЅРѕ РІ СЃРѕР±С‹С‚РёРё РІСЃС‘ РїСЂРµРІСЂР°С‰Р°РµС‚СЃСЏ РІ Object)
     	logger.trace("firePropertyChange. propertyName = '{}', newValue = '{}'", propertyName, newValue);
         getPropertyChangeSupport().firePropertyChange(propertyName, oldValue, newValue);
     } // public void firePropertyChange(String propertyName, Object oldValue, Object newValue)
@@ -176,7 +176,7 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
     /** @see PropertyChangeSupport#addPropertyChangeListener(PropertyChangeListener) */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
 //    	if (listener == this) {
-    		// TODO: сами обрабатываем короче
+    		// TODO: СЃР°РјРё РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј РєРѕСЂРѕС‡Рµ
 //    	} else {
     		getPropertyChangeSupport().addPropertyChangeListener(listener);
 //    	}
@@ -185,7 +185,7 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
     /** @see PropertyChangeSupport#addPropertyChangeListener(String, PropertyChangeListener) */
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 //    	if (listener == this) {
-    		// TODO: сами обрабатываем короче
+    		// TODO: СЃР°РјРё РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј РєРѕСЂРѕС‡Рµ
 //    	} else {
     		getPropertyChangeSupport().addPropertyChangeListener(propertyName, listener);
 //    	}
@@ -196,15 +196,15 @@ public class AsyncTask<V> implements RunnableFuture<V> /*extends FutureTask<V>*/
     	getPropertyChangeSupport().removePropertyChangeListener(listener);
     }
     
-    /** Возвращает lazy init, self-incapsulated {@link PropertyChangeSupport}, которому делегирована поддержка "bound properties" (события java.beans).
-     * Слушатель должен реализовать интерфейс {@link PropertyChangeListener}.
+    /** Р’РѕР·РІСЂР°С‰Р°РµС‚ lazy init, self-incapsulated {@link PropertyChangeSupport}, РєРѕС‚РѕСЂРѕРјСѓ РґРµР»РµРіРёСЂРѕРІР°РЅР° РїРѕРґРґРµСЂР¶РєР° "bound properties" (СЃРѕР±С‹С‚РёСЏ java.beans).
+     * РЎР»СѓС€Р°С‚РµР»СЊ РґРѕР»Р¶РµРЅ СЂРµР°Р»РёР·РѕРІР°С‚СЊ РёРЅС‚РµСЂС„РµР№СЃ {@link PropertyChangeListener}.
      * @see #addPropertyChangeListener
      * @see #removePropertyChangeListener
      * @see #firePropertyChange
      */
     public PropertyChangeSupport getPropertyChangeSupport() {
     	if (propertyChangeSupport == null) {
-    		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? в SwingWorker своя реализация - SwingWorkerPropertyChangeSupport (переопределён firePropertyChange)
+    		propertyChangeSupport = new PropertyChangeSupport(this/*sourceBean*/); // ? РІ SwingWorker СЃРІРѕСЏ СЂРµР°Р»РёР·Р°С†РёСЏ - SwingWorkerPropertyChangeSupport (РїРµСЂРµРѕРїСЂРµРґРµР»С‘РЅ firePropertyChange)
     	}
         return propertyChangeSupport;
     }

@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -27,25 +27,25 @@ public class BetweenFilters {
 
 	private BetweenFilters() {}
 	
-/** Универсальный валидатор для фильтра Between
- * Для BigDecimal (денежный тип):
- *  не пусто;
- *  точность = 2 зн. после запятой;
- *  дипазон значенией [minVal, maxVal]
+/** РЈРЅРёРІРµСЂСЃР°Р»СЊРЅС‹Р№ РІР°Р»РёРґР°С‚РѕСЂ РґР»СЏ С„РёР»СЊС‚СЂР° Between
+ * Р”Р»СЏ BigDecimal (РґРµРЅРµР¶РЅС‹Р№ С‚РёРї):
+ *  РЅРµ РїСѓСЃС‚Рѕ;
+ *  С‚РѕС‡РЅРѕСЃС‚СЊ = 2 Р·РЅ. РїРѕСЃР»Рµ Р·Р°РїСЏС‚РѕР№;
+ *  РґРёРїР°Р·РѕРЅ Р·РЅР°С‡РµРЅРёРµР№ [minVal, maxVal]
  *  valFrom <= valTo
  *  
- * Для java.util.Date:
- *  не пусто;
- *  дипазон значенией [minVal, maxVal]
+ * Р”Р»СЏ java.util.Date:
+ *  РЅРµ РїСѓСЃС‚Рѕ;
+ *  РґРёРїР°Р·РѕРЅ Р·РЅР°С‡РµРЅРёРµР№ [minVal, maxVal]
  *  valFrom <= valTo
- *  (валидность формата даты проверяется автоматически: datebox lenient="false")
+ *  (РІР°Р»РёРґРЅРѕСЃС‚СЊ С„РѕСЂРјР°С‚Р° РґР°С‚С‹ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё: datebox lenient="false")
  */
 	private static class BetweenValidator implements Constraint {
 		@Override
 		public void validate(Component comp, Object valStr) throws WrongValueException {
-// TODO: Path требует ИД (в конструкторе не присвоен макрокомпоненту), реализовать через селекторы (comp.query(), see DR p. 29)
+// TODO: Path С‚СЂРµР±СѓРµС‚ РР” (РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ РЅРµ РїСЂРёСЃРІРѕРµРЅ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Сѓ), СЂРµР°Р»РёР·РѕРІР°С‚СЊ С‡РµСЂРµР· СЃРµР»РµРєС‚РѕСЂС‹ (comp.query(), see DR p. 29)
 			String compPath = new Path(comp).getPath();
-			String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // окно - носитель скоупа
+			String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // РѕРєРЅРѕ - РЅРѕСЃРёС‚РµР»СЊ СЃРєРѕСѓРїР°
 			Component container = Path.getComponent(containerPath);
 			logger.trace("BetweenValidator.validate.  containerPath = {}, container = {}", containerPath, container);
 			String minValStr = (String)container.getAttribute("minVal")
@@ -149,28 +149,28 @@ public class BetweenFilters {
 	} // private static class BetweenValidator implements Constraint 
 
 	
-// TODO: !! маска (тчк) !!
-/** Применить фильтр типа between.
- * Окно должно содержать атрибуты  "minVal" и "maxVal" - значения по умолчанию, они же мин. и макс. возможные значения.
- * Даты в формате "yyyy-MM-dd".
- * Компонент окна определяется как корень (носитель скоупа) в пути к valFromComp.
- * Тип данных определяется по типу компонента valFromComp.
- * Реализовано для: Decimalbox-BigDecimal, Datebox-java.util.Date.
- * Кнопка Image меняет изображение на очистку заполненного фильтра если значения отличаются от поумолчательных, иначе изображает пустой фильтр.
- * Фильтр применяется со считанными значениями компонент valFromComp и valToComp
- *  (логика применения к данным передаётся через реализацию функционального интерейса Consumer);
- * Окно скрывается.
- * @param entryImage Управляющий видимостью окна компонент (Image).
- * @param valFromComp Компонент содержащий нижнюю границу (суффикс "ValFrom").
- * @param valToComp Компонент содержащий верхнюю границу (суффикс "ValTo").
- * @param applyLogic Логика применения фильтра, выполняется в конце перед сокрытием окна (optional).
+// TODO: !! РјР°СЃРєР° (С‚С‡Рє) !!
+/** РџСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂ С‚РёРїР° between.
+ * РћРєРЅРѕ РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ Р°С‚СЂРёР±СѓС‚С‹  "minVal" Рё "maxVal" - Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ, РѕРЅРё Р¶Рµ РјРёРЅ. Рё РјР°РєСЃ. РІРѕР·РјРѕР¶РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ.
+ * Р”Р°С‚С‹ РІ С„РѕСЂРјР°С‚Рµ "yyyy-MM-dd".
+ * РљРѕРјРїРѕРЅРµРЅС‚ РѕРєРЅР° РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РєР°Рє РєРѕСЂРµРЅСЊ (РЅРѕСЃРёС‚РµР»СЊ СЃРєРѕСѓРїР°) РІ РїСѓС‚Рё Рє valFromComp.
+ * РўРёРї РґР°РЅРЅС‹С… РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РїРѕ С‚РёРїСѓ РєРѕРјРїРѕРЅРµРЅС‚Р° valFromComp.
+ * Р РµР°Р»РёР·РѕРІР°РЅРѕ РґР»СЏ: Decimalbox-BigDecimal, Datebox-java.util.Date.
+ * РљРЅРѕРїРєР° Image РјРµРЅСЏРµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РЅР° РѕС‡РёСЃС‚РєСѓ Р·Р°РїРѕР»РЅРµРЅРЅРѕРіРѕ С„РёР»СЊС‚СЂР° РµСЃР»Рё Р·РЅР°С‡РµРЅРёСЏ РѕС‚Р»РёС‡Р°СЋС‚СЃСЏ РѕС‚ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С…, РёРЅР°С‡Рµ РёР·РѕР±СЂР°Р¶Р°РµС‚ РїСѓСЃС‚РѕР№ С„РёР»СЊС‚СЂ.
+ * Р¤РёР»СЊС‚СЂ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ СЃРѕ СЃС‡РёС‚Р°РЅРЅС‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё РєРѕРјРїРѕРЅРµРЅС‚ valFromComp Рё valToComp
+ *  (Р»РѕРіРёРєР° РїСЂРёРјРµРЅРµРЅРёСЏ Рє РґР°РЅРЅС‹Рј РїРµСЂРµРґР°С‘С‚СЃСЏ С‡РµСЂРµР· СЂРµР°Р»РёР·Р°С†РёСЋ С„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅРѕРіРѕ РёРЅС‚РµСЂРµР№СЃР° Consumer);
+ * РћРєРЅРѕ СЃРєСЂС‹РІР°РµС‚СЃСЏ.
+ * @param entryImage РЈРїСЂР°РІР»СЏСЋС‰РёР№ РІРёРґРёРјРѕСЃС‚СЊСЋ РѕРєРЅР° РєРѕРјРїРѕРЅРµРЅС‚ (Image).
+ * @param valFromComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValFrom").
+ * @param valToComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValTo").
+ * @param applyLogic Р›РѕРіРёРєР° РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°, РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РІ РєРѕРЅС†Рµ РїРµСЂРµРґ СЃРѕРєСЂС‹С‚РёРµРј РѕРєРЅР° (optional).
  */
 	public static void toggleOnBetweenFilter(Image entryImage, Component valFromComp, Component valToComp, Consumer<Object> applyLogic) {
-// TODO:HOWTO: разрешить нажатие
+// TODO:HOWTO: СЂР°Р·СЂРµС€РёС‚СЊ РЅР°Р¶Р°С‚РёРµ
 //		entryImage.enable();
 		logger.debug("toggleOnBetweenFilter entry.  entryImage: "+entryImage+", valFromComp: "+valFromComp+", valToComp: "+valToComp);
 		String compPath = new Path(valFromComp).getPath();
-		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // окно - носитель скоупа
+		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // РѕРєРЅРѕ - РЅРѕСЃРёС‚РµР»СЊ СЃРєРѕСѓРїР°
 		Component container = Path.getComponent(containerPath);
 		String minValStr = (String)container.getAttribute("minVal")
 			  ,maxValStr = (String)container.getAttribute("maxVal");
@@ -225,39 +225,39 @@ logger.debug("toggleOnBetweenFilter: sour:"+sour.getId()+" "+sour.getClass().get
 		logger.debug("toggleOnBetweenFilter. minVal = {}, maxVal = {}, valFrom = {}, valTo = {}", minVal, maxVal, valFrom, valTo);
 		if (valFrom != null && !valFrom.equals(minVal) || valTo != null && !valTo.equals(maxVal)) {
 			String clearFiltersIconName = Labels.getLabel("betweenFilters.entryImage.clearIcon", "/img/Data-Clear-Filters-icon_black(24).png");
-			entryImage.setSrc(clearFiltersIconName); // кнопка вызова модального диалога становится после применения фильтра кнопкой быстрой очистки
+			entryImage.setSrc(clearFiltersIconName); // РєРЅРѕРїРєР° РІС‹Р·РѕРІР° РјРѕРґР°Р»СЊРЅРѕРіРѕ РґРёР°Р»РѕРіР° СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РїРѕСЃР»Рµ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° РєРЅРѕРїРєРѕР№ Р±С‹СЃС‚СЂРѕР№ РѕС‡РёСЃС‚РєРё
 		} else {
 			String emptyFiltersIconName = Labels.getLabel("betweenFilters.entryImage.emptyIcon", "/img/Data-Empty-Filter-icon(24).png");
-			entryImage.setSrc(emptyFiltersIconName); // кнопка вызова модального диалога принимает вид пустого фильтра
+			entryImage.setSrc(emptyFiltersIconName); // РєРЅРѕРїРєР° РІС‹Р·РѕРІР° РјРѕРґР°Р»СЊРЅРѕРіРѕ РґРёР°Р»РѕРіР° РїСЂРёРЅРёРјР°РµС‚ РІРёРґ РїСѓСЃС‚РѕРіРѕ С„РёР»СЊС‚СЂР°
 		}
-// передаём как лямбда-параметр, чтобы метод был static
-//		if (gridDM.applyFilter(readFilter()) >= 0) refreshAfterDataChange(); // применить весь фильтр
+// РїРµСЂРµРґР°С‘Рј РєР°Рє Р»СЏРјР±РґР°-РїР°СЂР°РјРµС‚СЂ, С‡С‚РѕР±С‹ РјРµС‚РѕРґ Р±С‹Р» static
+//		if (gridDM.applyFilter(readFilter()) >= 0) refreshAfterDataChange(); // РїСЂРёРјРµРЅРёС‚СЊ РІРµСЃСЊ С„РёР»СЊС‚СЂ
 		if (applyLogic != null) {
 			applyLogic.accept(null);
 		}
 		container.setVisible(false);
-// TODO:HOWTO: разрешить нажатие
+// TODO:HOWTO: СЂР°Р·СЂРµС€РёС‚СЊ РЅР°Р¶Р°С‚РёРµ
 //		entryImage.enable();
 	} // public static void toggleOnBetweenFilter(Component sour)
 
-	/** Восстановить значения компонент фильтра из применённого фильтра или из поумолчательных значений
-	 * (т.е. бывших на момент открытия формы фильтра).
-	 * @param valFromComp Компонент содержащий нижнюю границу (суффикс "ValFrom").
-	 * @param valToComp Компонент содержащий верхнюю границу (суффикс "ValTo").
-	 * @param clear Очищать фильтр (сейчас всегда только очищается).
+	/** Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° РёР· РїСЂРёРјРµРЅС‘РЅРЅРѕРіРѕ С„РёР»СЊС‚СЂР° РёР»Рё РёР· РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№
+	 * (С‚.Рµ. Р±С‹РІС€РёС… РЅР° РјРѕРјРµРЅС‚ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ С„РёР»СЊС‚СЂР°).
+	 * @param valFromComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValFrom").
+	 * @param valToComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValTo").
+	 * @param clear РћС‡РёС‰Р°С‚СЊ С„РёР»СЊС‚СЂ (СЃРµР№С‡Р°СЃ РІСЃРµРіРґР° С‚РѕР»СЊРєРѕ РѕС‡РёС‰Р°РµС‚СЃСЏ).
 	 */
 	public static void restoreBetweenFilter(InputElement valFromComp, InputElement valToComp, boolean clear) {
 		String compPath = new Path(valFromComp).getPath();
-		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // окно - носитель скоупа
+		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // РѕРєРЅРѕ - РЅРѕСЃРёС‚РµР»СЊ СЃРєРѕСѓРїР°
 		Component container = Path.getComponent(containerPath);
 		String minValStr = (String)container.getAttribute("minVal")
 			  ,maxValStr = (String)container.getAttribute("maxVal");
 		Object minVal = null, maxVal = null;
 		if (!clear) {
-// TODO: читать применённые значения из dataFilter
+// TODO: С‡РёС‚Р°С‚СЊ РїСЂРёРјРµРЅС‘РЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РёР· dataFilter
 //			return;
 		}
-// если затребована очистка или компонент не участвует в фильтре
+// РµСЃР»Рё Р·Р°С‚СЂРµР±РѕРІР°РЅР° РѕС‡РёСЃС‚РєР° РёР»Рё РєРѕРјРїРѕРЅРµРЅС‚ РЅРµ СѓС‡Р°СЃС‚РІСѓРµС‚ РІ С„РёР»СЊС‚СЂРµ
 		if (valFromComp instanceof Decimalbox) {
 			minVal = new BigDecimal(minValStr);
 			maxVal = new BigDecimal(maxValStr);
@@ -282,29 +282,29 @@ logger.debug("toggleOnBetweenFilter: sour:"+sour.getId()+" "+sour.getClass().get
 		
 		logger.debug("restoreBetweenFilter.  valFromComp: {} of type {}, valToComp: {} of type {}, minValStr = {}, minVal = {}, maxValStr = {}, maxVal = {}", valFromComp.getId(), valFromComp.getClass().getName(), valToComp.getId(), valToComp.getClass().getName(), minValStr, minVal, maxValStr, maxVal);
 //		valFromComp.setRawValue(minVal); // setText(minValStr)
-//		valToComp.setRawValue(maxVal); // setText(maxValStr) - теряется точка - срабатывает валидатор !
+//		valToComp.setRawValue(maxVal); // setText(maxValStr) - С‚РµСЂСЏРµС‚СЃСЏ С‚РѕС‡РєР° - СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ РІР°Р»РёРґР°С‚РѕСЂ !
 	} // public static void restoreBetweenFilter(InputElement valFromComp, InputElement valToComp, boolean clear)
 
-	/** Очистка - восстановление поумолчательных значений (для вызова извне макрокомпонента, например, из GridDataFilter).
-	 * Предполагается, что вызывающий метод применяет после фильтр, потому меняем иконку управляющей кнопки на "чистый фильтр".
-	 * @param entryImage Управляющий видимостью окна компонент (Image).
-	 * @param valFromComp Компонент содержащий нижнюю границу (суффикс "ValFrom").
-	 * @param valToComp Компонент содержащий верхнюю границу (суффикс "ValTo").
+	/** РћС‡РёСЃС‚РєР° - РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ (РґР»СЏ РІС‹Р·РѕРІР° РёР·РІРЅРµ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р°, РЅР°РїСЂРёРјРµСЂ, РёР· GridDataFilter).
+	 * РџСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ, С‡С‚Рѕ РІС‹Р·С‹РІР°СЋС‰РёР№ РјРµС‚РѕРґ РїСЂРёРјРµРЅСЏРµС‚ РїРѕСЃР»Рµ С„РёР»СЊС‚СЂ, РїРѕС‚РѕРјСѓ РјРµРЅСЏРµРј РёРєРѕРЅРєСѓ СѓРїСЂР°РІР»СЏСЋС‰РµР№ РєРЅРѕРїРєРё РЅР° "С‡РёСЃС‚С‹Р№ С„РёР»СЊС‚СЂ".
+	 * @param entryImage РЈРїСЂР°РІР»СЏСЋС‰РёР№ РІРёРґРёРјРѕСЃС‚СЊСЋ РѕРєРЅР° РєРѕРјРїРѕРЅРµРЅС‚ (Image).
+	 * @param valFromComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValFrom").
+	 * @param valToComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValTo").
 	 * @see #restoreBetweenFilter(InputElement, InputElement, boolean)
 	 */
 	public static void clearBetweenFilter(Image entryImage, InputElement valFromComp, InputElement valToComp) {
 		restoreBetweenFilter(valFromComp, valToComp, true);
 		String emptyFiltersIconName = Labels.getLabel("betweenFilters.entryImage.emptyIcon", "/img/Data-Empty-Filter-icon(24).png");
-		entryImage.setSrc(emptyFiltersIconName); // кнопка вызова модального диалога принимает вид пустого фильтра
+		entryImage.setSrc(emptyFiltersIconName); // РєРЅРѕРїРєР° РІС‹Р·РѕРІР° РјРѕРґР°Р»СЊРЅРѕРіРѕ РґРёР°Р»РѕРіР° РїСЂРёРЅРёРјР°РµС‚ РІРёРґ РїСѓСЃС‚РѕРіРѕ С„РёР»СЊС‚СЂР°
 	} // public static void clearBetweenFilter(InputElement valFromComp, InputElement valToComp)
 
-	/** Проверка на пустоту (поумолчательность) значений (для вызова из GridDataFilter).
-	 * @param valFromComp Компонент содержащий нижнюю границу (суффикс "ValFrom").
-	 * @param valToComp Компонент содержащий верхнюю границу (суффикс "ValTo").
+	/** РџСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅРѕСЃС‚СЊ) Р·РЅР°С‡РµРЅРёР№ (РґР»СЏ РІС‹Р·РѕРІР° РёР· GridDataFilter).
+	 * @param valFromComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValFrom").
+	 * @param valToComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValTo").
 	 */
 	public static boolean isEmptyBetweenFilter(InputElement valFromComp, InputElement valToComp) {
 		String compPath = new Path(valFromComp).getPath();
-		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // окно - носитель скоупа
+		String containerPath = compPath.substring(0, compPath.lastIndexOf('/'))/*compPath.replace("ValFrom", "FltrWin").replace("ValTo", "FltrWin")*/; // РѕРєРЅРѕ - РЅРѕСЃРёС‚РµР»СЊ СЃРєРѕСѓРїР°
 		Component container = Path.getComponent(containerPath);
 		String minValStr = (String)container.getAttribute("minVal")
 			  ,maxValStr = (String)container.getAttribute("maxVal");
@@ -339,11 +339,11 @@ logger.debug("toggleOnBetweenFilter: sour:"+sour.getId()+" "+sour.getClass().get
 		return false;
 	} // public static boolean isEmptyBetweenFilter(InputElement valFromComp, InputElement valToComp)
 
-// TODO: ??? добавить параметр типа NVL (замена для null) ???
-	/** Оценка значения на прохождение фильтра (для вызова из GridDataFilterableModelMan.applyFilter()).
-	 * @param objValToEval Значение, которое нужно оценить против фильтра.
-	 * @param valFromComp Компонент содержащий нижнюю границу (суффикс "ValFrom").
-	 * @param valToComp Компонент содержащий верхнюю границу (суффикс "ValTo").
+// TODO: ??? РґРѕР±Р°РІРёС‚СЊ РїР°СЂР°РјРµС‚СЂ С‚РёРїР° NVL (Р·Р°РјРµРЅР° РґР»СЏ null) ???
+	/** РћС†РµРЅРєР° Р·РЅР°С‡РµРЅРёСЏ РЅР° РїСЂРѕС…РѕР¶РґРµРЅРёРµ С„РёР»СЊС‚СЂР° (РґР»СЏ РІС‹Р·РѕРІР° РёР· GridDataFilterableModelMan.applyFilter()).
+	 * @param objValToEval Р—РЅР°С‡РµРЅРёРµ, РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ РѕС†РµРЅРёС‚СЊ РїСЂРѕС‚РёРІ С„РёР»СЊС‚СЂР°.
+	 * @param valFromComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РЅРёР¶РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValFrom").
+	 * @param valToComp РљРѕРјРїРѕРЅРµРЅС‚ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІРµСЂС…РЅСЋСЋ РіСЂР°РЅРёС†Сѓ (СЃСѓС„С„РёРєСЃ "ValTo").
 	 * False for null.
 	 */
 	public static boolean evalBetweenFilter(Comparable<?> objValToEval, InputElement valFromComp, InputElement valToComp) {
@@ -362,7 +362,7 @@ logger.debug("toggleOnBetweenFilter: sour:"+sour.getId()+" "+sour.getClass().get
 			Date valFrom = null, valTo = null, valToEval = null;
 			valFrom = ((Datebox)valFromComp).getValue();
 			valTo = ((Datebox)valToComp).getValue();
-			valToEval = (Date)objValToEval; // здесь реально будет java.sql.Date (потомок java.util.Date)
+			valToEval = (Date)objValToEval; // Р·РґРµСЃСЊ СЂРµР°Р»СЊРЅРѕ Р±СѓРґРµС‚ java.sql.Date (РїРѕС‚РѕРјРѕРє java.util.Date)
 			if (valFrom != null && valTo != null && valToEval != null && valFrom.compareTo(valToEval) <= 0 && valTo.compareTo(valToEval) >= 0) {
 				retRes = true;
 			}
@@ -375,8 +375,8 @@ logger.debug("toggleOnBetweenFilter: sour:"+sour.getId()+" "+sour.getClass().get
 		return retRes;
 	} // public static boolean evalBetweenFilter(Comparable<?> objValToEval, InputElement valFromComp, InputElement valToComp)
 	
-	/** Вернуть экземпляр (внутреннего) класса валидатора. */
-	public static Constraint genBetweenValidator() { // потому что не умею создать объект вложенного класса в ZUL
+	/** Р’РµСЂРЅСѓС‚СЊ СЌРєР·РµРјРїР»СЏСЂ (РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ) РєР»Р°СЃСЃР° РІР°Р»РёРґР°С‚РѕСЂР°. */
+	public static Constraint genBetweenValidator() { // РїРѕС‚РѕРјСѓ С‡С‚Рѕ РЅРµ СѓРјРµСЋ СЃРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚ РІР»РѕР¶РµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР° РІ ZUL
 		return new BetweenValidator();
 	}
 

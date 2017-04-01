@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import basos.xe.data.entity.LimitInfo;
 import basos.xe.data.entity.SubjRestHistory;
 
 
-/** Специфичные для субъектов разнородные дата-сервисы. */
+/** РЎРїРµС†РёС„РёС‡РЅС‹Рµ РґР»СЏ СЃСѓР±СЉРµРєС‚РѕРІ СЂР°Р·РЅРѕСЂРѕРґРЅС‹Рµ РґР°С‚Р°-СЃРµСЂРІРёСЃС‹. */
 public class SubjDopService {
 	private static final Logger logger = LoggerFactory.getLogger(SubjDopService.class);
 	
 	
-	/** Состав группы лимита по ИД LM субъекта (одного из участников). */
+	/** РЎРѕСЃС‚Р°РІ РіСЂСѓРїРїС‹ Р»РёРјРёС‚Р° РїРѕ РР” LM СЃСѓР±СЉРµРєС‚Р° (РѕРґРЅРѕРіРѕ РёР· СѓС‡Р°СЃС‚РЅРёРєРѕРІ). */
 	public static List<String> getGroupMembersBySubjId(int subjId) {
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -34,7 +34,7 @@ public class SubjDopService {
 	} // public static List<String> getGroupMembersBySubjId(int subjId)
 
 	
-	/** История остатков по ИД LM субъекта. */
+	/** РСЃС‚РѕСЂРёСЏ РѕСЃС‚Р°С‚РєРѕРІ РїРѕ РР” LM СЃСѓР±СЉРµРєС‚Р°. */
 	public static List<SubjRestHistory> getRestHistoryBySubjId(int subjId) {
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -48,7 +48,7 @@ public class SubjDopService {
 	} // public static List<SubjRestHistory> getRestHistoryBySubjId(int subjId)
 	
 	
-	/** Инфо по лимиту кредитования включая историю использования (выборки) по ИД субъекта.
+	/** РРЅС„Рѕ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РІРєР»СЋС‡Р°СЏ РёСЃС‚РѕСЂРёСЋ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РІС‹Р±РѕСЂРєРё) РїРѕ РР” СЃСѓР±СЉРµРєС‚Р°.
 	 * @return nullable
 	 */
 	public static LimitInfo selectLimitInfoBySubjId(int subjId) {
@@ -58,7 +58,7 @@ public class SubjDopService {
 				sess.getConfiguration().addMapper(SubjDopMapper.class);
 			}
 			SubjDopMapper mp = sess.getMapper(SubjDopMapper.class);
-// FIXME: оптимизировать поиск ИД лимита, сделать одним вызовом
+// FIXME: РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РїРѕРёСЃРє РР” Р»РёРјРёС‚Р°, СЃРґРµР»Р°С‚СЊ РѕРґРЅРёРј РІС‹Р·РѕРІРѕРј
 			Integer idLimit = mp.selectIdLimitBySubjId(subjId);
 			logger.trace("selectLimitInfoBySubjId.  subjId = {}, idLimit = {}", subjId, idLimit);
 			if (idLimit == null) return null;
@@ -68,7 +68,7 @@ public class SubjDopService {
 		}
 	} // public static LimitInfo selectLimitInfoBySubjId(int subjId)
 	
-	/** Инфо по лимиту кредитования включая историю использования (выборки) по ИД лимита.
+	/** РРЅС„Рѕ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РІРєР»СЋС‡Р°СЏ РёСЃС‚РѕСЂРёСЋ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РІС‹Р±РѕСЂРєРё) РїРѕ РР” Р»РёРјРёС‚Р°.
 	 * @return nullable
 	 */
 	public static LimitInfo selectLimitInfoByIdLimit(int idLimit) {
@@ -86,7 +86,7 @@ public class SubjDopService {
 	} // public static LimitInfo selectLimitInfoByIdLimit(int idLimit)
 	
 	
-	/** Вернуть последнюю (по дате записи в БД) запись с данными сервиса DaData (+ комментарий) по ИНН. */
+	/** Р’РµСЂРЅСѓС‚СЊ РїРѕСЃР»РµРґРЅСЋСЋ (РїРѕ РґР°С‚Рµ Р·Р°РїРёСЃРё РІ Р‘Р”) Р·Р°РїРёСЃСЊ СЃ РґР°РЅРЅС‹РјРё СЃРµСЂРІРёСЃР° DaData (+ РєРѕРјРјРµРЅС‚Р°СЂРёР№) РїРѕ РРќРќ. */
 	public static DaDataInfo selectDaDataInfoLatestByInn(String inn) {
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -96,7 +96,7 @@ public class SubjDopService {
 			SubjDopMapper mp = sess.getMapper(SubjDopMapper.class);
 			DaDataInfo daDataInfo = mp.selectDaDataInfoLatestByInn(inn);
 			if (daDataInfo != null) {
-				daDataInfo.fixPartyActDateBeforeLong(); // сразу архивируем ДА в отдельное поле
+				daDataInfo.fixPartyActDateBeforeLong(); // СЃСЂР°Р·Сѓ Р°СЂС…РёРІРёСЂСѓРµРј Р”Рђ РІ РѕС‚РґРµР»СЊРЅРѕРµ РїРѕР»Рµ
 			}
 			logger.trace("selectDaDataInfoLatestByInn.  inn = {}, found?with saveTime = {}, ActDate = {}", inn, daDataInfo == null ? "<not_found>" : daDataInfo.getSaveTime(), daDataInfo == null ? "<not_found>" : daDataInfo.getPartyActDate() );
 			return daDataInfo;
@@ -105,10 +105,10 @@ public class SubjDopService {
 		}
 	} // public static DaDataInfo selectDaDataInfoLatestByInn(String inn)
 	
-	/** Добавить новую запись (новый ИНН или новая ДатаАктуальности - partyActDateLong).
-	 * userComment и userName не обязательны; saveTime не используется (заполняется на стороне БД текущим временем).
+	/** Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ (РЅРѕРІС‹Р№ РРќРќ РёР»Рё РЅРѕРІР°СЏ Р”Р°С‚Р°РђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё - partyActDateLong).
+	 * userComment Рё userName РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹; saveTime РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ (Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р” С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј).
 	 */
-// TODO: обработка ошибок (возможна конкуренция) !!
+// TODO: РѕР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє (РІРѕР·РјРѕР¶РЅР° РєРѕРЅРєСѓСЂРµРЅС†РёСЏ) !!
 	public static int insertDaDataInfo(DaDataInfo daDataInfo) {
 		if ( StringUtils.isEmpty(daDataInfo.getInn()) || StringUtils.isEmpty(daDataInfo.getSuggestParty()) || daDataInfo.getPartyActDate() == null || daDataInfo.getPartyActDateLong() == 0L ) {
 			logger.error("insertDaDataInfo.  inconsistent object: {}", daDataInfo);
@@ -130,9 +130,9 @@ public class SubjDopService {
 		}
 	} // public static int insertDaDataInfo(DaDataInfo daDataInfo)
 	
-	/** Обновить по ИНН + штампу_редакции (saveTime).
-	 * Для обновления штамп daDataInfo.saveTime д.б. старый (на стороне БД обновляется текущим временем).
-	 * Обновляем только коммент и юзера (при перегрузке из сервиса с новой ДА (проверка до вызова) всегда INSERT).
+	/** РћР±РЅРѕРІРёС‚СЊ РїРѕ РРќРќ + С€С‚Р°РјРїСѓ_СЂРµРґР°РєС†РёРё (saveTime).
+	 * Р”Р»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ С€С‚Р°РјРї daDataInfo.saveTime Рґ.Р±. СЃС‚Р°СЂС‹Р№ (РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р” РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј).
+	 * РћР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РєРѕРјРјРµРЅС‚ Рё СЋР·РµСЂР° (РїСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РёР· СЃРµСЂРІРёСЃР° СЃ РЅРѕРІРѕР№ Р”Рђ (РїСЂРѕРІРµСЂРєР° РґРѕ РІС‹Р·РѕРІР°) РІСЃРµРіРґР° INSERT).
 	 */
 	public static int updateDaDataInfoBySaveTime(DaDataInfo daDataInfo) {
  		if ( StringUtils.isEmpty(daDataInfo.getInn()) || daDataInfo.getSaveTime() == null ) {
@@ -155,12 +155,12 @@ public class SubjDopService {
 		}
 	} // public static int updateDaDataInfoBySaveTime(DaDataInfo daDataInfo)
 	
-	/** Добавление/обновление записи по inn + ДатеАктуальности - partyActDateLong.
-	 * Новый (по ДА) json всегда INSERT (userComment и userName не обязательны);
-	 * ДА не поменялясь - UPDATE (userComment, userName, которые не проверяем).
-	 * При любой операции обновляем saveTime = SYSTIMESTAMP, в записи поле штампа необязательно.
+	/** Р”РѕР±Р°РІР»РµРЅРёРµ/РѕР±РЅРѕРІР»РµРЅРёРµ Р·Р°РїРёСЃРё РїРѕ inn + Р”Р°С‚РµРђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё - partyActDateLong.
+	 * РќРѕРІС‹Р№ (РїРѕ Р”Рђ) json РІСЃРµРіРґР° INSERT (userComment Рё userName РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹);
+	 * Р”Рђ РЅРµ РїРѕРјРµРЅСЏР»СЏСЃСЊ - UPDATE (userComment, userName, РєРѕС‚РѕСЂС‹Рµ РЅРµ РїСЂРѕРІРµСЂСЏРµРј).
+	 * РџСЂРё Р»СЋР±РѕР№ РѕРїРµСЂР°С†РёРё РѕР±РЅРѕРІР»СЏРµРј saveTime = SYSTIMESTAMP, РІ Р·Р°РїРёСЃРё РїРѕР»Рµ С€С‚Р°РјРїР° РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ.
 	 */
-// !!! INSERT проходит, при UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Данные для считывания из сокета отсутствуют
+// !!! INSERT РїСЂРѕС…РѕРґРёС‚, РїСЂРё UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Р”Р°РЅРЅС‹Рµ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РёР· СЃРѕРєРµС‚Р° РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚
 // MERGE statement (http://stackoverflow.com/questions/19593785/how-can-i-use-oracle-merge-statement-using-mybatis)
 // https://docs.oracle.com/database/121/SQLRF/statements_9016.htm#SQLRF01606
 	public static int mergeDaDataInfoByActDate(DaDataInfo daDataInfo) {

@@ -1,4 +1,4 @@
-package basos.xe.abcpmon.zkui.compose;
+п»їpackage basos.xe.abcpmon.zkui.compose;
 
 import basos.core.SafeFormatter;
 import basos.core.TriFunction;
@@ -33,7 +33,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /*import java.io.StringReader;
-import javax.json.Json; // тупо скопировал wildfly1010F\modules\system\layers\base\org\glassfish\javax\json\main\javax.json-1.0.3.jar в ZKOrclReportGrid\WebContent\WEB-INF\lib\
+import javax.json.Json; // С‚СѓРїРѕ СЃРєРѕРїРёСЂРѕРІР°Р» wildfly1010F\modules\system\layers\base\org\glassfish\javax\json\main\javax.json-1.0.3.jar РІ ZKOrclReportGrid\WebContent\WEB-INF\lib\
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;*/
@@ -42,12 +42,12 @@ import org.apache.commons.collections4.EnumerationUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-/*// minimal-json, не имеет Parser-API
+/*// minimal-json, РЅРµ РёРјРµРµС‚ Parser-API
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;*/
 
-import com.github.wnameless.json.flattener.JsonFlattener; // преобразователь json в плоскую структуру (ключи конкатенируются через заданный разделитель), которую удобно передавать в ZUL-форму; использует minimal-json
+import com.github.wnameless.json.flattener.JsonFlattener; // РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚РµР»СЊ json РІ РїР»РѕСЃРєСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ (РєР»СЋС‡Рё РєРѕРЅРєР°С‚РµРЅРёСЂСѓСЋС‚СЃСЏ С‡РµСЂРµР· Р·Р°РґР°РЅРЅС‹Р№ СЂР°Р·РґРµР»РёС‚РµР»СЊ), РєРѕС‚РѕСЂСѓСЋ СѓРґРѕР±РЅРѕ РїРµСЂРµРґР°РІР°С‚СЊ РІ ZUL-С„РѕСЂРјСѓ; РёСЃРїРѕР»СЊР·СѓРµС‚ minimal-json
 
 //import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
@@ -123,39 +123,39 @@ import org.zkoss.zul.Combobutton;
 import org.zkoss.zul.Div;
 
 
-/** Контроллер (основной) страницы subjsPage. */
-@VariableResolver(org.zkoss.zkplus.cdi.DelegatingVariableResolver.class) // не рекомендуется делать контроллер бином и отдавать под управление Weld, а оставлять под управлением ZK, т.к. у него свой особый жизненный цикл
+/** РљРѕРЅС‚СЂРѕР»Р»РµСЂ (РѕСЃРЅРѕРІРЅРѕР№) СЃС‚СЂР°РЅРёС†С‹ subjsPage. */
+@VariableResolver(org.zkoss.zkplus.cdi.DelegatingVariableResolver.class) // РЅРµ СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РґРµР»Р°С‚СЊ РєРѕРЅС‚СЂРѕР»Р»РµСЂ Р±РёРЅРѕРј Рё РѕС‚РґР°РІР°С‚СЊ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµ Weld, Р° РѕСЃС‚Р°РІР»СЏС‚СЊ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµРј ZK, С‚.Рє. Сѓ РЅРµРіРѕ СЃРІРѕР№ РѕСЃРѕР±С‹Р№ Р¶РёР·РЅРµРЅРЅС‹Р№ С†РёРєР»
 public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	private static final long serialVersionUID = 7659563013365157950L;
-// HOWTO: ! методы д.б. public хотя бы они вызываются из ZUL или связаны аннотацией Listen (в этом случае ошибка для private скрывается !) !!
+// HOWTO: ! РјРµС‚РѕРґС‹ Рґ.Р±. public С…РѕС‚СЏ Р±С‹ РѕРЅРё РІС‹Р·С‹РІР°СЋС‚СЃСЏ РёР· ZUL РёР»Рё СЃРІСЏР·Р°РЅС‹ Р°РЅРЅРѕС‚Р°С†РёРµР№ Listen (РІ СЌС‚РѕРј СЃР»СѓС‡Р°Рµ РѕС€РёР±РєР° РґР»СЏ private СЃРєСЂС‹РІР°РµС‚СЃСЏ !) !!
 	
 	private static final Logger logger = LoggerFactory.getLogger(SubjsPageComposer.class);
 	
-// пейджирование, отделённое от грида
+// РїРµР№РґР¶РёСЂРѕРІР°РЅРёРµ, РѕС‚РґРµР»С‘РЅРЅРѕРµ РѕС‚ РіСЂРёРґР°
     //@Wire private Div pagingHolder;
     @Wire
-    private Paging subjSummPaging; // ? макрокомпонент (div > paging) ? связь Paging с Grid / Listbox !
+    private Paging subjSummPaging; // ? РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚ (div > paging) ? СЃРІСЏР·СЊ Paging СЃ Grid / Listbox !
     
 	@Wire
-	private Label subjSummLabelSummary; // TODO: (low) перенести на клиента (onAfterRender)
+	private Label subjSummLabelSummary; // TODO: (low) РїРµСЂРµРЅРµСЃС‚Рё РЅР° РєР»РёРµРЅС‚Р° (onAfterRender)
 	
 	@Wire
 	private Grid subjSummGrid;
 	
-	private GridDataFilter subjSummFilter; // Композитный фильтр - массив компонентов, рассматриваемых совместно и формирующих дата-модель грида при наложении их построчно на "эталонный набор строк", предоставляемый дата-провайдером
+	private GridDataFilter subjSummFilter; // РљРѕРјРїРѕР·РёС‚РЅС‹Р№ С„РёР»СЊС‚СЂ - РјР°СЃСЃРёРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ, СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹С… СЃРѕРІРјРµСЃС‚РЅРѕ Рё С„РѕСЂРјРёСЂСѓСЋС‰РёС… РґР°С‚Р°-РјРѕРґРµР»СЊ РіСЂРёРґР° РїСЂРё РЅР°Р»РѕР¶РµРЅРёРё РёС… РїРѕСЃС‚СЂРѕС‡РЅРѕ РЅР° "СЌС‚Р°Р»РѕРЅРЅС‹Р№ РЅР°Р±РѕСЂ СЃС‚СЂРѕРє", РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµРјС‹Р№ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРѕРј
 	
-// TODO: провайдер перевести в локальные переменные (doAfterCompose)
+// TODO: РїСЂРѕРІР°Р№РґРµСЂ РїРµСЂРµРІРµСЃС‚Рё РІ Р»РѕРєР°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ (doAfterCompose)
 /* https://www.zkoss.org/wiki/Small%20Talks/2012/September/Practices%20Of%20Using%20CDI%20In%20ZK
  By now(ZK 6.0.2) ZK's Variable Resolving approach can only work with named beans in CDI.
  If your CDI beans are based on Alternative or Producer you'll have to add an adoption layer(a facade or something)
   to make them accessible with Variable Resolver.
 */
-	@WireVariable("subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
-	private GridDataProviderWPk<SubjSumm> subjSummProvider; // Провайдер данных для модели грида (в т.ч. инфо о текущем ПК)
+	@WireVariable("subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
+	private GridDataProviderWPk<SubjSumm> subjSummProvider; // РџСЂРѕРІР°Р№РґРµСЂ РґР°РЅРЅС‹С… РґР»СЏ РјРѕРґРµР»Рё РіСЂРёРґР° (РІ С‚.С‡. РёРЅС„Рѕ Рѕ С‚РµРєСѓС‰РµРј РџРљ)
     
-	private GridDataFilterableModelMan<SubjSumm> subjSummModelManager; // Связующее звено между контроллером грида, дата-провайдером модели, самой моделью грида, композитным фильтром
+	private GridDataFilterableModelMan<SubjSumm> subjSummModelManager; // РЎРІСЏР·СѓСЋС‰РµРµ Р·РІРµРЅРѕ РјРµР¶РґСѓ РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј РіСЂРёРґР°, РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРѕРј РјРѕРґРµР»Рё, СЃР°РјРѕР№ РјРѕРґРµР»СЊСЋ РіСЂРёРґР°, РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј
     
-// кнопки toolbar принадлежат tabbox (вне tabpanels)
+// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels)
  	@Wire
  	private Toolbarbutton clearFilterToolBB;
  	
@@ -163,7 +163,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
  	private Charts chartSubjRests;
  	private CategoryModel chartSubjRestsCatModel;*/
  	
- 	private EventQueue<Event> interDeskEQ; // синхронная (UI) очередь inter-desktop задач - сериализуемая ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
+ 	private EventQueue<Event> interDeskEQ; // СЃРёРЅС…СЂРѕРЅРЅР°СЏ (UI) РѕС‡РµСЂРµРґСЊ inter-desktop Р·Р°РґР°С‡ - СЃРµСЂРёР°Р»РёР·СѓРµРјР°СЏ ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
     
 /*    private Runnable cleanupCmnd = () -> {
    		logger.debug("cleanupCmnd.run(), asyncExecutor = {}", asyncExecutor);
@@ -177,23 +177,23 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 */  
     
     
-    /** {@inheritDoc} После инициализации компонента создаём дата-провайдера, набор поведения для фильтра, сам
-     * композитный фильтр, дата-менеджер; получаем из него модель грида и назначаем её; инициализируем екзекьютеры и проч.
+    /** {@inheritDoc} РџРѕСЃР»Рµ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РєРѕРјРїРѕРЅРµРЅС‚Р° СЃРѕР·РґР°С‘Рј РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂР°, РЅР°Р±РѕСЂ РїРѕРІРµРґРµРЅРёСЏ РґР»СЏ С„РёР»СЊС‚СЂР°, СЃР°Рј
+     * РєРѕРјРїРѕР·РёС‚РЅС‹Р№ С„РёР»СЊС‚СЂ, РґР°С‚Р°-РјРµРЅРµРґР¶РµСЂ; РїРѕР»СѓС‡Р°РµРј РёР· РЅРµРіРѕ РјРѕРґРµР»СЊ РіСЂРёРґР° Рё РЅР°Р·РЅР°С‡Р°РµРј РµС‘; РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РµРєР·РµРєСЊСЋС‚РµСЂС‹ Рё РїСЂРѕС‡.
      */
 	@Override
 	protected void initAfterCompose(Component comp) throws Exception { // implementation specific part of doAfterCompose (at the and of)
-// FIXME: ловить исключения и делать аварийное завершение (HOWTO: как (scope ?) ? getWebManager( Executions.getCurrent().getDesktop().getWebApp() or Sessions.getCurrent(false).getWebApp() or WebApps.getCurrent() - не одно и то же !! ).destroy() ? ) !
+// FIXME: Р»РѕРІРёС‚СЊ РёСЃРєР»СЋС‡РµРЅРёСЏ Рё РґРµР»Р°С‚СЊ Р°РІР°СЂРёР№РЅРѕРµ Р·Р°РІРµСЂС€РµРЅРёРµ (HOWTO: РєР°Рє (scope ?) ? getWebManager( Executions.getCurrent().getDesktop().getWebApp() or Sessions.getCurrent(false).getWebApp() or WebApps.getCurrent() - РЅРµ РѕРґРЅРѕ Рё С‚Рѕ Р¶Рµ !! ).destroy() ? ) !
 		
 // TESTME !!
-// FIXME: ? как обеспечить уникальность задачи для сессии/приложения; ИД ? ?
-/*		GlobalCleaner.clear(WebAppCleanup.class); // !! надо как-то бороться с дублированием при перечитывании страницы !!
+// FIXME: ? РєР°Рє РѕР±РµСЃРїРµС‡РёС‚СЊ СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ Р·Р°РґР°С‡Рё РґР»СЏ СЃРµСЃСЃРёРё/РїСЂРёР»РѕР¶РµРЅРёСЏ; РР” ? ?
+/*		GlobalCleaner.clear(WebAppCleanup.class); // !! РЅР°РґРѕ РєР°Рє-С‚Рѕ Р±РѕСЂРѕС‚СЊСЃСЏ СЃ РґСѓР±Р»РёСЂРѕРІР°РЅРёРµРј РїСЂРё РїРµСЂРµС‡РёС‚С‹РІР°РЅРёРё СЃС‚СЂР°РЅРёС†С‹ !!
 		GlobalCleaner.registerCommand(cleanupMockCmnd, WebAppCleanup.class);
-		GlobalCleaner.registerCommand(cleanupCmnd, WebAppCleanup.class); // не удалось добиться неявного вызова
+		GlobalCleaner.registerCommand(cleanupCmnd, WebAppCleanup.class); // РЅРµ СѓРґР°Р»РѕСЃСЊ РґРѕР±РёС‚СЊСЃСЏ РЅРµСЏРІРЅРѕРіРѕ РІС‹Р·РѕРІР°
     	GlobalCleaner.clear(SessionCleanup.class);
 		GlobalCleaner.registerCommand(cleanupMockCmnd, SessionCleanup.class);
-		GlobalCleaner.registerCommand(cleanupCmnd, SessionCleanup.class); // вызывается только по таймауту (после ExecutionCleanup и DesktopCleanup), причём дважды из одного потока
+		GlobalCleaner.registerCommand(cleanupCmnd, SessionCleanup.class); // РІС‹Р·С‹РІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕ С‚Р°Р№РјР°СѓС‚Сѓ (РїРѕСЃР»Рµ ExecutionCleanup Рё DesktopCleanup), РїСЂРёС‡С‘Рј РґРІР°Р¶РґС‹ РёР· РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР°
 		GlobalCleaner.registerCommand(cleanupMockCmnd, DesktopCleanup.class);
-		GlobalCleaner.registerCommand(cleanupCmnd, DesktopCleanup.class); // вызывается при уходе со страницы, таймауте, закрытии вкладки(! в т.ч. timeout.zul) на пару, но после ExecutionCleanup; иногда дважды подряд в одном потоке
+		GlobalCleaner.registerCommand(cleanupCmnd, DesktopCleanup.class); // РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ СЃРѕ СЃС‚СЂР°РЅРёС†С‹, С‚Р°Р№РјР°СѓС‚Рµ, Р·Р°РєСЂС‹С‚РёРё РІРєР»Р°РґРєРё(! РІ С‚.С‡. timeout.zul) РЅР° РїР°СЂСѓ, РЅРѕ РїРѕСЃР»Рµ ExecutionCleanup; РёРЅРѕРіРґР° РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ РІ РѕРґРЅРѕРј РїРѕС‚РѕРєРµ
 		//GlobalCleaner.registerCommand(cleanupCmnd, ExecutionCleanup.class);
     	Cleanups.add(new GlobalCleaner());
 		Sessions.getCurrent(false).getWebApp().getConfiguration().addListener(GlobalCleaner.class);*/
@@ -201,7 +201,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	
 		if (subjSummProvider == null) subjSummProvider = new /*basos.xe.data.dao.impl.GridDataProviderOrclSubjSumm(false)*/basos.xe.data.dao.impl.TestGridDataProviderMockSubjSumm(888);
 		
-		changePkToolBB.setTooltiptext("Выбор PK, сейчас: " + subjSummProvider.getPk().orElse("null(uid)"));
+		changePkToolBB.setTooltiptext("Р’С‹Р±РѕСЂ PK, СЃРµР№С‡Р°СЃ: " + subjSummProvider.getPk().orElse("null(uid)"));
 		
 		subjSummModelManager = initFilterableMesh(subjSummProvider, subjSummGrid, subjSummPaging, subjSummLabelSummary, subjSummPmHolder);
 		subjSummFilter = subjSummModelManager.getDataFilter();
@@ -209,7 +209,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 /*		initBehavMap();
 		
 		AbstractComponent[] filterComps = UIUtil.extractFilterControlsFromAuxhead(subjSummGrid);
-// FIXME: параметризовать фильтр типом бина ???
+// FIXME: РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°С‚СЊ С„РёР»СЊС‚СЂ С‚РёРїРѕРј Р±РёРЅР° ???
 		try {
 			subjSummFilter = new GridDataFilter(subjSummProvider, behavMap, filterComps); // lmc_rowidTB, cluidTB, idlimitIB, is_riskCHB, s_usd_balFltr, rest_msfo_usdFltr, dd_probl_proj_beginFltr, selFilterCHB, subj_idIB, subj_nameTB, gr_nameTB, ko_fioTB, curator_fioTB, acd_prodTB, yak_nameCombo, br_nameCombo, cityCombo, kko_otdelCombo, kko_upravlCombo, cat_nameCombo, clibr_nameCombo, b2segmCombo, asv_name_okeqCombo   //new ArrayList<AbstractComponent>(Arrays.asList(selFilterCHB, subj_idIB, subj_nameTB, gr_nameTB, ko_fioTB, curator_fioTB, acd_prodTB, yak_nameCombo, br_nameCombo, cityCombo, kko_otdelCombo, kko_upravlCombo, cat_nameCombo, clibr_nameCombo, b2segmCombo, asv_name_okeqCombo)).toArray(new AbstractComponent[0])
 		} catch (Throwable e) {
@@ -220,18 +220,18 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		
 		subjSummModelManager = new GridDataFilterableModelMan<>(SubjSumm.class, subjSummProvider, subjSummFilter);
 		
-	    subjSummGrid.setModel(subjSummModelManager.getGridLML()); // лист-модель грида на данных, предоставленных провайдером (изначально содержит копию полного списка) и управляемая фильтром
+	    subjSummGrid.setModel(subjSummModelManager.getGridLML()); // Р»РёСЃС‚-РјРѕРґРµР»СЊ РіСЂРёРґР° РЅР° РґР°РЅРЅС‹С…, РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅС‹С… РїСЂРѕРІР°Р№РґРµСЂРѕРј (РёР·РЅР°С‡Р°Р»СЊРЅРѕ СЃРѕРґРµСЂР¶РёС‚ РєРѕРїРёСЋ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°) Рё СѓРїСЂР°РІР»СЏРµРјР°СЏ С„РёР»СЊС‚СЂРѕРј
 	    
-	    subjSummGrid.setAttribute("GridDataModelMan", subjSummModelManager); // RULE: так связываем грид/листбокс с менеджером его лист-модели (GridDataModelMan)
-	    subjSummGrid.setAttribute("ExtPaging", subjSummPaging); // RULE: так связываем грид/листбокс с внешним страничным контроллером
-	    subjSummGrid.setAttribute("SummaryLabel", subjSummLabelSummary); // RULE: так связываем грид/листбокс с меткой, в которую выводим итоги при изменении модели
-	    subjSummGrid.setAttribute("PmHolder", subjSummPmHolder); // RULE: так связываем грид/листбокс с контейнером для UI-элементов ZKWorkerWithTimerAndPM 
+	    subjSummGrid.setAttribute("GridDataModelMan", subjSummModelManager); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµРЅРµРґР¶РµСЂРѕРј РµРіРѕ Р»РёСЃС‚-РјРѕРґРµР»Рё (GridDataModelMan)
+	    subjSummGrid.setAttribute("ExtPaging", subjSummPaging); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РІРЅРµС€РЅРёРј СЃС‚СЂР°РЅРёС‡РЅС‹Рј РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј
+	    subjSummGrid.setAttribute("SummaryLabel", subjSummLabelSummary); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РјРµС‚РєРѕР№, РІ РєРѕС‚РѕСЂСѓСЋ РІС‹РІРѕРґРёРј РёС‚РѕРіРё РїСЂРё РёР·РјРµРЅРµРЅРёРё РјРѕРґРµР»Рё
+	    subjSummGrid.setAttribute("PmHolder", subjSummPmHolder); // RULE: С‚Р°Рє СЃРІСЏР·С‹РІР°РµРј РіСЂРёРґ/Р»РёСЃС‚Р±РѕРєСЃ СЃ РєРѕРЅС‚РµР№РЅРµСЂРѕРј РґР»СЏ UI-СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM 
 	    
-	    subjSummLabelSummary.setValue("Всего строк: " + subjSummModelManager.getCurRowCount()); // TODO: (low) перенести на клиента (onAfterRender)
+	    subjSummLabelSummary.setValue("Р’СЃРµРіРѕ СЃС‚СЂРѕРє: " + subjSummModelManager.getCurRowCount()); // TODO: (low) РїРµСЂРµРЅРµСЃС‚Рё РЅР° РєР»РёРµРЅС‚Р° (onAfterRender)
 */
 	    
-	    logger.trace("doAfterCompose. Rows.VisibleItemCount = {}", subjSummGrid.getRows().getVisibleItemCount()); // показывает общее кол-во строк в модели; не работает (нул пойнтёр) в doAfterRender
-// TESTME: autowiring ! см. Components.getImplicit()
+	    logger.trace("doAfterCompose. Rows.VisibleItemCount = {}", subjSummGrid.getRows().getVisibleItemCount()); // РїРѕРєР°Р·С‹РІР°РµС‚ РѕР±С‰РµРµ РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ РјРѕРґРµР»Рё; РЅРµ СЂР°Р±РѕС‚Р°РµС‚ (РЅСѓР» РїРѕР№РЅС‚С‘СЂ) РІ doAfterRender
+// TESTME: autowiring ! СЃРј. Components.getImplicit()
 		if (desktop == null) {
 			logger.trace("desktop autowiring did not work.  Scopes.getImplicit = '{}'", Scopes.getImplicit("desktop", null));
 			desktop = /*subjSummGrid.getDesktop()*/Executions.getCurrent().getDesktop();
@@ -239,15 +239,15 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		logger.trace("doAfterCompose. Locales.getCurrent: {}, getAvailableLocales: {}", Locales.getCurrent(), Arrays.deepToString(Locale.getAvailableLocales()));
 		logger.trace("doAfterCompose. subjSummGrid.pageSize from \\WebContent\\WEB-INF\\zk-label.properties (def 77): {}", Integer.valueOf(Labels.getLabel("dataGrid.pageSize", "77")).intValue() );
 		
-// принудительно включаем пейджирование при кол-ве строк 5000+ (в настройки !)
+// РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РІРєР»СЋС‡Р°РµРј РїРµР№РґР¶РёСЂРѕРІР°РЅРёРµ РїСЂРё РєРѕР»-РІРµ СЃС‚СЂРѕРє 5000+ (РІ РЅР°СЃС‚СЂРѕР№РєРё !)
 		if (subjSummModelManager.getCurRowCount() > 5000) ExtPagingUtil.changePaging(subjSummPaging, subjSummGrid, pagingToolBB);
 		
-// перехватчики request уровня компонента
+// РїРµСЂРµС…РІР°С‚С‡РёРєРё request СѓСЂРѕРІРЅСЏ РєРѕРјРїРѕРЅРµРЅС‚Р°
 //    	rest_msfo_usdCBTpopup.setAuService(new PopupBlockService());
 //    	rest_msfo_usdCBT.setAuService(new CombobuttonBlockService());
 		
 		//int asyncExecutorFixedThreadPoolSize = Integer.valueOf(Labels.getLabel("dataGridComposer.asyncExecutorFixedThreadPoolSize", "3")).intValue();
-		//asyncExecutor = Executors.newFixedThreadPool(asyncExecutorFixedThreadPoolSize)/*newSingleThreadExecutor()*/; // FIXME: настройка (properties) ! Integer.valueOf(Labels.getLabel("workingThreadCnt", "3")).intValue()
+		//asyncExecutor = Executors.newFixedThreadPool(asyncExecutorFixedThreadPoolSize)/*newSingleThreadExecutor()*/; // FIXME: РЅР°СЃС‚СЂРѕР№РєР° (properties) ! Integer.valueOf(Labels.getLabel("workingThreadCnt", "3")).intValue()
 		
 // TODO: (see DR p.235) handle onClientInfo(ClientInfoEvent evt) registered on root element for retrieve browser info such as getTimeZone(), getScreenWidth(), getScreenHeight()
 		logger.debug("SelectorComposer.doAfterCompose. comp: " + comp.getClass().getName() + ", compId: "+comp.getId()
@@ -264,7 +264,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			+ "\n, Version: " + desktop.getWebApp().getVersion() // Version: 8.0.1.1, Build: 2016020312
 			+ "\n, Build: " + desktop.getWebApp().getBuild()
 			+ "\n, Edition: " + WebApps.getEdition() // CE
-///*оч.много*/			+ "\n, WebApp.Attributes (same as in ServletContext): " + WebApps.getCurrent().getAttributes().entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }"))
+///*РѕС‡.РјРЅРѕРіРѕ*/			+ "\n, WebApp.Attributes (same as in ServletContext): " + WebApps.getCurrent().getAttributes().entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }"))
 			+ "\n, ServerInfo: " + desktop.getWebApp().getServletContext().getServerInfo() // WildFly 2.2.0.Final - 1.4.0.Final
 			+ "\n, ServletContext.ContextPath: " + WebApps.getCurrent().getServletContext().getContextPath() // /ZKOrclReportGrid
 			+ "\n, ServletContext.ServletContextName: " + WebApps.getCurrent().getServletContext().getServletContextName() // ZKOrclReportGrid
@@ -279,7 +279,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			+ "\n, Execution.RemoteAddr: " + Executions.getCurrent().getRemoteAddr()
 			+ "\n, Execution.RemoteHost: " + Executions.getCurrent().getRemoteHost()
 			+ "\n, Execution.RemoteUser: " + Executions.getCurrent().getRemoteUser()
-			+ "\n, Execution.Attributes: " + Executions.getCurrent().getAttributes().entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }")) // в т.ч. ссылка на Desktop
+			+ "\n, Execution.Attributes: " + Executions.getCurrent().getAttributes().entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }")) // РІ С‚.С‡. СЃСЃС‹Р»РєР° РЅР° Desktop
 			+ "\n, Execution.ParameterMap: " + Executions.getCurrent().getParameterMap().entrySet().stream().map((Map.Entry<String,String[]> k)->{return "['"+k.getKey()+"':'<"+k.getValue().toString()+">']";}).collect(Collectors.joining(", ", "{ ", " }")) // empty
 			+ "\n, Desktop.Id: " + desktop.getId()
 			+ "\n, Page.Id: " + subjSummGrid.getPage().getId() // empty
@@ -299,20 +299,20 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	    System.err.println("Where is my STDERR ?");
 	    
 /* Logging (Slf4j + wildfly/logback)
- +Override logging in WildFly (как разрешить logback для приложения не меняя серверное логирование): http://stackoverflow.com/questions/21846329/override-logging-in-wildfly/26342226#26342226
-    META-INF\jboss-deployment-structure.xml позволяет не использовать серверное логирование в приложении (исключается подсистема: exclude-subsystem prevents a subsystems deployment unit processors running on a deployment which gives basically the same effect as removing the subsystem, but it only affects single deployment)
-  Enable logback in JBoss (не пробовал, связывает серверное логирование с Logback): http://blog.anotheria.net/devops/enable-logback-in-jboss/
-  WildFly v10 Logging Configuration (нифига нет, исходников тоже): https://docs.jboss.org/author/display/WFLY10/Logging+Configuration?_sscc=t
+ +Override logging in WildFly (РєР°Рє СЂР°Р·СЂРµС€РёС‚СЊ logback РґР»СЏ РїСЂРёР»РѕР¶РµРЅРёСЏ РЅРµ РјРµРЅСЏСЏ СЃРµСЂРІРµСЂРЅРѕРµ Р»РѕРіРёСЂРѕРІР°РЅРёРµ): http://stackoverflow.com/questions/21846329/override-logging-in-wildfly/26342226#26342226
+    META-INF\jboss-deployment-structure.xml РїРѕР·РІРѕР»СЏРµС‚ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЃРµСЂРІРµСЂРЅРѕРµ Р»РѕРіРёСЂРѕРІР°РЅРёРµ РІ РїСЂРёР»РѕР¶РµРЅРёРё (РёСЃРєР»СЋС‡Р°РµС‚СЃСЏ РїРѕРґСЃРёСЃС‚РµРјР°: exclude-subsystem prevents a subsystems deployment unit processors running on a deployment which gives basically the same effect as removing the subsystem, but it only affects single deployment)
+  Enable logback in JBoss (РЅРµ РїСЂРѕР±РѕРІР°Р», СЃРІСЏР·С‹РІР°РµС‚ СЃРµСЂРІРµСЂРЅРѕРµ Р»РѕРіРёСЂРѕРІР°РЅРёРµ СЃ Logback): http://blog.anotheria.net/devops/enable-logback-in-jboss/
+  WildFly v10 Logging Configuration (РЅРёС„РёРіР° РЅРµС‚, РёСЃС…РѕРґРЅРёРєРѕРІ С‚РѕР¶Рµ): https://docs.jboss.org/author/display/WFLY10/Logging+Configuration?_sscc=t
   For web-applications, configuration files (logback-test.xml / logback.xml) can be placed directly under WEB-INF/classes
  (http://stackoverflow.com/questions/20427307/where-to-put-logback-xml-in-tomcat)
  (http://logback.qos.ch/faq.html#configFileLocation)
  (http://stackoverflow.com/questions/8278079/slf4j-and-logback-configuration-in-gwt-eclipse-and-jetty)
-  Практика использования маркеров и контекстов:
+  РџСЂР°РєС‚РёРєР° РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РјР°СЂРєРµСЂРѕРІ Рё РєРѕРЅС‚РµРєСЃС‚РѕРІ:
     http://stackoverflow.com/questions/4165558/best-practices-for-using-markers-in-slf4j-logback
     http://stackoverflow.com/questions/16813032/what-is-markers-in-java-logging-frameworks-and-that-is-a-reason-to-use-them
-  How to redirect System.out to a log file using Logback (не пробовал): http://stackoverflow.com/questions/39170008/how-to-redirect-system-out-to-a-log-file-using-logback
+  How to redirect System.out to a log file using Logback (РЅРµ РїСЂРѕР±РѕРІР°Р»): http://stackoverflow.com/questions/39170008/how-to-redirect-system-out-to-a-log-file-using-logback
 */		
-	    interDeskEQ = EventQueues.lookup("interDeskEQ"); // синхронная (UI) очередь inter-desktop задач - сериализуемая ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
+	    interDeskEQ = EventQueues.lookup("interDeskEQ"); // СЃРёРЅС…СЂРѕРЅРЅР°СЏ (UI) РѕС‡РµСЂРµРґСЊ inter-desktop Р·Р°РґР°С‡ - СЃРµСЂРёР°Р»РёР·СѓРµРјР°СЏ ! // Returns the desktop-level event queue with the specified name in the current desktop, or if no such event queue, create one
 	    
 	    //initSubjRestsChartModel();
 	    
@@ -335,7 +335,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		chartSubjRests.setModel(chartSubjRestsCatModel);
 	} // private void initSubjRestsChartModel()
 */	
-    /*// не работает...
+    /*// РЅРµ СЂР°Р±РѕС‚Р°РµС‚...
     public void processBeans(@javax.enterprise.event.Observes javax.enterprise.inject.spi.ProcessBean<?> event) {
     	javax.enterprise.inject.spi.AnnotatedMethod<?> info;
         if (event instanceof javax.enterprise.inject.spi.ProcessProducerMethod) {
@@ -350,17 +350,17 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	public void onChangeTab(SelectEvent<Tab, ?> sev) {
 		Tab prevTab = sev.getUnselectedItems().iterator().next()
 		   ,newTab = sev.getReference();
-		// управлять Toolbox'ом
-		if ( "subjsTab".equals(prevTab.getId()) ) { // покинули панель субъектов
+		// СѓРїСЂР°РІР»СЏС‚СЊ Toolbox'РѕРј
+		if ( "subjsTab".equals(prevTab.getId()) ) { // РїРѕРєРёРЅСѓР»Рё РїР°РЅРµР»СЊ СЃСѓР±СЉРµРєС‚РѕРІ
 			tools.setVisible(false);
-		} else if ( "subjsTab".equals(newTab.getId()) ) { // вернулись на панель субъектов
+		} else if ( "subjsTab".equals(newTab.getId()) ) { // РІРµСЂРЅСѓР»РёСЃСЊ РЅР° РїР°РЅРµР»СЊ СЃСѓР±СЉРµРєС‚РѕРІ
 			tools.setVisible(true);
 		}
 		logger.trace("onChangeTab.  target = {}, ref = {}, data = {}, page = {}, UnselectedItems = {}, SelectedObjects = {}", sev.getTarget(), sev.getReference(), sev.getData(), sev.getPage(), sev.getUnselectedItems(), sev.getSelectedObjects());
 	}
 	
-	/** Вызывается в начале и после каждого изменения параметров клиента, в т.ч. изменения масштаба в браузере.
-	 * Сохраняем в атрибутах текущей сессии "Orientation", "DesktopWidth", "DesktopHeight".
+	/** Р’С‹Р·С‹РІР°РµС‚СЃСЏ РІ РЅР°С‡Р°Р»Рµ Рё РїРѕСЃР»Рµ РєР°Р¶РґРѕРіРѕ РёР·РјРµРЅРµРЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РєР»РёРµРЅС‚Р°, РІ С‚.С‡. РёР·РјРµРЅРµРЅРёСЏ РјР°СЃС€С‚Р°Р±Р° РІ Р±СЂР°СѓР·РµСЂРµ.
+	 * РЎРѕС…СЂР°РЅСЏРµРј РІ Р°С‚СЂРёР±СѓС‚Р°С… С‚РµРєСѓС‰РµР№ СЃРµСЃСЃРёРё "Orientation", "DesktopWidth", "DesktopHeight".
 	 */
 	@Listen("onClientInfo=:root")
 	public void clientInfo(ClientInfoEvent cie) {
@@ -379,20 +379,20 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	} // public void clientInfo(ClientInfoEvent cie)
 	
 	
-	/** Показываем во всплывающем окне состав группы компаний при наведении курсора на название. */
+	/** РџРѕРєР°Р·С‹РІР°РµРј РІРѕ РІСЃРїР»С‹РІР°СЋС‰РµРј РѕРєРЅРµ СЃРѕСЃС‚Р°РІ РіСЂСѓРїРїС‹ РєРѕРјРїР°РЅРёР№ РїСЂРё РЅР°РІРµРґРµРЅРёРё РєСѓСЂСЃРѕСЂР° РЅР° РЅР°Р·РІР°РЅРёРµ. */
 	@Listen("onOpen=popup#grNameCellPopup")
 	public void popupGroupMember(OpenEvent oev) {
 		Popup pop = (Popup)oev.getTarget();
-// HOWTO: ! стили определены в ZUL !
-		if (oev.isOpen()) { // открытие
+// HOWTO: ! СЃС‚РёР»Рё РѕРїСЂРµРґРµР»РµРЅС‹ РІ ZUL !
+		if (oev.isOpen()) { // РѕС‚РєСЂС‹С‚РёРµ
 			Label ref = (Label)oev.getReference();
 			if (ref != null && !StringUtils.isBlank(ref.getValue())) {
-				StringBuilder sb = new StringBuilder("Состав группы лимита: ");
+				StringBuilder sb = new StringBuilder("РЎРѕСЃС‚Р°РІ РіСЂСѓРїРїС‹ Р»РёРјРёС‚Р°: ");
 				sb.append(ref.getValue());
 				Object sid = ref.getParent().getAttribute("sid");
 				if (sid != null && sid instanceof Integer) {
 					int subjId = ((Integer)sid).intValue();
-// TODO: вариант без обращения к БД
+// TODO: РІР°СЂРёР°РЅС‚ Р±РµР· РѕР±СЂР°С‰РµРЅРёСЏ Рє Р‘Р”
 					List<String> members = SubjDopService.getGroupMembersBySubjId(subjId);
 					logger.trace("popupGroupMember.  members.size = {} for subjId = {}", members.size(), subjId);
 					sb.append("\n");
@@ -400,14 +400,14 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 						sb.append("\n").append(s);
 					}
 				}
-// TODO: html вместо label !
-				Label cont = new Label(sb.toString()); // многострочная надпись
+// TODO: html РІРјРµСЃС‚Рѕ label !
+				Label cont = new Label(sb.toString()); // РјРЅРѕРіРѕСЃС‚СЂРѕС‡РЅР°СЏ РЅР°РґРїРёСЃСЊ
 				cont.setPre(true); // preserve WS (incl. \n)
 				//cont.setStyle("color:#b22222 !important;"); // B22222 - FireBrick
 				//pop.setStyle("color:#b22222 !important;"); // B22222 - FireBrick
 				pop.appendChild(cont);
 			}
-		} else { // закрытие
+		} else { // Р·Р°РєСЂС‹С‚РёРµ
 			for ( Component ch : pop.getChildren() ) {
 				pop.removeChild(ch);
 			}
@@ -422,7 +422,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	//if (!(trg instanceof Menupopup)) return;
 // <menuitem label="subj_id" forward="onClick=${active_page}changePkToolBB.onChangePk(${self.label})" />
     	Menuitem el;
-// FIXME: получать от провайдера !!!
+// FIXME: РїРѕР»СѓС‡Р°С‚СЊ РѕС‚ РїСЂРѕРІР°Р№РґРµСЂР° !!!
     	for ( String kn : subjSummProvider.getPkNames() ) {
     		el = new Menuitem(kn);
     		el.addForward(Events.ON_CLICK, changePkToolBB, "onChangePk", kn);
@@ -434,13 +434,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     } // public void fillPkMenu(CreateEvent crev)
     
     
-// кнопки toolbar принадлежат tabbox (вне tabpanels)
+// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels)
     @Wire
     private Combobutton changePkToolBB;
     
-    /** Смена Первичного Ключа через дата-провайдер по заранее определённому перечню, полученному через статический интерфейс доменного класса. */
+    /** РЎРјРµРЅР° РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° С‡РµСЂРµР· РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂ РїРѕ Р·Р°СЂР°РЅРµРµ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРјСѓ РїРµСЂРµС‡РЅСЋ, РїРѕР»СѓС‡РµРЅРЅРѕРјСѓ С‡РµСЂРµР· СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РёРЅС‚РµСЂС„РµР№СЃ РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР°. */
     @Listen("onChangePk=#changePkToolBB")
-    public void changePk(ForwardEvent fev) { // имя поля ПК передаётся в теле события
+    public void changePk(ForwardEvent fev) { // РёРјСЏ РїРѕР»СЏ РџРљ РїРµСЂРµРґР°С‘С‚СЃСЏ РІ С‚РµР»Рµ СЃРѕР±С‹С‚РёСЏ
     	String newPk = (String)fev.getData();
 //    	Comparator<SubjSumm> cmp = null;
     	//cmp = pksMap.get(newPk);
@@ -457,13 +457,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	} else {
     		subjSummProvider.setPk(newPk/*, cmp*/);
     	}
-    	changePkToolBB.setTooltiptext("Выбор PK, сейчас: " + newPk);
+    	changePkToolBB.setTooltiptext("Р’С‹Р±РѕСЂ PK, СЃРµР№С‡Р°СЃ: " + newPk);
     	//logger.trace("changePk. ev_data = '{}', newPk(after) = '{}', pksMap.size: {}, pksMap.containsKey(ev_data): {}", fev.getData(), newPk, pksMap.size(), pksMap.containsKey(fev.getData()));
     	logger.trace("changePk. ev_data = '{}', newPk(after) = '{}'", fev.getData(), newPk );
     } // public void changePk(ForwardEvent fev)
     
     
-    /** Перехват события сортировки по колонке для обеспечения синхронизации на модели грида. 
+    /** РџРµСЂРµС…РІР°С‚ СЃРѕР±С‹С‚РёСЏ СЃРѕСЂС‚РёСЂРѕРІРєРё РїРѕ РєРѕР»РѕРЅРєРµ РґР»СЏ РѕР±РµСЃРїРµС‡РµРЅРёСЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РЅР° РјРѕРґРµР»Рё РіСЂРёРґР°. 
      * @see SubjsPageComposer#safeSort(HeaderElement, boolean, GridDataModelMan) safeSort
 	 */
     @Listen("onSort=grid#subjSummGrid > columns > column")
@@ -476,28 +476,28 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	safeSort(hdr, isAsc, gdm);
 	} // public void onSortCol(SortEvent sev)
         
-    /** Препятствуем распространению события от внешнего страничного контроллера вовне (гриду - там глюки). */
+    /** РџСЂРµРїСЏС‚СЃС‚РІСѓРµРј СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅРµРЅРёСЋ СЃРѕР±С‹С‚РёСЏ РѕС‚ РІРЅРµС€РЅРµРіРѕ СЃС‚СЂР°РЅРёС‡РЅРѕРіРѕ РєРѕРЅС‚СЂРѕР»Р»РµСЂР° РІРѕРІРЅРµ (РіСЂРёРґСѓ - С‚Р°Рј РіР»СЋРєРё). */
     @Listen("onPaging=paging#subjSummPaging")
-    public void onPagingSubjSummPaging(PagingEvent pe) { // срабатывает до аналогичного в гриде
+    public void onPagingSubjSummPaging(PagingEvent pe) { // СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ РґРѕ Р°РЅР°Р»РѕРіРёС‡РЅРѕРіРѕ РІ РіСЂРёРґРµ
     	logger.trace("onPagingSubjSummPaging. getActivePage() = {}", pe.getActivePage());
-		pe.stopPropagation(); // гасим, иначе дальше возникает ошибка в setActivePage в обработчике грида (страница -4777)
+		pe.stopPropagation(); // РіР°СЃРёРј, РёРЅР°С‡Рµ РґР°Р»СЊС€Рµ РІРѕР·РЅРёРєР°РµС‚ РѕС€РёР±РєР° РІ setActivePage РІ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ РіСЂРёРґР° (СЃС‚СЂР°РЅРёС†Р° -4777)
 	}
 
     @Listen("onPaging=grid#subjSummGrid")
-    public void onPagingSubjSummGrid(PagingEvent pe) { // не должен сюда заходить !!!
+    public void onPagingSubjSummGrid(PagingEvent pe) { // РЅРµ РґРѕР»Р¶РµРЅ СЃСЋРґР° Р·Р°С…РѕРґРёС‚СЊ !!!
 		//_startPageNumber = pe.getActivePage();
     	logger.error("onPagingSubjSummGrid. getActivePage() = {} !!!", pe.getActivePage());
-		assert(false) : "onPaging  не должен доходить до грида !!!";
+		assert(false) : "onPaging  РЅРµ РґРѕР»Р¶РµРЅ РґРѕС…РѕРґРёС‚СЊ РґРѕ РіСЂРёРґР° !!!";
 	}
     
 /*    private void onChange(ListDataEvent lde) { // implements ListDataListener
-		logger.trace("onChange. Всего строк: {}", subjSummModelManager.getInFilterRowCount());
+		logger.trace("onChange. Р’СЃРµРіРѕ СЃС‚СЂРѕРє: {}", subjSummModelManager.getInFilterRowCount());
     	refreshAfterDataChange();
     } // public void onChange(ListDataEvent lde) { // implements ListDataListener
 */
     
     
-// кнопки toolbar принадлежат tabbox (вне tabpanels); paging внутри панели, но вне грида
+// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels); paging РІРЅСѓС‚СЂРё РїР°РЅРµР»Рё, РЅРѕ РІРЅРµ РіСЂРёРґР°
     @Wire
     private Toolbarbutton pagingToolBB;
     
@@ -507,13 +507,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     }
     
     
-    /** Показать в модальном окне историю остатков по выбранному субъекту.
-     * Из Java, ZUL не используется.
-     * @param page На какой странице создаём форму.
+    /** РџРѕРєР°Р·Р°С‚СЊ РІ РјРѕРґР°Р»СЊРЅРѕРј РѕРєРЅРµ РёСЃС‚РѕСЂРёСЋ РѕСЃС‚Р°С‚РєРѕРІ РїРѕ РІС‹Р±СЂР°РЅРЅРѕРјСѓ СЃСѓР±СЉРµРєС‚Сѓ.
+     * РР· Java, ZUL РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ.
+     * @param page РќР° РєР°РєРѕР№ СЃС‚СЂР°РЅРёС†Рµ СЃРѕР·РґР°С‘Рј С„РѕСЂРјСѓ.
      */
 	private void showSubjRestHistModal(Integer subjId, Page page) {
-// TODO: диаграмма (скрываемая; выбор типа) !!!
-// TODO: вариант без обращения к БД (точнее, с разовой загрузкой)
+// TODO: РґРёР°РіСЂР°РјРјР° (СЃРєСЂС‹РІР°РµРјР°СЏ; РІС‹Р±РѕСЂ С‚РёРїР°) !!!
+// TODO: РІР°СЂРёР°РЅС‚ Р±РµР· РѕР±СЂР°С‰РµРЅРёСЏ Рє Р‘Р” (С‚РѕС‡РЅРµРµ, СЃ СЂР°Р·РѕРІРѕР№ Р·Р°РіСЂСѓР·РєРѕР№)
 		List<SubjRestHistory> lst = SubjDopService.getRestHistoryBySubjId(subjId);
 		
 		int wd = (int)(((Integer) Sessions.getCurrent(false).getAttribute("DesktopWidth")).intValue()*0.8);
@@ -524,11 +524,11 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		logger.debug("showSubjRestHistModal.  lst.size = {} for subjId = {}, Width = {}, Height = {}, hi1 = {}, hi2 = {}", lst.size(), subjId, wd, hi, hi1, hi2);
 		
 		Window restsWin = new Window(null, "normal", true);
-		Caption cpt = new Caption("История остатков по субъекту ИД LM "+subjId);
+		Caption cpt = new Caption("РСЃС‚РѕСЂРёСЏ РѕСЃС‚Р°С‚РєРѕРІ РїРѕ СЃСѓР±СЉРµРєС‚Сѓ РР” LM "+subjId);
 		cpt.setStyle("background:#cceeff;text-align:center;font-size:26px;font-weight:bold;color:#b22222;"); // font-style:italic; // B22222 - FireBrick, cceeff - 
 		restsWin.appendChild(cpt);
 		//restsWin.setHeight("500px"); restsWin.setWidth("800px");
-// TODO:HOWTO: ? как сделать, чтобы не было пустого пространства, но не выходило за экран, а появлялась прокрутка (в гриде, не в окне) - без paging ?
+// TODO:HOWTO: ? РєР°Рє СЃРґРµР»Р°С‚СЊ, С‡С‚РѕР±С‹ РЅРµ Р±С‹Р»Рѕ РїСѓСЃС‚РѕРіРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР°, РЅРѕ РЅРµ РІС‹С…РѕРґРёР»Рѕ Р·Р° СЌРєСЂР°РЅ, Р° РїРѕСЏРІР»СЏР»Р°СЃСЊ РїСЂРѕРєСЂСѓС‚РєР° (РІ РіСЂРёРґРµ, РЅРµ РІ РѕРєРЅРµ) - Р±РµР· paging ?
 		restsWin.doHighlighted(); //restsWin.setMode(Window.HIGHLIGHTED);
 		//restsWin.setShadow(true);
 		restsWin.setSizable(true);
@@ -542,36 +542,36 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		restsGrid.setWidth(wd+"px"/*"1400px"*/);
 		//restsGrid.setMold("paging");
 		//restsGrid.setPagingPosition("top");
-		//restsGrid.setPageSize(8); // так ограничиваем высоту окна
-		//restsGrid.setAutopaging(true); // плохо определяет: то переносит, когда умещается, то выходит за экран
-		restsGrid.setEmptyMessage("История остатков не найдена по субъекту ИД LM "+subjId);
+		//restsGrid.setPageSize(8); // С‚Р°Рє РѕРіСЂР°РЅРёС‡РёРІР°РµРј РІС‹СЃРѕС‚Сѓ РѕРєРЅР°
+		//restsGrid.setAutopaging(true); // РїР»РѕС…Рѕ РѕРїСЂРµРґРµР»СЏРµС‚: С‚Рѕ РїРµСЂРµРЅРѕСЃРёС‚, РєРѕРіРґР° СѓРјРµС‰Р°РµС‚СЃСЏ, С‚Рѕ РІС‹С…РѕРґРёС‚ Р·Р° СЌРєСЂР°РЅ
+		restsGrid.setEmptyMessage("РСЃС‚РѕСЂРёСЏ РѕСЃС‚Р°С‚РєРѕРІ РЅРµ РЅР°Р№РґРµРЅР° РїРѕ СЃСѓР±СЉРµРєС‚Сѓ РР” LM "+subjId);
 		//restsGrid.setSizedByContent(true); // Sets whether sizing grid/listbox/tree column width by its content; it equals set hflex="min" on each column.
 		restsGrid.setSpan(true);
 		
 		Columns clmns = new Columns();
 		clmns.setVflex("min");
 		clmns.setSizable(true);
-		//clmns.setMenupopup("auto"); // перекосы при скрытии колонок
+		//clmns.setMenupopup("auto"); // РїРµСЂРµРєРѕСЃС‹ РїСЂРё СЃРєСЂС‹С‚РёРё РєРѕР»РѕРЅРѕРє
 		int i = -1;
 		for (String h : SubjRestHistory.getHeader()) {
 			++i;
-			if (i == 0/*"ИД LM".equals(h)*/) continue; // пропускаем колонку с ID
+			if (i == 0/*"РР” LM".equals(h)*/) continue; // РїСЂРѕРїСѓСЃРєР°РµРј РєРѕР»РѕРЅРєСѓ СЃ ID
 			Column col = new Column(h);
 			col.setAlign("center");
 			clmns.appendChild(col);
 		}
 		clmns.setParent(restsGrid);
 		
-// TODO: модель и выгрузку в Excel !
+// TODO: РјРѕРґРµР»СЊ Рё РІС‹РіСЂСѓР·РєСѓ РІ Excel !
 		Rows rs = new Rows();
 		        
 		BigDecimal maxBalVal = new BigDecimal(0);
 		for (SubjRestHistory rh : lst) {
 			Row r = new Row();
 			r.setNowrap(true);
-			//r.setAlign("right"); // не работает, col.setAlign("center") приоритетнее
-			r.setStyle("text-align:right !important"); // только так работает; HOWTO: ? как выравнивать на уровне колонок (при этом заголовки по центру) ?
-			//r.appendChild(new Label(rh.getId().toString())); // пропускаем колонку с ID
+			//r.setAlign("right"); // РЅРµ СЂР°Р±РѕС‚Р°РµС‚, col.setAlign("center") РїСЂРёРѕСЂРёС‚РµС‚РЅРµРµ
+			r.setStyle("text-align:right !important"); // С‚РѕР»СЊРєРѕ С‚Р°Рє СЂР°Р±РѕС‚Р°РµС‚; HOWTO: ? РєР°Рє РІС‹СЂР°РІРЅРёРІР°С‚СЊ РЅР° СѓСЂРѕРІРЅРµ РєРѕР»РѕРЅРѕРє (РїСЂРё СЌС‚РѕРј Р·Р°РіРѕР»РѕРІРєРё РїРѕ С†РµРЅС‚СЂСѓ) ?
+			//r.appendChild(new Label(rh.getId().toString())); // РїСЂРѕРїСѓСЃРєР°РµРј РєРѕР»РѕРЅРєСѓ СЃ ID
 			r.appendChild( new Label( SafeFormatter.asGermanDate(rh.getDdRest()) )); // rh.getDdRest().toString()
 			r.appendChild( new Label( SafeFormatter.asMoney(rh.getRestBalUSD()) ) );
 			r.appendChild( new Label( SafeFormatter.asMoney(rh.getPastRestBalUSD()) ) );
@@ -588,9 +588,9 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		
 		restsGrid.setParent(restsWin);
 		
-// FIXME: см. странные суммы просрочки по 1839519, 29618 (название = ОАО ?!)
+// FIXME: СЃРј. СЃС‚СЂР°РЅРЅС‹Рµ СЃСѓРјРјС‹ РїСЂРѕСЃСЂРѕС‡РєРё РїРѕ 1839519, 29618 (РЅР°Р·РІР°РЅРёРµ = РћРђРћ ?!)
 		
-		// график остатков
+		// РіСЂР°С„РёРє РѕСЃС‚Р°С‚РєРѕРІ
 		Charts chrt = new Charts();
 		chrt.setType(Charts.LINE);
 		chrt.setTitle("");
@@ -598,22 +598,22 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		chrt.setWidth(wd/*1400*/);
 		//chrt.setWidth(restsGrid.getWidth().);
 		XAxis xa = chrt.getXAxis();
-		xa.setTitle("За дату");
+		xa.setTitle("Р—Р° РґР°С‚Сѓ");
 		YAxis ya = chrt.getYAxis();
 		ya.setMin(0);
 		ya.setFloor(0);
-		ya.setMax(maxBalVal); // автомат плохо определяет максимум
+		ya.setMax(maxBalVal); // Р°РІС‚РѕРјР°С‚ РїР»РѕС…Рѕ РѕРїСЂРµРґРµР»СЏРµС‚ РјР°РєСЃРёРјСѓРј
 		ya.setTitle("USD");
 		CategoryModel chmd = new DefaultCategoryModel();
 		for (SubjRestHistory rh : lst) {
-// Использование лимита: https://www.zkoss.org/zkchartsdemo/area_stacked_percent
-// Придумать где использовать Area range (https://www.zkoss.org/zkchartsdemo/arearange_line)
-// Придумать где использовать Sparkline charts: (https://www.zkoss.org/zkchartsdemo/area_sparkline)
-// Придумать где использовать зумирование (выдачи, детализация до операций): https://www.zkoss.org/zkchartsdemo/line_time_series
-// TODO: mm_yy (см. ) ? переключатель (автомат, когда всё ясно) баланс/управл
-// Выравнивание подписи легенды: https://www.zkoss.org/zkchartsdemo/line_ajax
-// Ось абсцисс: https://www.zkoss.org/zkchartsdemo/line_labels
-			if ( rh.getDdRest().toLocalDate().plusDays(1L).getDayOfMonth() != 1 ) continue; // пропускать промежуточные (только конец месяца !)
+// РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ Р»РёРјРёС‚Р°: https://www.zkoss.org/zkchartsdemo/area_stacked_percent
+// РџСЂРёРґСѓРјР°С‚СЊ РіРґРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Area range (https://www.zkoss.org/zkchartsdemo/arearange_line)
+// РџСЂРёРґСѓРјР°С‚СЊ РіРґРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Sparkline charts: (https://www.zkoss.org/zkchartsdemo/area_sparkline)
+// РџСЂРёРґСѓРјР°С‚СЊ РіРґРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р·СѓРјРёСЂРѕРІР°РЅРёРµ (РІС‹РґР°С‡Рё, РґРµС‚Р°Р»РёР·Р°С†РёСЏ РґРѕ РѕРїРµСЂР°С†РёР№): https://www.zkoss.org/zkchartsdemo/line_time_series
+// TODO: mm_yy (СЃРј. ) ? РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЊ (Р°РІС‚РѕРјР°С‚, РєРѕРіРґР° РІСЃС‘ СЏСЃРЅРѕ) Р±Р°Р»Р°РЅСЃ/СѓРїСЂР°РІР»
+// Р’С‹СЂР°РІРЅРёРІР°РЅРёРµ РїРѕРґРїРёСЃРё Р»РµРіРµРЅРґС‹: https://www.zkoss.org/zkchartsdemo/line_ajax
+// РћСЃСЊ Р°Р±СЃС†РёСЃСЃ: https://www.zkoss.org/zkchartsdemo/line_labels
+			if ( rh.getDdRest().toLocalDate().plusDays(1L).getDayOfMonth() != 1 ) continue; // РїСЂРѕРїСѓСЃРєР°С‚СЊ РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Рµ (С‚РѕР»СЊРєРѕ РєРѕРЅРµС† РјРµСЃСЏС†Р° !)
 			chmd.setValue("RestBalUSD", SafeFormatter.asGermanDate(rh.getDdRest()), rh.getRestBalUSD());
 			chmd.setValue("PastRestBalUSD", SafeFormatter.asGermanDate(rh.getDdRest()), rh.getPastRestBalUSD());
 		}
@@ -625,8 +625,8 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	} // private void showSubjRestHistModal(Integer subjId, Page page)
 	
 	
-	/** Показываем в отдельном окне инфу по лимиту кредитования субъекта.
-	 * (Форма грузится из limitinfo.zul с передачей параметров через Map; окно зашито в форму.)
+	/** РџРѕРєР°Р·С‹РІР°РµРј РІ РѕС‚РґРµР»СЊРЅРѕРј РѕРєРЅРµ РёРЅС„Сѓ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ СЃСѓР±СЉРµРєС‚Р°.
+	 * (Р¤РѕСЂРјР° РіСЂСѓР·РёС‚СЃСЏ РёР· limitinfo.zul СЃ РїРµСЂРµРґР°С‡РµР№ РїР°СЂР°РјРµС‚СЂРѕРІ С‡РµСЂРµР· Map; РѕРєРЅРѕ Р·Р°С€РёС‚Рѕ РІ С„РѕСЂРјСѓ.)
 	 */
 	private void showLimitUsageModal(int subjId, Integer idlimit) {
 		if (idlimit == null) {
@@ -639,16 +639,16 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			alert("Limit info not found...");
 			return;
 		}
-// TESTME: найти лимит с инфо, но без истории !!!
+// TESTME: РЅР°Р№С‚Рё Р»РёРјРёС‚ СЃ РёРЅС„Рѕ, РЅРѕ Р±РµР· РёСЃС‚РѕСЂРёРё !!!
 		ListModelList<LimitHistory> lhModel = new ListModelList<>(li.getUsageHistory(), true);
 		Object[][] arrArg = {{"subjId", subjId}
 							,{"li", li}
 							,{"lhModel", lhModel}
-							,{"yyy.xxxxx", subjId} // HOWTO: НЕЛЬЗЯ ч/з точку именовать (не вываливается, просто не находит) ?!
-							,{"yyy_xxxxx", subjId} // в EL идентификатор может содержать такие же символы, как в Java ('_'/'$'), но у меня не прошла кириллица !!
+							,{"yyy.xxxxx", subjId} // HOWTO: РќР•Р›Р¬Р—РЇ С‡/Р· С‚РѕС‡РєСѓ РёРјРµРЅРѕРІР°С‚СЊ (РЅРµ РІС‹РІР°Р»РёРІР°РµС‚СЃСЏ, РїСЂРѕСЃС‚Рѕ РЅРµ РЅР°С…РѕРґРёС‚) ?!
+							,{"yyy_xxxxx", subjId} // РІ EL РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚Р°РєРёРµ Р¶Рµ СЃРёРјРІРѕР»С‹, РєР°Рє РІ Java ('_'/'$'), РЅРѕ Сѓ РјРµРЅСЏ РЅРµ РїСЂРѕС€Р»Р° РєРёСЂРёР»Р»РёС†Р° !!
 		};
 		Map<String, Object> arg = Generics.cast(ArrayUtils.toMap(arrArg));
-// FIXME: вынести из формы окно и restsWin.doHighlighted();
+// FIXME: РІС‹РЅРµСЃС‚Рё РёР· С„РѕСЂРјС‹ РѕРєРЅРѕ Рё restsWin.doHighlighted();
 		Component rootComp = Executions.getCurrent().createComponents("limitinfo.zul", null, arg);
 		//Selectors.wireComponents(this, this, true);
 		//Selectors.wireEventListeners(this, this);
@@ -658,23 +658,23 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	} // private void showLimitUsageModal(int subjId, int idlimit)
     
 		
-	/** Создание формы с данными по организации от сервиса DaData.
-	 * Юридическая информация о компании по ИНН с сайта dadata.ru ("API Подсказок").
-	 * Данные предварительно загружаются из БД или из сервиса в структуру DaDataInfo.
-	 * Параметры для формы парсим из json в одномерный Map, создаём форму из ZUL, делаем ревайринг, задаём
-	 *  атрибуты корневого компонента формы для передачи между асинхронными методами.
-	 * Из json используем только первый член (всегда MAIN при наличии филиалов ?) - suggestions[0].
-	 * @param subjId ИД субъекта.
-	 * @param daDataInfo Объект с заполненным ИНН, json-ответом сервиса; возможно, с комментарием пользователя.
-	 * @param fromDB Признак, что объект был получен ранее, редактировался и сохранён в БД.
-	 * @param parComp Родительский для формы компонент (Optional).
-	 * @param actDateBeforeLong Дата актуальности из БД на случай перегрузки из сервиса (Optional).
-	 * @return Корневой элемент созданной формы.
+	/** РЎРѕР·РґР°РЅРёРµ С„РѕСЂРјС‹ СЃ РґР°РЅРЅС‹РјРё РїРѕ РѕСЂРіР°РЅРёР·Р°С†РёРё РѕС‚ СЃРµСЂРІРёСЃР° DaData.
+	 * Р®СЂРёРґРёС‡РµСЃРєР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РєРѕРјРїР°РЅРёРё РїРѕ РРќРќ СЃ СЃР°Р№С‚Р° dadata.ru ("API РџРѕРґСЃРєР°Р·РѕРє").
+	 * Р”Р°РЅРЅС‹Рµ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РіСЂСѓР¶Р°СЋС‚СЃСЏ РёР· Р‘Р” РёР»Рё РёР· СЃРµСЂРІРёСЃР° РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ DaDataInfo.
+	 * РџР°СЂР°РјРµС‚СЂС‹ РґР»СЏ С„РѕСЂРјС‹ РїР°СЂСЃРёРј РёР· json РІ РѕРґРЅРѕРјРµСЂРЅС‹Р№ Map, СЃРѕР·РґР°С‘Рј С„РѕСЂРјСѓ РёР· ZUL, РґРµР»Р°РµРј СЂРµРІР°Р№СЂРёРЅРі, Р·Р°РґР°С‘Рј
+	 *  Р°С‚СЂРёР±СѓС‚С‹ РєРѕСЂРЅРµРІРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р° С„РѕСЂРјС‹ РґР»СЏ РїРµСЂРµРґР°С‡Рё РјРµР¶РґСѓ Р°СЃРёРЅС…СЂРѕРЅРЅС‹РјРё РјРµС‚РѕРґР°РјРё.
+	 * РР· json РёСЃРїРѕР»СЊР·СѓРµРј С‚РѕР»СЊРєРѕ РїРµСЂРІС‹Р№ С‡Р»РµРЅ (РІСЃРµРіРґР° MAIN РїСЂРё РЅР°Р»РёС‡РёРё С„РёР»РёР°Р»РѕРІ ?) - suggestions[0].
+	 * @param subjId РР” СЃСѓР±СЉРµРєС‚Р°.
+	 * @param daDataInfo РћР±СЉРµРєС‚ СЃ Р·Р°РїРѕР»РЅРµРЅРЅС‹Рј РРќРќ, json-РѕС‚РІРµС‚РѕРј СЃРµСЂРІРёСЃР°; РІРѕР·РјРѕР¶РЅРѕ, СЃ РєРѕРјРјРµРЅС‚Р°СЂРёРµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+	 * @param fromDB РџСЂРёР·РЅР°Рє, С‡С‚Рѕ РѕР±СЉРµРєС‚ Р±С‹Р» РїРѕР»СѓС‡РµРЅ СЂР°РЅРµРµ, СЂРµРґР°РєС‚РёСЂРѕРІР°Р»СЃСЏ Рё СЃРѕС…СЂР°РЅС‘РЅ РІ Р‘Р”.
+	 * @param parComp Р РѕРґРёС‚РµР»СЊСЃРєРёР№ РґР»СЏ С„РѕСЂРјС‹ РєРѕРјРїРѕРЅРµРЅС‚ (Optional).
+	 * @param actDateBeforeLong Р”Р°С‚Р° Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё РёР· Р‘Р” РЅР° СЃР»СѓС‡Р°Р№ РїРµСЂРµРіСЂСѓР·РєРё РёР· СЃРµСЂРІРёСЃР° (Optional).
+	 * @return РљРѕСЂРЅРµРІРѕР№ СЌР»РµРјРµРЅС‚ СЃРѕР·РґР°РЅРЅРѕР№ С„РѕСЂРјС‹.
 	 */
 	public Component createDaDataForm(int subjId, DaDataInfo daDataInfo, Boolean fromDB, Component parComp, Long actDateBeforeLong) {
     	String inn = daDataInfo.getInn()
     		,val = daDataInfo.getSuggestParty() // json
-    		,userСomment = daDataInfo.getUserComment(); // комментарий КО при загрузке из БД
+    		,userРЎomment = daDataInfo.getUserComment(); // РєРѕРјРјРµРЅС‚Р°СЂРёР№ РљРћ РїСЂРё Р·Р°РіСЂСѓР·РєРµ РёР· Р‘Р”
     	java.util.Date saveTimeBefore = daDataInfo.getSaveTime();
     	
 /*// JBoss JSON-P version
@@ -684,7 +684,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			logger.warn("createDaDataForm.  unexpectedly empty array 'suggestions' for inn = {}, subjId = {}", inn, subjId);
 			return;
 		} else if (suggArr.size() > 1) {
-// !!! например, ИНН = 7735008954 (АО "АЙТИ", subjId = 84) - 7 записей
+// !!! РЅР°РїСЂРёРјРµСЂ, РРќРќ = 7735008954 (РђРћ "РђР™РўР", subjId = 84) - 7 Р·Р°РїРёСЃРµР№
 			logger.warn("createDaDataForm.  too many results = {} for inn = {}, subjId = {}", suggArr.size(), inn, subjId);
 		}
  		JsonObject res = (JsonObject)suggArr.get(0);*/
@@ -695,43 +695,43 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			logger.warn("createDaDataForm.  unexpectedly empty array 'suggestions' for inn = {}, subjId = {}", inn, subjId);
 			return;
 		} else if (suggArr.size() > 1) {
-// !!! например, ИНН = 7735008954 (АО "АЙТИ", subjId = 84) - 7 записей
+// !!! РЅР°РїСЂРёРјРµСЂ, РРќРќ = 7735008954 (РђРћ "РђР™РўР", subjId = 84) - 7 Р·Р°РїРёСЃРµР№
 			logger.warn("createDaDataForm.  too many results = {} for inn = {}, subjId = {}", suggArr.size(), inn, subjId);
 		}
  		JsonObject res = (JsonObject)suggArr.get(0);
  		
  		logger.trace("createDaDataForm. res = '{}', res_class = '{}'", res, res.getClass().getSimpleName());
  		logger.trace("createDaDataForm. unrestricted_value: '{}'", res.getString("unrestricted_value", ""));
-// сбойнёт для пустых узлов !
+// СЃР±РѕР№РЅС‘С‚ РґР»СЏ РїСѓСЃС‚С‹С… СѓР·Р»РѕРІ !
         logger.trace("createDaDataForm. data.kpp: '{}', data.management.name: '{}'", res.get("data").asObject().getString("kpp", ""), res.get("data").asObject().get("management").asObject().getString("name", "") );
 */ 		
         
-/* ZK понимает вложенные Map в передаваемом в createComponents() параметре, можно туда подкладывать сразу JsonObject (без массивов ?)
- а иначе существуют библиотеки для преобразования JSON в плоскую структуру Map: см. https://habrahabr.ru/company/luxoft/blog/280782/
+/* ZK РїРѕРЅРёРјР°РµС‚ РІР»РѕР¶РµРЅРЅС‹Рµ Map РІ РїРµСЂРµРґР°РІР°РµРјРѕРј РІ createComponents() РїР°СЂР°РјРµС‚СЂРµ, РјРѕР¶РЅРѕ С‚СѓРґР° РїРѕРґРєР»Р°РґС‹РІР°С‚СЊ СЃСЂР°Р·Сѓ JsonObject (Р±РµР· РјР°СЃСЃРёРІРѕРІ ?)
+ Р° РёРЅР°С‡Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‚ Р±РёР±Р»РёРѕС‚РµРєРё РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ JSON РІ РїР»РѕСЃРєСѓСЋ СЃС‚СЂСѓРєС‚СѓСЂСѓ Map: СЃРј. https://habrahabr.ru/company/luxoft/blog/280782/
  http://stackoverflow.com/questions/20355261/how-to-deserialize-json-into-flat-map-like-structure
-+https://github.com/wnameless/json-flattener  (использует minimal-json)
++https://github.com/wnameless/json-flattener  (РёСЃРїРѕР»СЊР·СѓРµС‚ minimal-json)
 
- Однако не очень понимает, проблема с пустым узлами (data.address.data.city по ИНН = 7723822598)
-  - проблема в том, что имя не может содержать точки => нельзя использовать плоскую Map, где точки в ключах
-  ? создавать по шаблону (с пустыми отсутствующими ветвями) ? Или генерить POJO ?
- Также приходится пребразовывать каждое значение, в т.ч. строки лишать кавычек
+ РћРґРЅР°РєРѕ РЅРµ РѕС‡РµРЅСЊ РїРѕРЅРёРјР°РµС‚, РїСЂРѕР±Р»РµРјР° СЃ РїСѓСЃС‚С‹Рј СѓР·Р»Р°РјРё (data.address.data.city РїРѕ РРќРќ = 7723822598)
+  - РїСЂРѕР±Р»РµРјР° РІ С‚РѕРј, С‡С‚Рѕ РёРјСЏ РЅРµ РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕС‡РєРё => РЅРµР»СЊР·СЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїР»РѕСЃРєСѓСЋ Map, РіРґРµ С‚РѕС‡РєРё РІ РєР»СЋС‡Р°С…
+  ? СЃРѕР·РґР°РІР°С‚СЊ РїРѕ С€Р°Р±Р»РѕРЅСѓ (СЃ РїСѓСЃС‚С‹РјРё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёРјРё РІРµС‚РІСЏРјРё) ? РР»Рё РіРµРЅРµСЂРёС‚СЊ POJO ?
+ РўР°РєР¶Рµ РїСЂРёС…РѕРґРёС‚СЃСЏ РїСЂРµР±СЂР°Р·РѕРІС‹РІР°С‚СЊ РєР°Р¶РґРѕРµ Р·РЅР°С‡РµРЅРёРµ, РІ С‚.С‡. СЃС‚СЂРѕРєРё Р»РёС€Р°С‚СЊ РєР°РІС‹С‡РµРє
 */		
-// HOWTO: (см. StringEscapePolicy): '_' экранирует, если есть в тэге (напр., 'suggestions[0]_data[\"branch_count\"]'), потому через '$', который EL принимает как часть идентификатора
-// TODO: ещё предложения по JsonFlattener: конструктор, принимающий JsonValue (если отдельно используем парсер, чтобы дважды не парсить или передавать узел); выбор типа контейнера (сохранение сортировки - иерархии); фильтрация (как у меня), но это наиболее эффективно при stream парсинге (!); regex для переименования ключей; использование справочников (на моём примере - разрешение значений через коды - fias_level и т.п.) - через аннотации ?; 
+// HOWTO: (СЃРј. StringEscapePolicy): '_' СЌРєСЂР°РЅРёСЂСѓРµС‚, РµСЃР»Рё РµСЃС‚СЊ РІ С‚СЌРіРµ (РЅР°РїСЂ., 'suggestions[0]_data[\"branch_count\"]'), РїРѕС‚РѕРјСѓ С‡РµСЂРµР· '$', РєРѕС‚РѕСЂС‹Р№ EL РїСЂРёРЅРёРјР°РµС‚ РєР°Рє С‡Р°СЃС‚СЊ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°
+// TODO: РµС‰С‘ РїСЂРµРґР»РѕР¶РµРЅРёСЏ РїРѕ JsonFlattener: РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, РїСЂРёРЅРёРјР°СЋС‰РёР№ JsonValue (РµСЃР»Рё РѕС‚РґРµР»СЊРЅРѕ РёСЃРїРѕР»СЊР·СѓРµРј РїР°СЂСЃРµСЂ, С‡С‚РѕР±С‹ РґРІР°Р¶РґС‹ РЅРµ РїР°СЂСЃРёС‚СЊ РёР»Рё РїРµСЂРµРґР°РІР°С‚СЊ СѓР·РµР»); РІС‹Р±РѕСЂ С‚РёРїР° РєРѕРЅС‚РµР№РЅРµСЂР° (СЃРѕС…СЂР°РЅРµРЅРёРµ СЃРѕСЂС‚РёСЂРѕРІРєРё - РёРµСЂР°СЂС…РёРё); С„РёР»СЊС‚СЂР°С†РёСЏ (РєР°Рє Сѓ РјРµРЅСЏ), РЅРѕ СЌС‚Рѕ РЅР°РёР±РѕР»РµРµ СЌС„С„РµРєС‚РёРІРЅРѕ РїСЂРё stream РїР°СЂСЃРёРЅРіРµ (!); regex РґР»СЏ РїРµСЂРµРёРјРµРЅРѕРІР°РЅРёСЏ РєР»СЋС‡РµР№; РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРІ (РЅР° РјРѕС‘Рј РїСЂРёРјРµСЂРµ - СЂР°Р·СЂРµС€РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ С‡РµСЂРµР· РєРѕРґС‹ - fias_level Рё С‚.Рї.) - С‡РµСЂРµР· Р°РЅРЅРѕС‚Р°С†РёРё ?; 
         Map<String, Object> arg0 = new JsonFlattener(val).withSeparator('$').flattenAsMap();
 		logger.trace("createDaDataForm.  flattened: {}", arg0.entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }")) );
-		Map<String, Object> arg = new HashMap<>(); // порядок не сохраняется !
+		Map<String, Object> arg = new HashMap<>(); // РїРѕСЂСЏРґРѕРє РЅРµ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ !
 			arg0
 				.entrySet()
 				.stream()
-// !!! берём только первую запись (всегда MAIN при наличии филиалов ?) !!!
+// !!! Р±РµСЂС‘Рј С‚РѕР»СЊРєРѕ РїРµСЂРІСѓСЋ Р·Р°РїРёСЃСЊ (РІСЃРµРіРґР° MAIN РїСЂРё РЅР°Р»РёС‡РёРё С„РёР»РёР°Р»РѕРІ ?) !!!
 				.filter(e -> e.getKey().startsWith("suggestions[0]"))
 				//.collect(Collectors.toMap(e -> e.getKey().substring(15).replace('^', '_'), e -> e.getValue())) // NPE !!! ???
 				.forEach( e -> {
 					String k = e.getKey().substring(15)/*.replace('$', '_')*/;
 					Object v = e.getValue();
 					if (v != null) {
-						switch (k) { // раскодирование по справочникам
+						switch (k) { // СЂР°СЃРєРѕРґРёСЂРѕРІР°РЅРёРµ РїРѕ СЃРїСЂР°РІРѕС‡РЅРёРєР°Рј
 							case "data$address$data$fias_level" :
 								v = DaDataInfo.FiasLevel.uncode(Integer.parseInt((String)v));
 								break;
@@ -751,22 +751,22 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 				;
 		logger.trace("createDaDataForm.  flattened_transformed: {}", arg.entrySet().stream().map((Map.Entry<String,Object> k)->{return "['"+k.getKey()+"':'"+k.getValue()+"']";}).collect(Collectors.joining(", ", "{ ", " }")) );
 		
-// дата актуальности (ДО всех перегрузок); сохраняем в атрибут "actDateBefore" ТОЛЬКО если из БД или подана на вход
-// должна совпадать с daDataInfo.getPartyActDateBeforeLong(), но та заполняется всегда (при загрузке из БД)
+// РґР°С‚Р° Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё (Р”Рћ РІСЃРµС… РїРµСЂРµРіСЂСѓР·РѕРє); СЃРѕС…СЂР°РЅСЏРµРј РІ Р°С‚СЂРёР±СѓС‚ "actDateBefore" РўРћР›Р¬РљРћ РµСЃР»Рё РёР· Р‘Р” РёР»Рё РїРѕРґР°РЅР° РЅР° РІС…РѕРґ
+// РґРѕР»Р¶РЅР° СЃРѕРІРїР°РґР°С‚СЊ СЃ daDataInfo.getPartyActDateBeforeLong(), РЅРѕ С‚Р° Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РІСЃРµРіРґР° (РїСЂРё Р·Р°РіСЂСѓР·РєРµ РёР· Р‘Р”)
  		long dtActEpochMilli = 0L;
- 		if ( fromDB ) { // в БД актуальность уже хранится в отдельных полях
+ 		if ( fromDB ) { // РІ Р‘Р” Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ СѓР¶Рµ С…СЂР°РЅРёС‚СЃСЏ РІ РѕС‚РґРµР»СЊРЅС‹С… РїРѕР»СЏС…
  			dtActEpochMilli = daDataInfo.getPartyActDateLong();
  			if (dtActEpochMilli == 0L) {
  				logger.warn("createDaDataForm.  unknown dtAct for inn = {}, subjId = {}", inn, subjId);
- 				dtActEpochMilli = System.currentTimeMillis(); // текущее время !!
+ 				dtActEpochMilli = System.currentTimeMillis(); // С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ !!
  			}
- 		} else if ( actDateBeforeLong != null && actDateBeforeLong != 0L ) { // загружены из БД, но перегружены из сервиса до поднятия формы или по кнопке "Обновить" формы
+ 		} else if ( actDateBeforeLong != null && actDateBeforeLong != 0L ) { // Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· Р‘Р”, РЅРѕ РїРµСЂРµРіСЂСѓР¶РµРЅС‹ РёР· СЃРµСЂРІРёСЃР° РґРѕ РїРѕРґРЅСЏС‚РёСЏ С„РѕСЂРјС‹ РёР»Рё РїРѕ РєРЅРѕРїРєРµ "РћР±РЅРѕРІРёС‚СЊ" С„РѕСЂРјС‹
  			dtActEpochMilli = actDateBeforeLong.longValue();
 	 		BigDecimal tmp = (BigDecimal)arg.get("data$state$actuality_date");
 	 	    if ( tmp != null ) {
-	 	    	daDataInfo.setActuality( Long.valueOf( tmp.longValue() ) ); // (ПОСЛЕ != ДО)
+	 	    	daDataInfo.setActuality( Long.valueOf( tmp.longValue() ) ); // (РџРћРЎР›Р• != Р”Рћ)
 	 	    }
- 		} else { // (ДО == ПОСЛЕ) свежие данные из сервиса - берём актуальность из flattenMap
+ 		} else { // (Р”Рћ == РџРћРЎР›Р•) СЃРІРµР¶РёРµ РґР°РЅРЅС‹Рµ РёР· СЃРµСЂРІРёСЃР° - Р±РµСЂС‘Рј Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ РёР· flattenMap
 	 		BigDecimal tmp = (BigDecimal)arg.get("data$state$actuality_date");
 	 	    if ( tmp != null ) {
 	 	    	//dtActEpochMilli = tmp.longValue();
@@ -774,31 +774,31 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	 	    }
  		}
  		
- 		assert dtActEpochMilli == daDataInfo.getPartyActDateBeforeLong() : "Несовпадение ActDateBeforeLong";
+ 		assert dtActEpochMilli == daDataInfo.getPartyActDateBeforeLong() : "РќРµСЃРѕРІРїР°РґРµРЅРёРµ ActDateBeforeLong";
 		
-		// дополнительные (к json) параметры для передачи в форму
-        arg.put("subjId", subjId); // только в caption
-        arg.put("usercomment", StringUtils.isBlank(userСomment) ? "" : userСomment);
-        //arg.put("ifFromDBrem", fromDB ? " (сохранённые)" : ""); // только в caption
-        arg.put("saveTimeBefore", saveTimeBefore); // если грузили из БД, но сохраняется при перегрузке из сервиса
+		// РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ (Рє json) РїР°СЂР°РјРµС‚СЂС‹ РґР»СЏ РїРµСЂРµРґР°С‡Рё РІ С„РѕСЂРјСѓ
+        arg.put("subjId", subjId); // С‚РѕР»СЊРєРѕ РІ caption
+        arg.put("usercomment", StringUtils.isBlank(userРЎomment) ? "" : userРЎomment);
+        //arg.put("ifFromDBrem", fromDB ? " (СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ)" : ""); // С‚РѕР»СЊРєРѕ РІ caption
+        arg.put("saveTimeBefore", saveTimeBefore); // РµСЃР»Рё РіСЂСѓР·РёР»Рё РёР· Р‘Р”, РЅРѕ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РїСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РёР· СЃРµСЂРІРёСЃР°
         
         Component rootComp = Executions.getCurrent().createComponents("dadata.zul", parComp, /*res*/arg);
-        assert rootComp != null && "dadataRoot".equals(rootComp.getId()) : "Для формы 'dadata.zul' ожидается корневой компонент с ИД = 'dadataRoot'";
+        assert rootComp != null && "dadataRoot".equals(rootComp.getId()) : "Р”Р»СЏ С„РѕСЂРјС‹ 'dadata.zul' РѕР¶РёРґР°РµС‚СЃСЏ РєРѕСЂРЅРµРІРѕР№ РєРѕРјРїРѕРЅРµРЅС‚ СЃ РР” = 'dadataRoot'";
         
-// TODO: назначать ивент-хендлеры без вайринга
-		//Selectors.wireComponents(this.getSelf(), this, false/*true*/); // HOWTO: ignoreNonNull !! иначе не обновляется вайринг, например, в новом окне читается значение старого текстбокса: ignoreNonNull - ignore wiring when the value of the field is a Component (non-null) or a non-empty Collection
+// TODO: РЅР°Р·РЅР°С‡Р°С‚СЊ РёРІРµРЅС‚-С…РµРЅРґР»РµСЂС‹ Р±РµР· РІР°Р№СЂРёРЅРіР°
+		//Selectors.wireComponents(this.getSelf(), this, false/*true*/); // HOWTO: ignoreNonNull !! РёРЅР°С‡Рµ РЅРµ РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ РІР°Р№СЂРёРЅРі, РЅР°РїСЂРёРјРµСЂ, РІ РЅРѕРІРѕРј РѕРєРЅРµ С‡РёС‚Р°РµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµ СЃС‚Р°СЂРѕРіРѕ С‚РµРєСЃС‚Р±РѕРєСЃР°: ignoreNonNull - ignore wiring when the value of the field is a Component (non-null) or a non-empty Collection
 		Selectors.wireEventListeners(this.getSelf(), this);
 
 		if (rootComp != null) { //
 			rootComp.setAttribute("subjId", subjId);
 			rootComp.setAttribute("daDataInfo", daDataInfo);
-			//rootComp.setAttribute("inn", inn); // убрать
-			//rootComp.setAttribute("json", val); // убрать
-			//rootComp.setAttribute("actDateBefore", Long.valueOf(dtActEpochMilli)); // !! убрать !! (исп-ть поле DaDataInfo.partyActDateBeforeLong)
-			//rootComp.setAttribute("usercommentBefore", userСomment); // убрать
-			rootComp.setAttribute("fromDB", fromDB); // !! убрать !! (исп-ть поле DaDataInfo.jsonState)
-			//rootComp.setAttribute("saveTimeBefore", saveTimeBefore); // убрать
-			//rootComp.setAttribute("actDateAfter", Long.valueOf( daDataInfo.getPartyActDateLong() ) ); // убрать
+			//rootComp.setAttribute("inn", inn); // СѓР±СЂР°С‚СЊ
+			//rootComp.setAttribute("json", val); // СѓР±СЂР°С‚СЊ
+			//rootComp.setAttribute("actDateBefore", Long.valueOf(dtActEpochMilli)); // !! СѓР±СЂР°С‚СЊ !! (РёСЃРї-С‚СЊ РїРѕР»Рµ DaDataInfo.partyActDateBeforeLong)
+			//rootComp.setAttribute("usercommentBefore", userРЎomment); // СѓР±СЂР°С‚СЊ
+			rootComp.setAttribute("fromDB", fromDB); // !! СѓР±СЂР°С‚СЊ !! (РёСЃРї-С‚СЊ РїРѕР»Рµ DaDataInfo.jsonState)
+			//rootComp.setAttribute("saveTimeBefore", saveTimeBefore); // СѓР±СЂР°С‚СЊ
+			//rootComp.setAttribute("actDateAfter", Long.valueOf( daDataInfo.getPartyActDateLong() ) ); // СѓР±СЂР°С‚СЊ
 		} else {
 			logger.error("createDaDataForm.  rootComp is null");
 		}
@@ -808,29 +808,29 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	} // public Component createDaDataForm(int subjId, DaDataInfo daDataInfo, Boolean fromDB, Component parComp)
 	
 	
-	/** Показать форму DaData в модальном окне. Юридическая информация о компании по ИНН с сайта dadata.ru ("API Подсказок").
-	 * Сначала ищем сохранённые в БД данные. Не нашли - дёргаем сервис. Если найдены и они "устарели", предлагаем
-	 *  перезагрузить из сервиса. Открываем форму в окне.
-	 * @param page На какой странице создаём форму.
+	/** РџРѕРєР°Р·Р°С‚СЊ С„РѕСЂРјСѓ DaData РІ РјРѕРґР°Р»СЊРЅРѕРј РѕРєРЅРµ. Р®СЂРёРґРёС‡РµСЃРєР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РєРѕРјРїР°РЅРёРё РїРѕ РРќРќ СЃ СЃР°Р№С‚Р° dadata.ru ("API РџРѕРґСЃРєР°Р·РѕРє").
+	 * РЎРЅР°С‡Р°Р»Р° РёС‰РµРј СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ РІ Р‘Р” РґР°РЅРЅС‹Рµ. РќРµ РЅР°С€Р»Рё - РґС‘СЂРіР°РµРј СЃРµСЂРІРёСЃ. Р•СЃР»Рё РЅР°Р№РґРµРЅС‹ Рё РѕРЅРё "СѓСЃС‚Р°СЂРµР»Рё", РїСЂРµРґР»Р°РіР°РµРј
+	 *  РїРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ РёР· СЃРµСЂРІРёСЃР°. РћС‚РєСЂС‹РІР°РµРј С„РѕСЂРјСѓ РІ РѕРєРЅРµ.
+	 * @param page РќР° РєР°РєРѕР№ СЃС‚СЂР°РЅРёС†Рµ СЃРѕР·РґР°С‘Рј С„РѕСЂРјСѓ.
 	 */
 	private void showSuggestionModal(int subjId, String inn, Page page) {
-// проверить параметры, искать в БД, запрос на обновление несвежих
+// РїСЂРѕРІРµСЂРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹, РёСЃРєР°С‚СЊ РІ Р‘Р”, Р·Р°РїСЂРѕСЃ РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ РЅРµСЃРІРµР¶РёС…
 		if (inn == null || inn.length() != 10) {
-    		alert("Для проверки субъекта "+subjId+" требуется ИНН длиной 10 цифр.");
+    		alert("Р”Р»СЏ РїСЂРѕРІРµСЂРєРё СЃСѓР±СЉРµРєС‚Р° "+subjId+" С‚СЂРµР±СѓРµС‚СЃСЏ РРќРќ РґР»РёРЅРѕР№ 10 С†РёС„СЂ.");
     		return;
     	}
 		
-// FIXME: заменить на поле DaDataInfo.jsonState: FROMDB_LOADED, FIRST_FROMRS_LOADED, RELOADED_BEFORE_FORM, RELOADED_DURING_FORM
-    	Boolean fromDB; // признак, что данные были в БД и загружены оттуда; нужно для решения о необходимости и возможности перезагрузки
-    	java.util.Date saveTimeBefore = null; // для проверки "устарелости"
+// FIXME: Р·Р°РјРµРЅРёС‚СЊ РЅР° РїРѕР»Рµ DaDataInfo.jsonState: FROMDB_LOADED, FIRST_FROMRS_LOADED, RELOADED_BEFORE_FORM, RELOADED_DURING_FORM
+    	Boolean fromDB; // РїСЂРёР·РЅР°Рє, С‡С‚Рѕ РґР°РЅРЅС‹Рµ Р±С‹Р»Рё РІ Р‘Р” Рё Р·Р°РіСЂСѓР¶РµРЅС‹ РѕС‚С‚СѓРґР°; РЅСѓР¶РЅРѕ РґР»СЏ СЂРµС€РµРЅРёСЏ Рѕ РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё Рё РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРµСЂРµР·Р°РіСЂСѓР·РєРё
+    	java.util.Date saveTimeBefore = null; // РґР»СЏ РїСЂРѕРІРµСЂРєРё "СѓСЃС‚Р°СЂРµР»РѕСЃС‚Рё"
     	
-// создать модальное окно, в нём форму на основе параметра _daDataInfo и вернуть корень формы (грид с ИД "dadataRoot")
+// СЃРѕР·РґР°С‚СЊ РјРѕРґР°Р»СЊРЅРѕРµ РѕРєРЅРѕ, РІ РЅС‘Рј С„РѕСЂРјСѓ РЅР° РѕСЃРЅРѕРІРµ РїР°СЂР°РјРµС‚СЂР° _daDataInfo Рё РІРµСЂРЅСѓС‚СЊ РєРѕСЂРµРЅСЊ С„РѕСЂРјС‹ (РіСЂРёРґ СЃ РР” "dadataRoot")
     	TriFunction<DaDataInfo,Boolean,Long,Component> createFormInWin = (_daDataInfo, _fromDB, _actDateBeforeLong) -> {
-    			Window /*this.*/dadataWin = new Window(null, "normal", true); // <window id="dadataWin" height="90%" width="50%" mode="highlighted" sizable="true" closable="true" border="normal" style="max-width:70%;"> <!--  hflex="min" vflex="min" overflow:auto; - не работает -->
+    			Window /*this.*/dadataWin = new Window(null, "normal", true); // <window id="dadataWin" height="90%" width="50%" mode="highlighted" sizable="true" closable="true" border="normal" style="max-width:70%;"> <!--  hflex="min" vflex="min" overflow:auto; - РЅРµ СЂР°Р±РѕС‚Р°РµС‚ -->
     			dadataWin.setHeight("90%"); dadataWin.setWidth("60%");
     			dadataWin.setSizable(true);
     			dadataWin.setId("dadataWin");
-    			Caption cpt = new Caption("Данные сервиса DaData"+(_fromDB ? " (сохранённые)" : "")+" по субъекту ИД LM "+subjId); // <caption label="Данные сервиса DaData${arg.ifFromDBrem} по субъекту ИД LM ${arg.subjId}" style="background:#cceeff;text-align:center;font-size:24px;font-weight:bold;color:#b22222;" />
+    			Caption cpt = new Caption("Р”Р°РЅРЅС‹Рµ СЃРµСЂРІРёСЃР° DaData"+(_fromDB ? " (СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ)" : "")+" РїРѕ СЃСѓР±СЉРµРєС‚Сѓ РР” LM "+subjId); // <caption label="Р”Р°РЅРЅС‹Рµ СЃРµСЂРІРёСЃР° DaData${arg.ifFromDBrem} РїРѕ СЃСѓР±СЉРµРєС‚Сѓ РР” LM ${arg.subjId}" style="background:#cceeff;text-align:center;font-size:24px;font-weight:bold;color:#b22222;" />
     			cpt.setStyle("background:#cceeff;text-align:center;font-size:24px;font-weight:bold;color:#b22222;");
     			dadataWin.appendChild(cpt);
     			dadataWin.setPage(page);
@@ -839,18 +839,18 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     			return rootComp;
     	}; // createFormInWin()
     	
-    	// сначала ищем запись по ИНН в БД (последнюю редакцию)
+    	// СЃРЅР°С‡Р°Р»Р° РёС‰РµРј Р·Р°РїРёСЃСЊ РїРѕ РРќРќ РІ Р‘Р” (РїРѕСЃР»РµРґРЅСЋСЋ СЂРµРґР°РєС†РёСЋ)
     	DaDataInfo daDataInfo = SubjDopService.selectDaDataInfoLatestByInn(inn);
-    	if (daDataInfo != null) { // нашли в БД; насколько свежая ?
+    	if (daDataInfo != null) { // РЅР°С€Р»Рё РІ Р‘Р”; РЅР°СЃРєРѕР»СЊРєРѕ СЃРІРµР¶Р°СЏ ?
     		fromDB = Boolean.TRUE;
     		//daDataInfo.fixPartyActDateBeforeLong(); //daDataInfo.setPartyActDateBeforeLong(daDataInfo.getPartyActDateLong());
     		saveTimeBefore = daDataInfo.getSaveTime();
     		boolean mayReload = saveTimeBefore.toInstant().until(Instant.now(), ChronoUnit.HOURS) > 8;
     		logger.trace("showSuggestionModal.  subjId: {}, inn: {} found in DB with saveTimeBefore = {}, hours_until_now = {}, mayReload = {}", subjId, inn, saveTimeBefore, saveTimeBefore.toInstant().until(Instant.now(), ChronoUnit.HOURS), mayReload );
-        	if ( mayReload ) { // предлагаем перегрузить данные при заданной несвежести
+        	if ( mayReload ) { // РїСЂРµРґР»Р°РіР°РµРј РїРµСЂРµРіСЂСѓР·РёС‚СЊ РґР°РЅРЅС‹Рµ РїСЂРё Р·Р°РґР°РЅРЅРѕР№ РЅРµСЃРІРµР¶РµСЃС‚Рё
         		final DaDataInfo fin_daDataInfo = daDataInfo;
         		Messagebox.show(
-					 "Данные ранее были сохранены "+saveTimeBefore+". Перегрузить ?", "Prompt"
+					 "Р”Р°РЅРЅС‹Рµ СЂР°РЅРµРµ Р±С‹Р»Рё СЃРѕС…СЂР°РЅРµРЅС‹ "+saveTimeBefore+". РџРµСЂРµРіСЂСѓР·РёС‚СЊ ?", "Prompt"
 					,Messagebox.YES|Messagebox.NO, Messagebox.QUESTION
 					,new SerializableEventListener<Event>() {
 	        			private static final long serialVersionUID = -4439495004385792793L;
@@ -859,51 +859,51 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	        				final DaDataInfo loc_daDataInfo = fin_daDataInfo;
 	        				Boolean loc_fromDB = fromDB;
 	        				switch( ((Integer)evt.getData()).intValue() ) {
-	        					case Messagebox.YES:  // попробовать дёрнуть сервис (daDataInfo на входе ! и выходе), коммент сохранить; при неудаче использовать загруженные из БД; вызвать этап2
-	        						long actDateBeforeLong = loc_daDataInfo.getPartyActDateLong(); // до перегрузки запомнить ДатуАктуальности
-	        						if ( loc_daDataInfo.loadFromRS() ) { // здесь при успехе переназначили json, сбросили актуальность, saveTime не меняем (из БД, нужен для update)
+	        					case Messagebox.YES:  // РїРѕРїСЂРѕР±РѕРІР°С‚СЊ РґС‘СЂРЅСѓС‚СЊ СЃРµСЂРІРёСЃ (daDataInfo РЅР° РІС…РѕРґРµ ! Рё РІС‹С…РѕРґРµ), РєРѕРјРјРµРЅС‚ СЃРѕС…СЂР°РЅРёС‚СЊ; РїСЂРё РЅРµСѓРґР°С‡Рµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РёР· Р‘Р”; РІС‹Р·РІР°С‚СЊ СЌС‚Р°Рї2
+	        						long actDateBeforeLong = loc_daDataInfo.getPartyActDateLong(); // РґРѕ РїРµСЂРµРіСЂСѓР·РєРё Р·Р°РїРѕРјРЅРёС‚СЊ Р”Р°С‚СѓРђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё
+	        						if ( loc_daDataInfo.loadFromRS() ) { // Р·РґРµСЃСЊ РїСЂРё СѓСЃРїРµС…Рµ РїРµСЂРµРЅР°Р·РЅР°С‡РёР»Рё json, СЃР±СЂРѕСЃРёР»Рё Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ, saveTime РЅРµ РјРµРЅСЏРµРј (РёР· Р‘Р”, РЅСѓР¶РµРЅ РґР»СЏ update)
 	        							loc_fromDB = Boolean.FALSE;
-	        							//loc_daDataInfo.setPartyActDateBeforeLong(actDateBeforeLong); // всегда в selectDaDataInfoLatestByInn
+	        							//loc_daDataInfo.setPartyActDateBeforeLong(actDateBeforeLong); // РІСЃРµРіРґР° РІ selectDaDataInfoLatestByInn
 	        							loc_daDataInfo.setJsonState(JsonStates.RELOADED_BEFORE_FORM);
-	        						} else { // странная ситуация: ранее была загружена, теперь не нашли (возможно, сбой сервиса)
+	        						} else { // СЃС‚СЂР°РЅРЅР°СЏ СЃРёС‚СѓР°С†РёСЏ: СЂР°РЅРµРµ Р±С‹Р»Р° Р·Р°РіСЂСѓР¶РµРЅР°, С‚РµРїРµСЂСЊ РЅРµ РЅР°С€Р»Рё (РІРѕР·РјРѕР¶РЅРѕ, СЃР±РѕР№ СЃРµСЂРІРёСЃР°)
 	        							actDateBeforeLong = 0L;
 	        							loc_daDataInfo.setJsonState(JsonStates.FROMDB_LOADED);
-	        							logger.debug("showSuggestionModal.  Информация по ИНН {} не найдена при попытке перезагрузить до поднятия формы, subjId = {}", inn, subjId);
-	        							alert("Информация по ИНН "+inn+" не найдена, выводим сохранённую.");
+	        							logger.debug("showSuggestionModal.  РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ {} РЅРµ РЅР°Р№РґРµРЅР° РїСЂРё РїРѕРїС‹С‚РєРµ РїРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ РґРѕ РїРѕРґРЅСЏС‚РёСЏ С„РѕСЂРјС‹, subjId = {}", inn, subjId);
+	        							alert("РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ "+inn+" РЅРµ РЅР°Р№РґРµРЅР°, РІС‹РІРѕРґРёРј СЃРѕС…СЂР°РЅС‘РЅРЅСѓСЋ.");
 	        						}
 	        						loc_rootComp = createFormInWin.apply(loc_daDataInfo, loc_fromDB, Long.valueOf(actDateBeforeLong));
-	        						logger.debug("showSuggestionModal.  DaDataForm was created after YES answer (попробовали перегрузить загруженные из БД давно), fromDB = {}, JsonState = {}, rootComp = {}", fromDB, loc_daDataInfo.getJsonState(), loc_rootComp);
+	        						logger.debug("showSuggestionModal.  DaDataForm was created after YES answer (РїРѕРїСЂРѕР±РѕРІР°Р»Рё РїРµСЂРµРіСЂСѓР·РёС‚СЊ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РёР· Р‘Р” РґР°РІРЅРѕ), fromDB = {}, JsonState = {}, rootComp = {}", fromDB, loc_daDataInfo.getJsonState(), loc_rootComp);
 	        						break;
-	        					case Messagebox.NO: // использовать старые данные, загруженные из БД
-	        					default: // закрыли крестиком ?
+	        					case Messagebox.NO: // РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЃС‚Р°СЂС‹Рµ РґР°РЅРЅС‹Рµ, Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РёР· Р‘Р”
+	        					default: // Р·Р°РєСЂС‹Р»Рё РєСЂРµСЃС‚РёРєРѕРј ?
 	        						loc_daDataInfo.setJsonState(JsonStates.FROMDB_LOADED);
 	        						loc_rootComp = createFormInWin.apply(loc_daDataInfo, loc_fromDB, null);
-	        						logger.debug("showSuggestionModal.  DaDataForm was created after NO answer (отказались перегружать загруженные из БД давно), fromDB = {}, JsonState = {}, rootComp = {}", fromDB, loc_daDataInfo.getJsonState(), loc_rootComp);
+	        						logger.debug("showSuggestionModal.  DaDataForm was created after NO answer (РѕС‚РєР°Р·Р°Р»РёСЃСЊ РїРµСЂРµРіСЂСѓР¶Р°С‚СЊ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РёР· Р‘Р” РґР°РІРЅРѕ), fromDB = {}, JsonState = {}, rootComp = {}", fromDB, loc_daDataInfo.getJsonState(), loc_rootComp);
 	        						break;
 	        				} // switch
 	        			} // onEvent
 					 } // EventListener
         		); // Messagebox.show
-        		return; // асинхрон
-        	} // несвежи
-        	else { // из БД и свежие
+        		return; // Р°СЃРёРЅС…СЂРѕРЅ
+        	} // РЅРµСЃРІРµР¶Рё
+        	else { // РёР· Р‘Р” Рё СЃРІРµР¶РёРµ
         		daDataInfo.setJsonState(JsonStates.FROMDB_LOADED);
         	}
-    	} // найдены в БД
-    	else { // пытаемся загрузить первый раз из сервиса
-    		//loadThenShowModal(): создать окно; loadDaDataInfoFromRS(DaDataInfo.getBlank(inn));...step2(subjId, daDataInfo, fromDB);
+    	} // РЅР°Р№РґРµРЅС‹ РІ Р‘Р”
+    	else { // РїС‹С‚Р°РµРјСЃСЏ Р·Р°РіСЂСѓР·РёС‚СЊ РїРµСЂРІС‹Р№ СЂР°Р· РёР· СЃРµСЂРІРёСЃР°
+    		//loadThenShowModal(): СЃРѕР·РґР°С‚СЊ РѕРєРЅРѕ; loadDaDataInfoFromRS(DaDataInfo.getBlank(inn));...step2(subjId, daDataInfo, fromDB);
     		daDataInfo = DaDataInfo.getBlank(inn);
     		if ( !daDataInfo.loadFromRS() ) {
-    			logger.debug("showSuggestionModal.  Информация по ИНН {} не найдена (при отсутствии в БД), subjId = {}", inn, subjId);
-    			alert("Информация по ИНН "+inn+" не найдена");
+    			logger.debug("showSuggestionModal.  РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ {} РЅРµ РЅР°Р№РґРµРЅР° (РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё РІ Р‘Р”), subjId = {}", inn, subjId);
+    			alert("РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ "+inn+" РЅРµ РЅР°Р№РґРµРЅР°");
     			//daDataInfo.setJsonState(JsonStates.BLANC);
     			return;
     		}
     		fromDB = Boolean.FALSE;
     		daDataInfo.setJsonState(JsonStates.FIRST_FROMRS_LOADED);
     	}
-// здесь оказываемся если не было в БД и успешно прогрузили или было в базе и не предложили обновить (не старые)
-// если предложили обновить, то ответ асинхронный
+// Р·РґРµСЃСЊ РѕРєР°Р·С‹РІР°РµРјСЃСЏ РµСЃР»Рё РЅРµ Р±С‹Р»Рѕ РІ Р‘Р” Рё СѓСЃРїРµС€РЅРѕ РїСЂРѕРіСЂСѓР·РёР»Рё РёР»Рё Р±С‹Р»Рѕ РІ Р±Р°Р·Рµ Рё РЅРµ РїСЂРµРґР»РѕР¶РёР»Рё РѕР±РЅРѕРІРёС‚СЊ (РЅРµ СЃС‚Р°СЂС‹Рµ)
+// РµСЃР»Рё РїСЂРµРґР»РѕР¶РёР»Рё РѕР±РЅРѕРІРёС‚СЊ, С‚Рѕ РѕС‚РІРµС‚ Р°СЃРёРЅС…СЂРѕРЅРЅС‹Р№
     	
 		Component rootComp = createFormInWin.apply(daDataInfo, fromDB, null);
 		logger.debug("showSuggestionModal.  DaDataForm was created at once, fromDB = {}, JsonState = {}, rootComp = {}", fromDB, daDataInfo.getJsonState(), rootComp);
@@ -913,10 +913,10 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	//@Wire("#dadataWin #dadataUserCommTB") Textbox dadataUserCommTB;
 	//@Wire Window dadataWin;
 	
-	/** Сохранение в БД при закрытии формы DaData. */
+	/** РЎРѕС…СЂР°РЅРµРЅРёРµ РІ Р‘Р” РїСЂРё Р·Р°РєСЂС‹С‚РёРё С„РѕСЂРјС‹ DaData. */
 	@Listen("onClick = #dadataWin #dadataSaveBtn; onClose = #dadataWin")
-// TODO: назначать ивент-хендлеры без вайринга
-	public void onSaveDaDataInfo(Event ev) { // если изменился коммент или данные перегружены, сохранить
+// TODO: РЅР°Р·РЅР°С‡Р°С‚СЊ РёРІРµРЅС‚-С…РµРЅРґР»РµСЂС‹ Р±РµР· РІР°Р№СЂРёРЅРіР°
+	public void onSaveDaDataInfo(Event ev) { // РµСЃР»Рё РёР·РјРµРЅРёР»СЃСЏ РєРѕРјРјРµРЅС‚ РёР»Рё РґР°РЅРЅС‹Рµ РїРµСЂРµРіСЂСѓР¶РµРЅС‹, СЃРѕС…СЂР°РЅРёС‚СЊ
 		Component rootComp = ev.getTarget().getFellow("dadataRoot");
 		Component dadataWin = rootComp.getParent() == null || !(rootComp.getParent() instanceof Window) ? null : rootComp.getParent(); //rootComp.getFellow("dadataWin"); //Path.getComponent("dadataWin");
 		Textbox dadataUserCommTB = (Textbox)ev.getTarget().getFellow("dadataUserCommTB");
@@ -929,16 +929,16 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		DaDataInfo.JsonStates jsonState = daDataInfo.getJsonState();
 		Long actDateBeforeLong = Long.valueOf( daDataInfo.getPartyActDateBeforeLong() ) //(Long)rootComp.getAttribute("actDateBefore")
 			,actDateAfterLong = Long.valueOf( daDataInfo.getPartyActDateLong() ); //(Long)rootComp.getAttribute("actDateAfter");
-		java.util.Date saveTimeBefore = daDataInfo.getSaveTime(); // не исп-ся //(java.util.Date)rootComp.getAttribute("saveTimeBefore");
+		java.util.Date saveTimeBefore = daDataInfo.getSaveTime(); // РЅРµ РёСЃРї-СЃСЏ //(java.util.Date)rootComp.getAttribute("saveTimeBefore");
 				
 		if (dadataUserCommTB != null) {
 			usercommentAfter = StringUtils.isBlank(dadataUserCommTB.getValue()) ? "" : dadataUserCommTB.getValue();
 		}
 		
 		boolean commentChanged = !usercommentAfter.equals(usercommentBefore)
-				// json сохраняем, когда из БД, но перегружали и новая ДА; или впервые загружен из сервиса
-				// не сохраняем если из БД и не перегружали или ДА не поменялась
-				,loadedNewParty = ( fromDB == null || !fromDB  || jsonState != null && jsonState != DaDataInfo.JsonStates.BLANC && jsonState != DaDataInfo.JsonStates.FROMDB_LOADED ) // дёргали сервис
+				// json СЃРѕС…СЂР°РЅСЏРµРј, РєРѕРіРґР° РёР· Р‘Р”, РЅРѕ РїРµСЂРµРіСЂСѓР¶Р°Р»Рё Рё РЅРѕРІР°СЏ Р”Рђ; РёР»Рё РІРїРµСЂРІС‹Рµ Р·Р°РіСЂСѓР¶РµРЅ РёР· СЃРµСЂРІРёСЃР°
+				// РЅРµ СЃРѕС…СЂР°РЅСЏРµРј РµСЃР»Рё РёР· Р‘Р” Рё РЅРµ РїРµСЂРµРіСЂСѓР¶Р°Р»Рё РёР»Рё Р”Рђ РЅРµ РїРѕРјРµРЅСЏР»Р°СЃСЊ
+				,loadedNewParty = ( fromDB == null || !fromDB  || jsonState != null && jsonState != DaDataInfo.JsonStates.BLANC && jsonState != DaDataInfo.JsonStates.FROMDB_LOADED ) // РґС‘СЂРіР°Р»Рё СЃРµСЂРІРёСЃ
 							   && (actDateBeforeLong == null || actDateBeforeLong == 0L || !actDateAfterLong.equals(actDateBeforeLong));
 		
 		logger.trace("onSaveDaDataInfo.  ev_name = '{}', rootComp = '{}', ev_class = '{}', ev_target = '{}', ev_target_fellow_win = '{}', dadataUserCommTB = '{}', inn = {}", ev.getName(), rootComp, ev.getClass().getSimpleName(), ev.getTarget(), ev.getTarget().getFellowIfAny("dadataWin"), dadataUserCommTB, inn);
@@ -949,7 +949,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			if ( loadedNewParty ) {
 				rc = Integer.valueOf( SubjDopService.insertDaDataInfo(daDataInfo) );
 				logger.debug("onSaveDaDataInfo_NEW.  INSERT, sqlRowCount = {}", rc);
-			} else if ( commentChanged ) { // обновляем только коммент и юзера (при перегрузке из сервиса всегда INSERT)
+			} else if ( commentChanged ) { // РѕР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РєРѕРјРјРµРЅС‚ Рё СЋР·РµСЂР° (РїСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РёР· СЃРµСЂРІРёСЃР° РІСЃРµРіРґР° INSERT)
 				rc = Integer.valueOf( SubjDopService.updateDaDataInfoBySaveTime(daDataInfo) );
 				logger.debug("onSaveDaDataInfo_NEW.  UPDATE, sqlRowCount = {}", rc);
 			} else {
@@ -959,54 +959,54 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 			return rc;
 		};
 		
-		// закрытие по крестику (не по кнопке): спросить о сохранении, но новый json в БД сохранять всегда
+		// Р·Р°РєСЂС‹С‚РёРµ РїРѕ РєСЂРµСЃС‚РёРєСѓ (РЅРµ РїРѕ РєРЅРѕРїРєРµ): СЃРїСЂРѕСЃРёС‚СЊ Рѕ СЃРѕС…СЂР°РЅРµРЅРёРё, РЅРѕ РЅРѕРІС‹Р№ json РІ Р‘Р” СЃРѕС…СЂР°РЅСЏС‚СЊ РІСЃРµРіРґР°
 		if ( "onClose".equals(ev.getName()) && (loadedNewParty || commentChanged) ) {
 			String loc_usercommentAfter = usercommentAfter;
-    		Messagebox.show( "Сохранить данные ?", "Prompt", Messagebox.YES|Messagebox.NO, Messagebox.QUESTION
+    		Messagebox.show( "РЎРѕС…СЂР°РЅРёС‚СЊ РґР°РЅРЅС‹Рµ ?", "Prompt", Messagebox.YES|Messagebox.NO, Messagebox.QUESTION
 				,new SerializableEventListener<Event>() {
 					private static final long serialVersionUID = 9124127831123105130L;
 					public void onEvent(Event evt) {
 						int rc = 0; // SQLRowCount
         				switch( ((Integer)evt.getData()).intValue() ) {
-        					case Messagebox.YES:  // сохранить
+        					case Messagebox.YES:  // СЃРѕС…СЂР°РЅРёС‚СЊ
         						daDataInfo.setUserInput(loc_usercommentAfter, "basos");
         						rc = saveToDB.get().intValue();
-        						logger.trace("onSaveDaDataInfo.  Подтверждение YES после закрытия окна крестиком. choise: {}, SQLRowCount: {}", ((Integer)evt.getData()).intValue(), rc);
+        						logger.trace("onSaveDaDataInfo.  РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ YES РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР° РєСЂРµСЃС‚РёРєРѕРј. choise: {}, SQLRowCount: {}", ((Integer)evt.getData()).intValue(), rc);
         						break;
-        					case Messagebox.NO: // отказались сохранять, но перегруженный json всё равно сохраняем
-        					default: // закрыли крестиком ?
-        						// коммент не сохраняем !! не null потому, что для null нужно явно указывать jdbcType :)
-        						daDataInfo.setUserInput(usercommentBefore/*""*/, "basos"); // !! оставить старый, не обнулять !!
+        					case Messagebox.NO: // РѕС‚РєР°Р·Р°Р»РёСЃСЊ СЃРѕС…СЂР°РЅСЏС‚СЊ, РЅРѕ РїРµСЂРµРіСЂСѓР¶РµРЅРЅС‹Р№ json РІСЃС‘ СЂР°РІРЅРѕ СЃРѕС…СЂР°РЅСЏРµРј
+        					default: // Р·Р°РєСЂС‹Р»Рё РєСЂРµСЃС‚РёРєРѕРј ?
+        						// РєРѕРјРјРµРЅС‚ РЅРµ СЃРѕС…СЂР°РЅСЏРµРј !! РЅРµ null РїРѕС‚РѕРјСѓ, С‡С‚Рѕ РґР»СЏ null РЅСѓР¶РЅРѕ СЏРІРЅРѕ СѓРєР°Р·С‹РІР°С‚СЊ jdbcType :)
+        						daDataInfo.setUserInput(usercommentBefore/*""*/, "basos"); // !! РѕСЃС‚Р°РІРёС‚СЊ СЃС‚Р°СЂС‹Р№, РЅРµ РѕР±РЅСѓР»СЏС‚СЊ !!
         						if (loadedNewParty) {
         							rc = saveToDB.get().intValue();
         						}
-        						logger.trace("onSaveDaDataInfo.  Подтверждение NO после закрытия окна крестиком. choise: {}, SQLRowCount: {}", ((Integer)evt.getData()).intValue(), rc);
+        						logger.trace("onSaveDaDataInfo.  РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ NO РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР° РєСЂРµСЃС‚РёРєРѕРј. choise: {}, SQLRowCount: {}", ((Integer)evt.getData()).intValue(), rc);
         						break;
         				} // switch
         				if ( dadataWin != null ) {
-        					dadataWin.detach(); // закрыть окно
+        					dadataWin.detach(); // Р·Р°РєСЂС‹С‚СЊ РѕРєРЅРѕ
 							//dadataWin = null;
         				}
         			} // onEvent
 				 } // EventListener
     		); // Messagebox.show
 			return;
-		} // if закрытие окна иконкой и были изменения
+		} // if Р·Р°РєСЂС‹С‚РёРµ РѕРєРЅР° РёРєРѕРЅРєРѕР№ Рё Р±С‹Р»Рё РёР·РјРµРЅРµРЅРёСЏ
 		
-		// здесь оказываемся если закрытие по кнопке "Сохранить" //или крестиком, но ничего сохранять не надо
+		// Р·РґРµСЃСЊ РѕРєР°Р·С‹РІР°РµРјСЃСЏ РµСЃР»Рё Р·Р°РєСЂС‹С‚РёРµ РїРѕ РєРЅРѕРїРєРµ "РЎРѕС…СЂР°РЅРёС‚СЊ" //РёР»Рё РєСЂРµСЃС‚РёРєРѕРј, РЅРѕ РЅРёС‡РµРіРѕ СЃРѕС…СЂР°РЅСЏС‚СЊ РЅРµ РЅР°РґРѕ
 		int sqlRowCount = 0;
-// признак - наличие saveTime: пустота означает, что из БД не грузили, а получен впервые от сервиса;
-// непустой saveTime означает, что получали из БД, но могли перегрузить из сервиса (до создания формы по запросу или по кнопке "Обновить")
-// признак перегрузки из сервиса (еще данные д.б. не те же, тогда insert; update тогда и только, когда изменился только коммент): ДатаАктуальности (хранить старую)
-		if ( loadedNewParty || commentChanged ) { // не надо гнать порожняк
+// РїСЂРёР·РЅР°Рє - РЅР°Р»РёС‡РёРµ saveTime: РїСѓСЃС‚РѕС‚Р° РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РёР· Р‘Р” РЅРµ РіСЂСѓР·РёР»Рё, Р° РїРѕР»СѓС‡РµРЅ РІРїРµСЂРІС‹Рµ РѕС‚ СЃРµСЂРІРёСЃР°;
+// РЅРµРїСѓСЃС‚РѕР№ saveTime РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РїРѕР»СѓС‡Р°Р»Рё РёР· Р‘Р”, РЅРѕ РјРѕРіР»Рё РїРµСЂРµРіСЂСѓР·РёС‚СЊ РёР· СЃРµСЂРІРёСЃР° (РґРѕ СЃРѕР·РґР°РЅРёСЏ С„РѕСЂРјС‹ РїРѕ Р·Р°РїСЂРѕСЃСѓ РёР»Рё РїРѕ РєРЅРѕРїРєРµ "РћР±РЅРѕРІРёС‚СЊ")
+// РїСЂРёР·РЅР°Рє РїРµСЂРµРіСЂСѓР·РєРё РёР· СЃРµСЂРІРёСЃР° (РµС‰Рµ РґР°РЅРЅС‹Рµ Рґ.Р±. РЅРµ С‚Рµ Р¶Рµ, С‚РѕРіРґР° insert; update С‚РѕРіРґР° Рё С‚РѕР»СЊРєРѕ, РєРѕРіРґР° РёР·РјРµРЅРёР»СЃСЏ С‚РѕР»СЊРєРѕ РєРѕРјРјРµРЅС‚): Р”Р°С‚Р°РђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё (С…СЂР°РЅРёС‚СЊ СЃС‚Р°СЂСѓСЋ)
+		if ( loadedNewParty || commentChanged ) { // РЅРµ РЅР°РґРѕ РіРЅР°С‚СЊ РїРѕСЂРѕР¶РЅСЏРє
 			daDataInfo.setUserInput(usercommentAfter, "basos");
-/*			// MERGE statement (тогда не нужно самому сравнивать ДА) !!! (http://stackoverflow.com/questions/19593785/how-can-i-use-oracle-merge-statement-using-mybatis)
-			// !!! INSERT проходит, при UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Данные для считывания из сокета отсутствуют
+/*			// MERGE statement (С‚РѕРіРґР° РЅРµ РЅСѓР¶РЅРѕ СЃР°РјРѕРјСѓ СЃСЂР°РІРЅРёРІР°С‚СЊ Р”Рђ) !!! (http://stackoverflow.com/questions/19593785/how-can-i-use-oracle-merge-statement-using-mybatis)
+			// !!! INSERT РїСЂРѕС…РѕРґРёС‚, РїСЂРё UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Р”Р°РЅРЅС‹Рµ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РёР· СЃРѕРєРµС‚Р° РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚
 			sqlRowCount =  Integer.valueOf( SubjDopService.mergeDaDataInfoByActDate(daDataInfo) );
 			logger.trace("onSaveDaDataInfo.  MERGE, sqlRowCount = {}, daDataInfo = {}", sqlRowCount, daDataInfo);
 */			
 			sqlRowCount = saveToDB.get().intValue();
-			logger.trace("onSaveDaDataInfo.  сохранение после закрытия кнопкой: sqlRowCount = {}", sqlRowCount);
+			logger.trace("onSaveDaDataInfo.  СЃРѕС…СЂР°РЅРµРЅРёРµ РїРѕСЃР»Рµ Р·Р°РєСЂС‹С‚РёСЏ РєРЅРѕРїРєРѕР№: sqlRowCount = {}", sqlRowCount);
 		}
 		
 /*		DaDataInfo tmp_daDataInfo = null;
@@ -1017,19 +1017,19 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 										,"basos" // userName
 										,actDateAfter
 										,new java.sql.Date(actDateAfter)
-										,null //new java.util.Date() // заполняется на стороне БД
+										,null //new java.util.Date() // Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р”
 						);
 			sqlRowCount = SubjDopService.insertDaDataInfo(tmp_daDataInfo);
 			logger.trace("onSaveDaDataInfo.  INSERT, sqlRowCount = {}", sqlRowCount);
 		} else if ( commentChanged ) {
-// обновляем только коммент и юзера (при перегрузке из сервиса всегда INSERT)
+// РѕР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РєРѕРјРјРµРЅС‚ Рё СЋР·РµСЂР° (РїСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РёР· СЃРµСЂРІРёСЃР° РІСЃРµРіРґР° INSERT)
 			tmp_daDataInfo = new DaDataInfo( inn
 										,null //suggestPartyRaw
 										,usercommentAfter // userComment
 										,"basos" // userName
 										,null //actDateBefore
 										,null //new java.sql.Date(actDateBefore)
-										,saveTimeBefore // (!! для обновления штамп daDataInfo.saveTime д.б. старый (иначе не найдёт загруженную запись); новый проставится в SQL !!) new java.util.Date()
+										,saveTimeBefore // (!! РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ С€С‚Р°РјРї daDataInfo.saveTime Рґ.Р±. СЃС‚Р°СЂС‹Р№ (РёРЅР°С‡Рµ РЅРµ РЅР°Р№РґС‘С‚ Р·Р°РіСЂСѓР¶РµРЅРЅСѓСЋ Р·Р°РїРёСЃСЊ); РЅРѕРІС‹Р№ РїСЂРѕСЃС‚Р°РІРёС‚СЃСЏ РІ SQL !!) new java.util.Date()
 						);
 			sqlRowCount = SubjDopService.updateDaDataInfoBySaveTime(tmp_daDataInfo);
 			logger.trace("onSaveDaDataInfo.  UPDATE, sqlRowCount = {}", sqlRowCount);
@@ -1040,16 +1040,16 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 */		
 
 		if ( dadataWin != null ) {
-			dadataWin.detach(); // закрыть окно
+			dadataWin.detach(); // Р·Р°РєСЂС‹С‚СЊ РѕРєРЅРѕ
 			//dadataWin = null;
 		}
 		
 	} // onSaveDaDataInfo
 	
 	
-	/** Сохранить и закрыть форму DaData по одноимённой кнопке. */
+	/** РЎРѕС…СЂР°РЅРёС‚СЊ Рё Р·Р°РєСЂС‹С‚СЊ С„РѕСЂРјСѓ DaData РїРѕ РѕРґРЅРѕРёРјС‘РЅРЅРѕР№ РєРЅРѕРїРєРµ. */
 	@Listen("onClick = #dadataWin #dadataRefreshBtn")
-// TODO: назначать ивент-хендлеры без вайринга
+// TODO: РЅР°Р·РЅР°С‡Р°С‚СЊ РёРІРµРЅС‚-С…РµРЅРґР»РµСЂС‹ Р±РµР· РІР°Р№СЂРёРЅРіР°
 	public void onRefreshDaDataInfo(Event ev) {
 		Component oldRoot = ev.getTarget().getFellow("dadataRoot");
 		DaDataInfo daDataInfo = (DaDataInfo)oldRoot.getAttribute("daDataInfo");
@@ -1059,41 +1059,41 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 		Integer subjId = (Integer)oldRoot.getAttribute("subjId");
 		
 		logger.debug("onRefreshDaDataInfo.  subjId = {}, inn = {}, fromDB = {}, jsonState = {}", subjId, inn, fromDB, jsonState);
-		if ( fromDB == null || !fromDB || jsonState != null && jsonState != DaDataInfo.JsonStates.BLANC && jsonState != DaDataInfo.JsonStates.FROMDB_LOADED ) { // сервис уже (впервые) дёргался по искомому ИНН в жизни этой формы
-			alert("Обновить можно только ранее загруженные данные");
+		if ( fromDB == null || !fromDB || jsonState != null && jsonState != DaDataInfo.JsonStates.BLANC && jsonState != DaDataInfo.JsonStates.FROMDB_LOADED ) { // СЃРµСЂРІРёСЃ СѓР¶Рµ (РІРїРµСЂРІС‹Рµ) РґС‘СЂРіР°Р»СЃСЏ РїРѕ РёСЃРєРѕРјРѕРјСѓ РРќРќ РІ Р¶РёР·РЅРё СЌС‚РѕР№ С„РѕСЂРјС‹
+			alert("РћР±РЅРѕРІРёС‚СЊ РјРѕР¶РЅРѕ С‚РѕР»СЊРєРѕ СЂР°РЅРµРµ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ");
 			return;
 		}
-		// форма загружена из БД, можно перегрузить и обновить форму, если данные изменились (по дате актуальности)
-		// дату актуальности не проверяем, т.к. не парсим
-		// по-хорошему, нужно спросить подтверждение, но асинхрон задолбал...
+		// С„РѕСЂРјР° Р·Р°РіСЂСѓР¶РµРЅР° РёР· Р‘Р”, РјРѕР¶РЅРѕ РїРµСЂРµРіСЂСѓР·РёС‚СЊ Рё РѕР±РЅРѕРІРёС‚СЊ С„РѕСЂРјСѓ, РµСЃР»Рё РґР°РЅРЅС‹Рµ РёР·РјРµРЅРёР»РёСЃСЊ (РїРѕ РґР°С‚Рµ Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё)
+		// РґР°С‚Сѓ Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё РЅРµ РїСЂРѕРІРµСЂСЏРµРј, С‚.Рє. РЅРµ РїР°СЂСЃРёРј
+		// РїРѕ-С…РѕСЂРѕС€РµРјСѓ, РЅСѓР¶РЅРѕ СЃРїСЂРѕСЃРёС‚СЊ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ, РЅРѕ Р°СЃРёРЅС…СЂРѕРЅ Р·Р°РґРѕР»Р±Р°Р»...
 		
 		Long actDateBeforeLong = Long.valueOf( daDataInfo.getPartyActDateBeforeLong() ); //(Long)oldRoot.getAttribute("actDateBefore");
-		//long dtActEpochMilli = daDataInfo.getPartyActDateLong(); // до перегрузки запомнить ДатуАктуальности
+		//long dtActEpochMilli = daDataInfo.getPartyActDateLong(); // РґРѕ РїРµСЂРµРіСЂСѓР·РєРё Р·Р°РїРѕРјРЅРёС‚СЊ Р”Р°С‚СѓРђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё
 
 		Textbox dadataUserCommTB = (Textbox)ev.getTarget().getFellow("dadataUserCommTB");
-		String usercomment = ""; // коммент с формы сохраняется в поле объекта только перед сохранением в БД
+		String usercomment = ""; // РєРѕРјРјРµРЅС‚ СЃ С„РѕСЂРјС‹ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РІ РїРѕР»Рµ РѕР±СЉРµРєС‚Р° С‚РѕР»СЊРєРѕ РїРµСЂРµРґ СЃРѕС…СЂР°РЅРµРЅРёРµРј РІ Р‘Р”
 		if (dadataUserCommTB != null) {
 			usercomment = StringUtils.isBlank(dadataUserCommTB.getValue()) ? "" : dadataUserCommTB.getValue();
 		}
 		
-		if ( daDataInfo.loadFromRS() ) { // здесь при успехе переназначили json, сбросили актуальность, saveTime не меняем (из БД, нужен для update)
-			fromDB = Boolean.FALSE; // атрибут корневого компонента устанавливается в createDaDataForm
+		if ( daDataInfo.loadFromRS() ) { // Р·РґРµСЃСЊ РїСЂРё СѓСЃРїРµС…Рµ РїРµСЂРµРЅР°Р·РЅР°С‡РёР»Рё json, СЃР±СЂРѕСЃРёР»Рё Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚СЊ, saveTime РЅРµ РјРµРЅСЏРµРј (РёР· Р‘Р”, РЅСѓР¶РµРЅ РґР»СЏ update)
+			fromDB = Boolean.FALSE; // Р°С‚СЂРёР±СѓС‚ РєРѕСЂРЅРµРІРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р° СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РІ createDaDataForm
 			daDataInfo.setJsonState(JsonStates.RELOADED_DURING_FORM);
-		} else { // странная ситуация: ранее была загружена, теперь не нашли (возможно, сбой сервиса)
-			alert("Информация по ИНН "+inn+" не найдена.");
-			logger.debug("onRefreshDaDataInfo.  Информация по ИНН {} не найдена при перезагрузке из формы, subjId = {}", inn, subjId);
+		} else { // СЃС‚СЂР°РЅРЅР°СЏ СЃРёС‚СѓР°С†РёСЏ: СЂР°РЅРµРµ Р±С‹Р»Р° Р·Р°РіСЂСѓР¶РµРЅР°, С‚РµРїРµСЂСЊ РЅРµ РЅР°С€Р»Рё (РІРѕР·РјРѕР¶РЅРѕ, СЃР±РѕР№ СЃРµСЂРІРёСЃР°)
+			alert("РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ "+inn+" РЅРµ РЅР°Р№РґРµРЅР°.");
+			logger.debug("onRefreshDaDataInfo.  РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ РРќРќ {} РЅРµ РЅР°Р№РґРµРЅР° РїСЂРё РїРµСЂРµР·Р°РіСЂСѓР·РєРµ РёР· С„РѕСЂРјС‹, subjId = {}", inn, subjId);
 			return;
 		}
 		
-// пересоздадим форму - не знаю, можно ли заново передать параметры и просто обновить
+// РїРµСЂРµСЃРѕР·РґР°РґРёРј С„РѕСЂРјСѓ - РЅРµ Р·РЅР°СЋ, РјРѕР¶РЅРѕ Р»Рё Р·Р°РЅРѕРІРѕ РїРµСЂРµРґР°С‚СЊ РїР°СЂР°РјРµС‚СЂС‹ Рё РїСЂРѕСЃС‚Рѕ РѕР±РЅРѕРІРёС‚СЊ
 		//Component oldRoot = rootComp/*dadataWin.getFellow("dadataRoot")*/;
 		Component dadataWin = oldRoot.getParent(); //oldRoot.getFellow("dadataWin"); //Path.getComponent("dadataWin");
 		oldRoot.detach();
 		Component newRoot = createDaDataForm(subjId.intValue(), daDataInfo, fromDB, dadataWin, actDateBeforeLong/*Long.valueOf(dtActEpochMilli)*/ );
-		//newRoot.setAttribute("fromDB", fromDB); // устанавливается в createDaDataForm()
-		logger.trace("onRefreshDaDataInfo.  DaDataForm was reloaded (по кнопке на форме): subjId = {}, inn = {}, fromDB = {}, jsonState = {}, oldRoot = {}, newRoot = {}, dadataWin = {}", subjId, inn, fromDB, jsonState, oldRoot, newRoot, dadataWin);
+		//newRoot.setAttribute("fromDB", fromDB); // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РІ createDaDataForm()
+		logger.trace("onRefreshDaDataInfo.  DaDataForm was reloaded (РїРѕ РєРЅРѕРїРєРµ РЅР° С„РѕСЂРјРµ): subjId = {}, inn = {}, fromDB = {}, jsonState = {}, oldRoot = {}, newRoot = {}, dadataWin = {}", subjId, inn, fromDB, jsonState, oldRoot, newRoot, dadataWin);
 		
-		dadataUserCommTB = (Textbox)newRoot.getFellow("dadataUserCommTB"); // новый компонент в новом дереве !!
+		dadataUserCommTB = (Textbox)newRoot.getFellow("dadataUserCommTB"); // РЅРѕРІС‹Р№ РєРѕРјРїРѕРЅРµРЅС‚ РІ РЅРѕРІРѕРј РґРµСЂРµРІРµ !!
 		if ( !StringUtils.isBlank(usercomment) ) {
 			 dadataUserCommTB.setValue(usercomment);
 		}
@@ -1103,20 +1103,20 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	
 	@Wire private Tabpanel subjsTabpanel;
     @Wire private Tabpanel dealsTabpanel;
-	/** Всплывающее меню с набором действий по субъекту.
-	 * @param subjId ИД субъекта.
-	 * @param parComp Родительский контрол.
+	/** Р’СЃРїР»С‹РІР°СЋС‰РµРµ РјРµРЅСЋ СЃ РЅР°Р±РѕСЂРѕРј РґРµР№СЃС‚РІРёР№ РїРѕ СЃСѓР±СЉРµРєС‚Сѓ.
+	 * @param subjId РР” СЃСѓР±СЉРµРєС‚Р°.
+	 * @param parComp Р РѕРґРёС‚РµР»СЊСЃРєРёР№ РєРѕРЅС‚СЂРѕР».
 	 */
 	private void subjActionsMenu(Integer subjId, Component parComp, SubjSumm bean) {
 		Menupopup menu = new Menupopup();
-// TODO:HOWTO: ? как изменить стили пунктов меню (сейчас для надписи действует стиль "altpopupstyle" из ZUL) ?
+// TODO:HOWTO: ? РєР°Рє РёР·РјРµРЅРёС‚СЊ СЃС‚РёР»Рё РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ (СЃРµР№С‡Р°СЃ РґР»СЏ РЅР°РґРїРёСЃРё РґРµР№СЃС‚РІСѓРµС‚ СЃС‚РёР»СЊ "altpopupstyle" РёР· ZUL) ?
 // .z-menupopup .z-menupopup-content .z-menuitem .z-menuitem-content .z-menuitem-text {font-size:15px;font-weight:bold;font-style:italic;color:#FF1493 !important;}
 		//menu.setStyle("border:3px solid #B0E0E6; border-radius:3px; .z-menuitem-text {font-size:16px;font-weight:bold;color:#FF1493 !important;}"); // B0E0E6 - PowderBlue, BC8F8F - RosyBrown, FF7F50 - Coral, 7B68EE - MediumSlateBlue, 48D1CC - MediumTurquoise, C71585 - MediumVioletRed, FF4500 - OrangeRed, FF6347 - Tomato, 4682B4 - SteelBlue, 708090 - SlateGrey, DB7093 - PaleVioletRed, CD5C5C - IndianRed, D2691E - Chocolate
-    	Menuitem el1 = new Menuitem("Перейти к сделкам заёмщика")
-    			,el2 = new Menuitem("Перейти к сделкам СПР")
-    			,el3 = new Menuitem("Динамика остатков")
-    			,el4 = new Menuitem("Лимит кредитования")
-    			,el5 = new Menuitem("Проверить по ИНН на DaData");
+    	Menuitem el1 = new Menuitem("РџРµСЂРµР№С‚Рё Рє СЃРґРµР»РєР°Рј Р·Р°С‘РјС‰РёРєР°")
+    			,el2 = new Menuitem("РџРµСЂРµР№С‚Рё Рє СЃРґРµР»РєР°Рј РЎРџР ")
+    			,el3 = new Menuitem("Р”РёРЅР°РјРёРєР° РѕСЃС‚Р°С‚РєРѕРІ")
+    			,el4 = new Menuitem("Р›РёРјРёС‚ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ")
+    			,el5 = new Menuitem("РџСЂРѕРІРµСЂРёС‚СЊ РїРѕ РРќРќ РЅР° DaData");
     	
     	SerializableEventListener<Event> onClickMI = new SerializableEventListener<Event>() {
 			private static final long serialVersionUID = 9124127831123105130L;
@@ -1126,39 +1126,39 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 				String fk = null;
 				menu.close();
 				menu.detach();
-				if (el1.equals(el)) { // Перейти к сделкам заёмщика
+				if (el1.equals(el)) { // РџРµСЂРµР№С‚Рё Рє СЃРґРµР»РєР°Рј Р·Р°С‘РјС‰РёРєР°
 					fk = "clnId";
-				} else if (el2.equals(el)) { // Перейти к сделкам СПР
+				} else if (el2.equals(el)) { // РџРµСЂРµР№С‚Рё Рє СЃРґРµР»РєР°Рј РЎРџР 
 					fk = "rsubjId";
-				} else if (el3.equals(el)) { // Динамика остатков
+				} else if (el3.equals(el)) { // Р”РёРЅР°РјРёРєР° РѕСЃС‚Р°С‚РєРѕРІ
 					showSubjRestHistModal(subjId, subjSummGrid.getPage());
 					return;
-				} else if (el4.equals(el)) { // Лимит кредитования
+				} else if (el4.equals(el)) { // Р›РёРјРёС‚ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ
 					if (bean == null) {
-						alert("Не удалось получить бин типа SubjSumm !");
+						alert("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ Р±РёРЅ С‚РёРїР° SubjSumm !");
 						return;
 					}
 					Integer idLimit = bean.getIdlimit(); // Integer !!! subjId = 608940: null
 					showLimitUsageModal(subjId.intValue(), idLimit);
 					return;
-				} else if (el5.equals(el)) { // Проверить по ИНН на DaData
+				} else if (el5.equals(el)) { // РџСЂРѕРІРµСЂРёС‚СЊ РїРѕ РРќРќ РЅР° DaData
 					if (bean == null) {
-						alert("Не удалось получить бин типа SubjSumm !");
+						alert("РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ Р±РёРЅ С‚РёРїР° SubjSumm !");
 						return;
 					}
 					showSuggestionModal(subjId.intValue(), bean.getInn(), subjSummGrid.getPage());
 					return;
 				}
-				// Перейти к сделкам заёмщика/СПР
+				// РџРµСЂРµР№С‚Рё Рє СЃРґРµР»РєР°Рј Р·Р°С‘РјС‰РёРєР°/РЎРџР 
 				String fkPar = fk;
-				//dealsTab.setSelected(true); // !!! fulfill не выполняется (пустая панель, если вручную не открывал) !!!
+				//dealsTab.setSelected(true); // !!! fulfill РЅРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ (РїСѓСЃС‚Р°СЏ РїР°РЅРµР»СЊ, РµСЃР»Рё РІСЂСѓС‡РЅСѓСЋ РЅРµ РѕС‚РєСЂС‹РІР°Р») !!!
 				//tabbic.setSelectedTab(dealsTab); // same as above
-// проверяем существование страницы dealsPage, которая создаётся по условию fulfill на dealsTabpanel, а именно, клик на связанный ярлык (Tab)
-// HOWTO: почему страницу ("//dealsPage") не находит как компонент ?
+// РїСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ СЃС‚СЂР°РЅРёС†С‹ dealsPage, РєРѕС‚РѕСЂР°СЏ СЃРѕР·РґР°С‘С‚СЃСЏ РїРѕ СѓСЃР»РѕРІРёСЋ fulfill РЅР° dealsTabpanel, Р° РёРјРµРЅРЅРѕ, РєР»РёРє РЅР° СЃРІСЏР·Р°РЅРЅС‹Р№ СЏСЂР»С‹Рє (Tab)
+// HOWTO: РїРѕС‡РµРјСѓ СЃС‚СЂР°РЅРёС†Сѓ ("//dealsPage") РЅРµ РЅР°С…РѕРґРёС‚ РєР°Рє РєРѕРјРїРѕРЅРµРЅС‚ ?
 				Component dlb = Path.getComponent("//dealsPage/dealsLB"); // "//dealsPage/dealsLB"
-				if (dlb == null) { // первое посещение панели dealsTabpanel; ждём инициализации, потом запускаем переход к сделкам
+				if (dlb == null) { // РїРµСЂРІРѕРµ РїРѕСЃРµС‰РµРЅРёРµ РїР°РЅРµР»Рё dealsTabpanel; Р¶РґС‘Рј РёРЅРёС†РёР°Р»РёР·Р°С†РёРё, РїРѕС‚РѕРј Р·Р°РїСѓСЃРєР°РµРј РїРµСЂРµС…РѕРґ Рє СЃРґРµР»РєР°Рј
 					logger.trace("subjActionsMenu. add onAfterCreateDealsPage listener, send onSelect.");
-// ON_FULFILL слишком рано; дожидаемся завершения doAfterCompose контроллера страницы dealsPage
+// ON_FULFILL СЃР»РёС€РєРѕРј СЂР°РЅРѕ; РґРѕР¶РёРґР°РµРјСЃСЏ Р·Р°РІРµСЂС€РµРЅРёСЏ doAfterCompose РєРѕРЅС‚СЂРѕР»Р»РµСЂР° СЃС‚СЂР°РЅРёС†С‹ dealsPage
 					dealsTabpanel.addEventListener("onAfterCreateDealsPage", new SerializableEventListener<Event>() {
 						private static final long serialVersionUID = 4995193078703309766L;
 						public void onEvent(Event event) throws Exception {
@@ -1167,10 +1167,10 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 							//((DealsPageComposer)event.getData()).asSubjectDetails(fkPar, subjId);
 							Object[] params = {fkPar, subjId};
 							interDeskEQ.publish(new Event("onGoToDeals", null, params));
-							dealsTabpanel.removeEventListener("onAfterCreateDealsPage", this); // разрегистрировать себя
+							dealsTabpanel.removeEventListener("onAfterCreateDealsPage", this); // СЂР°Р·СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ СЃРµР±СЏ
 						}; // onAfterCreateDealsPage onEvent
 					}); // dealsTabpanel.addEventListener("onAfterCreateDealsPage", new SerializableEventListener<Event>()
-					//Events.sendEvent(Events.ON_SELECT, /*dealsTab*/dealsTabpanel.getLinkedTab(), null); // инициализация панели сделок происходит после, sleep не помогает
+					//Events.sendEvent(Events.ON_SELECT, /*dealsTab*/dealsTabpanel.getLinkedTab(), null); // РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РїР°РЅРµР»Рё СЃРґРµР»РѕРє РїСЂРѕРёСЃС…РѕРґРёС‚ РїРѕСЃР»Рµ, sleep РЅРµ РїРѕРјРѕРіР°РµС‚
 					Events.sendEvent( new SelectEvent<>(Events.ON_SELECT // name
 											,dealsTabpanel.getLinkedTab() // target
 											,Collections.singleton(dealsTabpanel.getLinkedTab()) // selectedItems
@@ -1185,7 +1185,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 									)
 					);
 				} // dealsLB == null
-				else { // страница уже создана
+				else { // СЃС‚СЂР°РЅРёС†Р° СѓР¶Рµ СЃРѕР·РґР°РЅР°
 					Object[] params = {fk, subjId};
 					Events.sendEvent( new SelectEvent<>(Events.ON_SELECT // name
 											,dealsTabpanel.getLinkedTab() // target
@@ -1228,14 +1228,14 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	
 	
 //    @Listen("onClick = grid#subjSummGrid > rows > row")
-    @Listen("onClickRow=#subjSummGrid") // клик на ссылку ИД субъекта
+    @Listen("onClickRow=#subjSummGrid") // РєР»РёРє РЅР° СЃСЃС‹Р»РєСѓ РР” СЃСѓР±СЉРµРєС‚Р°
     public void onClickSubj(ForwardEvent fev) {
-    	String lb = (String)fev.getData(); // ИД субъекта - параметр вызова
+    	String lb = (String)fev.getData(); // РР” СЃСѓР±СЉРµРєС‚Р° - РїР°СЂР°РјРµС‚СЂ РІС‹Р·РѕРІР°
     	if (lb == null) {
     		return;
     	}
     	Integer subjId = Integer.valueOf(lb);
-    	Component aOrig = fev.getOrigin().getTarget(); // ячейка типа ссылка ("A") текущей строки в колонке subj_id
+    	Component aOrig = fev.getOrigin().getTarget(); // СЏС‡РµР№РєР° С‚РёРїР° СЃСЃС‹Р»РєР° ("A") С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРё РІ РєРѕР»РѕРЅРєРµ subj_id
     	Component origPar = aOrig.getParent();
     	SubjSumm bean = null;
     	if (origPar instanceof Row) {
@@ -1248,18 +1248,18 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     } // public void onClickSubj(String lb)
 
 
-	/** При изменении состояния чекбокса в первой колонке грида ("крыж" выбора строки) обновлять поле GridData.sel.
-	 * Выполняется через диспетчер dispatchGridModelLockingTask с эксклюзивной блокировкой модели.
-	 * Вызывает {@link GridDataFilterableModelMan#selectRow(boolean, int) GridDataFilterableModelMan.selectRow()}, потом применяет фильтр (при необходимости).
-	 * @param isChecked Новое значение флага (true/false), которое нужно отразить в данных.
-	 * @param subj_id ИД субъекта (поле доменного объекта типа SubjSumm - <b>не использовать</b>).
-	 * @param rn Номер строки в гриде, зависит от фильтра, но соответствует модели (проблема с обновлением - <b>не использовать</b>).
-	 * @param uid GridData.uid - порядковый номер созданного объекта, ПК модели по умолчанию. По номеру ищем строку в модели.
+	/** РџСЂРё РёР·РјРµРЅРµРЅРёРё СЃРѕСЃС‚РѕСЏРЅРёСЏ С‡РµРєР±РѕРєСЃР° РІ РїРµСЂРІРѕР№ РєРѕР»РѕРЅРєРµ РіСЂРёРґР° ("РєСЂС‹Р¶" РІС‹Р±РѕСЂР° СЃС‚СЂРѕРєРё) РѕР±РЅРѕРІР»СЏС‚СЊ РїРѕР»Рµ GridData.sel.
+	 * Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ С‡РµСЂРµР· РґРёСЃРїРµС‚С‡РµСЂ dispatchGridModelLockingTask СЃ СЌРєСЃРєР»СЋР·РёРІРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ РјРѕРґРµР»Рё.
+	 * Р’С‹Р·С‹РІР°РµС‚ {@link GridDataFilterableModelMan#selectRow(boolean, int) GridDataFilterableModelMan.selectRow()}, РїРѕС‚РѕРј РїСЂРёРјРµРЅСЏРµС‚ С„РёР»СЊС‚СЂ (РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё).
+	 * @param isChecked РќРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° (true/false), РєРѕС‚РѕСЂРѕРµ РЅСѓР¶РЅРѕ РѕС‚СЂР°Р·РёС‚СЊ РІ РґР°РЅРЅС‹С….
+	 * @param subj_id РР” СЃСѓР±СЉРµРєС‚Р° (РїРѕР»Рµ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° С‚РёРїР° SubjSumm - <b>РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ</b>).
+	 * @param rn РќРѕРјРµСЂ СЃС‚СЂРѕРєРё РІ РіСЂРёРґРµ, Р·Р°РІРёСЃРёС‚ РѕС‚ С„РёР»СЊС‚СЂР°, РЅРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РјРѕРґРµР»Рё (РїСЂРѕР±Р»РµРјР° СЃ РѕР±РЅРѕРІР»РµРЅРёРµРј - <b>РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ</b>).
+	 * @param uid GridData.uid - РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, РџРљ РјРѕРґРµР»Рё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ. РџРѕ РЅРѕРјРµСЂСѓ РёС‰РµРј СЃС‚СЂРѕРєСѓ РІ РјРѕРґРµР»Рё.
 	 */
-// FIXME: как оптимизировать поиск (сортировка модели меняется) ?
-// --привязано в ZUL на нажатие крыжа в первой колонке // @Listen("onClick = grid#subjSummGrid > rows > row")
+// FIXME: РєР°Рє РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РїРѕРёСЃРє (СЃРѕСЂС‚РёСЂРѕРІРєР° РјРѕРґРµР»Рё РјРµРЅСЏРµС‚СЃСЏ) ?
+// --РїСЂРёРІСЏР·Р°РЅРѕ РІ ZUL РЅР° РЅР°Р¶Р°С‚РёРµ РєСЂС‹Р¶Р° РІ РїРµСЂРІРѕР№ РєРѕР»РѕРЅРєРµ // @Listen("onClick = grid#subjSummGrid > rows > row")
     @Listen("onCheckRow=#subjSummGrid")
-    public void onCheckRow(ForwardEvent fev) { // поменяли состояние крыжика (GridData.sel) в строке
+    public void onCheckRow(ForwardEvent fev) { // РїРѕРјРµРЅСЏР»Рё СЃРѕСЃС‚РѕСЏРЅРёРµ РєСЂС‹Р¶РёРєР° (GridData.sel) РІ СЃС‚СЂРѕРєРµ
 // HOWTO: (ZUML Ref. p. 78): The 'each' object is actually stored in the parent component's attribute, so you could retrieve it in pure Java as follows: comp.getParent().getAttribute("each") / getAttribute("forEachStatus")
 // (DR p. 51) However, you cannot access the values of each and forEachStatus in an event listener because their values are reset after the XML element which forEach is associated has been evaluated. There is a simple solution: store the value in the component's attribute, so you can retrieve it when the event listener is called.
     	//fev.stopPropagation(); // ???
@@ -1275,22 +1275,22 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	int sidAttr = (int)r.getAttribute("sid"); // ((SubjSumm)gd.getBean()).getSubj_id()
     	Integer rnAttr = (Integer)r.getAttribute("rn")/*((ForEachStatus)r.getParent().getAttribute("forEachStatus")).getIndex()*/;
     	long uid = gd.getUid(); // (long)r.getAttribute("uid")
-    	Checkbox _selFilterCHB = (Checkbox)/*subjSummGrid*/cb.query("checkbox#selFilterCHB"); // ?? несколько гридов в одном пространстве ??
+    	Checkbox _selFilterCHB = (Checkbox)/*subjSummGrid*/cb.query("checkbox#selFilterCHB"); // ?? РЅРµСЃРєРѕР»СЊРєРѕ РіСЂРёРґРѕРІ РІ РѕРґРЅРѕРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРµ ??
     	String msg = "onCheckRow. sid="+sidAttr+", new_state:"+isChecked+", rn="+rnAttr+", uid="+uid;
     	Consumer<Long> taskToRun = (stamp) -> {
     		try {
-    			//int irn = GridData.searchByUid(gridLML.getInnerList(), uid); // за время ожидания многое могло измениться !
+    			//int irn = GridData.searchByUid(gridLML.getInnerList(), uid); // Р·Р° РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РјРЅРѕРіРѕРµ РјРѕРіР»Рѕ РёР·РјРµРЅРёС‚СЊСЃСЏ !
     			//logger.trace("t3 = {}", System.currentTimeMillis());
-    			int irn = gdm.selectRow(isChecked, Generics.cast(gd)/*uid*/); // 1-я синхронизируемая операция
+    			int irn = gdm.selectRow(isChecked, Generics.cast(gd)/*uid*/); // 1-СЏ СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРјР°СЏ РѕРїРµСЂР°С†РёСЏ
     			//logger.trace("t4 = {}", System.currentTimeMillis());
     			boolean filtered = true;
     			if (_selFilterCHB != null) {
     				filtered = _selFilterCHB.isChecked();
     			}
     			logger.trace(concurMarker, "{} (UI)...taskToRun. After change data, before filter... irn = {}, stamp = {}, filtered = {}, _selFilterCHB = {}, _selFilterCHB.spaceOwner = {}, cb.spaceOwner = {}", msg, irn, stamp, filtered, _selFilterCHB, _selFilterCHB.getSpaceOwner(), cb.getSpaceOwner());
-    			if (irn < 0) return; // отложенная операция может выполняться на изменившейся модели
-    			if ( filtered /*&& !isChecked*//*selFilterCHB.isChecked()*/ ) { // (опять проверяем непосредственно во время выполнения после возможного ожидания) применить фильтр (имеет смысл, только если колонка чекбоксов участвует в фильтре И крыжик снимается); проверяем против фильтра только открыженную строку, остальные не могут измениться
-					applyFilter(gdm, host, true, Optional.of(irn), 0L/*stamp*/); // 2-я синхронизируемая операция // не разблокировать внутри applyFilter()
+    			if (irn < 0) return; // РѕС‚Р»РѕР¶РµРЅРЅР°СЏ РѕРїРµСЂР°С†РёСЏ РјРѕР¶РµС‚ РІС‹РїРѕР»РЅСЏС‚СЊСЃСЏ РЅР° РёР·РјРµРЅРёРІС€РµР№СЃСЏ РјРѕРґРµР»Рё
+    			if ( filtered /*&& !isChecked*//*selFilterCHB.isChecked()*/ ) { // (РѕРїСЏС‚СЊ РїСЂРѕРІРµСЂСЏРµРј РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РїРѕСЃР»Рµ РІРѕР·РјРѕР¶РЅРѕРіРѕ РѕР¶РёРґР°РЅРёСЏ) РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂ (РёРјРµРµС‚ СЃРјС‹СЃР», С‚РѕР»СЊРєРѕ РµСЃР»Рё РєРѕР»РѕРЅРєР° С‡РµРєР±РѕРєСЃРѕРІ СѓС‡Р°СЃС‚РІСѓРµС‚ РІ С„РёР»СЊС‚СЂРµ Р РєСЂС‹Р¶РёРє СЃРЅРёРјР°РµС‚СЃСЏ); РїСЂРѕРІРµСЂСЏРµРј РїСЂРѕС‚РёРІ С„РёР»СЊС‚СЂР° С‚РѕР»СЊРєРѕ РѕС‚РєСЂС‹Р¶РµРЅРЅСѓСЋ СЃС‚СЂРѕРєСѓ, РѕСЃС‚Р°Р»СЊРЅС‹Рµ РЅРµ РјРѕРіСѓС‚ РёР·РјРµРЅРёС‚СЊСЃСЏ
+					applyFilter(gdm, host, true, Optional.of(irn), 0L/*stamp*/); // 2-СЏ СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРјР°СЏ РѕРїРµСЂР°С†РёСЏ // РЅРµ СЂР°Р·Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ РІРЅСѓС‚СЂРё applyFilter()
 				}
     		} finally {
     			if ( stamp != 0L ) {
@@ -1306,13 +1306,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     } // public void onCheckRow(ForwardEvent fev)
     
     
-    /** При нажатии чекбокса на заголовке колонки "крыжей" (выбрать/снять все), обновляем поле GridData.sel во всех доступных по фильтру строках модели.
-     * Выполняется через диспетчер dispatchGridModelLockingTask с эксклюзивной блокировкой модели.
-     * Вызывает {@link GridDataFilterableModelMan#selectAllRows(boolean) GridDataFilterableModelMan.selectAllRows()}, потом применяет фильтр.
+    /** РџСЂРё РЅР°Р¶Р°С‚РёРё С‡РµРєР±РѕРєСЃР° РЅР° Р·Р°РіРѕР»РѕРІРєРµ РєРѕР»РѕРЅРєРё "РєСЂС‹Р¶РµР№" (РІС‹Р±СЂР°С‚СЊ/СЃРЅСЏС‚СЊ РІСЃРµ), РѕР±РЅРѕРІР»СЏРµРј РїРѕР»Рµ GridData.sel РІРѕ РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РїРѕ С„РёР»СЊС‚СЂСѓ СЃС‚СЂРѕРєР°С… РјРѕРґРµР»Рё.
+     * Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ С‡РµСЂРµР· РґРёСЃРїРµС‚С‡РµСЂ dispatchGridModelLockingTask СЃ СЌРєСЃРєР»СЋР·РёРІРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ РјРѕРґРµР»Рё.
+     * Р’С‹Р·С‹РІР°РµС‚ {@link GridDataFilterableModelMan#selectAllRows(boolean) GridDataFilterableModelMan.selectAllRows()}, РїРѕС‚РѕРј РїСЂРёРјРµРЅСЏРµС‚ С„РёР»СЊС‚СЂ.
      */
     //@Listen("onCheck=#selectAllCHB")
-    @Listen("onSelectAll=#subjSummGrid") // перенаправлено с "onCheck=#selectAllCHB"
-    public void onSelectAll(ForwardEvent fev) { // нажат чекбокс "выбрать все" (в обычном заголовке грида)
+    @Listen("onSelectAll=#subjSummGrid") // РїРµСЂРµРЅР°РїСЂР°РІР»РµРЅРѕ СЃ "onCheck=#selectAllCHB"
+    public void onSelectAll(ForwardEvent fev) { // РЅР°Р¶Р°С‚ С‡РµРєР±РѕРєСЃ "РІС‹Р±СЂР°С‚СЊ РІСЃРµ" (РІ РѕР±С‹С‡РЅРѕРј Р·Р°РіРѕР»РѕРІРєРµ РіСЂРёРґР°)
     	boolean isChecked =  ((Checkbox)fev.getOrigin().getTarget()).isChecked();
     	MeshElement host = (MeshElement)fev.getTarget();
     	GridDataFilterableModelMan<?> gdm = (GridDataFilterableModelMan<?>)host.getAttribute("GridDataModelMan");
@@ -1321,8 +1321,8 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     	Consumer<Long> taskToRun = (stamp) -> {
     		logger.trace(concurMarker, "{} (UI)...taskToRun. Before do .. stamp = {}", msg, stamp);
     		gdm.selectAllRows(isChecked);
-// применить фильтр если колонка чекбоксов участвует в фильтре (возможно только снять всё -> пустой фильтр - если не по первичному ключу)
-    		applyFilter(gdm, host, true, Optional.empty(), 0L/*stamp*/); // 2-я синхронизируемая операция // не разблокировать внутри applyFilter()
+// РїСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂ РµСЃР»Рё РєРѕР»РѕРЅРєР° С‡РµРєР±РѕРєСЃРѕРІ СѓС‡Р°СЃС‚РІСѓРµС‚ РІ С„РёР»СЊС‚СЂРµ (РІРѕР·РјРѕР¶РЅРѕ С‚РѕР»СЊРєРѕ СЃРЅСЏС‚СЊ РІСЃС‘ -> РїСѓСЃС‚РѕР№ С„РёР»СЊС‚СЂ - РµСЃР»Рё РЅРµ РїРѕ РїРµСЂРІРёС‡РЅРѕРјСѓ РєР»СЋС‡Сѓ)
+    		applyFilter(gdm, host, true, Optional.empty(), 0L/*stamp*/); // 2-СЏ СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµРјР°СЏ РѕРїРµСЂР°С†РёСЏ // РЅРµ СЂР°Р·Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ РІРЅСѓС‚СЂРё applyFilter()
     	};
     	dispatchGridModelLockingTask(gdm, taskToRun, msg, null, null);
     } // public void onSelectAll(ForwardEvent fev)
@@ -1330,13 +1330,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
     
     /**  */
 	@Listen("onApplyFilter=#subjSummGrid")
-	public void onApplyFilter(ForwardEvent fev) { // сюда перенаправляются все нужные события (меняющие состояние фильтра) от контролов композитного фильтра; по событию применяем фильтр
+	public void onApplyFilter(ForwardEvent fev) { // СЃСЋРґР° РїРµСЂРµРЅР°РїСЂР°РІР»СЏСЋС‚СЃСЏ РІСЃРµ РЅСѓР¶РЅС‹Рµ СЃРѕР±С‹С‚РёСЏ (РјРµРЅСЏСЋС‰РёРµ СЃРѕСЃС‚РѕСЏРЅРёРµ С„РёР»СЊС‚СЂР°) РѕС‚ РєРѕРЅС‚СЂРѕР»РѕРІ РєРѕРјРїРѕР·РёС‚РЅРѕРіРѕ С„РёР»СЊС‚СЂР°; РїРѕ СЃРѕР±С‹С‚РёСЋ РїСЂРёРјРµРЅСЏРµРј С„РёР»СЊС‚СЂ
 		Event origin = fev.getOrigin();
 		logger.debug("onApplyFilter.  origin: {} '{}'.{}, target(mesh): '{}'({})", origin.getTarget().getClass().getSimpleName(), origin.getTarget().getId(), origin.getName(), fev.getTarget().getId(), fev.getTarget().getClass().getSimpleName() );
     	if (origin instanceof OpenEvent && ((OpenEvent)origin).isOpen() && origin.getTarget() instanceof Combobox) {
-    		return; // интересует только "onClose", а здесь открытие комбика - установим модель в другом обработчике
+    		return; // РёРЅС‚РµСЂРµСЃСѓРµС‚ С‚РѕР»СЊРєРѕ "onClose", Р° Р·РґРµСЃСЊ РѕС‚РєСЂС‹С‚РёРµ РєРѕРјР±РёРєР° - СѓСЃС‚Р°РЅРѕРІРёРј РјРѕРґРµР»СЊ РІ РґСЂСѓРіРѕРј РѕР±СЂР°Р±РѕС‚С‡РёРєРµ
 		}
-// TODO: здесь ещё можно проверить на изменённость значения (по хэшу или сохранять последнее применённое, не изменилось - не применять !)
+// TODO: Р·РґРµСЃСЊ РµС‰С‘ РјРѕР¶РЅРѕ РїСЂРѕРІРµСЂРёС‚СЊ РЅР° РёР·РјРµРЅС‘РЅРЅРѕСЃС‚СЊ Р·РЅР°С‡РµРЅРёСЏ (РїРѕ С…СЌС€Сѓ РёР»Рё СЃРѕС…СЂР°РЅСЏС‚СЊ РїРѕСЃР»РµРґРЅРµРµ РїСЂРёРјРµРЅС‘РЅРЅРѕРµ, РЅРµ РёР·РјРµРЅРёР»РѕСЃСЊ - РЅРµ РїСЂРёРјРµРЅСЏС‚СЊ !)
 		//safeApplyFilter(origin.getTarget(), clearFilterToolBB);
 		safeApplyFilter((MeshElement)fev.getTarget(), clearFilterToolBB);
 		//safeApplyFilter(subjSummFilter, subjSummModelManager, subjSummGrid, clearFilterToolBB);
@@ -1344,34 +1344,34 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	
 	
     @Listen("onClick=#clearFilterToolBB")
-    public void clearFilter() { // по нажатию toolbarbutton clearFilterToolBB (видимость кнопки управляется также из логики отложенного применения фильтра)
+    public void clearFilter() { // РїРѕ РЅР°Р¶Р°С‚РёСЋ toolbarbutton clearFilterToolBB (РІРёРґРёРјРѕСЃС‚СЊ РєРЅРѕРїРєРё СѓРїСЂР°РІР»СЏРµС‚СЃСЏ С‚Р°РєР¶Рµ РёР· Р»РѕРіРёРєРё РѕС‚Р»РѕР¶РµРЅРЅРѕРіРѕ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°)
     	logger.debug("clearFilter");
     	subjSummFilter.clear(true);
     	safeApplyFilter(subjSummFilter, subjSummModelManager, subjSummGrid, clearFilterToolBB);
     }
     
     
-// кнопки toolbar принадлежат tabbox (вне tabpanels)
+// РєРЅРѕРїРєРё toolbar РїСЂРёРЅР°РґР»РµР¶Р°С‚ tabbox (РІРЅРµ tabpanels)
 	@Wire
 	private Toolbarbutton toExcelToolBB;
 
-/* Проблема: отображение прогресса ONLINE (Progressmeter) из async working tread
-  Пробую решения (слепок списка отвергается):
- 1) Асинхронная длительная задача сама (через событие PropertyChange, инициируемое в том же потоке) обновляет UI с использованием Server Push. Не работает: при наличии ждущего блокировки другого UI Thread. Искать решение в коде ZK ("выключение" UI Thread на период ожидания).
- 2) При невозможности активировать Desktop для SP, передаём данные прогресса ждущему UI-потоку. Не работает: ждущий поток отрабатывает, но UI обновляется разом только после его завершения. Искать решение в коде ZK (мгновенное обновление UI).
- +3) Конкурирующий UI-поток не ждёт, а завершается. Но сначала запускает асинхронную задачу, которая ставит изначальную задачу в синхроную очередь при завершении конкурирующего рабочего потока (по Thread.join или Lock.lock).
- 4) (попробовать сравнить по скорости с SP) Не ставить UI-поток на ожидание, из working thread обновлять UI не через SP, а посылая событие в отдельном UI-потоке. Не работает: из working thread без SP не инициировать событие (publish)
- 5) (попробовать) Исключить блокировку model list. Например long operation читает allSubj (там не состав, но поля тоже меняются конкурентно - sel, inFilter (определяет состав) !). Ничего не придумал...
-!+6) Timer (CR p.396), который выполняет SharedLogic. Гораздо быстрее, чем SP (который ещё и склонен вызывать deadlock'и) !
+/* РџСЂРѕР±Р»РµРјР°: РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РїСЂРѕРіСЂРµСЃСЃР° ONLINE (Progressmeter) РёР· async working tread
+  РџСЂРѕР±СѓСЋ СЂРµС€РµРЅРёСЏ (СЃР»РµРїРѕРє СЃРїРёСЃРєР° РѕС‚РІРµСЂРіР°РµС‚СЃСЏ):
+ 1) РђСЃРёРЅС…СЂРѕРЅРЅР°СЏ РґР»РёС‚РµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° СЃР°РјР° (С‡РµСЂРµР· СЃРѕР±С‹С‚РёРµ PropertyChange, РёРЅРёС†РёРёСЂСѓРµРјРѕРµ РІ С‚РѕРј Р¶Рµ РїРѕС‚РѕРєРµ) РѕР±РЅРѕРІР»СЏРµС‚ UI СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Server Push. РќРµ СЂР°Р±РѕС‚Р°РµС‚: РїСЂРё РЅР°Р»РёС‡РёРё Р¶РґСѓС‰РµРіРѕ Р±Р»РѕРєРёСЂРѕРІРєРё РґСЂСѓРіРѕРіРѕ UI Thread. РСЃРєР°С‚СЊ СЂРµС€РµРЅРёРµ РІ РєРѕРґРµ ZK ("РІС‹РєР»СЋС‡РµРЅРёРµ" UI Thread РЅР° РїРµСЂРёРѕРґ РѕР¶РёРґР°РЅРёСЏ).
+ 2) РџСЂРё РЅРµРІРѕР·РјРѕР¶РЅРѕСЃС‚Рё Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ Desktop РґР»СЏ SP, РїРµСЂРµРґР°С‘Рј РґР°РЅРЅС‹Рµ РїСЂРѕРіСЂРµСЃСЃР° Р¶РґСѓС‰РµРјСѓ UI-РїРѕС‚РѕРєСѓ. РќРµ СЂР°Р±РѕС‚Р°РµС‚: Р¶РґСѓС‰РёР№ РїРѕС‚РѕРє РѕС‚СЂР°Р±Р°С‚С‹РІР°РµС‚, РЅРѕ UI РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ СЂР°Р·РѕРј С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РµРіРѕ Р·Р°РІРµСЂС€РµРЅРёСЏ. РСЃРєР°С‚СЊ СЂРµС€РµРЅРёРµ РІ РєРѕРґРµ ZK (РјРіРЅРѕРІРµРЅРЅРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ UI).
+ +3) РљРѕРЅРєСѓСЂРёСЂСѓСЋС‰РёР№ UI-РїРѕС‚РѕРє РЅРµ Р¶РґС‘С‚, Р° Р·Р°РІРµСЂС€Р°РµС‚СЃСЏ. РќРѕ СЃРЅР°С‡Р°Р»Р° Р·Р°РїСѓСЃРєР°РµС‚ Р°СЃРёРЅС…СЂРѕРЅРЅСѓСЋ Р·Р°РґР°С‡Сѓ, РєРѕС‚РѕСЂР°СЏ СЃС‚Р°РІРёС‚ РёР·РЅР°С‡Р°Р»СЊРЅСѓСЋ Р·Р°РґР°С‡Сѓ РІ СЃРёРЅС…СЂРѕРЅСѓСЋ РѕС‡РµСЂРµРґСЊ РїСЂРё Р·Р°РІРµСЂС€РµРЅРёРё РєРѕРЅРєСѓСЂРёСЂСѓСЋС‰РµРіРѕ СЂР°Р±РѕС‡РµРіРѕ РїРѕС‚РѕРєР° (РїРѕ Thread.join РёР»Рё Lock.lock).
+ 4) (РїРѕРїСЂРѕР±РѕРІР°С‚СЊ СЃСЂР°РІРЅРёС‚СЊ РїРѕ СЃРєРѕСЂРѕСЃС‚Рё СЃ SP) РќРµ СЃС‚Р°РІРёС‚СЊ UI-РїРѕС‚РѕРє РЅР° РѕР¶РёРґР°РЅРёРµ, РёР· working thread РѕР±РЅРѕРІР»СЏС‚СЊ UI РЅРµ С‡РµСЂРµР· SP, Р° РїРѕСЃС‹Р»Р°СЏ СЃРѕР±С‹С‚РёРµ РІ РѕС‚РґРµР»СЊРЅРѕРј UI-РїРѕС‚РѕРєРµ. РќРµ СЂР°Р±РѕС‚Р°РµС‚: РёР· working thread Р±РµР· SP РЅРµ РёРЅРёС†РёРёСЂРѕРІР°С‚СЊ СЃРѕР±С‹С‚РёРµ (publish)
+ 5) (РїРѕРїСЂРѕР±РѕРІР°С‚СЊ) РСЃРєР»СЋС‡РёС‚СЊ Р±Р»РѕРєРёСЂРѕРІРєСѓ model list. РќР°РїСЂРёРјРµСЂ long operation С‡РёС‚Р°РµС‚ allSubj (С‚Р°Рј РЅРµ СЃРѕСЃС‚Р°РІ, РЅРѕ РїРѕР»СЏ С‚РѕР¶Рµ РјРµРЅСЏСЋС‚СЃСЏ РєРѕРЅРєСѓСЂРµРЅС‚РЅРѕ - sel, inFilter (РѕРїСЂРµРґРµР»СЏРµС‚ СЃРѕСЃС‚Р°РІ) !). РќРёС‡РµРіРѕ РЅРµ РїСЂРёРґСѓРјР°Р»...
+!+6) Timer (CR p.396), РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅСЏРµС‚ SharedLogic. Р“РѕСЂР°Р·РґРѕ Р±С‹СЃС‚СЂРµРµ, С‡РµРј SP (РєРѕС‚РѕСЂС‹Р№ РµС‰С‘ Рё СЃРєР»РѕРЅРµРЅ РІС‹Р·С‹РІР°С‚СЊ deadlock'Рё) !
 */
 	
-// Контейнер для динамически создаваемых элементов ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, т.е. вне грида)
+// РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРё СЃРѕР·РґР°РІР°РµРјС‹С… СЌР»РµРјРµРЅС‚РѕРІ ZKWorkerWithTimerAndPM (tabpanel.borderlayout.south.hlayout, С‚.Рµ. РІРЅРµ РіСЂРёРґР°)
 	@Wire private Div subjSummPmHolder;
 	
 	
 	@Listen("onClick=#toExcelToolBB")
 	public void onClickToExcelToolBB() {
-// FIXME: универсализировать для случая нескольких гридов (grid, lmlx, holder)
+// FIXME: СѓРЅРёРІРµСЂСЃР°Р»РёР·РёСЂРѕРІР°С‚СЊ РґР»СЏ СЃР»СѓС‡Р°СЏ РЅРµСЃРєРѕР»СЊРєРёС… РіСЂРёРґРѕРІ (grid, lmlx, holder)
 		downloadToExcel(subjSummModelManager, UIUtil.meshHeaderToList(subjSummGrid), subjSummPmHolder, toExcelToolBB);
 	} // public void onClickToExcelToolBB()
 		
@@ -1387,16 +1387,16 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 	} // public void downloadToPDF()
 */	
 
-// FIXME:HOWTO: как перехватить без фокуса на каком-либо элементе ??? установить фокус изначально на каком-либо контрроле ?
+// FIXME:HOWTO: РєР°Рє РїРµСЂРµС…РІР°С‚РёС‚СЊ Р±РµР· С„РѕРєСѓСЃР° РЅР° РєР°РєРѕРј-Р»РёР±Рѕ СЌР»РµРјРµРЅС‚Рµ ??? СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С„РѕРєСѓСЃ РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅР° РєР°РєРѕРј-Р»РёР±Рѕ РєРѕРЅС‚СЂСЂРѕР»Рµ ?
 	@Listen("onCtrlKey=grid;onCancel=grid;onCtrlKey=listbox;onCancel=listbox") // {@2}Alt+2: 50, {@#f5}Alt+F5 : 116
 	public void keyListener(KeyEvent kev) {
 		MeshElement grid = (MeshElement)kev.getTarget();
     	int keyCode = kev.getKeyCode();
     	logger.debug("keyListener. target: {}, id: {}, keyCode: {}", kev.getTarget(), kev.getTarget().getId(), keyCode);
-    	if (keyCode == 50) { // ({@2}Alt+2: 50) запомнить ширины колонок (настраиваем интерактивно); !! выдать в формате файла properties названия колонок (типа deals_grid.col.dd_rest.label) и ширины (deals_grid.col.dd_rest.width) !!
+    	if (keyCode == 50) { // ({@2}Alt+2: 50) Р·Р°РїРѕРјРЅРёС‚СЊ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє (РЅР°СЃС‚СЂР°РёРІР°РµРј РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕ); !! РІС‹РґР°С‚СЊ РІ С„РѕСЂРјР°С‚Рµ С„Р°Р№Р»Р° properties РЅР°Р·РІР°РЅРёСЏ РєРѕР»РѕРЅРѕРє (С‚РёРїР° deals_grid.col.dd_rest.label) Рё С€РёСЂРёРЅС‹ (deals_grid.col.dd_rest.width) !!
     		UIUtil.writeMeshHeaderInfo(grid);
-    	} // Alt+2 -> сохранить названия и текущие ширины колонок в файл deals.properties
-    	else if (keyCode == 116) { // ({@#f5}Alt+F5 : 116) выгрузить в Excel содержимое лист-модели грида
+    	} // Alt+2 -> СЃРѕС…СЂР°РЅРёС‚СЊ РЅР°Р·РІР°РЅРёСЏ Рё С‚РµРєСѓС‰РёРµ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє РІ С„Р°Р№Р» deals.properties
+    	else if (keyCode == 116) { // ({@#f5}Alt+F5 : 116) РІС‹РіСЂСѓР·РёС‚СЊ РІ Excel СЃРѕРґРµСЂР¶РёРјРѕРµ Р»РёСЃС‚-РјРѕРґРµР»Рё РіСЂРёРґР°
     		Messagebox.show( "Download deals to Excel ?"
     						,"toExcel"
     						,Messagebox.OK|Messagebox.CANCEL
@@ -1407,13 +1407,13 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 								public void onEvent(Event e) throws Exception {
 									if (Messagebox.ON_OK.equals(e.getName())) {
 										//alert("Ok, go to Excel!");
-// FIXME: универсализировать для случая нескольких гридов (lmlx, holder)
+// FIXME: СѓРЅРёРІРµСЂСЃР°Р»РёР·РёСЂРѕРІР°С‚СЊ РґР»СЏ СЃР»СѓС‡Р°СЏ РЅРµСЃРєРѕР»СЊРєРёС… РіСЂРёРґРѕРІ (lmlx, holder)
 										downloadToExcel(subjSummModelManager, UIUtil.meshHeaderToList(grid), subjSummPmHolder, toExcelToolBB);
 									}
 								} // public void onEvent
     						} // SerializableEventListener
     		); // Messagebox.show
-    	} // ({@#f5}Alt+F5 : 116) выгрузить в Excel содержимое лист-модели грида
+    	} // ({@#f5}Alt+F5 : 116) РІС‹РіСЂСѓР·РёС‚СЊ РІ Excel СЃРѕРґРµСЂР¶РёРјРѕРµ Р»РёСЃС‚-РјРѕРґРµР»Рё РіСЂРёРґР°
     	else if ( keyCode == 27 && gridModelToExcelWorker != null ) {
 			//if (gridModelToExcelWorker != null && gridModelToExcelWorker/*subjSummModelManager*/.getWorkingThread() != null && gridModelToExcelWorker/*subjSummModelManager*/.getWorkingThread().isAlive()) 
 			Messagebox.show( "Terminate downloading to XLSX ?" // DR p. 282
@@ -1426,7 +1426,7 @@ public class SubjsPageComposer extends FilterableGridDataComposer<Component> {
 								public void onEvent(Event e) {
 									if ( Messagebox.ON_OK.equals(e.getName()) && gridModelToExcelWorker != null ) {
 										logger.debug("keyListener. Termination confirmed. sizeSharedLogic: {}", (gridModelToExcelWorker==null ? null : gridModelToExcelWorker.sizeSharedLogic()) );
-										//toXLSXsharedLogic.clearSharedLogic(); // ни прогресс, ни скАчка файла больше не актуальны
+										//toXLSXsharedLogic.clearSharedLogic(); // РЅРё РїСЂРѕРіСЂРµСЃСЃ, РЅРё СЃРєРђС‡РєР° С„Р°Р№Р»Р° Р±РѕР»СЊС€Рµ РЅРµ Р°РєС‚СѓР°Р»СЊРЅС‹
 										gridModelToExcelWorker.cancel(false/*true*/);
 									}
 								}

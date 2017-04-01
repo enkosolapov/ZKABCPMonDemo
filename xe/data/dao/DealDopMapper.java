@@ -1,4 +1,4 @@
-package basos.xe.data.dao;
+п»їpackage basos.xe.data.dao;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +12,7 @@ import basos.xe.data.entity.DealRestHistory;
 
 
 
-/** Специфичные для сделок запросы.
+/** РЎРїРµС†РёС„РёС‡РЅС‹Рµ РґР»СЏ СЃРґРµР»РѕРє Р·Р°РїСЂРѕСЃС‹.
  *
  */
 public interface DealDopMapper {

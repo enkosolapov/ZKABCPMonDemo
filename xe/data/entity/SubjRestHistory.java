@@ -1,14 +1,14 @@
-package basos.xe.data.entity;
+п»їpackage basos.xe.data.entity;
 
 import java.math.BigDecimal;
 //import java.sql.Date;
 
 
-/** Остатки за дату. ИД может быть заёмщика, СПР, сделки... */
+/** РћСЃС‚Р°С‚РєРё Р·Р° РґР°С‚Сѓ. РР” РјРѕР¶РµС‚ Р±С‹С‚СЊ Р·Р°С‘РјС‰РёРєР°, РЎРџР , СЃРґРµР»РєРё... */
 public final class SubjRestHistory {
 	
-	/** Конструктор рукописный, не сгенерён, преобразования (e.g. setScale) можно делать в нём.
-	 * Но типы смаппировал через @ConstructorArgs + @Arg в интерфейсе.
+	/** РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЂСѓРєРѕРїРёСЃРЅС‹Р№, РЅРµ СЃРіРµРЅРµСЂС‘РЅ, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ (e.g. setScale) РјРѕР¶РЅРѕ РґРµР»Р°С‚СЊ РІ РЅС‘Рј.
+	 * РќРѕ С‚РёРїС‹ СЃРјР°РїРїРёСЂРѕРІР°Р» С‡РµСЂРµР· @ConstructorArgs + @Arg РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
 	 */
 	public SubjRestHistory(Integer/*BigDecimal*/ id, java.sql.Date/*java.sql.Timestamp*/ ddRest, BigDecimal restBalUSD, BigDecimal pastRestBalUSD,
 			BigDecimal restUpravlUSD, BigDecimal sumChargeoffUSD, BigDecimal sumProvisionUSD, BigDecimal sokBallInt) {
@@ -56,8 +56,8 @@ public final class SubjRestHistory {
 		return sokBallInt;
 	}
 	
-	private static final String[] header = {"ИД LM", "За дату", "Задолженность в РСБУ, USD", "Просрочка в РСБУ, USD", "Позиция в МСФО, USD", "Списано в МСФО, USD", "Спецпровизия, USD", "Внутр. балл СОК"}; 
-	/** Строка заголовка с читабельными названиями полей. */
+	private static final String[] header = {"РР” LM", "Р—Р° РґР°С‚Сѓ", "Р—Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚СЊ РІ Р РЎР‘РЈ, USD", "РџСЂРѕСЃСЂРѕС‡РєР° РІ Р РЎР‘РЈ, USD", "РџРѕР·РёС†РёСЏ РІ РњРЎР¤Рћ, USD", "РЎРїРёСЃР°РЅРѕ РІ РњРЎР¤Рћ, USD", "РЎРїРµС†РїСЂРѕРІРёР·РёСЏ, USD", "Р’РЅСѓС‚СЂ. Р±Р°Р»Р» РЎРћРљ"}; 
+	/** РЎС‚СЂРѕРєР° Р·Р°РіРѕР»РѕРІРєР° СЃ С‡РёС‚Р°Р±РµР»СЊРЅС‹РјРё РЅР°Р·РІР°РЅРёСЏРјРё РїРѕР»РµР№. */
 	public static final String[] getHeader() {
 		return header;
 	}

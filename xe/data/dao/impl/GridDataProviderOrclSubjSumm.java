@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,11 +17,11 @@ import basos.xe.data.ds.OrclDataSource;
 import basos.xe.data.entity.SubjSumm;
 
 
-/** Сводные клиентские данные (тип бина - SubjSumm) из источника OrclDataSource ("java:jboss/datasources/orcl"), вью basos.vw_subj_summ.
- * Список реализован через ArrayList. Pure JDBC.
+/** РЎРІРѕРґРЅС‹Рµ РєР»РёРµРЅС‚СЃРєРёРµ РґР°РЅРЅС‹Рµ (С‚РёРї Р±РёРЅР° - SubjSumm) РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl"), РІСЊСЋ basos.vw_subj_summ.
+ * РЎРїРёСЃРѕРє СЂРµР°Р»РёР·РѕРІР°РЅ С‡РµСЂРµР· ArrayList. Pure JDBC.
  */
 @javax.enterprise.context.Dependent // RequestScoped
-@javax.inject.Named("subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
+@javax.inject.Named("subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
 //@javax.enterprise.inject.Alternative
 public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<SubjSumm> implements Serializable {
 // <T extends Object & Serializable & Comparable<? super T>>
@@ -29,16 +29,16 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 
 	private static final Logger logger = LoggerFactory.getLogger(GridDataProviderOrclSubjSumm.class);
 	
-// FIXME: текст запроса вынести в конфигурацию
+// FIXME: С‚РµРєСЃС‚ Р·Р°РїСЂРѕСЃР° РІС‹РЅРµСЃС‚Рё РІ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ
 	private static final String SUBJ_SUMM_SQL = "SELECT * from basos.vw_subj_summ order by subj_id";
 
-	private final boolean depersonalize; // требование обезличивания клиентских данных
+	private final boolean depersonalize; // С‚СЂРµР±РѕРІР°РЅРёРµ РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С…
 	
-	/** Обезличиваем по умолчанию клиентские данные. */
+	/** РћР±РµР·Р»РёС‡РёРІР°РµРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РєР»РёРµРЅС‚СЃРєРёРµ РґР°РЅРЅС‹Рµ. */
 	public GridDataProviderOrclSubjSumm() { this(/*false*/true); }
 	
-	/** Тип бина - SubjSumm. ПК изначально не устанавливается.
-	 * @param depersonalize Флаг обезличивания клиентских данных.
+	/** РўРёРї Р±РёРЅР° - SubjSumm. РџРљ РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅРµ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ.
+	 * @param depersonalize Р¤Р»Р°Рі РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С….
 	 */
 	public GridDataProviderOrclSubjSumm(boolean depersonalize) {
 		super(SubjSumm.class); // http://stackoverflow.com/questions/260666/can-an-abstract-class-have-a-constructor
@@ -49,13 +49,13 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 	} // public GridDataProviderOrclSubjSumm(boolean depersonalize)
 	
 	
-	/** Наполняет внутренный список (ArrayList) обёрток GridData бина SubjSumm содержимым таблицы basos.vw_subj_summ из источника OrclDataSource ("java:jboss/datasources/orcl"). Вызывается из {@link #getGridDataList}. */
+	/** РќР°РїРѕР»РЅСЏРµС‚ РІРЅСѓС‚СЂРµРЅРЅС‹Р№ СЃРїРёСЃРѕРє (ArrayList) РѕР±С‘СЂС‚РѕРє GridData Р±РёРЅР° SubjSumm СЃРѕРґРµСЂР¶РёРјС‹Рј С‚Р°Р±Р»РёС†С‹ basos.vw_subj_summ РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl"). Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getGridDataList}. */
 	@Override
 	protected final List<GridData<SubjSumm>> populateGridDataList() {
 		List<GridData<SubjSumm>> locGridDataArrayList;
 //		try(Connection conn = DriverManager.getConnection(url)) {
 		try(Connection conn = OrclDataSource.getDataSource().getConnection()) { // thread-safe
-// HOWTO: как определить кол-во строк в рекордсете (http://stackoverflow.com/questions/7886462/how-to-get-row-count-using-resultset-in-java)
+// HOWTO: РєР°Рє РѕРїСЂРµРґРµР»РёС‚СЊ РєРѕР»-РІРѕ СЃС‚СЂРѕРє РІ СЂРµРєРѕСЂРґСЃРµС‚Рµ (http://stackoverflow.com/questions/7886462/how-to-get-row-count-using-resultset-in-java)
 			try(Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
 				try(ResultSet rs = stmt.executeQuery(SUBJ_SUMM_SQL)) {
 				    rs.last();
@@ -66,13 +66,13 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 					SubjSumm dataBean = null;
 					while (rs.next()) {
 						BigDecimal tmp;
-						dataBean = new SubjSumm( rs.getInt("subj_id") // getLong ?? зачем ? numeric(9,0) ставки: numeric(12,4)
+						dataBean = new SubjSumm( rs.getInt("subj_id") // getLong ?? Р·Р°С‡РµРј ? numeric(9,0) СЃС‚Р°РІРєРё: numeric(12,4)
 											   ,rs.getDate("dd_rest")
 											   ,rs.getString("pin_eq")
 											   ,depersonalize ? RandomStringUtils.randomNumeric(10) : rs.getString("inn")
 											   ,rs.getString("subj_type")
 											   ,rs.getBoolean("is_risk") // getInt("is_risk") 
-											   ,depersonalize ? "Субъект № "+rs.getInt("subj_id") : rs.getString("subj_name")
+											   ,depersonalize ? "РЎСѓР±СЉРµРєС‚ в„– "+rs.getInt("subj_id") : rs.getString("subj_name")
 											   ,depersonalize ? RandomStringUtils.randomAlphabetic(8, 20).toUpperCase() : rs.getString("gr_name")
 											   ,rs.getString("cpr_id")
 											   ,depersonalize ? RandomStringUtils.randomAlphabetic(3, 10).toUpperCase() : rs.getString("cpr_name")
@@ -91,23 +91,23 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 											   ,rs.getBigDecimal("s_usd_overbal").setScale(2)
 											   ,rs.getBigDecimal("s_usd_prosr").setScale(2)
 											   ,(tmp = rs.getBigDecimal("rest_money_usd")) == null ? null : tmp.setScale(2)
-											   ,rs.getInt("rate_o") // ? Byte - в NumberInputElement нет меньше Intbox !!
+											   ,rs.getInt("rate_o") // ? Byte - РІ NumberInputElement РЅРµС‚ РјРµРЅСЊС€Рµ Intbox !!
 											   ,rs.getInt("rate_uo")
 											   ,rs.getInt("rate_no")
-											   ,rs.getInt("cnt_tr") // ? Short - в NumberInputElement нет меньше Intbox !!
+											   ,rs.getInt("cnt_tr") // ? Short - РІ NumberInputElement РЅРµС‚ РјРµРЅСЊС€Рµ Intbox !!
 											   ,rs.getInt("cnt_dgvr") 
 											   ,rs.getDate("dgvr_last")
 											   ,rs.getString("b2segm")
 											   ,rs.getString("subj_rate")
 											   ,(tmp = rs.getBigDecimal("sokball_int")) == null ? null : tmp.setScale(2) // numeric(3,2)
-											   ,(tmp = rs.getBigDecimal("final_pd")) == null ? null : tmp.setScale(8) // 8 зн. ?
+											   ,(tmp = rs.getBigDecimal("final_pd")) == null ? null : tmp.setScale(8) // 8 Р·РЅ. ?
 											   ,rs.getString("finsost")
 											   ,rs.getString("debtlevel_cp")
-// RULE: используем для даты java.sql.Date, для даты+времени(сек) java.util.Date, для времени с наносами java.sql.Timestamp ! 
+// RULE: РёСЃРїРѕР»СЊР·СѓРµРј РґР»СЏ РґР°С‚С‹ java.sql.Date, РґР»СЏ РґР°С‚С‹+РІСЂРµРјРµРЅРё(СЃРµРє) java.util.Date, РґР»СЏ РІСЂРµРјРµРЅРё СЃ РЅР°РЅРѕСЃР°РјРё java.sql.Timestamp ! 
 											   ,rs.getDate("subj_risk_dd_edit") == null ? null : new java.util.Date(rs.getDate("subj_risk_dd_edit").getTime()) // DATE+TIME !! new 2016-12-06   NOT getTimestamp (nanos !)
 											   ,rs.getDate("dd_probl_proj_begin")
 											   ,rs.getDate("dd_probl_proj_close")
-											   ,(tmp = rs.getBigDecimal("rate_provision")) == null ? null : tmp.setScale(2) // 2 зн.
+											   ,(tmp = rs.getBigDecimal("rate_provision")) == null ? null : tmp.setScale(2) // 2 Р·РЅ.
 											   ,rs.getBoolean("is_msfo_charge_off") // int -> boolean
 											   ,rs.getString("wl_zone")
 											   ,rs.getString("cln_def_stat")
@@ -119,14 +119,14 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 											   ,rs.getString("okved")
 											   ,rs.getString("okved_name")
 											   ,rs.getString("asv_name_okeq")
-											   ,(tmp = rs.getBigDecimal("sok_vyr_mln_rub_2015")) == null ? null : tmp.setScale(2) // 2 зн.
-											   ,(tmp = rs.getBigDecimal("spark_vyr_mln_rub_2015")) == null ? null : tmp.setScale(0) // 0 зн.
+											   ,(tmp = rs.getBigDecimal("sok_vyr_mln_rub_2015")) == null ? null : tmp.setScale(2) // 2 Р·РЅ.
+											   ,(tmp = rs.getBigDecimal("spark_vyr_mln_rub_2015")) == null ? null : tmp.setScale(0) // 0 Р·РЅ.
 											   ,rs.getString("acd_prod")
 											   ,rs.getRowId("lmc_rowid").toString()
 											   ,rs.getString("cluid")
 								);
 						locGridDataArrayList.add( new GridData<SubjSumm>(dataBean, this.beanClass) );
-					} // обход ResultSet
+					} // РѕР±С…РѕРґ ResultSet
 				} // try ResultSet
 			} // try Statement
 		} catch (SQLException e) {
@@ -143,10 +143,10 @@ public /*final*/ class GridDataProviderOrclSubjSumm extends GridDataProviderWPk<
 		throw new UnsupportedOperationException("selectRange unsupported by GridDataProviderOrclSubjSumm at all.");
 	}
 	
-	/** Быстрый поиск в списке GridData<SubjSumm> по полю subj_id. */
+	/** Р‘С‹СЃС‚СЂС‹Р№ РїРѕРёСЃРє РІ СЃРїРёСЃРєРµ GridData<SubjSumm> РїРѕ РїРѕР»СЋ subj_id. */
 // not used
 	public static int indexedBinarySearchBySubjId(/*Array*/List<GridData<SubjSumm>> a, int fromIndex, int toIndex, int key) {
-// FIXME: проверять на RandomAccess !
+// FIXME: РїСЂРѕРІРµСЂСЏС‚СЊ РЅР° RandomAccess !
 		int low = 0;
 		int high = toIndex - 1;
 		while (low <= high) {

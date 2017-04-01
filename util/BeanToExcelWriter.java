@@ -1,4 +1,4 @@
-package basos.util;
+п»їpackage basos.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 //See http://poi.apache.org/overview.html about JARs (+ http://stackoverflow.com/questions/19739026/java-lang-classnotfoundexception-org-apache-xmlbeans-xmlobject-error)
 import org.apache.poi.hssf.usermodel.HSSFWorkbook; // in poi-3.15.jar (+ poi-ooxml-schemas-3.15.jar)
 import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook; // Для создания больших листов (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
+import org.apache.poi.xssf.streaming.SXSSFWorkbook; // Р”Р»СЏ СЃРѕР·РґР°РЅРёСЏ Р±РѕР»СЊС€РёС… Р»РёСЃС‚РѕРІ (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
 //import org.apache.poi.xssf.model.StylesTable;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook; // in poi-ooxml-3.15.jar (+ xmlbeans-2.6.0.jar + commons-collections4-4.1.jar)
 import org.apache.poi.ss.SpreadsheetVersion;
@@ -38,25 +38,25 @@ import org.slf4j.LoggerFactory;
 //import org.zkoss.util.resource.Labels;
 
 // FIXME: autoclosable !!
-// TODO: метод сохранения книги в файл
-// TODO: печать произвольного заголовка (бизнес-наименования полей) из массива/списка
-// TODO: дополнительные столбцы в начале (см. colOffset) передавать в writeFieldNamesToRow, {печать_произвольного_заголовка}, writeBeanToRow через varargs (сквозной контроль кол-ва !)
-// TODO: builder, включающий параметры форматирования, настройки и setZoom (их вызывать перед writeWbToBA ?)
+// TODO: РјРµС‚РѕРґ СЃРѕС…СЂР°РЅРµРЅРёСЏ РєРЅРёРіРё РІ С„Р°Р№Р»
+// TODO: РїРµС‡Р°С‚СЊ РїСЂРѕРёР·РІРѕР»СЊРЅРѕРіРѕ Р·Р°РіРѕР»РѕРІРєР° (Р±РёР·РЅРµСЃ-РЅР°РёРјРµРЅРѕРІР°РЅРёСЏ РїРѕР»РµР№) РёР· РјР°СЃСЃРёРІР°/СЃРїРёСЃРєР°
+// TODO: РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ СЃС‚РѕР»Р±С†С‹ РІ РЅР°С‡Р°Р»Рµ (СЃРј. colOffset) РїРµСЂРµРґР°РІР°С‚СЊ РІ writeFieldNamesToRow, {РїРµС‡Р°С‚СЊ_РїСЂРѕРёР·РІРѕР»СЊРЅРѕРіРѕ_Р·Р°РіРѕР»РѕРІРєР°}, writeBeanToRow С‡РµСЂРµР· varargs (СЃРєРІРѕР·РЅРѕР№ РєРѕРЅС‚СЂРѕР»СЊ РєРѕР»-РІР° !)
+// TODO: builder, РІРєР»СЋС‡Р°СЋС‰РёР№ РїР°СЂР°РјРµС‚СЂС‹ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ, РЅР°СЃС‚СЂРѕР№РєРё Рё setZoom (РёС… РІС‹Р·С‹РІР°С‚СЊ РїРµСЂРµРґ writeWbToBA ?)
 
-/** Класс для выгрузки в Excel-файл (xls/xlsx) доменных объектов (дата-бинов).
- * Автоматическое форматирование на основе рефлексивного анализа класса бина.
- * Предполагается использование в цикле для списка объектов с выгрузкой на единственный лист в книге.
- * Технический формат задаётся в конструкторе. SXSSF позволяет формировать очень большие таблицы (проверено на 100 тыс.)
- *  с некоторыми ограничениями доступа в процессе (видимость строк в окне).
- * Параметр colOffset конструктора позволяет первые столбцы (номер по порядку и т.п.) записывать внешними для класса средствами.
- * Способ и формат записи в ячейки книги регулируется методами {@link #addTypedCellWriter()}, {@link #setDefaultCellWriter()}, {@link #fillTypedCellWriters()}.
- * @param <T> Тип бина.
+/** РљР»Р°СЃСЃ РґР»СЏ РІС‹РіСЂСѓР·РєРё РІ Excel-С„Р°Р№Р» (xls/xlsx) РґРѕРјРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ (РґР°С‚Р°-Р±РёРЅРѕРІ).
+ * РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РЅР° РѕСЃРЅРѕРІРµ СЂРµС„Р»РµРєСЃРёРІРЅРѕРіРѕ Р°РЅР°Р»РёР·Р° РєР»Р°СЃСЃР° Р±РёРЅР°.
+ * РџСЂРµРґРїРѕР»Р°РіР°РµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ РІ С†РёРєР»Рµ РґР»СЏ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ СЃ РІС‹РіСЂСѓР·РєРѕР№ РЅР° РµРґРёРЅСЃС‚РІРµРЅРЅС‹Р№ Р»РёСЃС‚ РІ РєРЅРёРіРµ.
+ * РўРµС…РЅРёС‡РµСЃРєРёР№ С„РѕСЂРјР°С‚ Р·Р°РґР°С‘С‚СЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ. SXSSF РїРѕР·РІРѕР»СЏРµС‚ С„РѕСЂРјРёСЂРѕРІР°С‚СЊ РѕС‡РµРЅСЊ Р±РѕР»СЊС€РёРµ С‚Р°Р±Р»РёС†С‹ (РїСЂРѕРІРµСЂРµРЅРѕ РЅР° 100 С‚С‹СЃ.)
+ *  СЃ РЅРµРєРѕС‚РѕСЂС‹РјРё РѕРіСЂР°РЅРёС‡РµРЅРёСЏРјРё РґРѕСЃС‚СѓРїР° РІ РїСЂРѕС†РµСЃСЃРµ (РІРёРґРёРјРѕСЃС‚СЊ СЃС‚СЂРѕРє РІ РѕРєРЅРµ).
+ * РџР°СЂР°РјРµС‚СЂ colOffset РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° РїРѕР·РІРѕР»СЏРµС‚ РїРµСЂРІС‹Рµ СЃС‚РѕР»Р±С†С‹ (РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ Рё С‚.Рї.) Р·Р°РїРёСЃС‹РІР°С‚СЊ РІРЅРµС€РЅРёРјРё РґР»СЏ РєР»Р°СЃСЃР° СЃСЂРµРґСЃС‚РІР°РјРё.
+ * РЎРїРѕСЃРѕР± Рё С„РѕСЂРјР°С‚ Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєРё РєРЅРёРіРё СЂРµРіСѓР»РёСЂСѓРµС‚СЃСЏ РјРµС‚РѕРґР°РјРё {@link #addTypedCellWriter()}, {@link #setDefaultCellWriter()}, {@link #fillTypedCellWriters()}.
+ * @param <T> РўРёРї Р±РёРЅР°.
  */
 public class BeanToExcelWriter<T> {
 
 	private /*static*/ final Logger logger = LoggerFactory.getLogger(BeanToExcelWriter.class);
 	
-	/** Доступные форматы файла: HSSF - old xls, XSSF - new xlsx, SXSSF - large (up to 100k) XSSF. */
+	/** Р”РѕСЃС‚СѓРїРЅС‹Рµ С„РѕСЂРјР°С‚С‹ С„Р°Р№Р»Р°: HSSF - old xls, XSSF - new xlsx, SXSSF - large (up to 100k) XSSF. */
 	public static enum FileTypes {HSSF, XSSF, SXSSF};
 	
 	protected final Class<T> beanClass;
@@ -64,41 +64,41 @@ public class BeanToExcelWriter<T> {
 	protected String fileName;
 	protected Workbook wb;
 	protected Sheet sheet;
-	protected final int colOffset; // сколько колонок пропустить в начале
-	protected int firstDataRowNum; // при первом вызове writeBeanToRow() отмечаем размер заголовка в строках (+1)
-	protected int curRowNum; // храним текущий номер строки (с 1!), для этого всегда создавать строки методом this.createRow() !
-	protected Row curRow; // последняя созданная методом createRow() строка (чтобы можно было извне её пользовать)
-	protected int colCnt; // общее кол-во столбцов
-	protected final boolean externalWb; // признак использования готовой книги, сами не создаём, не выгружаем, не закрываем
+	protected final int colOffset; // СЃРєРѕР»СЊРєРѕ РєРѕР»РѕРЅРѕРє РїСЂРѕРїСѓСЃС‚РёС‚СЊ РІ РЅР°С‡Р°Р»Рµ
+	protected int firstDataRowNum; // РїСЂРё РїРµСЂРІРѕРј РІС‹Р·РѕРІРµ writeBeanToRow() РѕС‚РјРµС‡Р°РµРј СЂР°Р·РјРµСЂ Р·Р°РіРѕР»РѕРІРєР° РІ СЃС‚СЂРѕРєР°С… (+1)
+	protected int curRowNum; // С…СЂР°РЅРёРј С‚РµРєСѓС‰РёР№ РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё (СЃ 1!), РґР»СЏ СЌС‚РѕРіРѕ РІСЃРµРіРґР° СЃРѕР·РґР°РІР°С‚СЊ СЃС‚СЂРѕРєРё РјРµС‚РѕРґРѕРј this.createRow() !
+	protected Row curRow; // РїРѕСЃР»РµРґРЅСЏСЏ СЃРѕР·РґР°РЅРЅР°СЏ РјРµС‚РѕРґРѕРј createRow() СЃС‚СЂРѕРєР° (С‡С‚РѕР±С‹ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ РёР·РІРЅРµ РµС‘ РїРѕР»СЊР·РѕРІР°С‚СЊ)
+	protected int colCnt; // РѕР±С‰РµРµ РєРѕР»-РІРѕ СЃС‚РѕР»Р±С†РѕРІ
+	protected final boolean externalWb; // РїСЂРёР·РЅР°Рє РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РіРѕС‚РѕРІРѕР№ РєРЅРёРіРё, СЃР°РјРё РЅРµ СЃРѕР·РґР°С‘Рј, РЅРµ РІС‹РіСЂСѓР¶Р°РµРј, РЅРµ Р·Р°РєСЂС‹РІР°РµРј
 	
 	protected Field[] declaredFields;
-	protected Optional<Boolean>[] accessibleOld; // права доступа к полям запоминаем при парсинге заголовка (перед выходом восстановим права доступа к полям)
-	protected List<Field> dataFields; // без обёртки он иммутабелен, а мы будем удалять 
-// в parseBeanFields() анализируем список полей доменного объекта и запоминаем в парном к dataFields массиве функции по заполнению и форматированию ячейки в зависимости от типа поля
+	protected Optional<Boolean>[] accessibleOld; // РїСЂР°РІР° РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј Р·Р°РїРѕРјРёРЅР°РµРј РїСЂРё РїР°СЂСЃРёРЅРіРµ Р·Р°РіРѕР»РѕРІРєР° (РїРµСЂРµРґ РІС‹С…РѕРґРѕРј РІРѕСЃСЃС‚Р°РЅРѕРІРёРј РїСЂР°РІР° РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј)
+	protected List<Field> dataFields; // Р±РµР· РѕР±С‘СЂС‚РєРё РѕРЅ РёРјРјСѓС‚Р°Р±РµР»РµРЅ, Р° РјС‹ Р±СѓРґРµРј СѓРґР°Р»СЏС‚СЊ 
+// РІ parseBeanFields() Р°РЅР°Р»РёР·РёСЂСѓРµРј СЃРїРёСЃРѕРє РїРѕР»РµР№ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° Рё Р·Р°РїРѕРјРёРЅР°РµРј РІ РїР°СЂРЅРѕРј Рє dataFields РјР°СЃСЃРёРІРµ С„СѓРЅРєС†РёРё РїРѕ Р·Р°РїРѕР»РЅРµРЅРёСЋ Рё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЋ СЏС‡РµР№РєРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° РїРѕР»СЏ
 	protected TriConsumer<Cell, Field, Object>[] setCellTriConsumer;
 	protected ByteArrayOutputStream baos;
 	
-// можно установить до вызова init(), т.е. до первого обращения к функционалу (сразу после вызова конструктора)
-	protected int maxDecimalScale = 10; // макс. scale для BigDecimal, для которого подготовлен формат (настройка)
-	protected int maxColumnWidth = 15000; // макс. ширина колонки (при автоформатировании) (настройка)
-	protected int sxssfRowBufferSize = 1000; // "окно" (настройка)
-	protected String sheetName; // по умолчанию короткое имя класса бина
+// РјРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕ РІС‹Р·РѕРІР° init(), С‚.Рµ. РґРѕ РїРµСЂРІРѕРіРѕ РѕР±СЂР°С‰РµРЅРёСЏ Рє С„СѓРЅРєС†РёРѕРЅР°Р»Сѓ (СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°)
+	protected int maxDecimalScale = 10; // РјР°РєСЃ. scale РґР»СЏ BigDecimal, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїРѕРґРіРѕС‚РѕРІР»РµРЅ С„РѕСЂРјР°С‚ (РЅР°СЃС‚СЂРѕР№РєР°)
+	protected int maxColumnWidth = 15000; // РјР°РєСЃ. С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё (РїСЂРё Р°РІС‚РѕС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРё) (РЅР°СЃС‚СЂРѕР№РєР°)
+	protected int sxssfRowBufferSize = 1000; // "РѕРєРЅРѕ" (РЅР°СЃС‚СЂРѕР№РєР°)
+	protected String sheetName; // РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РєРѕСЂРѕС‚РєРѕРµ РёРјСЏ РєР»Р°СЃСЃР° Р±РёРЅР°
 	
-	// стили ячеек в зависимости от типа данных их значений
+	// СЃС‚РёР»Рё СЏС‡РµРµРє РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° РґР°РЅРЅС‹С… РёС… Р·РЅР°С‡РµРЅРёР№
 	protected CellStyle dateCS, dateTimeCS, headerCS;
 	protected CellStyle[] decimalCSs;
 	
-	protected Map<String, TriConsumer<Cell, Field, Object>> typedCellWriters; // расширяемый набор правил для записи в заданную ячейку значения заданного поля заданного объекта
+	protected Map<String, TriConsumer<Cell, Field, Object>> typedCellWriters; // СЂР°СЃС€РёСЂСЏРµРјС‹Р№ РЅР°Р±РѕСЂ РїСЂР°РІРёР» РґР»СЏ Р·Р°РїРёСЃРё РІ Р·Р°РґР°РЅРЅСѓСЋ СЏС‡РµР№РєСѓ Р·РЅР°С‡РµРЅРёСЏ Р·Р°РґР°РЅРЅРѕРіРѕ РїРѕР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 	
-	protected DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // формат даты java.sql.Date по умолчанию в Ексель-ячейке (для случая передачи текстом)
-	protected DateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss"); // формат даты-времени java.util.Date по умолчанию в Ексель-ячейке (для случая передачи текстом)
+	protected DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // С„РѕСЂРјР°С‚ РґР°С‚С‹ java.sql.Date РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІ Р•РєСЃРµР»СЊ-СЏС‡РµР№РєРµ (РґР»СЏ СЃР»СѓС‡Р°СЏ РїРµСЂРµРґР°С‡Рё С‚РµРєСЃС‚РѕРј)
+	protected DateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss"); // С„РѕСЂРјР°С‚ РґР°С‚С‹-РІСЂРµРјРµРЅРё java.util.Date РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІ Р•РєСЃРµР»СЊ-СЏС‡РµР№РєРµ (РґР»СЏ СЃР»СѓС‡Р°СЏ РїРµСЂРµРґР°С‡Рё С‚РµРєСЃС‚РѕРј)
 	
-	// набор логики записи в ячейку в зависимости от типа (зависят от локальных стилей ячеек)
+	// РЅР°Р±РѕСЂ Р»РѕРіРёРєРё Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєСѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° (Р·Р°РІРёСЃСЏС‚ РѕС‚ Р»РѕРєР°Р»СЊРЅС‹С… СЃС‚РёР»РµР№ СЏС‡РµРµРє)
 	protected TriConsumer<Cell, Field, Object> nullCellWriter = (Cell cell, Field field, Object subj) -> {}; // null ?
 	protected TriConsumer<Cell, Field, Object> booleanCellWriter = (Cell cell, Field field, Object subj) -> {
 		try {
 			//logger.trace(String.valueOf(field.getBoolean(subj)));
-			cell.setCellValue(field.getBoolean(subj)); // записывается как 0/1
+			cell.setCellValue(field.getBoolean(subj)); // Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РєР°Рє 0/1
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			logger.error("Exception on export to XLSX: booleanCellWriter", e);
 		} // try / catch
@@ -145,7 +145,7 @@ public class BeanToExcelWriter<T> {
 			if (f != null) {
 				cell.setCellValue(f);
 /*					
-				f = new java.util.Date(f.getTime()); // java.sql.Date считает, что не содержит время и кидает IllegalArgumentException для getHours() и пр.
+				f = new java.util.Date(f.getTime()); // java.sql.Date СЃС‡РёС‚Р°РµС‚, С‡С‚Рѕ РЅРµ СЃРѕРґРµСЂР¶РёС‚ РІСЂРµРјСЏ Рё РєРёРґР°РµС‚ IllegalArgumentException РґР»СЏ getHours() Рё РїСЂ.
 				if ( f.getHours() == 0 && f.getMinutes() == 0 && f.getSeconds() == 0 ) {
 					cell.setCellStyle(getDateCS());
 				} else {
@@ -170,8 +170,8 @@ public class BeanToExcelWriter<T> {
 			logger.error("Exception on export to XLSX: dateTimeCellWriter", e);
 		} // try / catch
 	};
-	/** Команда записи значения указанного поля типа BigDecimal заданного объекта в целевую ячейку с использованием
-	 *  формата {@link #getDecimalCSs()}. Количество десятичных знаков не более {@link #getMaxDecimalScale()}.
+	/** РљРѕРјР°РЅРґР° Р·Р°РїРёСЃРё Р·РЅР°С‡РµРЅРёСЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїРѕР»СЏ С‚РёРїР° BigDecimal Р·Р°РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РІ С†РµР»РµРІСѓСЋ СЏС‡РµР№РєСѓ СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј
+	 *  С„РѕСЂРјР°С‚Р° {@link #getDecimalCSs()}. РљРѕР»РёС‡РµСЃС‚РІРѕ РґРµСЃСЏС‚РёС‡РЅС‹С… Р·РЅР°РєРѕРІ РЅРµ Р±РѕР»РµРµ {@link #getMaxDecimalScale()}.
 	 */
 	protected TriConsumer<Cell, Field, Object> decimalCellWriter = (Cell cell, Field field, Object subj) -> {
 		try {
@@ -185,10 +185,10 @@ public class BeanToExcelWriter<T> {
 					cell.setCellStyle(getDecimalCSs()[scale]);
 				} else if (scale >= maxDecimalScale) {
 					cell.setCellStyle(getDecimalCSs()[maxDecimalScale-1]);
-					logger.warn("decimalCellWriter. Превышен допустимый scale = {}, subj = {}, field = {}", scale, subj, field);
+					logger.warn("decimalCellWriter. РџСЂРµРІС‹С€РµРЅ РґРѕРїСѓСЃС‚РёРјС‹Р№ scale = {}, subj = {}, field = {}", scale, subj, field);
 				} else {
 					cell.setCellStyle(getDecimalCSs()[0]);
-					logger.warn("decimalCellWriter. Отрицательный scale = {}, subj = {}, field = {}", scale, subj, field);
+					logger.warn("decimalCellWriter. РћС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№ scale = {}, subj = {}, field = {}", scale, subj, field);
 				}
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -196,10 +196,10 @@ public class BeanToExcelWriter<T> {
 		} // try / catch
 	};
 	
-	/** Вариант с выводом в готовую (внешнюю) книгу.
-	 * @param beanClass Класс бина.
-	 * @param extWb Книга, в которую добавим лист.
-	 * @param colOffset Отступ в штуках колонок (не поля бина).
+	/** Р’Р°СЂРёР°РЅС‚ СЃ РІС‹РІРѕРґРѕРј РІ РіРѕС‚РѕРІСѓСЋ (РІРЅРµС€РЅСЋСЋ) РєРЅРёРіСѓ.
+	 * @param beanClass РљР»Р°СЃСЃ Р±РёРЅР°.
+	 * @param extWb РљРЅРёРіР°, РІ РєРѕС‚РѕСЂСѓСЋ РґРѕР±Р°РІРёРј Р»РёСЃС‚.
+	 * @param colOffset РћС‚СЃС‚СѓРї РІ С€С‚СѓРєР°С… РєРѕР»РѕРЅРѕРє (РЅРµ РїРѕР»СЏ Р±РёРЅР°).
 	 */
 	public BeanToExcelWriter(Class<T> beanClass, Workbook extWb, int colOffset) {
 		this.beanClass = beanClass;
@@ -213,15 +213,15 @@ public class BeanToExcelWriter<T> {
 		} else if (extWb instanceof SXSSFWorkbook) {
 			this.fileType = FileTypes.SXSSF;
 		} else {
-			logger.error("Книга {} неизвестного типа {}", extWb, extWb.getClass().getName());
-			throw new IllegalArgumentException("Книга " + extWb + " неизвестного типа " + extWb.getClass().getName());
+			logger.error("РљРЅРёРіР° {} РЅРµРёР·РІРµСЃС‚РЅРѕРіРѕ С‚РёРїР° {}", extWb, extWb.getClass().getName());
+			throw new IllegalArgumentException("РљРЅРёРіР° " + extWb + " РЅРµРёР·РІРµСЃС‚РЅРѕРіРѕ С‚РёРїР° " + extWb.getClass().getName());
 		}
 	}
 	
-	/** Книга будет создана данным объектом (не внешняя).
-	 * @param beanClass Класс бина.
-	 * @param fileType Формат выгрузки.
-	 * @param colOffset Отступ в штуках колонок (не поля бина).
+	/** РљРЅРёРіР° Р±СѓРґРµС‚ СЃРѕР·РґР°РЅР° РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚РѕРј (РЅРµ РІРЅРµС€РЅСЏСЏ).
+	 * @param beanClass РљР»Р°СЃСЃ Р±РёРЅР°.
+	 * @param fileType Р¤РѕСЂРјР°С‚ РІС‹РіСЂСѓР·РєРё.
+	 * @param colOffset РћС‚СЃС‚СѓРї РІ С€С‚СѓРєР°С… РєРѕР»РѕРЅРѕРє (РЅРµ РїРѕР»СЏ Р±РёРЅР°).
 	 */
 	public BeanToExcelWriter(Class<T> beanClass, FileTypes fileType, int colOffset) {
 		this.beanClass = beanClass;
@@ -230,36 +230,36 @@ public class BeanToExcelWriter<T> {
 		externalWb = false;
 	}
 	
-	/** Признак использования готовой книги, сами не создаём, не выгружаем, не закрываем. */
+	/** РџСЂРёР·РЅР°Рє РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РіРѕС‚РѕРІРѕР№ РєРЅРёРіРё, СЃР°РјРё РЅРµ СЃРѕР·РґР°С‘Рј, РЅРµ РІС‹РіСЂСѓР¶Р°РµРј, РЅРµ Р·Р°РєСЂС‹РІР°РµРј. */
 	public boolean isExternalWb() {
 		return externalWb;
 	}
 	
-	/** Команда записи в ячейку по умолчанию (если не найдена по типу) - stringCellWriter. */
-	protected TriConsumer<Cell, Field, Object> defaultCellWriter = stringCellWriter; // (? настройка ?) для типов данных, которым не поставлен в соответствие свой typedCellWriter 
+	/** РљРѕРјР°РЅРґР° Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєСѓ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅР° РїРѕ С‚РёРїСѓ) - stringCellWriter. */
+	protected TriConsumer<Cell, Field, Object> defaultCellWriter = stringCellWriter; // (? РЅР°СЃС‚СЂРѕР№РєР° ?) РґР»СЏ С‚РёРїРѕРІ РґР°РЅРЅС‹С…, РєРѕС‚РѕСЂС‹Рј РЅРµ РїРѕСЃС‚Р°РІР»РµРЅ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ СЃРІРѕР№ typedCellWriter 
 	
-	/** Команда записи в ячейку по умолчанию (если не найдена по типу) - stringCellWriter. */
+	/** РљРѕРјР°РЅРґР° Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєСѓ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅР° РїРѕ С‚РёРїСѓ) - stringCellWriter. */
 	public TriConsumer<Cell, Field, Object> getDefaultCellWriter() {
 		return defaultCellWriter;
 	}
 	
-	/** Задать команду записи в ячейку по умолчанию (если не найдена по типу). */
+	/** Р—Р°РґР°С‚СЊ РєРѕРјР°РЅРґСѓ Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєСѓ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅР° РїРѕ С‚РёРїСѓ). */
 	public void setDefaultCellWriter(TriConsumer<Cell, Field, Object> defaultCellWriter) {
 		this.defaultCellWriter = defaultCellWriter;
 	}
 	
-	/** Вся подготовка к выводу включая чтение настроек, создание книги (если не внешняя) и листа, построение набора
-	 * команд записи {@link #fillTypedCellWriters()} и интроспекцию класса бина {@link #parseBeanFields()}.
-	 * Вызывается многими методами перед первой операцией с листом, явно вызывать не нужно.
+	/** Р’СЃСЏ РїРѕРґРіРѕС‚РѕРІРєР° Рє РІС‹РІРѕРґСѓ РІРєР»СЋС‡Р°СЏ С‡С‚РµРЅРёРµ РЅР°СЃС‚СЂРѕРµРє, СЃРѕР·РґР°РЅРёРµ РєРЅРёРіРё (РµСЃР»Рё РЅРµ РІРЅРµС€РЅСЏСЏ) Рё Р»РёСЃС‚Р°, РїРѕСЃС‚СЂРѕРµРЅРёРµ РЅР°Р±РѕСЂР°
+	 * РєРѕРјР°РЅРґ Р·Р°РїРёСЃРё {@link #fillTypedCellWriters()} Рё РёРЅС‚СЂРѕСЃРїРµРєС†РёСЋ РєР»Р°СЃСЃР° Р±РёРЅР° {@link #parseBeanFields()}.
+	 * Р’С‹Р·С‹РІР°РµС‚СЃСЏ РјРЅРѕРіРёРјРё РјРµС‚РѕРґР°РјРё РїРµСЂРµРґ РїРµСЂРІРѕР№ РѕРїРµСЂР°С†РёРµР№ СЃ Р»РёСЃС‚РѕРј, СЏРІРЅРѕ РІС‹Р·С‹РІР°С‚СЊ РЅРµ РЅСѓР¶РЅРѕ.
 	 */
 	@SuppressWarnings("unchecked")
 	public void init() {
-		if (sheet != null) { // защита от повторного запуска
-			logger.error("BeanToExcelWriter.init(). Попытка повторной инициализации !");
+		if (sheet != null) { // Р·Р°С‰РёС‚Р° РѕС‚ РїРѕРІС‚РѕСЂРЅРѕРіРѕ Р·Р°РїСѓСЃРєР°
+			logger.error("BeanToExcelWriter.init(). РџРѕРїС‹С‚РєР° РїРѕРІС‚РѕСЂРЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё !");
 			return;
 		}
 		curRowNum = 0;
-		colCnt = 0; // общее кол-во столбцов
+		colCnt = 0; // РѕР±С‰РµРµ РєРѕР»-РІРѕ СЃС‚РѕР»Р±С†РѕРІ
 		/*if (sxssfRowBufferSize == 0) {
 			sxssfRowBufferSize = Integer.valueOf(Labels.getLabel("excel.sxssfRowBufferSize", "1000")).intValue();
 		}*/
@@ -267,7 +267,7 @@ public class BeanToExcelWriter<T> {
 			switch(fileType) {
 				case HSSF: wb = new HSSFWorkbook(); break; // HSSF - old xls
 				case XSSF: wb = new XSSFWorkbook(); break; // XSSF - new xlsx
-				case SXSSF: wb = new SXSSFWorkbook(sxssfRowBufferSize); // Для создания больших листов (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
+				case SXSSF: wb = new SXSSFWorkbook(sxssfRowBufferSize); // Р”Р»СЏ СЃРѕР·РґР°РЅРёСЏ Р±РѕР»СЊС€РёС… Р»РёСЃС‚РѕРІ (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
 							//((SXSSFWorkbook)wb).setCompressTempFiles(true); // temp files will be gzipped
 							break; // SXSSF - large XSSF (keep 100 (100-def, -1-unlim) rows in memory, exceeding rows will be flushed to disk)
 				default: wb = new HSSFWorkbook(); break; // HSSF - old xls
@@ -275,18 +275,18 @@ public class BeanToExcelWriter<T> {
 		}
 		
 		/*if (maxDecimalScale == 0) {
-			maxDecimalScale = Integer.valueOf(Labels.getLabel("excel.maxDecimalScale", "10")).intValue(); // макс. scale для BigDecimal, для которого подготовлен формат
+			maxDecimalScale = Integer.valueOf(Labels.getLabel("excel.maxDecimalScale", "10")).intValue(); // РјР°РєСЃ. scale РґР»СЏ BigDecimal, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїРѕРґРіРѕС‚РѕРІР»РµРЅ С„РѕСЂРјР°С‚
 		}
 		if (maxColumnWidth == 0) {
-			maxColumnWidth = Integer.valueOf(Labels.getLabel("excel.maxColumnWidth", "15000")).intValue(); // макс. ширина колонки (при автоформатировании)
+			maxColumnWidth = Integer.valueOf(Labels.getLabel("excel.maxColumnWidth", "15000")).intValue(); // РјР°РєСЃ. С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё (РїСЂРё Р°РІС‚РѕС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРё)
 		}*/
 		
 		sheet = wb.createSheet(getSheetName());
 		declaredFields = beanClass.getDeclaredFields();
-		accessibleOld = new /*boolean*/Optional[declaredFields.length]; // права доступа к полям запоминаем при парсинге заголовка (перед выходом восстановим права доступа к полям)
+		accessibleOld = new /*boolean*/Optional[declaredFields.length]; // РїСЂР°РІР° РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј Р·Р°РїРѕРјРёРЅР°РµРј РїСЂРё РїР°СЂСЃРёРЅРіРµ Р·Р°РіРѕР»РѕРІРєР° (РїРµСЂРµРґ РІС‹С…РѕРґРѕРј РІРѕСЃСЃС‚Р°РЅРѕРІРёРј РїСЂР°РІР° РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј)
 			Arrays.fill(accessibleOld, Optional.empty());
-		dataFields = new ArrayList<Field>(Arrays.asList(declaredFields)); //без обёртки он иммутабелен, а мы будем удалять 
-		setCellTriConsumer = new TriConsumer[declaredFields.length]; // ! будет не полностью заполнен(но без пропусков !), т.к. мапится на бизнес-поля (dataFields после парсинга + пустой хвост) !
+		dataFields = new ArrayList<Field>(Arrays.asList(declaredFields)); //Р±РµР· РѕР±С‘СЂС‚РєРё РѕРЅ РёРјРјСѓС‚Р°Р±РµР»РµРЅ, Р° РјС‹ Р±СѓРґРµРј СѓРґР°Р»СЏС‚СЊ 
+		setCellTriConsumer = new TriConsumer[declaredFields.length]; // ! Р±СѓРґРµС‚ РЅРµ РїРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РїРѕР»РЅРµРЅ(РЅРѕ Р±РµР· РїСЂРѕРїСѓСЃРєРѕРІ !), С‚.Рє. РјР°РїРёС‚СЃСЏ РЅР° Р±РёР·РЅРµСЃ-РїРѕР»СЏ (dataFields РїРѕСЃР»Рµ РїР°СЂСЃРёРЅРіР° + РїСѓСЃС‚РѕР№ С…РІРѕСЃС‚) !
 		
 		fillTypedCellWriters();
 		
@@ -294,63 +294,63 @@ public class BeanToExcelWriter<T> {
 	} // public void init()
 	
 	
-	/** Имя листа по умолчанию = <короткое имя класса бина>. */
+	/** РРјСЏ Р»РёСЃС‚Р° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ = <РєРѕСЂРѕС‚РєРѕРµ РёРјСЏ РєР»Р°СЃСЃР° Р±РёРЅР°>. */
 	public String autoNameSheet() {
 		return sheetName = beanClass.getSimpleName();
 	}
 	
-	/** Имя файла по умолчанию = <короткое имя класса бина>_<текущее время в формате yyyyMMdd_HHmmss>.<расширение в зависимости от формата>. */
+	/** РРјСЏ С„Р°Р№Р»Р° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ = <РєРѕСЂРѕС‚РєРѕРµ РёРјСЏ РєР»Р°СЃСЃР° Р±РёРЅР°>_<С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ РІ С„РѕСЂРјР°С‚Рµ yyyyMMdd_HHmmss>.<СЂР°СЃС€РёСЂРµРЅРёРµ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С„РѕСЂРјР°С‚Р°>. */
 	public String autoNameFile() {
 		return fileName = beanClass.getSimpleName()+"_"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss", Locale.ROOT/*new Locale("ru", "RU")*/))+(fileType == FileTypes.HSSF ? ".xls" : ".xlsx");
 	}
 	
-	/** Создаёт для заданной книги и возвращает стиль ячейки для типа данных Date с использованием шаблона "dd.mm.yyyy". */
+	/** РЎРѕР·РґР°С‘С‚ РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РєРЅРёРіРё Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РёР»СЊ СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… Date СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј С€Р°Р±Р»РѕРЅР° "dd.mm.yyyy". */
 	public static CellStyle createDateCellStyleForWB(Workbook wb) {
 		CellStyle dateCellStyle = wb.createCellStyle();
 		dateCellStyle.setDataFormat(wb.getCreationHelper().createDataFormat().getFormat("dd.mm.yyyy"));
 		return dateCellStyle;
 	}
 	
-	/** Создаёт для заданной книги и возвращает стиль ячейки для типа данных DateTime с использованием шаблона "dd.mm.yyyy hh:mm:ss". */
+	/** РЎРѕР·РґР°С‘С‚ РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РєРЅРёРіРё Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РёР»СЊ СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… DateTime СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј С€Р°Р±Р»РѕРЅР° "dd.mm.yyyy hh:mm:ss". */
 	public static CellStyle createDateTimeCellStyleForWB(Workbook wb) {
 		CellStyle dateTimeCellStyle = wb.createCellStyle();
 		dateTimeCellStyle.setDataFormat(wb.getCreationHelper().createDataFormat().getFormat("dd.mm.yyyy hh:mm:ss"));
 		return dateTimeCellStyle;
 	}
 	
-	/** Создаёт для заданной книги и возвращает стиль ячейки заголовка: по центру, с переносом, жирный. */
+	/** РЎРѕР·РґР°С‘С‚ РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РєРЅРёРіРё Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РёР»СЊ СЏС‡РµР№РєРё Р·Р°РіРѕР»РѕРІРєР°: РїРѕ С†РµРЅС‚СЂСѓ, СЃ РїРµСЂРµРЅРѕСЃРѕРј, Р¶РёСЂРЅС‹Р№. */
 	public static CellStyle createHeaderCellStyleForWB(Workbook wb) {
 		CellStyle headerCellStyle = wb.createCellStyle();
 		headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
 		headerCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		headerCellStyle.setWrapText(true); // с переносом строки (но как подогнать автоширину по данным без учёта заголовка, а заголовок расширить по высоте ?)
-		Font boldFont = wb.createFont(); // HOWTO: как получить текущий шрифт ячейки ?
+		headerCellStyle.setWrapText(true); // СЃ РїРµСЂРµРЅРѕСЃРѕРј СЃС‚СЂРѕРєРё (РЅРѕ РєР°Рє РїРѕРґРѕРіРЅР°С‚СЊ Р°РІС‚РѕС€РёСЂРёРЅСѓ РїРѕ РґР°РЅРЅС‹Рј Р±РµР· СѓС‡С‘С‚Р° Р·Р°РіРѕР»РѕРІРєР°, Р° Р·Р°РіРѕР»РѕРІРѕРє СЂР°СЃС€РёСЂРёС‚СЊ РїРѕ РІС‹СЃРѕС‚Рµ ?)
+		Font boldFont = wb.createFont(); // HOWTO: РєР°Рє РїРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ С€СЂРёС„С‚ СЏС‡РµР№РєРё ?
 		boldFont.setBold(true);
 		headerCellStyle.setFont(boldFont);
 		return headerCellStyle;
 	}
 	
-	/** Создаёт для заданной книги и возвращает стиль ячейки для типа данных Decimal с использованием шаблона "### ### ### ### ##0."+repeat("0", scale). */
+	/** РЎРѕР·РґР°С‘С‚ РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РєРЅРёРіРё Рё РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РёР»СЊ СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… Decimal СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј С€Р°Р±Р»РѕРЅР° "### ### ### ### ##0."+repeat("0", scale). */
 	public static CellStyle createDecimalCellStyleForWB(Workbook wb, int scale) {
 		CellStyle decimalCellStyle = wb.createCellStyle();
 		decimalCellStyle.setDataFormat( wb.getCreationHelper().createDataFormat().getFormat("### ### ### ### ##0."+StringUtils.repeat("0", scale)) );
 		return decimalCellStyle;
 	}
 	
-	/** Создание всех предопределённых стилей ячеек. */
-// TODO: для книги, переданной в конструкторе (externalWb) можно расшаривать и стили
+	/** РЎРѕР·РґР°РЅРёРµ РІСЃРµС… РїСЂРµРґРѕРїСЂРµРґРµР»С‘РЅРЅС‹С… СЃС‚РёР»РµР№ СЏС‡РµРµРє. */
+// TODO: РґР»СЏ РєРЅРёРіРё, РїРµСЂРµРґР°РЅРЅРѕР№ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ (externalWb) РјРѕР¶РЅРѕ СЂР°СЃС€Р°СЂРёРІР°С‚СЊ Рё СЃС‚РёР»Рё
 	public void createCommonCellStyles() {
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy"/*, Locale.ROOT*//*new Locale("ru", "RU")*/); // формат даты LocalDate по умолчанию в Ексель-ячейке (для случая передачи текстом)
-//		DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // формат даты java.sql.Date по умолчанию в Ексель-ячейке (для случая передачи текстом)
-//		DateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss"); // формат даты-времени java.util.Date по умолчанию в Ексель-ячейке (для случая передачи текстом)
-/* HOWTO: ? как создавать стили независимо от WB, предварительно ?
-Для XSSFWorkbook см. StylesTable (http://poi.apache.org/apidocs/org/apache/poi/xssf/model/StylesTable.html)
+//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy"/*, Locale.ROOT*//*new Locale("ru", "RU")*/); // С„РѕСЂРјР°С‚ РґР°С‚С‹ LocalDate РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІ Р•РєСЃРµР»СЊ-СЏС‡РµР№РєРµ (РґР»СЏ СЃР»СѓС‡Р°СЏ РїРµСЂРµРґР°С‡Рё С‚РµРєСЃС‚РѕРј)
+//		DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // С„РѕСЂРјР°С‚ РґР°С‚С‹ java.sql.Date РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІ Р•РєСЃРµР»СЊ-СЏС‡РµР№РєРµ (РґР»СЏ СЃР»СѓС‡Р°СЏ РїРµСЂРµРґР°С‡Рё С‚РµРєСЃС‚РѕРј)
+//		DateFormat sdtf = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss"); // С„РѕСЂРјР°С‚ РґР°С‚С‹-РІСЂРµРјРµРЅРё java.util.Date РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІ Р•РєСЃРµР»СЊ-СЏС‡РµР№РєРµ (РґР»СЏ СЃР»СѓС‡Р°СЏ РїРµСЂРµРґР°С‡Рё С‚РµРєСЃС‚РѕРј)
+/* HOWTO: ? РєР°Рє СЃРѕР·РґР°РІР°С‚СЊ СЃС‚РёР»Рё РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ WB, РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ ?
+Р”Р»СЏ XSSFWorkbook СЃРј. StylesTable (http://poi.apache.org/apidocs/org/apache/poi/xssf/model/StylesTable.html)
 StylesTable st = new StylesTable();
 CellStyle dateCS = st.createCellStyle();
 ...		
 st.setWorkbook((XSSFWorkbook) wb);
-Вылетает где-то с IllegalArgumentException("This Style does not belong to the supplied Workbook Stlyes Source. Are you trying to assign a style from one workbook to the cell of a differnt workbook?")
-Подход со статикой: http://stackoverflow.com/questions/23594822/creating-a-cellstyle-library-in-apache-poi
+Р’С‹Р»РµС‚Р°РµС‚ РіРґРµ-С‚Рѕ СЃ IllegalArgumentException("This Style does not belong to the supplied Workbook Stlyes Source. Are you trying to assign a style from one workbook to the cell of a differnt workbook?")
+РџРѕРґС…РѕРґ СЃРѕ СЃС‚Р°С‚РёРєРѕР№: http://stackoverflow.com/questions/23594822/creating-a-cellstyle-library-in-apache-poi
 */			
 		dateCS = createDateCellStyleForWB(getWb());
 		/*dateCS = wb.createCellStyle();
@@ -365,12 +365,12 @@ st.setWorkbook((XSSFWorkbook) wb);
 		headerCS = createHeaderCellStyleForWB(getWb());
 		/*headerCS = wb.createCellStyle();
 			headerCS.setAlignment(HorizontalAlignment.CENTER);
-			Font boldFont = wb.createFont(); // HOWTO: как получить текущий шрифт ячейки ?
+			Font boldFont = wb.createFont(); // HOWTO: РєР°Рє РїРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ С€СЂРёС„С‚ СЏС‡РµР№РєРё ?
 			boldFont.setBold(true);
 			headerCS.setFont(boldFont);*/
 		
-//TODO: сделать числовой формат более универсальным
-		decimalCSs = new CellStyle[maxDecimalScale]; // предопределяем числовые стили со scale in [0, maxDecimalScale-1]
+//TODO: СЃРґРµР»Р°С‚СЊ С‡РёСЃР»РѕРІРѕР№ С„РѕСЂРјР°С‚ Р±РѕР»РµРµ СѓРЅРёРІРµСЂСЃР°Р»СЊРЅС‹Рј
+		decimalCSs = new CellStyle[maxDecimalScale]; // РїСЂРµРґРѕРїСЂРµРґРµР»СЏРµРј С‡РёСЃР»РѕРІС‹Рµ СЃС‚РёР»Рё СЃРѕ scale in [0, maxDecimalScale-1]
 		for (int i = 0; i < maxDecimalScale; i++) {
 			decimalCSs[i] = createDecimalCellStyleForWB(getWb(), i);
 			/*decimalCSs[i] = wb.createCellStyle();
@@ -379,14 +379,14 @@ st.setWorkbook((XSSFWorkbook) wb);
 		
 	} // public void createCommonCellStyles()
 	
-	/** Формируем набор правил записи в ячейки в зависимости от типа данных.
-	 * Вслед за стилями реализации привязаны к книге.
+	/** Р¤РѕСЂРјРёСЂСѓРµРј РЅР°Р±РѕСЂ РїСЂР°РІРёР» Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° РґР°РЅРЅС‹С….
+	 * Р’СЃР»РµРґ Р·Р° СЃС‚РёР»СЏРјРё СЂРµР°Р»РёР·Р°С†РёРё РїСЂРёРІСЏР·Р°РЅС‹ Рє РєРЅРёРіРµ.
 	 */
 	protected void fillTypedCellWriters() {
 		typedCellWriters = new HashMap<>((int)(10/0.5), 0.5f); // If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.
 		typedCellWriters.put("int", intCellWriter);
-		typedCellWriters.put("java.util.Date", dateTimeCellWriter); // дата СО ВРЕМЕНЕМ
-		typedCellWriters.put("java.sql.Date", dateCellWriter); // дата БЕЗ ВРЕМЕНИ; дата_текстом: curField.get(curSubj) == null ? "" : sdf.format((java.util.Date)curField.get(curSubj))
+		typedCellWriters.put("java.util.Date", dateTimeCellWriter); // РґР°С‚Р° РЎРћ Р’Р Р•РњР•РќР•Рњ
+		typedCellWriters.put("java.sql.Date", dateCellWriter); // РґР°С‚Р° Р‘Р•Р— Р’Р Р•РњР•РќР; РґР°С‚Р°_С‚РµРєСЃС‚РѕРј: curField.get(curSubj) == null ? "" : sdf.format((java.util.Date)curField.get(curSubj))
 		//typedCellWriters.put("java.sql.Timestamp", timestampSetCell); // w nanos !
 		typedCellWriters.put("java.lang.Integer", integerCellWriter);
 		typedCellWriters.put("java.lang.String", stringCellWriter);
@@ -396,26 +396,26 @@ st.setWorkbook((XSSFWorkbook) wb);
 		logger.trace("fillTypedCellWriters. (int)(10/0.5)={}, (10/0.5)={}, typedCellWriters.size={}", (int)(10/0.5), (10/0.5), typedCellWriters.size() );
 	} // protected void fillTypedCellWriters()
 	
-	/** Расширение/замена логики записи в ячейки и их форматирования в зависимости от типа данных (поля).
-	 * @param k Имя (полное) типа данных, например "java.lang.Integer"
-	 * @param v Логика записи и форматирования в ячейку Cell значения поля Field (используя рефлексию) объекта Object
+	/** Р Р°СЃС€РёСЂРµРЅРёРµ/Р·Р°РјРµРЅР° Р»РѕРіРёРєРё Р·Р°РїРёСЃРё РІ СЏС‡РµР№РєРё Рё РёС… С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° РґР°РЅРЅС‹С… (РїРѕР»СЏ).
+	 * @param k РРјСЏ (РїРѕР»РЅРѕРµ) С‚РёРїР° РґР°РЅРЅС‹С…, РЅР°РїСЂРёРјРµСЂ "java.lang.Integer"
+	 * @param v Р›РѕРіРёРєР° Р·Р°РїРёСЃРё Рё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ РІ СЏС‡РµР№РєСѓ Cell Р·РЅР°С‡РµРЅРёСЏ РїРѕР»СЏ Field (РёСЃРїРѕР»СЊР·СѓСЏ СЂРµС„Р»РµРєСЃРёСЋ) РѕР±СЉРµРєС‚Р° Object
 	 * @return the previous value associated with key, or null if there was no mapping for key.
 	*/
 	public TriConsumer<Cell, Field, Object> addTypedCellWriter(String k, TriConsumer<Cell, Field, Object> v) {
 		return typedCellWriters.put(k, v);
 	}
 	
-	/** Интроспекция класса бина.
-	 * Заполняем набор команд typedCellWriters, accessibleOld[] и setCellTriConsumer[], colCnt.
-	 * <p/><b>RULE</b>: полями данных считаем все приватные нестатические поля.
+	/** РРЅС‚СЂРѕСЃРїРµРєС†РёСЏ РєР»Р°СЃСЃР° Р±РёРЅР°.
+	 * Р—Р°РїРѕР»РЅСЏРµРј РЅР°Р±РѕСЂ РєРѕРјР°РЅРґ typedCellWriters, accessibleOld[] Рё setCellTriConsumer[], colCnt.
+	 * <p/><b>RULE</b>: РїРѕР»СЏРјРё РґР°РЅРЅС‹С… СЃС‡РёС‚Р°РµРј РІСЃРµ РїСЂРёРІР°С‚РЅС‹Рµ РЅРµСЃС‚Р°С‚РёС‡РµСЃРєРёРµ РїРѕР»СЏ.
 	 */
 	protected void parseBeanFields() {
 		if (typedCellWriters == null) {
 			fillTypedCellWriters();
 		}
-		// поля класса доменного объекта
-		int colN = 0; //общий счётчик колонок (бизнес-полей)
-		int fn = 0; // считаем все поля
+		// РїРѕР»СЏ РєР»Р°СЃСЃР° РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+		int colN = 0; //РѕР±С‰РёР№ СЃС‡С‘С‚С‡РёРє РєРѕР»РѕРЅРѕРє (Р±РёР·РЅРµСЃ-РїРѕР»РµР№)
+		int fn = 0; // СЃС‡РёС‚Р°РµРј РІСЃРµ РїРѕР»СЏ
 		for (ListIterator<Field> bfi = dataFields.listIterator(); bfi.hasNext();) {
 //			int fn = bfi.nextIndex();
 			Field curField = bfi.next();
@@ -424,10 +424,10 @@ st.setWorkbook((XSSFWorkbook) wb);
 			String curFieldName = curField.getName();
 			boolean curFIsAcc = curField.isAccessible();
 			int curM = curField.getModifiers();
-			if ( Modifier.isPrivate(curM) && !Modifier.isStatic(curM) ) { // RULE: к полям данных относим все приватные нестатические !
+			if ( Modifier.isPrivate(curM) && !Modifier.isStatic(curM) ) { // RULE: Рє РїРѕР»СЏРј РґР°РЅРЅС‹С… РѕС‚РЅРѕСЃРёРј РІСЃРµ РїСЂРёРІР°С‚РЅС‹Рµ РЅРµСЃС‚Р°С‚РёС‡РµСЃРєРёРµ !
 				accessibleOld[/*colN*/fn] = Optional.of(Boolean.valueOf(curFIsAcc));
-// FIXME: здесь нужна синхронизация !
-				curField.setAccessible(true); // иначе нет доступа к приватным полям !
+// FIXME: Р·РґРµСЃСЊ РЅСѓР¶РЅР° СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ !
+				curField.setAccessible(true); // РёРЅР°С‡Рµ РЅРµС‚ РґРѕСЃС‚СѓРїР° Рє РїСЂРёРІР°С‚РЅС‹Рј РїРѕР»СЏРј !
 				logger.trace("+++ fn = {}, colN = {}, curFieldTypeName = {}, curFieldName = {}, Modifiers: {} = '{}', isAccessible = {}", fn, colN, curFieldTypeName, curFieldName, curM, Modifier.toString(curM), curFIsAcc);
 				TriConsumer<Cell, Field, Object> tc = typedCellWriters.get(curFieldTypeName);
 				if ( tc != null ) {
@@ -437,57 +437,57 @@ st.setWorkbook((XSSFWorkbook) wb);
 					logger.warn("\n unsupported type '{}' in parseBeanFields(); defaultCellWriter will be used.", curFieldTypeName);
 				}
 				++colN;
-			} else { // служебные поля
+			} else { // СЃР»СѓР¶РµР±РЅС‹Рµ РїРѕР»СЏ
 				logger.trace("-------- fn = {}, curFieldTypeName = {}, curFieldName = {}, Modifiers: {} = '{}', isAccessible = {}", fn, curFieldTypeName, curFieldName, curM, Modifier.toString(curM), curFIsAcc);
 				bfi.remove();
 			}
 			fn++;
-		} // for_столбцы_заголовка
-		colCnt = colN+colOffset; // штук столбцов ВСЕГО (с учётом colOffset и бизнес-полей)
+		} // for_СЃС‚РѕР»Р±С†С‹_Р·Р°РіРѕР»РѕРІРєР°
+		colCnt = colN+colOffset; // С€С‚СѓРє СЃС‚РѕР»Р±С†РѕРІ Р’РЎР•Р“Рћ (СЃ СѓС‡С‘С‚РѕРј colOffset Рё Р±РёР·РЅРµСЃ-РїРѕР»РµР№)
 	} // protected void parseBeanFields()
 	
-	/** {@link #writeFieldNamesToRow(Row)} с созданием новой строки. */
+	/** {@link #writeFieldNamesToRow(Row)} СЃ СЃРѕР·РґР°РЅРёРµРј РЅРѕРІРѕР№ СЃС‚СЂРѕРєРё. */
 	public void writeFieldNamesToRow() {
 		writeFieldNamesToRow(createRow());
 	}
 	
-	/** Вывод названий полей доменного объекта в строку (заголовок) используя формат {@link #getHeaderCS()}.
-	 * Пропускает {@link #getColOffset()} колонок (заполнены вне этого класса).
+	/** Р’С‹РІРѕРґ РЅР°Р·РІР°РЅРёР№ РїРѕР»РµР№ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РІ СЃС‚СЂРѕРєСѓ (Р·Р°РіРѕР»РѕРІРѕРє) РёСЃРїРѕР»СЊР·СѓСЏ С„РѕСЂРјР°С‚ {@link #getHeaderCS()}.
+	 * РџСЂРѕРїСѓСЃРєР°РµС‚ {@link #getColOffset()} РєРѕР»РѕРЅРѕРє (Р·Р°РїРѕР»РЅРµРЅС‹ РІРЅРµ СЌС‚РѕРіРѕ РєР»Р°СЃСЃР°).
 	 */
 	public void writeFieldNamesToRow(Row row) {
 		if (dataFields == null) {
 			init();
 		}
 		row.setRowStyle(getHeaderCS());
-		int colN = colOffset; //общий счётчик колонок
+		int colN = colOffset; //РѕР±С‰РёР№ СЃС‡С‘С‚С‡РёРє РєРѕР»РѕРЅРѕРє
 		for (ListIterator<Field> bfi = dataFields.listIterator(); bfi.hasNext();) {
 //			int fn = bfi.nextIndex();
 			Field curField = bfi.next();
 			String curFieldName = curField.getName();
 			Cell currCell = row.createCell(colN);
 			currCell.setCellValue(curFieldName);
-			if (fileType == FileTypes.HSSF) { // в xls формат уровня строки не работает
+			if (fileType == FileTypes.HSSF) { // РІ xls С„РѕСЂРјР°С‚ СѓСЂРѕРІРЅСЏ СЃС‚СЂРѕРєРё РЅРµ СЂР°Р±РѕС‚Р°РµС‚
 				currCell.setCellStyle(getHeaderCS());
 			}
 			++colN;
-		} // for_столбцы_заголовка
+		} // for_СЃС‚РѕР»Р±С†С‹_Р·Р°РіРѕР»РѕРІРєР°
 	} // public void writeFieldNamesToRow(Row row)
 	
-	/** Создание строки и запись в неё полей доменного объекта. */
+	/** РЎРѕР·РґР°РЅРёРµ СЃС‚СЂРѕРєРё Рё Р·Р°РїРёСЃСЊ РІ РЅРµС‘ РїРѕР»РµР№ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°. */
 	public void writeBeanToRow(T curSubj) {
 		writeBeanToRow(createRow(), curSubj);
 	}
 	
-	/** Вывод полей доменного объекта (с инициализацией при необходимости). */
+	/** Р’С‹РІРѕРґ РїРѕР»РµР№ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° (СЃ РёРЅРёС†РёР°Р»РёР·Р°С†РёРµР№ РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё). */
 	public void writeBeanToRow(Row row, T curSubj) {
 		if (dataFields == null || setCellTriConsumer == null) {
 			init();
 		}
-		if (firstDataRowNum == 0) { // при первом вызове writeBeanToRow() отмечаем размер(+1) заголовка в строках
+		if (firstDataRowNum == 0) { // РїСЂРё РїРµСЂРІРѕРј РІС‹Р·РѕРІРµ writeBeanToRow() РѕС‚РјРµС‡Р°РµРј СЂР°Р·РјРµСЂ(+1) Р·Р°РіРѕР»РѕРІРєР° РІ СЃС‚СЂРѕРєР°С…
 			firstDataRowNum = curRowNum;
 		}
-		int colN = 0; // с учётом colOffset уже занятых столбцов
-		for (ListIterator<Field> bfi = dataFields.listIterator(); bfi.hasNext();) { // поля доменного объекта
+		int colN = 0; // СЃ СѓС‡С‘С‚РѕРј colOffset СѓР¶Рµ Р·Р°РЅСЏС‚С‹С… СЃС‚РѕР»Р±С†РѕРІ
+		for (ListIterator<Field> bfi = dataFields.listIterator(); bfi.hasNext();) { // РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 			Field curField = bfi.next();
 			/*if (logger.isTraceEnabled()) {
 				Class<?> curFieldType = curField.getType();
@@ -496,30 +496,30 @@ st.setWorkbook((XSSFWorkbook) wb);
 				if ("java.math.BigDecimal".equals(curFieldTypeName)) logger.trace("+++ colN = {}, curFieldTypeName = {}, curFieldName = {}, VAL = ...", colN, curFieldTypeName, curFieldName);
 			}*/
 			Cell currCell = row.createCell(colN+colOffset);
-			setCellTriConsumer[colN].accept(currCell, curField, curSubj); // запись в ячейку значения соответствующего поля доменного объекта и форматирование в соответствии с ранее определённым типом данных
+			setCellTriConsumer[colN].accept(currCell, curField, curSubj); // Р·Р°РїРёСЃСЊ РІ СЏС‡РµР№РєСѓ Р·РЅР°С‡РµРЅРёСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° Рё С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЂР°РЅРµРµ РѕРїСЂРµРґРµР»С‘РЅРЅС‹Рј С‚РёРїРѕРј РґР°РЅРЅС‹С…
 			++colN;
-		} // for_столбцы_доменного_объекта_текущей_строки_дата-модели
+		} // for_СЃС‚РѕР»Р±С†С‹_РґРѕРјРµРЅРЅРѕРіРѕ_РѕР±СЉРµРєС‚Р°_С‚РµРєСѓС‰РµР№_СЃС‚СЂРѕРєРё_РґР°С‚Р°-РјРѕРґРµР»Рё
 	} // public void writeBeanToRow(Row row, T curSubj)
 	
-	/** {@link #formatSheet(boolean, boolean, boolean)} со "всё включено". */
+	/** {@link #formatSheet(boolean, boolean, boolean)} СЃРѕ "РІСЃС‘ РІРєР»СЋС‡РµРЅРѕ". */
 	public void formatSheet() {
 		formatSheet(true, true, true);
 	}
 	
-	/** Форматировать книгу.
-	 * @param isAutosizeColumns Автоширина колонок (но не более {@link #getMaxColumnWidth()}).
-	 * @param isAutoFilter Автофильтр.
-	 * @param isFreezePane Закрепление областей. Из полей бина считаем, что 1-е - ключевое, его и закрепляем.
+	/** Р¤РѕСЂРјР°С‚РёСЂРѕРІР°С‚СЊ РєРЅРёРіСѓ.
+	 * @param isAutosizeColumns РђРІС‚РѕС€РёСЂРёРЅР° РєРѕР»РѕРЅРѕРє (РЅРѕ РЅРµ Р±РѕР»РµРµ {@link #getMaxColumnWidth()}).
+	 * @param isAutoFilter РђРІС‚РѕС„РёР»СЊС‚СЂ.
+	 * @param isFreezePane Р—Р°РєСЂРµРїР»РµРЅРёРµ РѕР±Р»Р°СЃС‚РµР№. РР· РїРѕР»РµР№ Р±РёРЅР° СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ 1-Рµ - РєР»СЋС‡РµРІРѕРµ, РµРіРѕ Рё Р·Р°РєСЂРµРїР»СЏРµРј.
 	 */
 	public void formatSheet(boolean isAutosizeColumns, boolean isAutoFilter, boolean isFreezePane) {
 		if (sheet == null) {
-			logger.error("formatSheet() вызван до инициализации");
+			logger.error("formatSheet() РІС‹Р·РІР°РЅ РґРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё");
 			return;
 		}
 		if (isAutosizeColumns) {
-			// здесь даже лучше - не учтёт заголовок (выравняет по последнему буферу) !
+			// Р·РґРµСЃСЊ РґР°Р¶Рµ Р»СѓС‡С€Рµ - РЅРµ СѓС‡С‚С‘С‚ Р·Р°РіРѕР»РѕРІРѕРє (РІС‹СЂР°РІРЅСЏРµС‚ РїРѕ РїРѕСЃР»РµРґРЅРµРјСѓ Р±СѓС„РµСЂСѓ) !
 			if (fileType == FileTypes.SXSSF) ((SXSSFSheet)sheet).trackAllColumnsForAutoSizing(); // Tracks all columns in the sheet for auto-sizing. If this is called, individual columns do not need to be tracked. Because determining the best-fit width for a cell is expensive, this may affect the performance. (http://poi.apache.org/apidocs/org/apache/poi/xssf/streaming/SXSSFSheet.html#trackAllColumnsForAutoSizing())
-			for (int colN = 0; colN < colCnt; colN++) { // ширина столбцов
+			for (int colN = 0; colN < colCnt; colN++) { // С€РёСЂРёРЅР° СЃС‚РѕР»Р±С†РѕРІ
 				sheet.autoSizeColumn(colN);
 				logger.trace( "column '{}{} # {} ({}) of size {}", (colN > 25 ? (char)((int)'A'+colN/26-1) : ""), (char)((int)'A'+colN%26), colN, (colN >= 2 ? dataFields.get(colN-2).getName() : colN == 0 ? "npp" : "selected")/*, sheet.getRow(0).getCell(colN).getStringCellValue()*/, sheet.getColumnWidth(colN));
 				if (sheet.getColumnWidth(colN) > maxColumnWidth) sheet.setColumnWidth(colN, maxColumnWidth);
@@ -530,18 +530,18 @@ st.setWorkbook((XSSFWorkbook) wb);
 			sheet.setAutoFilter( new CellRangeAddress(firstDataRowNum-2, curRowNum-1, 0, colCnt-1)/*CellRangeAddress.valueOf("A:"+(colCnt > 25 ? (char)((int)'A'+colCnt/26-1) : "") + (char)((int)'A'+(colCnt-1)%26))*/ );
 		}
 		if (isFreezePane && firstDataRowNum > 1) {
-			sheet.createFreezePane(1+colOffset, firstDataRowNum-1); // из полей бина считаем, что 1-е - ключевое, его и закрепляем !
+			sheet.createFreezePane(1+colOffset, firstDataRowNum-1); // РёР· РїРѕР»РµР№ Р±РёРЅР° СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ 1-Рµ - РєР»СЋС‡РµРІРѕРµ, РµРіРѕ Рё Р·Р°РєСЂРµРїР»СЏРµРј !
 		}
 	} // public void formatSheet(boolean isAutosizeColumns, boolean isAutoFilter, boolean isFreezePane)
 	
-	/** Записать книгу. Не финализирующий метод, после его вызова можно продолжать работать с книгой. Не должен вызываться для книги, созданной вовне (внешней). */
-	public byte[] writeWbToBA() { // (уровень книги) формирование AMedia из готовой книги;
+	/** Р—Р°РїРёСЃР°С‚СЊ РєРЅРёРіСѓ. РќРµ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰РёР№ РјРµС‚РѕРґ, РїРѕСЃР»Рµ РµРіРѕ РІС‹Р·РѕРІР° РјРѕР¶РЅРѕ РїСЂРѕРґРѕР»Р¶Р°С‚СЊ СЂР°Р±РѕС‚Р°С‚СЊ СЃ РєРЅРёРіРѕР№. РќРµ РґРѕР»Р¶РµРЅ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РґР»СЏ РєРЅРёРіРё, СЃРѕР·РґР°РЅРЅРѕР№ РІРѕРІРЅРµ (РІРЅРµС€РЅРµР№). */
+	public byte[] writeWbToBA() { // (СѓСЂРѕРІРµРЅСЊ РєРЅРёРіРё) С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ AMedia РёР· РіРѕС‚РѕРІРѕР№ РєРЅРёРіРё;
 		if (externalWb) {
-			logger.error("writeWbToBA() не должен вызываться для книги, созданной вовне (externalWb) !");
+			logger.error("writeWbToBA() РЅРµ РґРѕР»Р¶РµРЅ РІС‹Р·С‹РІР°С‚СЊСЃСЏ РґР»СЏ РєРЅРёРіРё, СЃРѕР·РґР°РЅРЅРѕР№ РІРѕРІРЅРµ (externalWb) !");
 			return null;
 		}
-// FIXME: baos локализовать в этом методе и перед возвратом закрывать ! 
-// TODO: замерить длительность формирования/записи
+// FIXME: baos Р»РѕРєР°Р»РёР·РѕРІР°С‚СЊ РІ СЌС‚РѕРј РјРµС‚РѕРґРµ Рё РїРµСЂРµРґ РІРѕР·РІСЂР°С‚РѕРј Р·Р°РєСЂС‹РІР°С‚СЊ ! 
+// TODO: Р·Р°РјРµСЂРёС‚СЊ РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ/Р·Р°РїРёСЃРё
 		baos = new ByteArrayOutputStream();
 		try {
 			getWb().write(baos);
@@ -552,14 +552,14 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return ba;
 	} // public AMedia writeWbToBA()
 
-	/** Завершающий код (вызывать в finally). Закрытие книги и т.п. Книгу должен закрывать создавший объект (т.е. внешняя не закрывается). */
-//TESTME: проверить на разных этапах, включая отмену до запуска
+	/** Р—Р°РІРµСЂС€Р°СЋС‰РёР№ РєРѕРґ (РІС‹Р·С‹РІР°С‚СЊ РІ finally). Р—Р°РєСЂС‹С‚РёРµ РєРЅРёРіРё Рё С‚.Рї. РљРЅРёРіСѓ РґРѕР»Р¶РµРЅ Р·Р°РєСЂС‹РІР°С‚СЊ СЃРѕР·РґР°РІС€РёР№ РѕР±СЉРµРєС‚ (С‚.Рµ. РІРЅРµС€РЅСЏСЏ РЅРµ Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ). */
+//TESTME: РїСЂРѕРІРµСЂРёС‚СЊ РЅР° СЂР°Р·РЅС‹С… СЌС‚Р°РїР°С…, РІРєР»СЋС‡Р°СЏ РѕС‚РјРµРЅСѓ РґРѕ Р·Р°РїСѓСЃРєР°
 	public void onExit() {
 		if (accessibleOld == null || declaredFields == null) {
-			logger.error("onExit() вызван до инициализации");
+			logger.error("onExit() РІС‹Р·РІР°РЅ РґРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё");
 			return;
 		}
-		// 1. восстановление прав на поля класса доменного объекта
+		// 1. РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїСЂР°РІ РЅР° РїРѕР»СЏ РєР»Р°СЃСЃР° РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 		assert(accessibleOld.length == declaredFields.length/*dataFields.size()*/) : "accessibleOld.length = "+accessibleOld.length+" <> "+dataFields.size()+" = dataFields.size()";
 		/*for (int colN = 0; colN < colCnt; colN++) {
 			if (colN >= colOffset) dataFields.get(colN-colOffset).setAccessible(accessibleOld[colN]);
@@ -573,10 +573,10 @@ st.setWorkbook((XSSFWorkbook) wb);
 			}
 			colN++;
 		}
-		// 2. закрытие ByteArrayOutputStream и Workbook
+		// 2. Р·Р°РєСЂС‹С‚РёРµ ByteArrayOutputStream Рё Workbook
 		try {
 			if (baos != null) baos.close();
-			if (!externalWb && wb != null) { // ! книгу должен закрывать создавший объект !
+			if (!externalWb && wb != null) { // ! РєРЅРёРіСѓ РґРѕР»Р¶РµРЅ Р·Р°РєСЂС‹РІР°С‚СЊ СЃРѕР·РґР°РІС€РёР№ РѕР±СЉРµРєС‚ !
 				wb.close();
 				if (fileType == FileTypes.SXSSF) {
 					boolean succDisposed = ((SXSSFWorkbook)wb).dispose(); // SXSSF allocates temporary files that you must always clean up explicitly, by calling the dispose method
@@ -588,12 +588,12 @@ st.setWorkbook((XSSFWorkbook) wb);
 		}
 	} // public void onExit()
 	
-	/** Создать новую строку в нашей книге. Использовать извне при добавлении строк, иначе счётчик строк {@link #getCurRowNum()} будет врать. */
+	/** РЎРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ СЃС‚СЂРѕРєСѓ РІ РЅР°С€РµР№ РєРЅРёРіРµ. РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РёР·РІРЅРµ РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё СЃС‚СЂРѕРє, РёРЅР°С‡Рµ СЃС‡С‘С‚С‡РёРє СЃС‚СЂРѕРє {@link #getCurRowNum()} Р±СѓРґРµС‚ РІСЂР°С‚СЊ. */
 	public Row createRow() {
 		return curRow = getSheet().createRow(curRowNum++);
 	}
 	
-	/** Лист (ленивый). */
+	/** Р›РёСЃС‚ (Р»РµРЅРёРІС‹Р№). */
 	public Sheet getSheet() {
 		if (sheet == null) {
 			init();
@@ -601,7 +601,7 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return sheet;
 	}
 	
-	/** Общее количество столбцов (ленивый). */
+	/** РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ (Р»РµРЅРёРІС‹Р№). */
 	public int getColCnt() {
 		if (colCnt == 0) {
 			init();
@@ -609,12 +609,12 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return colCnt;
 	}
 	
-	/** Формат книги. */
+	/** Р¤РѕСЂРјР°С‚ РєРЅРёРіРё. */
 	public FileTypes getFileType() {
 		return fileType;
 	}
 	
-	/** Имя файла книги (ленивый). По умолчанию {@link #autoNameFile()}. */
+	/** РРјСЏ С„Р°Р№Р»Р° РєРЅРёРіРё (Р»РµРЅРёРІС‹Р№). РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ {@link #autoNameFile()}. */
 	public String getFileName() {
 		if (fileName == null) {
 			autoNameFile();
@@ -622,12 +622,12 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return fileName;
 	}
 	
-	/** Задать название файла книги. */
+	/** Р—Р°РґР°С‚СЊ РЅР°Р·РІР°РЅРёРµ С„Р°Р№Р»Р° РєРЅРёРіРё. */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 	
-	/** Книга (ленивый). */
+	/** РљРЅРёРіР° (Р»РµРЅРёРІС‹Р№). */
 	public Workbook getWb() {
 		if (wb == null) {
 			init();
@@ -635,54 +635,54 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return wb;
 	}
 	
-	/** Сколько колонок пропустить в начале. */
+	/** РЎРєРѕР»СЊРєРѕ РєРѕР»РѕРЅРѕРє РїСЂРѕРїСѓСЃС‚РёС‚СЊ РІ РЅР°С‡Р°Р»Рµ. */
 	public int getColOffset() {
 		return colOffset;
 	}
 	
-	/** Последняя созданная методом createRow() строка (чтобы можно было извне её пользовать). */
+	/** РџРѕСЃР»РµРґРЅСЏСЏ СЃРѕР·РґР°РЅРЅР°СЏ РјРµС‚РѕРґРѕРј createRow() СЃС‚СЂРѕРєР° (С‡С‚РѕР±С‹ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ РёР·РІРЅРµ РµС‘ РїРѕР»СЊР·РѕРІР°С‚СЊ). */
 	public Row getCurRow() { // nullable !
 		return curRow;
 	}
 	
-	/** Текущее значение счётчика строк (с 1!), для этого всегда создавать строки методом this.createRow() ! */
+	/** РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ СЃС‡С‘С‚С‡РёРєР° СЃС‚СЂРѕРє (СЃ 1!), РґР»СЏ СЌС‚РѕРіРѕ РІСЃРµРіРґР° СЃРѕР·РґР°РІР°С‚СЊ СЃС‚СЂРѕРєРё РјРµС‚РѕРґРѕРј this.createRow() ! */
 	public int getCurRowNum() {
 		return curRowNum;
 	}
 	
-	/** Максимальный scale для BigDecimal, для которого подготовлен формат (настройка). */
+	/** РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ scale РґР»СЏ BigDecimal, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїРѕРґРіРѕС‚РѕРІР»РµРЅ С„РѕСЂРјР°С‚ (РЅР°СЃС‚СЂРѕР№РєР°). */
 	public int getMaxDecimalScale() {
 		return maxDecimalScale;
 	}
 	
-	/** Максимальный scale для BigDecimal, для которого подготовлен формат (настройка). Можно установить до вызова init(), т.е. до первого обращения к листу (сразу после вызова конструктора). */
+	/** РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ scale РґР»СЏ BigDecimal, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїРѕРґРіРѕС‚РѕРІР»РµРЅ С„РѕСЂРјР°С‚ (РЅР°СЃС‚СЂРѕР№РєР°). РњРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕ РІС‹Р·РѕРІР° init(), С‚.Рµ. РґРѕ РїРµСЂРІРѕРіРѕ РѕР±СЂР°С‰РµРЅРёСЏ Рє Р»РёСЃС‚Сѓ (СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°). */
 	public void setMaxDecimalScale(int maxDecimalScale) {
 		this.maxDecimalScale = maxDecimalScale;
 	}
 	
-	/** Максимальная ширина колонки (при автоформатировании) (настройка). */
+	/** РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё (РїСЂРё Р°РІС‚РѕС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРё) (РЅР°СЃС‚СЂРѕР№РєР°). */
 	public int getMaxColumnWidth() {
 		return maxColumnWidth;
 	}
 	
-	/** Максимальная ширина колонки (при автоформатировании) (настройка).
-	 * Можно установить до вызова init(), т.е. до первого обращения к листу (сразу после вызова конструктора).
+	/** РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё (РїСЂРё Р°РІС‚РѕС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРё) (РЅР°СЃС‚СЂРѕР№РєР°).
+	 * РњРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕ РІС‹Р·РѕРІР° init(), С‚.Рµ. РґРѕ РїРµСЂРІРѕРіРѕ РѕР±СЂР°С‰РµРЅРёСЏ Рє Р»РёСЃС‚Сѓ (СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°).
 	 */
 	public void setMaxColumnWidth(int maxColumnWidth) {
 		this.maxColumnWidth = maxColumnWidth;
 	}
 	
-	/** "Окно видимости строк" для формата SXSSF (настройка). */
+	/** "РћРєРЅРѕ РІРёРґРёРјРѕСЃС‚Рё СЃС‚СЂРѕРє" РґР»СЏ С„РѕСЂРјР°С‚Р° SXSSF (РЅР°СЃС‚СЂРѕР№РєР°). */
 	public int getSxssfRowBufferSize() {
 		return sxssfRowBufferSize;
 	}
 	
-	/** "Окно видимости строк" для формата SXSSF (настройка). Можно установить до вызова init(), т.е. до первого обращения к листу (сразу после вызова конструктора). */
+	/** "РћРєРЅРѕ РІРёРґРёРјРѕСЃС‚Рё СЃС‚СЂРѕРє" РґР»СЏ С„РѕСЂРјР°С‚Р° SXSSF (РЅР°СЃС‚СЂРѕР№РєР°). РњРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕ РІС‹Р·РѕРІР° init(), С‚.Рµ. РґРѕ РїРµСЂРІРѕРіРѕ РѕР±СЂР°С‰РµРЅРёСЏ Рє Р»РёСЃС‚Сѓ (СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ РІС‹Р·РѕРІР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°). */
 	public void setSxssfRowBufferSize(int sxssfRowBufferSize) {
 		this.sxssfRowBufferSize = sxssfRowBufferSize;
 	}
 	
-	/** Название листа, по умолчанию (инициализируется {@link #autoNameSheet()} при первом обращении) короткое имя класса бина. */
+	/** РќР°Р·РІР°РЅРёРµ Р»РёСЃС‚Р°, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ {@link #autoNameSheet()} РїСЂРё РїРµСЂРІРѕРј РѕР±СЂР°С‰РµРЅРёРё) РєРѕСЂРѕС‚РєРѕРµ РёРјСЏ РєР»Р°СЃСЃР° Р±РёРЅР°. */
 	public String getSheetName() {
 		if (sheetName == null) {
 			autoNameSheet();
@@ -690,30 +690,30 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return sheetName;
 	}
 	
-	/** Название листа. */
+	/** РќР°Р·РІР°РЅРёРµ Р»РёСЃС‚Р°. */
 	public void setSheetName(String sheetName) {
 		this.sheetName = sheetName;
 	}
 	
-	/** Класс бина. */
+	/** РљР»Р°СЃСЃ Р±РёРЅР°. */
 	public Class<T> getBeanClass() {
 		return beanClass;
 	}
 	
-	/** При первом вызове writeBeanToRow() отмечаем размер заголовка в строках (+1). */
+	/** РџСЂРё РїРµСЂРІРѕРј РІС‹Р·РѕРІРµ writeBeanToRow() РѕС‚РјРµС‡Р°РµРј СЂР°Р·РјРµСЂ Р·Р°РіРѕР»РѕРІРєР° РІ СЃС‚СЂРѕРєР°С… (+1). */
 	public int getFirstDataRowNum() {
 		return firstDataRowNum;
 	}
 	
-	/** Список полей данных класса бина; каждому по колонке.
-	 * Инициализируется из declaredFields в {@link #init()}, окончательно формируется в {@link #parseBeanFields()}.
-	 * <p/><b>RULE:</b> к полям данных относим все приватные нестатические.
+	/** РЎРїРёСЃРѕРє РїРѕР»РµР№ РґР°РЅРЅС‹С… РєР»Р°СЃСЃР° Р±РёРЅР°; РєР°Р¶РґРѕРјСѓ РїРѕ РєРѕР»РѕРЅРєРµ.
+	 * РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ РёР· declaredFields РІ {@link #init()}, РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕ С„РѕСЂРјРёСЂСѓРµС‚СЃСЏ РІ {@link #parseBeanFields()}.
+	 * <p/><b>RULE:</b> Рє РїРѕР»СЏРј РґР°РЅРЅС‹С… РѕС‚РЅРѕСЃРёРј РІСЃРµ РїСЂРёРІР°С‚РЅС‹Рµ РЅРµСЃС‚Р°С‚РёС‡РµСЃРєРёРµ.
 	 */
 	public List<Field> getDataFields() {
 		return dataFields;
 	}
 	
-	/** Стиль для ячейки заголовка (ленивый). */
+	/** РЎС‚РёР»СЊ РґР»СЏ СЏС‡РµР№РєРё Р·Р°РіРѕР»РѕРІРєР° (Р»РµРЅРёРІС‹Р№). */
 	public CellStyle getHeaderCS() {
 		if (headerCS == null) {
 			headerCS = createHeaderCellStyleForWB(getWb());
@@ -721,7 +721,7 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return headerCS;
 	}
 	
-	/** Стиль ячейки для типа данных Date (ленивый). Маска: "dd.mm.yyyy". */
+	/** РЎС‚РёР»СЊ СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… Date (Р»РµРЅРёРІС‹Р№). РњР°СЃРєР°: "dd.mm.yyyy". */
 	public CellStyle getDateCS() {
 		if (dateCS == null) {
 			dateCS = createDateCellStyleForWB(getWb());
@@ -729,7 +729,7 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return dateCS;
 	}
 	
-	/** Стиль ячейки для типа данных DateTime (ленивый). Маска: "dd.mm.yyyy hh:mm:ss". */
+	/** РЎС‚РёР»СЊ СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… DateTime (Р»РµРЅРёРІС‹Р№). РњР°СЃРєР°: "dd.mm.yyyy hh:mm:ss". */
 	public CellStyle getDateTimeCS() {
 		if (dateTimeCS == null) {
 			dateTimeCS = createDateTimeCellStyleForWB(getWb());
@@ -737,10 +737,10 @@ st.setWorkbook((XSSFWorkbook) wb);
 		return dateTimeCS;
 	}
 	
-	/** Стили ячейки для типа данных Decimal (ленивый). {@link #getMaxDecimalScale()} штук (scale in [0, maxDecimalScale-1]). */
+	/** РЎС‚РёР»Рё СЏС‡РµР№РєРё РґР»СЏ С‚РёРїР° РґР°РЅРЅС‹С… Decimal (Р»РµРЅРёРІС‹Р№). {@link #getMaxDecimalScale()} С€С‚СѓРє (scale in [0, maxDecimalScale-1]). */
 	public CellStyle[] getDecimalCSs() {
 		if (decimalCSs == null) {
-			decimalCSs = new CellStyle[maxDecimalScale]; // предопределяем числовые стили со scale in [0, maxDecimalScale-1]
+			decimalCSs = new CellStyle[maxDecimalScale]; // РїСЂРµРґРѕРїСЂРµРґРµР»СЏРµРј С‡РёСЃР»РѕРІС‹Рµ СЃС‚РёР»Рё СЃРѕ scale in [0, maxDecimalScale-1]
 			for (int i = 0; i < maxDecimalScale; i++) {
 				decimalCSs[i] = createDecimalCellStyleForWB(getWb(), i);
 			}

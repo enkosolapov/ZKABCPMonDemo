@@ -1,4 +1,4 @@
-package basos.xe.data.entity;
+п»їpackage basos.xe.data.entity;
 
 import java.io.Serializable;
 //import java.util.Calendar;
@@ -22,29 +22,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Entity class "сводные данные субъекта (СПР/заёмщик) на последний срез с остатками", обёртываемый в GridData для использования в гриде.
- * RULE: все приватные нестатические поля доменного объекта класс beanClass должны относиться к полям данных.
- * Метод {@link #getPkMap()} - часть статического интерфейса.
+/** Entity class "СЃРІРѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ СЃСѓР±СЉРµРєС‚Р° (РЎРџР /Р·Р°С‘РјС‰РёРє) РЅР° РїРѕСЃР»РµРґРЅРёР№ СЃСЂРµР· СЃ РѕСЃС‚Р°С‚РєР°РјРё", РѕР±С‘СЂС‚С‹РІР°РµРјС‹Р№ РІ GridData РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ РіСЂРёРґРµ.
+ * RULE: РІСЃРµ РїСЂРёРІР°С‚РЅС‹Рµ РЅРµСЃС‚Р°С‚РёС‡РµСЃРєРёРµ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РєР»Р°СЃСЃ beanClass РґРѕР»Р¶РЅС‹ РѕС‚РЅРѕСЃРёС‚СЊСЃСЏ Рє РїРѕР»СЏРј РґР°РЅРЅС‹С….
+ * РњРµС‚РѕРґ {@link #getPkMap()} - С‡Р°СЃС‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°.
  */
 public final class SubjSumm implements Serializable, Comparable<SubjSumm> {
 	private static final long serialVersionUID = 6989352457009426911L;
 	
 	private static final Logger logger = LoggerFactory.getLogger(SubjSumm.class);
 	
-	private static AtomicLong throughoutNum = new AtomicLong(0L); // порядковый номер (не используется)
+	private static AtomicLong throughoutNum = new AtomicLong(0L); // РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ (РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ)
 	private static ThreadLocalRandom rnd = ThreadLocalRandom.current(); // Random = new Random(System.currentTimeMillis());
-	static final String[] finsostArray = {"ПЛОХОЕ", "СРЕДНЕЕ", "ХОРОШЕЕ", null};
-	static final String[] yaknameArray = {"Прочие отрасли", "Машиностроение", "Оптовая торговля", "АПК и пищевая промышленность", null};
-	static final String[] cityArray = {"Чикаго", "Нью-Йорк", "Бостон", "Мытищи", "Люберцы", null};
-	static final String[] catArray = {"Средний Региональный Бизнес", "Средний Отраслевой Бизнес", "Крупный Отраслевой Бизнес", "10-100", "Аффилированные компании", null};
-	static final String[] subjtypeArray = {"КЛИЕНТ (ФЛ)", "КЛИЕНТ (ЮЛ)", "КЛИЕНТ (ИП)", "ГРУППА ЛИМИТА"};
+	static final String[] finsostArray = {"РџР›РћРҐРћР•", "РЎР Р•Р”РќР•Р•", "РҐРћР РћРЁР•Р•", null};
+	static final String[] yaknameArray = {"РџСЂРѕС‡РёРµ РѕС‚СЂР°СЃР»Рё", "РњР°С€РёРЅРѕСЃС‚СЂРѕРµРЅРёРµ", "РћРїС‚РѕРІР°СЏ С‚РѕСЂРіРѕРІР»СЏ", "РђРџРљ Рё РїРёС‰РµРІР°СЏ РїСЂРѕРјС‹С€Р»РµРЅРЅРѕСЃС‚СЊ", null};
+	static final String[] cityArray = {"Р§РёРєР°РіРѕ", "РќСЊСЋ-Р™РѕСЂРє", "Р‘РѕСЃС‚РѕРЅ", "РњС‹С‚РёС‰Рё", "Р›СЋР±РµСЂС†С‹", null};
+	static final String[] catArray = {"РЎСЂРµРґРЅРёР№ Р РµРіРёРѕРЅР°Р»СЊРЅС‹Р№ Р‘РёР·РЅРµСЃ", "РЎСЂРµРґРЅРёР№ РћС‚СЂР°СЃР»РµРІРѕР№ Р‘РёР·РЅРµСЃ", "РљСЂСѓРїРЅС‹Р№ РћС‚СЂР°СЃР»РµРІРѕР№ Р‘РёР·РЅРµСЃ", "10-100", "РђС„С„РёР»РёСЂРѕРІР°РЅРЅС‹Рµ РєРѕРјРїР°РЅРёРё", null};
+	static final String[] subjtypeArray = {"РљР›РР•РќРў (Р¤Р›)", "РљР›РР•РќРў (Р®Р›)", "РљР›РР•РќРў (РРџ)", "Р“Р РЈРџРџРђ Р›РРњРРўРђ"};
 	
-	/** RULE: конструктор по умолчанию генерит тестовые данные. */
+	/** RULE: РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РіРµРЅРµСЂРёС‚ С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ. */
 	public SubjSumm() {
-//		String[] finsostArray = {"ПЛОХОЕ", "СРЕДНЕЕ", "ХОРОШЕЕ", null}; // static ThreadLocal<String[]>...
+//		String[] finsostArray = {"РџР›РћРҐРћР•", "РЎР Р•Р”РќР•Р•", "РҐРћР РћРЁР•Р•", null}; // static ThreadLocal<String[]>...
 		throughoutNum.incrementAndGet();
 		this.subj_id = rnd.nextInt(80, 100_000_000);
-/* Взаимная конверсия датовых типов:
+/* Р’Р·Р°РёРјРЅР°СЏ РєРѕРЅРІРµСЂСЃРёСЏ РґР°С‚РѕРІС‹С… С‚РёРїРѕРІ:
  http://stackoverflow.com/documentation/java/164/date-class#t=201612111809027021163
  http://stackoverflow.com/documentation/java/4813/dates-and-time-java-time#t=201611231701424697591
  http://stackoverflow.com/questions/29168494/how-to-convert-localdate-to-sql-date-java
@@ -52,28 +52,28 @@ public final class SubjSumm implements Serializable, Comparable<SubjSumm> {
 
 (rnd date) http://stackoverflow.com/questions/3985392/generate-random-date-of-birth
 
- new java.sql.Date(new java.util.Date().getTime()) - со временем !
+ new java.sql.Date(new java.util.Date().getTime()) - СЃРѕ РІСЂРµРјРµРЅРµРј !
 */
 		this.dd_rest = java.sql.Date.valueOf( LocalDate.of(2016, 8, 31)/*.now().with(TemporalAdjusters.lastDayOfMonth())*/.minusMonths(rnd.nextInt(0, 45/*excl*/)) ); // 31.12.2012 - 31.08.2016
 		this.pin_eq = "U"+RandomStringUtils.randomAlphanumeric(5).toUpperCase(); // !!! nullable, upper
 		this.inn = RandomStringUtils.randomNumeric(10);
 		this.subj_type = subjtypeArray[rnd.nextInt(0, subjtypeArray.length)];
 		this.is_risk = rnd.nextBoolean();
-		this.subj_name = "Субъект № "+this.subj_id;
+		this.subj_name = "РЎСѓР±СЉРµРєС‚ в„– "+this.subj_id;
 		this.gr_name = RandomStringUtils.randomAlphabetic(8, 20).toUpperCase();
 		this.cpr_id = "QD"+RandomStringUtils.randomNumeric(8);
 		this.cpr_name = RandomStringUtils.randomAlphabetic(3, 10).toUpperCase();
 		this.yak_name = yaknameArray[rnd.nextInt(0, yaknameArray.length)];
 		this.br_name = this.yak_name == null ? null : this.yak_name + "_" + RandomStringUtils.random(5, "345678ABCDEF$@");
 		this.city = cityArray[rnd.nextInt(0, cityArray.length)];
-		this.ko = this.city == null ? null : "Отдел №"+rnd.nextInt(1, 30)+" города "+this.city;
+		this.ko = this.city == null ? null : "РћС‚РґРµР» в„–"+rnd.nextInt(1, 30)+" РіРѕСЂРѕРґР° "+this.city;
 		this.ko_fio = StringUtils.capitalize(RandomStringUtils.randomAlphabetic(2, 12).toLowerCase())+" "+StringUtils.capitalize(RandomStringUtils.randomAlphabetic(4, 9).toLowerCase())+" "+StringUtils.capitalize(RandomStringUtils.randomAlphabetic(7, 12).toLowerCase());
-		this.kko_otdel = "Отдел № "+rnd.nextInt(1, 10);
-		this.kko_upravl = "Управление № "+rnd.nextInt(1, 5);
+		this.kko_otdel = "РћС‚РґРµР» в„– "+rnd.nextInt(1, 10);
+		this.kko_upravl = "РЈРїСЂР°РІР»РµРЅРёРµ в„– "+rnd.nextInt(1, 5);
 		this.curator_fio = StringUtils.capitalize(RandomStringUtils.randomAlphabetic(2, 12).toLowerCase())+" "+StringUtils.capitalize(RandomStringUtils.randomAlphabetic(4, 9).toLowerCase())+" "+StringUtils.capitalize(RandomStringUtils.randomAlphabetic(7, 12).toLowerCase());
 		this.cat_name = catArray[rnd.nextInt(0, catArray.length)];
 		this.clibr_name = RandomStringUtils.random(5, "UIGDLWS");
-/* Округление с заданной точностью: round(double x, int scale) есть в org.apache.commons.math3.util.Precision, он использует BigDecimal.setScale(scale, RoundingMode.HALF_UP)
+/* РћРєСЂСѓРіР»РµРЅРёРµ СЃ Р·Р°РґР°РЅРЅРѕР№ С‚РѕС‡РЅРѕСЃС‚СЊСЋ: round(double x, int scale) РµСЃС‚СЊ РІ org.apache.commons.math3.util.Precision, РѕРЅ РёСЃРїРѕР»СЊР·СѓРµС‚ BigDecimal.setScale(scale, RoundingMode.HALF_UP)
  http://stackoverflow.com/questions/4796746/double-value-to-round-up-in-java
  http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
  http://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
@@ -106,7 +106,7 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		this.debtlevel_cp = "debtlevel_cp";
 		this.subj_risk_dd_edit = new java.util.Date( LocalDateTime.now().minus(rnd.nextInt(1400*24*60*60), ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() ); // DATE+TIME !!
 		this.dd_probl_proj_begin = rnd.nextBoolean() ? null : java.sql.Date.valueOf(LocalDate.of(2016, 8, 31).minus(rnd.nextInt(4000), ChronoUnit.DAYS));
-// Дней между датами: http://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
+// Р”РЅРµР№ РјРµР¶РґСѓ РґР°С‚Р°РјРё: http://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
 		this.dd_probl_proj_close = (this.dd_probl_proj_begin == null || rnd.nextBoolean() || (this.dd_probl_proj_begin.toLocalDate().until(LocalDate.of(2016, 8, 31), ChronoUnit.DAYS) < 101)) ? null : java.sql.Date.valueOf( this.dd_probl_proj_begin.toLocalDate().plusDays(rnd.nextInt(100, (int)ChronoUnit.DAYS.between(this.dd_probl_proj_begin.toLocalDate(), LocalDate.of(2016, 8, 31))+1 )) );
 		this.rate_provision = BigDecimal.valueOf(rnd.nextDouble()*99.9).setScale(2, BigDecimal.ROUND_HALF_UP);
 		this.is_msfo_charge_off = rnd.nextBoolean();
@@ -716,13 +716,13 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		return serialVersionUID;
 	}
 
-// (вызывается из hashCode() грид-обёртки GridData) для списка объектов хэшкод идентифицирует состояние фильтра
+// (РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· hashCode() РіСЂРёРґ-РѕР±С‘СЂС‚РєРё GridData) РґР»СЏ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ С…СЌС€РєРѕРґ РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ С„РёР»СЊС‚СЂР°
 	@Override
 	public int hashCode() { // https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--
 		return subj_id;
 	}
 
-// вызывается из equals() грид-обёртки GridData 
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· equals() РіСЂРёРґ-РѕР±С‘СЂС‚РєРё GridData 
 	@Override
 	public boolean equals(Object obj) { // https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-
 		if (this == obj)
@@ -737,7 +737,7 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		return true;
 	} // public boolean equals(Object obj)
 	
-// вызывается из compareTo() грид-обёртки GridData
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· compareTo() РіСЂРёРґ-РѕР±С‘СЂС‚РєРё GridData
 	// Comparable implementation (https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)
 	public int compareTo(SubjSumm obj) {
 		if (this == obj)
@@ -760,17 +760,17 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		pkMap.put("cluid", SubjSumm.getCompareByCluid());
 	}*/
 	
-	// ради отложенной инициализации компараторов отказался от Map
+	// СЂР°РґРё РѕС‚Р»РѕР¶РµРЅРЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РєРѕРјРїР°СЂР°С‚РѕСЂРѕРІ РѕС‚РєР°Р·Р°Р»СЃСЏ РѕС‚ Map
 	private static String[] pkNames = {"subj_id", "lmc_rowid", "cluid"};
-	/** Таблица названий полей Первичных Ключей, поддерживаемых бином.
-	 * Например, для наполнения меню выбора ПК. Далее по выбранному названию получаем компаратор вызовом {@link #getPkComparatorByName(String)}.
-	 * (Это часть статического интерфейса бина. NOT null, но м.б. пустой массив.)
+	/** РўР°Р±Р»РёС†Р° РЅР°Р·РІР°РЅРёР№ РїРѕР»РµР№ РџРµСЂРІРёС‡РЅС‹С… РљР»СЋС‡РµР№, РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… Р±РёРЅРѕРј.
+	 * РќР°РїСЂРёРјРµСЂ, РґР»СЏ РЅР°РїРѕР»РЅРµРЅРёСЏ РјРµРЅСЋ РІС‹Р±РѕСЂР° РџРљ. Р”Р°Р»РµРµ РїРѕ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РЅР°Р·РІР°РЅРёСЋ РїРѕР»СѓС‡Р°РµРј РєРѕРјРїР°СЂР°С‚РѕСЂ РІС‹Р·РѕРІРѕРј {@link #getPkComparatorByName(String)}.
+	 * (Р­С‚Рѕ С‡Р°СЃС‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° Р±РёРЅР°. NOT null, РЅРѕ Рј.Р±. РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ.)
 	 */
 	public static String[] getPkNames() {
 		return pkNames;
 	}
-	/** По названию поля ПК (одного из {@link #getPkNames()}) получить соответствующий Comparator<SubjSumm> для сравнения по этому полю.
-	 * @return null если поле не является ПК.
+	/** РџРѕ РЅР°Р·РІР°РЅРёСЋ РїРѕР»СЏ РџРљ (РѕРґРЅРѕРіРѕ РёР· {@link #getPkNames()}) РїРѕР»СѓС‡РёС‚СЊ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ Comparator<SubjSumm> РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ РїРѕ СЌС‚РѕРјСѓ РїРѕР»СЋ.
+	 * @return null РµСЃР»Рё РїРѕР»Рµ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РџРљ.
 	 */
 	public static Comparator<SubjSumm> getPkComparatorByName(String namePk) {
     	switch (namePk) {
@@ -783,8 +783,8 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 	
 // FIXME: thread-safe: ? Enum + EnumMap ?
 	
-	/** Таблица пар <имя, компаратор> Первичных Ключей, поддерживаемых бином. */
-	// это часть статического интерфейса
+	/** РўР°Р±Р»РёС†Р° РїР°СЂ <РёРјСЏ, РєРѕРјРїР°СЂР°С‚РѕСЂ> РџРµСЂРІРёС‡РЅС‹С… РљР»СЋС‡РµР№, РїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… Р±РёРЅРѕРј. */
+	// СЌС‚Рѕ С‡Р°СЃС‚СЊ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°
 	/*public static Map<String, Comparator<SubjSumm>> getPkMap() {
 //		if (SubjSumm.pkMap == null) { // !! NOT thread-safe !!
 //			pkMap = new HashMap<>((int)(3/0.5+0.01), 0.5f);
@@ -795,8 +795,8 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		return SubjSumm.pkMap;
 	}*/
 	
-	/** Возвращает компаратор по ПК subj_id. Единственный консистентен с hashCode, equals, compareTo. */
-	// вызывается из class CompareByPK implements Comparator<GridData>, который задаётся совместно с PK в дата-провайдере и используется при сортировке и бинарном поиске объекта GridData
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРјРїР°СЂР°С‚РѕСЂ РїРѕ РџРљ subj_id. Р•РґРёРЅСЃС‚РІРµРЅРЅС‹Р№ РєРѕРЅСЃРёСЃС‚РµРЅС‚РµРЅ СЃ hashCode, equals, compareTo. */
+	// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· class CompareByPK implements Comparator<GridData>, РєРѕС‚РѕСЂС‹Р№ Р·Р°РґР°С‘С‚СЃСЏ СЃРѕРІРјРµСЃС‚РЅРѕ СЃ PK РІ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРµ Рё РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРё СЃРѕСЂС‚РёСЂРѕРІРєРµ Рё Р±РёРЅР°СЂРЅРѕРј РїРѕРёСЃРєРµ РѕР±СЉРµРєС‚Р° GridData
 	public static /*synchronized*/ Comparator<SubjSumm> getCompareBySubjId() {
 		/*if (SubjSumm.compareBySubjId == null) {
 			compareBySubjId = new CompareBySubjId();
@@ -804,7 +804,7 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		return SubjSumm.compareBySubjId;*/
 		return SubjSumm.CompareBySubjId.compareBySubjId; // (? Initialization-on-demand holder idiom) https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom	http://stackoverflow.com/questions/16106260/thread-safe-singleton-class
 	}
-	/** Возвращает компаратор по искуственному ПК lmc_rowid (для тестирования). */
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРјРїР°СЂР°С‚РѕСЂ РїРѕ РёСЃРєСѓСЃС‚РІРµРЅРЅРѕРјСѓ РџРљ lmc_rowid (РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ). */
 	public static /*synchronized*/ Comparator<SubjSumm> getCompareByRowid() {
 		/*if (SubjSumm.compareByRowid == null) {
 			compareByRowid = new CompareByRowid();
@@ -812,7 +812,7 @@ setScale() obviously accepts scale as an argument, as well as RoundingMode, howe
 		return SubjSumm.compareByRowid;*/
 		return SubjSumm.CompareByRowid.compareByRowid;
 	}
-	/** Возвращает компаратор по искуственному ПК cluid (для тестирования). */
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРјРїР°СЂР°С‚РѕСЂ РїРѕ РёСЃРєСѓСЃС‚РІРµРЅРЅРѕРјСѓ РџРљ cluid (РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ). */
 	public static /*synchronized*/ Comparator<SubjSumm> getCompareByCluid() {
 		/*if (SubjSumm.compareByCluid == null) {
 			compareByCluid = new CompareByCluid();

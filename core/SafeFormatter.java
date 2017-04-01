@@ -1,4 +1,4 @@
-package basos.core;
+п»їpackage basos.core;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -26,14 +26,14 @@ public final class SafeFormatter {
         moneyFormat.setDecimalFormatSymbols(dfs);
         moneyFormat.setGroupingUsed(true);
         moneyFormat.setGroupingSize(3);
-        moneyFormat.setMinimumIntegerDigits(1); // лидирующие нули в целой части
+        moneyFormat.setMinimumIntegerDigits(1); // Р»РёРґРёСЂСѓСЋС‰РёРµ РЅСѓР»Рё РІ С†РµР»РѕР№ С‡Р°СЃС‚Рё
         moneyFormat.setDecimalSeparatorAlwaysShown(true);
         moneyFormat.setMinimumFractionDigits(2);
 		return moneyFormat;
 	});
 	
 	private static final ThreadLocal<DateFormat> germanDateFormatter = ThreadLocal.withInitial( () -> {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // формат даты java.sql.Date
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // С„РѕСЂРјР°С‚ РґР°С‚С‹ java.sql.Date
 		return sdf;
 	});
 	
@@ -44,25 +44,25 @@ public final class SafeFormatter {
 	
 	private SafeFormatter() {}
 	
-	/** Форматирует по маске '### ### ### ##0.00'.
-	 * @return Для null возвращает пустую строку.
-	 */ //  (всегда 18 символов, выравнено вправо)
+	/** Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РїРѕ РјР°СЃРєРµ '### ### ### ##0.00'.
+	 * @return Р”Р»СЏ null РІРѕР·РІСЂР°С‰Р°РµС‚ РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ.
+	 */ //  (РІСЃРµРіРґР° 18 СЃРёРјРІРѕР»РѕРІ, РІС‹СЂР°РІРЅРµРЅРѕ РІРїСЂР°РІРѕ)
 	public static final String asMoney(BigDecimal sum) {
 		if (sum == null) return "";
 		return moneyFormatter.get().format(sum);
 		//return StringUtils.leftPad(moneyFormatter.get().format(sum), 18); // '### ### ### ##0.00': 18 chars
 	}
 	
-	/** Форматирует по маске 'dd.MM.yyyy'.
-	 * @return Для null возвращает пустую строку.
+	/** Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РїРѕ РјР°СЃРєРµ 'dd.MM.yyyy'.
+	 * @return Р”Р»СЏ null РІРѕР·РІСЂР°С‰Р°РµС‚ РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ.
 	 */
 	public static final String asGermanDate(Date dt) {
 		if (dt == null) return "";
 		return germanDateFormatter.get().format(dt);
 	}
 	
-	/** Форматирует по маске 'yyyyMMdd'.
-	 * @return Для null возвращает пустую строку.
+	/** Р¤РѕСЂРјР°С‚РёСЂСѓРµС‚ РїРѕ РјР°СЃРєРµ 'yyyyMMdd'.
+	 * @return Р”Р»СЏ null РІРѕР·РІСЂР°С‰Р°РµС‚ РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ.
 	 */
 	public static final String dateASyyyymmdd(Date dt) {
 		if (dt == null) return "";
@@ -83,7 +83,7 @@ public final class SafeFormatter {
 		return asGermanDate( Date.from( Instant.ofEpochMilli( ((JsonNumber)on).longValueExact() ) ) );
 	}*/
 	
-	/** @param on Дата как Long в строке */
+	/** @param on Р”Р°С‚Р° РєР°Рє Long РІ СЃС‚СЂРѕРєРµ */
 	public static final String asStrDate(String on) {
 		if (StringUtils.isEmpty(on) /*|| "null".equals(on)*/) return "";
 		return asGermanDate( Date.from( Instant.ofEpochMilli( Long.parseLong(on) ) ) );

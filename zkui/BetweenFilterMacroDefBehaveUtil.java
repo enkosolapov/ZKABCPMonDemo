@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.zkoss.zk.ui.AbstractComponent;
 
 
-/** Реализация поумолчательных поведенческих методов интерфейса AbstractComponentBehaveUtil для компонента basos.zkui.BetweenFilterMacro
+/** Р РµР°Р»РёР·Р°С†РёСЏ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… РїРѕРІРµРґРµРЅС‡РµСЃРєРёС… РјРµС‚РѕРґРѕРІ РёРЅС‚РµСЂС„РµР№СЃР° AbstractComponentBehaveUtil РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р° basos.zkui.BetweenFilterMacro
  * Singleton, use getInstance().
  * @author basos
  */
@@ -68,8 +68,8 @@ public class BetweenFilterMacroDefBehaveUtil extends AbstractComponentBehaveUtil
 		return ((BetweenFilterMacro<?,Comparable<? super Object>>)ac).getValue();
 	}
 	
-	/** Проверка величины на соответствие диапазону значений компонента.
-	 * @return Истина для пустого (поумолчательного) значения компонента, иначе ложь для пустого значения (null) поля, иначе истина для непустого значения поля принадлежащего непустому диапазону, иначе ложь.
+	/** РџСЂРѕРІРµСЂРєР° РІРµР»РёС‡РёРЅС‹ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ РґРёР°РїР°Р·РѕРЅСѓ Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р°.
+	 * @return РСЃС‚РёРЅР° РґР»СЏ РїСѓСЃС‚РѕРіРѕ (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅРѕРіРѕ) Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р°, РёРЅР°С‡Рµ Р»РѕР¶СЊ РґР»СЏ РїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ (null) РїРѕР»СЏ, РёРЅР°С‡Рµ РёСЃС‚РёРЅР° РґР»СЏ РЅРµРїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РїРѕР»СЏ РїСЂРёРЅР°РґР»РµР¶Р°С‰РµРіРѕ РЅРµРїСѓСЃС‚РѕРјСѓ РґРёР°РїР°Р·РѕРЅСѓ, РёРЅР°С‡Рµ Р»РѕР¶СЊ.
 	 * @see BetweenFilterMacro#isEmpty()
 	 * @see BetweenFilterMacro#isValBetween(Comparable) BetweenFilterMacro.isValBetween()
 	 */
@@ -80,8 +80,8 @@ public class BetweenFilterMacroDefBehaveUtil extends AbstractComponentBehaveUtil
 		return compVal.isEmpty() ? true : compVal.isValBetween((Comparable<? super Object>)otherValue);
 	}
 	
-	/** <b>Заглушка, возвращающая всегда false.</b> {@inheritDoc}
-	 * @return Всегда ложь.
+	/** <b>Р—Р°РіР»СѓС€РєР°, РІРѕР·РІСЂР°С‰Р°СЋС‰Р°СЏ РІСЃРµРіРґР° false.</b> {@inheritDoc}
+	 * @return Р’СЃРµРіРґР° Р»РѕР¶СЊ.
 	 */
 	@Override
 	public boolean exactMatch(Object componentValue, Object otherValue) {

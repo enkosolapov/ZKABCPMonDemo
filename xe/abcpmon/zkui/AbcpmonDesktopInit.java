@@ -1,4 +1,4 @@
-package basos.xe.abcpmon.zkui;
+п»їpackage basos.xe.abcpmon.zkui;
 
 //import java.lang.reflect.Method;
 
@@ -18,15 +18,15 @@ import org.zkoss.zk.ui.util.DesktopInit;
 import basos.zkui.util.GlobalCleaner;
 
 
-/** Размещаем свою логику уровня десктопа при его инициализации (desktop scope initialization logic); данный листенер прописан в zk.xml
- * Для каждого десктопа создаём объект синхронизации, который можно получить из атрибута "deskMutex".
- * И регистрируем команду финализации, которая очищает две очереди EventQueue с именами "syncEQ" и "interDeskEQ".
+/** Р Р°Р·РјРµС‰Р°РµРј СЃРІРѕСЋ Р»РѕРіРёРєСѓ СѓСЂРѕРІРЅСЏ РґРµСЃРєС‚РѕРїР° РїСЂРё РµРіРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё (desktop scope initialization logic); РґР°РЅРЅС‹Р№ Р»РёСЃС‚РµРЅРµСЂ РїСЂРѕРїРёСЃР°РЅ РІ zk.xml
+ * Р”Р»СЏ РєР°Р¶РґРѕРіРѕ РґРµСЃРєС‚РѕРїР° СЃРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РёР· Р°С‚СЂРёР±СѓС‚Р° "deskMutex".
+ * Р СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєРѕРјР°РЅРґСѓ С„РёРЅР°Р»РёР·Р°С†РёРё, РєРѕС‚РѕСЂР°СЏ РѕС‡РёС‰Р°РµС‚ РґРІРµ РѕС‡РµСЂРµРґРё EventQueue СЃ РёРјРµРЅР°РјРё "syncEQ" Рё "interDeskEQ".
  */
 public class AbcpmonDesktopInit implements DesktopInit {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbcpmonDesktopInit.class);
 	
-	private Object deskMutex = new Object(); // для синхронизации уровня текущего десктопа
+	private Object deskMutex = new Object(); // РґР»СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё СѓСЂРѕРІРЅСЏ С‚РµРєСѓС‰РµРіРѕ РґРµСЃРєС‚РѕРїР°
 	
     private Runnable cleanupCmndEQs = () -> {
     	EventQueue<Event> syncEQ = EventQueues.lookup("syncEQ", false);
@@ -44,11 +44,11 @@ public class AbcpmonDesktopInit implements DesktopInit {
 	public void init(Desktop desktop, Object request) throws Exception {
 		logger.debug("AbcpmonDesktopInit.init");
 		desktop.setAttribute("deskMutex", deskMutex);
-		GlobalCleaner.registerCommand(cleanupCmndEQs, DesktopCleanup.class); // вызывается при уходе со страницы, таймауте, закрытии вкладки(! в т.ч. timeout.zul) на пару, но после ExecutionCleanup; иногда дважды подряд в одном потоке
-//		desktop.addListener(new MyAuService()); // Регистрируем перехватчик событий верхнего уровня (после MyAuService вызывается метод service() обработчика компонента, см. DesktopImpl)
+		GlobalCleaner.registerCommand(cleanupCmndEQs, DesktopCleanup.class); // РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ СЃРѕ СЃС‚СЂР°РЅРёС†С‹, С‚Р°Р№РјР°СѓС‚Рµ, Р·Р°РєСЂС‹С‚РёРё РІРєР»Р°РґРєРё(! РІ С‚.С‡. timeout.zul) РЅР° РїР°СЂСѓ, РЅРѕ РїРѕСЃР»Рµ ExecutionCleanup; РёРЅРѕРіРґР° РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ РІ РѕРґРЅРѕРј РїРѕС‚РѕРєРµ
+//		desktop.addListener(new MyAuService()); // Р РµРіРёСЃС‚СЂРёСЂСѓРµРј РїРµСЂРµС…РІР°С‚С‡РёРє СЃРѕР±С‹С‚РёР№ РІРµСЂС…РЅРµРіРѕ СѓСЂРѕРІРЅСЏ (РїРѕСЃР»Рµ MyAuService РІС‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґ service() РѕР±СЂР°Р±РѕС‚С‡РёРєР° РєРѕРјРїРѕРЅРµРЅС‚Р°, СЃРј. DesktopImpl)
 	} // public void init(Desktop desktop, Object request) throws Exception
 	
-	/** Листенер для верхнеуровневой обработки события Events.ON_OPEN. */
+	/** Р›РёСЃС‚РµРЅРµСЂ РґР»СЏ РІРµСЂС…РЅРµСѓСЂРѕРІРЅРµРІРѕР№ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕР±С‹С‚РёСЏ Events.ON_OPEN. */
 /*	public class MyAuService implements org.zkoss.zk.au.AuService {
 		@Override
 		public boolean service(org.zkoss.zk.au.AuRequest request, boolean everError) {
@@ -63,7 +63,7 @@ public class AbcpmonDesktopInit implements DesktopInit {
 				OpenEvent evt = OpenEvent.getOpenEvent(request);
 				if (!evt.isOpen()) {
                     logger.debug("Closing... ");
-// popup закрывыется на стороне клиента, не перехватывается (нечего перехватывать)
+// popup Р·Р°РєСЂС‹РІС‹РµС‚СЃСЏ РЅР° СЃС‚РѕСЂРѕРЅРµ РєР»РёРµРЅС‚Р°, РЅРµ РїРµСЂРµС…РІР°С‚С‹РІР°РµС‚СЃСЏ (РЅРµС‡РµРіРѕ РїРµСЂРµС…РІР°С‚С‹РІР°С‚СЊ)
 //					if ("rest_msfo_usdCBT".equals(comp.getId())) throw new Error("TERMINATOR was here...");
 //					return true; // block request
 				}

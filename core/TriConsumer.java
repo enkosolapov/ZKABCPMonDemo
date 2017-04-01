@@ -1,4 +1,4 @@
-package basos.core;
+﻿package basos.core;
 
 @FunctionalInterface
 public interface TriConsumer<T, U, V> {

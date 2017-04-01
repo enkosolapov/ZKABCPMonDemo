@@ -1,15 +1,15 @@
-package basos.xe.data.entity;
+п»їpackage basos.xe.data.entity;
 
 import java.math.BigDecimal;
 import java.util.List;
 //import java.sql.Date;
 
 
-/** Информация по лимиту кредитования. */
+/** РРЅС„РѕСЂРјР°С†РёСЏ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ. */
 public final class LimitInfo {
 	
-	/** Конструктор рукописный, не сгенерён, преобразования (e.g. setScale) можно делать в нём.
-	 * Но типы смаппировал через @ConstructorArgs + @Arg в интерфейсе.
+	/** РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЂСѓРєРѕРїРёСЃРЅС‹Р№, РЅРµ СЃРіРµРЅРµСЂС‘РЅ, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ (e.g. setScale) РјРѕР¶РЅРѕ РґРµР»Р°С‚СЊ РІ РЅС‘Рј.
+	 * РќРѕ С‚РёРїС‹ СЃРјР°РїРїРёСЂРѕРІР°Р» С‡РµСЂРµР· @ConstructorArgs + @Arg РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
 	 */
 	public LimitInfo(Integer idLim, Integer kkNum, BigDecimal limSum, String limCur, Integer idOwner, String nameOwner,
 			java.sql.Date firstDecisDate, java.sql.Date lastDecisDate, String committee, String decisNum,

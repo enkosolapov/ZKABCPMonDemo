@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -21,15 +21,15 @@ import basos.data.dao.GridDataProviderWPk;
 import basos.xe.data.entity.SubjSumm;
 
 
-/** Композитный фильтр - массив компонентов, рассматриваемых совместно и формирующих дата-модель грида при наложении
- *  их построчно на "эталонный набор строк", предоставляемый дата-провайдером.
- * Фильтр используется в контроллере (composer), который его создаёт, определяя (фиксированный) набор фильтр-контролов;
- *  также в менеджере (GridDataFilterableModelMan), связующем его с моделью (наложение фильтра и т.п.).
- * Фильтр-контролы модифицирутся фильтром в процессе (clear очищает значения и т.п.).
+/** РљРѕРјРїРѕР·РёС‚РЅС‹Р№ С„РёР»СЊС‚СЂ - РјР°СЃСЃРёРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ, СЂР°СЃСЃРјР°С‚СЂРёРІР°РµРјС‹С… СЃРѕРІРјРµСЃС‚РЅРѕ Рё С„РѕСЂРјРёСЂСѓСЋС‰РёС… РґР°С‚Р°-РјРѕРґРµР»СЊ РіСЂРёРґР° РїСЂРё РЅР°Р»РѕР¶РµРЅРёРё
+ *  РёС… РїРѕСЃС‚СЂРѕС‡РЅРѕ РЅР° "СЌС‚Р°Р»РѕРЅРЅС‹Р№ РЅР°Р±РѕСЂ СЃС‚СЂРѕРє", РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµРјС‹Р№ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРѕРј.
+ * Р¤РёР»СЊС‚СЂ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ РєРѕРЅС‚СЂРѕР»Р»РµСЂРµ (composer), РєРѕС‚РѕСЂС‹Р№ РµРіРѕ СЃРѕР·РґР°С‘С‚, РѕРїСЂРµРґРµР»СЏСЏ (С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Р№) РЅР°Р±РѕСЂ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ;
+ *  С‚Р°РєР¶Рµ РІ РјРµРЅРµРґР¶РµСЂРµ (GridDataFilterableModelMan), СЃРІСЏР·СѓСЋС‰РµРј РµРіРѕ СЃ РјРѕРґРµР»СЊСЋ (РЅР°Р»РѕР¶РµРЅРёРµ С„РёР»СЊС‚СЂР° Рё С‚.Рї.).
+ * Р¤РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹ РјРѕРґРёС„РёС†РёСЂСѓС‚СЃСЏ С„РёР»СЊС‚СЂРѕРј РІ РїСЂРѕС†РµСЃСЃРµ (clear РѕС‡РёС‰Р°РµС‚ Р·РЅР°С‡РµРЅРёСЏ Рё С‚.Рї.).
  */
-// FIXME: параметризовать фильтр типом бина ???
-// FIXME: описать соглашение по именованию (поля VS ИД контролов; типы контролов) !!!
-// FIXME: предусмотреть интерактивное изменение набора контролов (генерить новые компоненты как applet с медиатором), тогда массив меняем на LinkedList !! Следить за консистентностью структуры битовых флагов GridData (при добавлении/удалении контрола просто применять фильтр ?) !!
+// FIXME: РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°С‚СЊ С„РёР»СЊС‚СЂ С‚РёРїРѕРј Р±РёРЅР° ???
+// FIXME: РѕРїРёСЃР°С‚СЊ СЃРѕРіР»Р°С€РµРЅРёРµ РїРѕ РёРјРµРЅРѕРІР°РЅРёСЋ (РїРѕР»СЏ VS РР” РєРѕРЅС‚СЂРѕР»РѕРІ; С‚РёРїС‹ РєРѕРЅС‚СЂРѕР»РѕРІ) !!!
+// FIXME: РїСЂРµРґСѓСЃРјРѕС‚СЂРµС‚СЊ РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕРµ РёР·РјРµРЅРµРЅРёРµ РЅР°Р±РѕСЂР° РєРѕРЅС‚СЂРѕР»РѕРІ (РіРµРЅРµСЂРёС‚СЊ РЅРѕРІС‹Рµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РєР°Рє applet СЃ РјРµРґРёР°С‚РѕСЂРѕРј), С‚РѕРіРґР° РјР°СЃСЃРёРІ РјРµРЅСЏРµРј РЅР° LinkedList !! РЎР»РµРґРёС‚СЊ Р·Р° РєРѕРЅСЃРёСЃС‚РµРЅС‚РЅРѕСЃС‚СЊСЋ СЃС‚СЂСѓРєС‚СѓСЂС‹ Р±РёС‚РѕРІС‹С… С„Р»Р°РіРѕРІ GridData (РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё/СѓРґР°Р»РµРЅРёРё РєРѕРЅС‚СЂРѕР»Р° РїСЂРѕСЃС‚Рѕ РїСЂРёРјРµРЅСЏС‚СЊ С„РёР»СЊС‚СЂ ?) !!
 public class GridDataFilter implements Serializable {
 
 	private static final long serialVersionUID = 2989429602320596648L;
@@ -38,34 +38,34 @@ public class GridDataFilter implements Serializable {
 	
 	private final GridDataProviderWPk<?> dataProvider;
 	private final Class<?> beanClass;
- 	private final AbstractComponent[] filterComponentArray; // список контролов, формирующих фильтр (для циклической обработки)
- 	private final String[] filterFieldArray; // соответствующие фильтр-контролам названия полей (несортированный, зеркален filterComponentArray !)
+ 	private final AbstractComponent[] filterComponentArray; // СЃРїРёСЃРѕРє РєРѕРЅС‚СЂРѕР»РѕРІ, С„РѕСЂРјРёСЂСѓСЋС‰РёС… С„РёР»СЊС‚СЂ (РґР»СЏ С†РёРєР»РёС‡РµСЃРєРѕР№ РѕР±СЂР°Р±РѕС‚РєРё)
+ 	private final String[] filterFieldArray; // СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»Р°Рј РЅР°Р·РІР°РЅРёСЏ РїРѕР»РµР№ (РЅРµСЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№, Р·РµСЂРєР°Р»РµРЅ filterComponentArray !)
  	
- 	private Map<String, AbstractComponentBehaveUtil> behavMap; // поведение фильтр-контролов разного типа
+ 	private Map<String, AbstractComponentBehaveUtil> behavMap; // РїРѕРІРµРґРµРЅРёРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ СЂР°Р·РЅРѕРіРѕ С‚РёРїР°
  	
-// 	private GridDataFilter() {} // FIXME: противоречит соглашениям JavaBeans !!!
+// 	private GridDataFilter() {} // FIXME: РїСЂРѕС‚РёРІРѕСЂРµС‡РёС‚ СЃРѕРіР»Р°С€РµРЅРёСЏРј JavaBeans !!!
  	
- 	/** Через дата-провайдера получаем класс бина, сортируем массив фильтр-контролов, инициализируем массив названий соответствующих им полей бина (или обёртки GridData).
- 	 * @param dataProvider Провайдер данных, предоставляющий список объектов-обёрток бина {@link GridData GridData<T>} для дата-модели грида.
- 	 * @param behavMap Поведение для классов компонентов. Набор реализаций AbstractComponentBehaveUtil для каждого типа контрола. Опрашивается динамически, копия не делается (live) - для управления логикой извне (можно менять на ходу).
- 	 * @param _filterComponentArray Массив составляющих фильтр компонентов (фильр-контролов). Размером не более 32. Создаётся копия, извне управлять нельзя. null-параметр и null-элементы допустимы.
- 	 * @exception IllegalArgumentException для массива контролов размером более 32; для пустых или не соответствующих соглашению имён ИД фильтр-контролов; для неподдерживаемых компонентов (не определено поведение).
+ 	/** Р§РµСЂРµР· РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂР° РїРѕР»СѓС‡Р°РµРј РєР»Р°СЃСЃ Р±РёРЅР°, СЃРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ, РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РјР°СЃСЃРёРІ РЅР°Р·РІР°РЅРёР№ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… РёРј РїРѕР»РµР№ Р±РёРЅР° (РёР»Рё РѕР±С‘СЂС‚РєРё GridData).
+ 	 * @param dataProvider РџСЂРѕРІР°Р№РґРµСЂ РґР°РЅРЅС‹С…, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЋС‰РёР№ СЃРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ-РѕР±С‘СЂС‚РѕРє Р±РёРЅР° {@link GridData GridData<T>} РґР»СЏ РґР°С‚Р°-РјРѕРґРµР»Рё РіСЂРёРґР°.
+ 	 * @param behavMap РџРѕРІРµРґРµРЅРёРµ РґР»СЏ РєР»Р°СЃСЃРѕРІ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ. РќР°Р±РѕСЂ СЂРµР°Р»РёР·Р°С†РёР№ AbstractComponentBehaveUtil РґР»СЏ РєР°Р¶РґРѕРіРѕ С‚РёРїР° РєРѕРЅС‚СЂРѕР»Р°. РћРїСЂР°С€РёРІР°РµС‚СЃСЏ РґРёРЅР°РјРёС‡РµСЃРєРё, РєРѕРїРёСЏ РЅРµ РґРµР»Р°РµС‚СЃСЏ (live) - РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р»РѕРіРёРєРѕР№ РёР·РІРЅРµ (РјРѕР¶РЅРѕ РјРµРЅСЏС‚СЊ РЅР° С…РѕРґСѓ).
+ 	 * @param _filterComponentArray РњР°СЃСЃРёРІ СЃРѕСЃС‚Р°РІР»СЏСЋС‰РёС… С„РёР»СЊС‚СЂ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ (С„РёР»СЊСЂ-РєРѕРЅС‚СЂРѕР»РѕРІ). Р Р°Р·РјРµСЂРѕРј РЅРµ Р±РѕР»РµРµ 32. РЎРѕР·РґР°С‘С‚СЃСЏ РєРѕРїРёСЏ, РёР·РІРЅРµ СѓРїСЂР°РІР»СЏС‚СЊ РЅРµР»СЊР·СЏ. null-РїР°СЂР°РјРµС‚СЂ Рё null-СЌР»РµРјРµРЅС‚С‹ РґРѕРїСѓСЃС‚РёРјС‹.
+ 	 * @exception IllegalArgumentException РґР»СЏ РјР°СЃСЃРёРІР° РєРѕРЅС‚СЂРѕР»РѕРІ СЂР°Р·РјРµСЂРѕРј Р±РѕР»РµРµ 32; РґР»СЏ РїСѓСЃС‚С‹С… РёР»Рё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… СЃРѕРіР»Р°С€РµРЅРёСЋ РёРјС‘РЅ РР” С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ; РґР»СЏ РЅРµРїРѕРґРґРµСЂР¶РёРІР°РµРјС‹С… РєРѕРјРїРѕРЅРµРЅС‚РѕРІ (РЅРµ РѕРїСЂРµРґРµР»РµРЅРѕ РїРѕРІРµРґРµРЅРёРµ).
  	 */
-// TODO: изучить: https://docs.oracle.com/javase/8/docs/api/java/lang/SafeVarargs.html
+// TODO: РёР·СѓС‡РёС‚СЊ: https://docs.oracle.com/javase/8/docs/api/java/lang/SafeVarargs.html
  	@SafeVarargs
  	public GridDataFilter(GridDataProviderWPk<?> dataProvider, Map<String, AbstractComponentBehaveUtil> behavMap, final AbstractComponent... _filterComponentArray) {
-// ограничение на кол-во фильтр-контролов (max - 32 - кол-во бит в GridData.filterFlags)
+// РѕРіСЂР°РЅРёС‡РµРЅРёРµ РЅР° РєРѕР»-РІРѕ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ (max - 32 - РєРѕР»-РІРѕ Р±РёС‚ РІ GridData.filterFlags)
  		if ( _filterComponentArray != null && _filterComponentArray.length > 32 ) {
  			logger.error("GridDataFilter. [0-32] components in filter allowed, received: {}", _filterComponentArray.length);
  			throw new IllegalArgumentException("GridDataFilter. [0-32] components in filter allowed, received: "+_filterComponentArray.length);
  		}
  		this.dataProvider = dataProvider;
  		this.beanClass = dataProvider.getBeanClass();
-// FIXME: проверка элементов массива !
- 		this.filterComponentArray = ArrayUtils.nullToEmpty(ArrayUtils.removeAllOccurences(_filterComponentArray, null), AbstractComponent[].class); // (nullable) сделать защитную копию
+// FIXME: РїСЂРѕРІРµСЂРєР° СЌР»РµРјРµРЅС‚РѕРІ РјР°СЃСЃРёРІР° !
+ 		this.filterComponentArray = ArrayUtils.nullToEmpty(ArrayUtils.removeAllOccurences(_filterComponentArray, null), AbstractComponent[].class); // (nullable) СЃРґРµР»Р°С‚СЊ Р·Р°С‰РёС‚РЅСѓСЋ РєРѕРїРёСЋ
  		this.behavMap = behavMap;
  		Arrays.sort(this.filterComponentArray, ABSTRACT_COMPONENT_BY_ID_COMPARATOR);
-// FIXME: проверить ИД на непустоту и уникальность !!!
+// FIXME: РїСЂРѕРІРµСЂРёС‚СЊ РР” РЅР° РЅРµРїСѓСЃС‚РѕС‚Сѓ Рё СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ !!!
  		filterFieldArray = new String[this.filterComponentArray.length]; // TODO: Map instead ?
  		for (int idx = 0; idx < filterComponentArray.length; idx++) {
  			filterFieldArray[idx] = componentToFieldName(filterComponentArray[idx]);
@@ -73,10 +73,10 @@ public class GridDataFilter implements Serializable {
  		logger.trace("GridDataFilter(). filterComponentArray = '{}', length = {}"/*+", deepToString = '{}'"*/, filterComponentArray, this.filterComponentArray.length /*, Arrays.deepToString(filterComponentArray)*/ );
  	} // public GridDataFilter(GridDataProviderWPk<?> dataProvider, Map<String, AbstractComponentBehaveUtil> behavMap, AbstractComponent... _filterComponentArray)
  	
- 	// внутри также проверяется соглашение по наименованию, но только на окончание ИД контрола в зависимости от типа
+ 	// РІРЅСѓС‚СЂРё С‚Р°РєР¶Рµ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ СЃРѕРіР»Р°С€РµРЅРёРµ РїРѕ РЅР°РёРјРµРЅРѕРІР°РЅРёСЋ, РЅРѕ С‚РѕР»СЊРєРѕ РЅР° РѕРєРѕРЅС‡Р°РЅРёРµ РР” РєРѕРЅС‚СЂРѕР»Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР°
  	private String componentToFieldName(AbstractComponent ac) {
  		String compType = ac.getClass().getSimpleName();
- 		if ("selFilterCHB".equals(ac.getId())) return "sel"; // техническое поле GridData.sel
+ 		if ("selFilterCHB".equals(ac.getId())) return "sel"; // С‚РµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ GridData.sel
  		AbstractComponentBehaveUtil curBehav;
  		curBehav = behavMap.get(compType);
  		if ( curBehav == null ) {
@@ -96,7 +96,7 @@ public class GridDataFilter implements Serializable {
 							   throw new IllegalArgumentException("componentToFieldName. Broken name convention: component ID '"+compId+"' of type '"+compType+"' must ends with 'IB'");
 						   }
 						   return compId.substring(0, compId.length()-2); // *IB // StringUtils.removeEnd(compId, "IB")
-			case "Checkbox": if ("selFilterCHB".equals(compId)) return "sel"; // техническое поле GridData.sel
+			case "Checkbox": if ("selFilterCHB".equals(compId)) return "sel"; // С‚РµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ GridData.sel
  							 else {
  								 if (!compId.endsWith("CHB") || compId.length() < 4) {
  								     logger.error("componentToFieldName. Broken name convention: component ID '{}' of type '{}' must ends with 'CHB'", compId, compType);
@@ -124,24 +124,24 @@ public class GridDataFilter implements Serializable {
 		} // switch
 */ 	} // private String componentToFieldName(AbstractComponent ac)
 
- 	/** Очистить все фильтр-контролы, кроме управляющего колонкой PK, при истинном параметре.
- 	 * @param clearPK Очищать ли контрол (запрашивается динамически у дата-провайдера, потому может меняться) колонки Первичного Ключа.
+ 	/** РћС‡РёСЃС‚РёС‚СЊ РІСЃРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹, РєСЂРѕРјРµ СѓРїСЂР°РІР»СЏСЋС‰РµРіРѕ РєРѕР»РѕРЅРєРѕР№ PK, РїСЂРё РёСЃС‚РёРЅРЅРѕРј РїР°СЂР°РјРµС‚СЂРµ.
+ 	 * @param clearPK РћС‡РёС‰Р°С‚СЊ Р»Рё РєРѕРЅС‚СЂРѕР» (Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ РґРёРЅР°РјРёС‡РµСЃРєРё Сѓ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂР°, РїРѕС‚РѕРјСѓ РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊСЃСЏ) РєРѕР»РѕРЅРєРё РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р°.
  	 * @see AbstractComponentBehaveUtil#clear(AbstractComponent ac)
  	 */
-// Вызывается из GridDataFilterableModelMan.applyFilter (если участвует PK) и из SubjsPageComposer.clearFilter (который в свою очерель из ZUL по нажатию toolbarbutton)
-	public void clear(final boolean clearPK) { // ! очищаем сами значения контролов (@param clearPK очищать ли фильтр по первичному ключу) !
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· GridDataFilterableModelMan.applyFilter (РµСЃР»Рё СѓС‡Р°СЃС‚РІСѓРµС‚ PK) Рё РёР· SubjsPageComposer.clearFilter (РєРѕС‚РѕСЂС‹Р№ РІ СЃРІРѕСЋ РѕС‡РµСЂРµР»СЊ РёР· ZUL РїРѕ РЅР°Р¶Р°С‚РёСЋ toolbarbutton)
+	public void clear(final boolean clearPK) { // ! РѕС‡РёС‰Р°РµРј СЃР°РјРё Р·РЅР°С‡РµРЅРёСЏ РєРѕРЅС‚СЂРѕР»РѕРІ (@param clearPK РѕС‡РёС‰Р°С‚СЊ Р»Рё С„РёР»СЊС‚СЂ РїРѕ РїРµСЂРІРёС‡РЅРѕРјСѓ РєР»СЋС‡Сѓ) !
  		Optional<String> pkFieldName = dataProvider.getPk();
 		if (pkFieldName.isPresent()) {
-// найденный pkIdx указывает на соответствующий PK фильтр-компонент в filterComponentArray
+// РЅР°Р№РґРµРЅРЅС‹Р№ pkIdx СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ PK С„РёР»СЊС‚СЂ-РєРѕРјРїРѕРЅРµРЅС‚ РІ filterComponentArray
 //			 			pkIdx = Arrays.asList(filterFieldArray).indexOf(pkFieldName); // (http://stackoverflow.com/questions/6171663/how-to-find-index-of-int-array-in-java-from-a-given-value)
 			pkIdx = ArrayUtils.indexOf(filterFieldArray, pkFieldName.get()); // Returns: the index of the object within the array, INDEX_NOT_FOUND (-1) if not found or null array input
-		} else { // PK не задан
+		} else { // PK РЅРµ Р·Р°РґР°РЅ
 			pkIdx = -1;
 		}
 		int idx = -1;
  		for (AbstractComponent ac : filterComponentArray) {
  			++idx;
- 			if ( !clearPK && idx == pkIdx ) continue; // без ограничений на тип компонента !!
+ 			if ( !clearPK && idx == pkIdx ) continue; // Р±РµР· РѕРіСЂР°РЅРёС‡РµРЅРёР№ РЅР° С‚РёРї РєРѕРјРїРѕРЅРµРЅС‚Р° !!
  	 		String compType = ac.getClass().getSimpleName();
  	 		AbstractComponentBehaveUtil curBehav;
  	 		curBehav = behavMap.get(compType);
@@ -154,11 +154,11 @@ public class GridDataFilter implements Serializable {
  			/*switch(ac.getClass().getSimpleName()) {
  				case "Checkbox": ((Checkbox)ac).setChecked(false); break;
  				case "Intbox": if (clearPK || idx != pkIdx) {
-// null для Intbox (0 м.б. допустимым значением) !!!
+// null РґР»СЏ Intbox (0 Рј.Р±. РґРѕРїСѓСЃС‚РёРјС‹Рј Р·РЅР°С‡РµРЅРёРµРј) !!!
 							      ((Intbox)ac).setText(""); // .setValue(0)
  							   }
  							   break;
- 				case "Combobox": if (((Combobox)ac).getModel() != null) ((Selectable)((Combobox)ac).getModel()).clearSelection(); // value обнуляется ?
+ 				case "Combobox": if (((Combobox)ac).getModel() != null) ((Selectable)((Combobox)ac).getModel()).clearSelection(); // value РѕР±РЅСѓР»СЏРµС‚СЃСЏ ?
 // 	 				case "": ;
  				case "Textbox": if (clearPK || idx != pkIdx) {
  									((InputElement)ac).setText("");
@@ -173,7 +173,7 @@ public class GridDataFilter implements Serializable {
  		logger.trace("Filter was cleared. clearPK = {}, pkIdx = {}, pkFieldName = '{}', idx(counter) = {}", clearPK, pkIdx, (pkIdx != -1 ? pkFieldName.get() : "<pk_not_def>"), idx);
  	} // public void clear(boolean clearPK)
 	
-	/** Компаратор для сравнения по ID виджетов на основе AbstractComponent */
+	/** РљРѕРјРїР°СЂР°С‚РѕСЂ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ РїРѕ ID РІРёРґР¶РµС‚РѕРІ РЅР° РѕСЃРЅРѕРІРµ AbstractComponent */
  	public static final Comparator<AbstractComponent> ABSTRACT_COMPONENT_BY_ID_COMPARATOR = new CompareACById();
  	
  	private static final class CompareACById implements Comparator<AbstractComponent>, Serializable {
@@ -196,26 +196,26 @@ public class GridDataFilter implements Serializable {
         } // public int compare(AbstractComponent o1, AbstractComponent o2) 
     }; // private static final class CompareACById implements Comparator<AbstractComponent>, Serializable
 
-    /** Позиция компонента с массиве filterComponentArray компонентов фильтра. Можно использовать для проверки наличия компонента в фильтре.
-     * @return &lt; 0 если компонент не участвует в фильтре.
+    /** РџРѕР·РёС†РёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° СЃ РјР°СЃСЃРёРІРµ filterComponentArray РєРѕРјРїРѕРЅРµРЅС‚РѕРІ С„РёР»СЊС‚СЂР°. РњРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ РїСЂРѕРІРµСЂРєРё РЅР°Р»РёС‡РёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° РІ С„РёР»СЊС‚СЂРµ.
+     * @return &lt; 0 РµСЃР»Рё РєРѕРјРїРѕРЅРµРЅС‚ РЅРµ СѓС‡Р°СЃС‚РІСѓРµС‚ РІ С„РёР»СЊС‚СЂРµ.
      * @see java.util.Arrays#binarySearch(Object[], Object, Comparator) Arrays.binarySearch()
      */
-// вызывается из GridDataFilterableModelMan.setComboModel при создании битовой маски; в обработчиках событий от компонентов для установления необходимости применения фильтра
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· GridDataFilterableModelMan.setComboModel РїСЂРё СЃРѕР·РґР°РЅРёРё Р±РёС‚РѕРІРѕР№ РјР°СЃРєРё; РІ РѕР±СЂР°Р±РѕС‚С‡РёРєР°С… СЃРѕР±С‹С‚РёР№ РѕС‚ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ РґР»СЏ СѓСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°
  	public int getComponentIndex(AbstractComponent component) {
- 		return Arrays.binarySearch(filterComponentArray // !!! массив должен быть отсортирован (порядок захардкоден в applyFilter) !!!
+ 		return Arrays.binarySearch(filterComponentArray // !!! РјР°СЃСЃРёРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ (РїРѕСЂСЏРґРѕРє Р·Р°С…Р°СЂРґРєРѕРґРµРЅ РІ applyFilter) !!!
  								  ,component
  								  ,ABSTRACT_COMPONENT_BY_ID_COMPARATOR
  								  );
  	} // public int getComponentIndex(AbstractComponent component)
 
- 	/** Поиск фильтр-контрола во внутреннем массиве по ИД.
+ 	/** РџРѕРёСЃРє С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»Р° РІРѕ РІРЅСѓС‚СЂРµРЅРЅРµРј РјР°СЃСЃРёРІРµ РїРѕ РР”.
  	 * @see #getComponentIndex(AbstractComponent) getComponentIndex()
  	 */
-// вызывается из isComponentEmptyById (не исп-ся)
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· isComponentEmptyById (РЅРµ РёСЃРї-СЃСЏ)
  	public int getComponentIndexById(String compId) {
         int low = 0;
         int high = filterComponentArray.length - 1;
-        while (low <= high) { // массив должен быть отсортирован !
+        while (low <= high) { // РјР°СЃСЃРёРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ !
             int mid = (low + high) >>> 1;
             int cmp = filterComponentArray[mid].getId().compareTo(compId);
             if (cmp < 0) low = mid + 1;
@@ -225,12 +225,12 @@ public class GridDataFilter implements Serializable {
         return -(low + 1);  // key not found.
  	} // public int getComponentIndexById(String compId)
  	
- 	/** Проверить компонент на пустое значение.
- 	 * @param compIndex Позиция контрола во внутреннем массиве. См. {@link #getComponentIndex(AbstractComponent)}
+ 	/** РџСЂРѕРІРµСЂРёС‚СЊ РєРѕРјРїРѕРЅРµРЅС‚ РЅР° РїСѓСЃС‚РѕРµ Р·РЅР°С‡РµРЅРёРµ.
+ 	 * @param compIndex РџРѕР·РёС†РёСЏ РєРѕРЅС‚СЂРѕР»Р° РІРѕ РІРЅСѓС‚СЂРµРЅРЅРµРј РјР°СЃСЃРёРІРµ. РЎРј. {@link #getComponentIndex(AbstractComponent)}
  	 * @see AbstractComponentBehaveUtil#isEmpty(AbstractComponent)
- 	 * @exception IllegalArgumentException При некорректном индексе.
+ 	 * @exception IllegalArgumentException РџСЂРё РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРј РёРЅРґРµРєСЃРµ.
  	 */
- 	// вызывается из: isComponentEmptyById, prepareToApply (для PK-контрола), isEmpty
+ 	// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР·: isComponentEmptyById, prepareToApply (РґР»СЏ PK-РєРѕРЅС‚СЂРѕР»Р°), isEmpty
  	public boolean isComponentEmptyByIndex(int compIndex) {
  		if (compIndex < 0 || compIndex >= filterComponentArray.length) {
  			logger.error("Index out of range in isComponentEmptyByIndex: {}, but must be between 0 and {}", compIndex, filterComponentArray.length);
@@ -248,11 +248,11 @@ public class GridDataFilter implements Serializable {
 
  		
 		/*switch(filterComponentArray[compIndex].getClass().getSimpleName()) {
-// getValue() == null для пустого Intbox (0 м.б. допустимым значением, а intValue() не различает 0 и null) !!!
+// getValue() == null РґР»СЏ РїСѓСЃС‚РѕРіРѕ Intbox (0 Рј.Р±. РґРѕРїСѓСЃС‚РёРјС‹Рј Р·РЅР°С‡РµРЅРёРµРј, Р° intValue() РЅРµ СЂР°Р·Р»РёС‡Р°РµС‚ 0 Рё null) !!!
 			case "Intbox": return ((Intbox)filterComponentArray[compIndex]).getValue() == null; // .intValue() == 0; Integer getValue(), might be null; int intValue(): If null, zero is returned
 			case "Checkbox": return !((Checkbox)filterComponentArray[compIndex]).isChecked();
 			case "Textbox": return StringUtils.isBlank( ((Textbox)filterComponentArray[compIndex]).getValue() );
-			case "Combobox": String val = ((InputElement)filterComponentArray[compIndex]).getText(); // null не возвращается, вместо него всегда "" !
+			case "Combobox": String val = ((InputElement)filterComponentArray[compIndex]).getText(); // null РЅРµ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ, РІРјРµСЃС‚Рѕ РЅРµРіРѕ РІСЃРµРіРґР° "" !
 							if ("<all>".equals(val)) val = ""; // combobox special value
 							return StringUtils.isEmpty(val);
 			case "BetweenFilterMacro": return ((BetweenFilterMacro<?,?>)filterComponentArray[compIndex]).isEmpty();
@@ -263,8 +263,8 @@ public class GridDataFilter implements Serializable {
 */		
  	} // public boolean isComponentEmptyByIndex(int compIndex)
  	
- 	/** Проверить компонент на пустое значение.
- 	 * @param compId ИД проверяемого контрола.
+ 	/** РџСЂРѕРІРµСЂРёС‚СЊ РєРѕРјРїРѕРЅРµРЅС‚ РЅР° РїСѓСЃС‚РѕРµ Р·РЅР°С‡РµРЅРёРµ.
+ 	 * @param compId РР” РїСЂРѕРІРµСЂСЏРµРјРѕРіРѕ РєРѕРЅС‚СЂРѕР»Р°.
  	 * @see #getComponentIndexById(String)
  	 * @see #isComponentEmptyByIndex(int)
  	 */
@@ -278,7 +278,7 @@ public class GridDataFilter implements Serializable {
  		return false;
  	} // public boolean isComponentEmptyById(String compId)
  	
-// построить состояние фильтра (хранится в GridDataFilterableModelMan.filterCompositeValue)
+// РїРѕСЃС‚СЂРѕРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ С„РёР»СЊС‚СЂР° (С…СЂР°РЅРёС‚СЃСЏ РІ GridDataFilterableModelMan.filterCompositeValue)
  	private String buildFilterCompositeValue() {
  		StringBuilder sb = new StringBuilder();
  		for (AbstractComponent ac : filterComponentArray) {
@@ -314,14 +314,14 @@ public class GridDataFilter implements Serializable {
  		return sb.toString(); 
  	} // private String buildFilterCompositeValue()
 
- 	/** Конкатенация всех фильтр-контролов в форме compID=compVal^~ */
+ 	/** РљРѕРЅРєР°С‚РµРЅР°С†РёСЏ РІСЃРµС… С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ РІ С„РѕСЂРјРµ compID=compVal^~ */
 	@Override
 	public String toString() {
 		return buildFilterCompositeValue();
 	}
 	
-	/** Пусты ли все фильтр-контролы ? @see {@link #isComponentEmptyByIndex(int) isComponentEmptyByIndex()} */
-// Вызывается из GridDataFilterableModelMan.applyFilter
+	/** РџСѓСЃС‚С‹ Р»Рё РІСЃРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹ ? @see {@link #isComponentEmptyByIndex(int) isComponentEmptyByIndex()} */
+// Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· GridDataFilterableModelMan.applyFilter
 	public boolean isEmpty() {
 		boolean ret_val = false;
 		for (int idx = 0; idx < filterComponentArray.length; idx++) {
@@ -331,18 +331,18 @@ public class GridDataFilter implements Serializable {
 		return true;
 	} // public boolean isEmpty()
 	
-	/** Сделать (не)доступными все фильтр-контролы.
-	 * @param disable Запретить(true)/разрешить(false).
-	 * @param disablePK Делать ли (не)доступным компонент, управляющий колонкой Первичного Ключа.
+	/** РЎРґРµР»Р°С‚СЊ (РЅРµ)РґРѕСЃС‚СѓРїРЅС‹РјРё РІСЃРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹.
+	 * @param disable Р—Р°РїСЂРµС‚РёС‚СЊ(true)/СЂР°Р·СЂРµС€РёС‚СЊ(false).
+	 * @param disablePK Р”РµР»Р°С‚СЊ Р»Рё (РЅРµ)РґРѕСЃС‚СѓРїРЅС‹Рј РєРѕРјРїРѕРЅРµРЅС‚, СѓРїСЂР°РІР»СЏСЋС‰РёР№ РєРѕР»РѕРЅРєРѕР№ РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р°.
 	 * @see AbstractComponentBehaveUtil#disable(AbstractComponent, boolean) AbstractComponentBehaveUtil.disable()
 	 */
 	public void disableComps(boolean disable, final boolean disablePK) {
 		Optional<String> pkFieldName = dataProvider.getPk();
 		if (pkFieldName.isPresent()) {
-// найденный pkIdx указывает на соответствующий PK фильтр-компонент в filterComponentArray
+// РЅР°Р№РґРµРЅРЅС‹Р№ pkIdx СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ PK С„РёР»СЊС‚СЂ-РєРѕРјРїРѕРЅРµРЅС‚ РІ filterComponentArray
 //			pkIdx = Arrays.asList(filterFieldArray).indexOf(pkFieldName); // (http://stackoverflow.com/questions/6171663/how-to-find-index-of-int-array-in-java-from-a-given-value)
 			pkIdx = ArrayUtils.indexOf(filterFieldArray, pkFieldName.get()); // Returns: the index of the object within the array, INDEX_NOT_FOUND (-1) if not found or null array input
-		} else { // PK не задан
+		} else { // PK РЅРµ Р·Р°РґР°РЅ
 			pkIdx = -1;
 		}
 		int idx = -1;
@@ -371,10 +371,10 @@ public class GridDataFilter implements Serializable {
 	} // public void disableComps(boolean disable, boolean disablePK)
     
 	
-	/** Предварительно рассчитанные данные для оценки прохождения фильтра по каждому полю (контролу, входящему в
-	 * фильтр): значения фильтр-контролов, методы доступа к полям данных, массив предикатов.
+	/** РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ СЂР°СЃСЃС‡РёС‚Р°РЅРЅС‹Рµ РґР°РЅРЅС‹Рµ РґР»СЏ РѕС†РµРЅРєРё РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР° РїРѕ РєР°Р¶РґРѕРјСѓ РїРѕР»СЋ (РєРѕРЅС‚СЂРѕР»Сѓ, РІС…РѕРґСЏС‰РµРјСѓ РІ
+	 * С„РёР»СЊС‚СЂ): Р·РЅР°С‡РµРЅРёСЏ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ, РјРµС‚РѕРґС‹ РґРѕСЃС‚СѓРїР° Рє РїРѕР»СЏРј РґР°РЅРЅС‹С…, РјР°СЃСЃРёРІ РїСЂРµРґРёРєР°С‚РѕРІ.
 	 */
-// HOWTO: static (разница ? - см. #22 у Блоха) ???
+// HOWTO: static (СЂР°Р·РЅРёС†Р° ? - СЃРј. #22 Сѓ Р‘Р»РѕС…Р°) ???
 	private static final class FilterField implements Serializable {
 		private static final long serialVersionUID = 4714793949421773384L;
 		private final String fieldName, getterName, compId;
@@ -397,7 +397,7 @@ public class GridDataFilter implements Serializable {
 		public final Object getFieldVal() {return fieldVal;}
 		public final boolean eval(final Object curObj) {
 			try {
-				fieldVal = getterMethod.invoke(curObj); // значение поля доменного объекта
+				fieldVal = getterMethod.invoke(curObj); // Р·РЅР°С‡РµРЅРёРµ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 			} catch ( IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException e) {
 				logger.error("FilterField.eval. Exception on invoke {}", getterName, e);
 				throw new InternalError("FilterField.eval. Exception on invoke '"+getterName+"' for fieldName = '"+fieldName+"' on object of type "+curObj.getClass().getName(), e);
@@ -406,38 +406,38 @@ public class GridDataFilter implements Serializable {
 		} // private final boolean eval(final Object curObj)
 	} // private final class FilterField
 
-	// эти локальные переменные задаются в prepareToApply (информация о PK обновляется каждый раз), читаются в evalGridData (этому вызову всегда должен предшествовать вызов prepareToApply !)
-	private FilterField[] filterFields; // подготовленные данные и методы для построчной фильтрации дата-модели (парен filterComponentArray) 
-	private boolean pkCtrlNotEmpty; // флаг непустоты значения контрола (только Intbox || Textbox !) ПервичногоКлюча (для передачи от prepareToApply к evalGridData)
-	private int pkIdx = -1; // индекс контрола ПервичногоКлюча в массиве filterComponentArray (для передачи от prepareToApply к evalGridData)
+	// СЌС‚Рё Р»РѕРєР°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ Р·Р°РґР°СЋС‚СЃСЏ РІ prepareToApply (РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ PK РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ РєР°Р¶РґС‹Р№ СЂР°Р·), С‡РёС‚Р°СЋС‚СЃСЏ РІ evalGridData (СЌС‚РѕРјСѓ РІС‹Р·РѕРІСѓ РІСЃРµРіРґР° РґРѕР»Р¶РµРЅ РїСЂРµРґС€РµСЃС‚РІРѕРІР°С‚СЊ РІС‹Р·РѕРІ prepareToApply !)
+	private FilterField[] filterFields; // РїРѕРґРіРѕС‚РѕРІР»РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ Рё РјРµС‚РѕРґС‹ РґР»СЏ РїРѕСЃС‚СЂРѕС‡РЅРѕР№ С„РёР»СЊС‚СЂР°С†РёРё РґР°С‚Р°-РјРѕРґРµР»Рё (РїР°СЂРµРЅ filterComponentArray) 
+	private boolean pkCtrlNotEmpty; // С„Р»Р°Рі РЅРµРїСѓСЃС‚РѕС‚С‹ Р·РЅР°С‡РµРЅРёСЏ РєРѕРЅС‚СЂРѕР»Р° (С‚РѕР»СЊРєРѕ Intbox || Textbox !) РџРµСЂРІРёС‡РЅРѕРіРѕРљР»СЋС‡Р° (РґР»СЏ РїРµСЂРµРґР°С‡Рё РѕС‚ prepareToApply Рє evalGridData)
+	private int pkIdx = -1; // РёРЅРґРµРєСЃ РєРѕРЅС‚СЂРѕР»Р° РџРµСЂРІРёС‡РЅРѕРіРѕРљР»СЋС‡Р° РІ РјР°СЃСЃРёРІРµ filterComponentArray (РґР»СЏ РїРµСЂРµРґР°С‡Рё РѕС‚ prepareToApply Рє evalGridData)
 
-	/** Перед оценкой строк дата-модели грида против фильтра читаем контролы, сопоставляем поля данных и готовим вызовы-предикаты.
-	 * На каждую фильтруемую колонку создаётся объект внутреннего класса FilterField, также сохраняется информация в локальных переменных для использования в evalGridData.
-	 * Подготовка выполняется единожды перед циклом проверок строк ("эталонной") дата-модели грида (evalGridData).
-	 * Предполагаем, что на колонке первичного ключа контролом фильтра может быть только Intbox или Textbox.
-	 * Пока считаем, что набор фильтр-контролов статичен.
-	 * При непустом контроле, управляющим клонкой Первичного Ключа (PK), фильтр будет эксклюзивным (без учёта прочих колонок); все остальные фильтр-контролы очищаются и становятся недоступными для ввода. Иначе все контролы разрешаются.
-	 * @exception InternalError(NoSuchMethodException) при доступе к полям бина (нет геттера или не соответствует соглашению JavaBean или изначально наименование поля, полученное из ИД контрола, некорректно); IllegalStateException при неопределённом поведении для типа контрола. 
+	/** РџРµСЂРµРґ РѕС†РµРЅРєРѕР№ СЃС‚СЂРѕРє РґР°С‚Р°-РјРѕРґРµР»Рё РіСЂРёРґР° РїСЂРѕС‚РёРІ С„РёР»СЊС‚СЂР° С‡РёС‚Р°РµРј РєРѕРЅС‚СЂРѕР»С‹, СЃРѕРїРѕСЃС‚Р°РІР»СЏРµРј РїРѕР»СЏ РґР°РЅРЅС‹С… Рё РіРѕС‚РѕРІРёРј РІС‹Р·РѕРІС‹-РїСЂРµРґРёРєР°С‚С‹.
+	 * РќР° РєР°Р¶РґСѓСЋ С„РёР»СЊС‚СЂСѓРµРјСѓСЋ РєРѕР»РѕРЅРєСѓ СЃРѕР·РґР°С‘С‚СЃСЏ РѕР±СЉРµРєС‚ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РєР»Р°СЃСЃР° FilterField, С‚Р°РєР¶Рµ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РёРЅС„РѕСЂРјР°С†РёСЏ РІ Р»РѕРєР°Р»СЊРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С… РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ evalGridData.
+	 * РџРѕРґРіРѕС‚РѕРІРєР° РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РµРґРёРЅРѕР¶РґС‹ РїРµСЂРµРґ С†РёРєР»РѕРј РїСЂРѕРІРµСЂРѕРє СЃС‚СЂРѕРє ("СЌС‚Р°Р»РѕРЅРЅРѕР№") РґР°С‚Р°-РјРѕРґРµР»Рё РіСЂРёРґР° (evalGridData).
+	 * РџСЂРµРґРїРѕР»Р°РіР°РµРј, С‡С‚Рѕ РЅР° РєРѕР»РѕРЅРєРµ РїРµСЂРІРёС‡РЅРѕРіРѕ РєР»СЋС‡Р° РєРѕРЅС‚СЂРѕР»РѕРј С„РёР»СЊС‚СЂР° РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ Intbox РёР»Рё Textbox.
+	 * РџРѕРєР° СЃС‡РёС‚Р°РµРј, С‡С‚Рѕ РЅР°Р±РѕСЂ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»РѕРІ СЃС‚Р°С‚РёС‡РµРЅ.
+	 * РџСЂРё РЅРµРїСѓСЃС‚РѕРј РєРѕРЅС‚СЂРѕР»Рµ, СѓРїСЂР°РІР»СЏСЋС‰РёРј РєР»РѕРЅРєРѕР№ РџРµСЂРІРёС‡РЅРѕРіРѕ РљР»СЋС‡Р° (PK), С„РёР»СЊС‚СЂ Р±СѓРґРµС‚ СЌРєСЃРєР»СЋР·РёРІРЅС‹Рј (Р±РµР· СѓС‡С‘С‚Р° РїСЂРѕС‡РёС… РєРѕР»РѕРЅРѕРє); РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹ РѕС‡РёС‰Р°СЋС‚СЃСЏ Рё СЃС‚Р°РЅРѕРІСЏС‚СЃСЏ РЅРµРґРѕСЃС‚СѓРїРЅС‹РјРё РґР»СЏ РІРІРѕРґР°. РРЅР°С‡Рµ РІСЃРµ РєРѕРЅС‚СЂРѕР»С‹ СЂР°Р·СЂРµС€Р°СЋС‚СЃСЏ.
+	 * @exception InternalError(NoSuchMethodException) РїСЂРё РґРѕСЃС‚СѓРїРµ Рє РїРѕР»СЏРј Р±РёРЅР° (РЅРµС‚ РіРµС‚С‚РµСЂР° РёР»Рё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СЃРѕРіР»Р°С€РµРЅРёСЋ JavaBean РёР»Рё РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅР°РёРјРµРЅРѕРІР°РЅРёРµ РїРѕР»СЏ, РїРѕР»СѓС‡РµРЅРЅРѕРµ РёР· РР” РєРѕРЅС‚СЂРѕР»Р°, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ); IllegalStateException РїСЂРё РЅРµРѕРїСЂРµРґРµР»С‘РЅРЅРѕРј РїРѕРІРµРґРµРЅРёРё РґР»СЏ С‚РёРїР° РєРѕРЅС‚СЂРѕР»Р°. 
 	 */
-// TESTME: протестировать на различных PK, в т.ч. на null и ""
-// TODO: (low) ? использовать предикаты Apache Commons (см. пример фильтра со SmallTalk) ??
+// TESTME: РїСЂРѕС‚РµСЃС‚РёСЂРѕРІР°С‚СЊ РЅР° СЂР°Р·Р»РёС‡РЅС‹С… PK, РІ С‚.С‡. РЅР° null Рё ""
+// TODO: (low) ? РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРёРєР°С‚С‹ Apache Commons (СЃРј. РїСЂРёРјРµСЂ С„РёР»СЊС‚СЂР° СЃРѕ SmallTalk) ??
 	//@SuppressWarnings("unchecked")
 	public void prepareToApply() {
 		Optional<String> pkFieldName = dataProvider.getPk();
 		if (filterFields == null || filterFields.length != filterComponentArray.length) {
 			filterFields = new FilterField[filterComponentArray.length];
 		}
-		pkCtrlNotEmpty = false; // установлен фильтр по PK (не пуст соответствующий контрол)
+		pkCtrlNotEmpty = false; // СѓСЃС‚Р°РЅРѕРІР»РµРЅ С„РёР»СЊС‚СЂ РїРѕ PK (РЅРµ РїСѓСЃС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ РєРѕРЅС‚СЂРѕР»)
 		if (pkFieldName.isPresent()) {
-// найденный pkIdx указывает на соответствующий PK фильтр-компонент в filterComponentArray
+// РЅР°Р№РґРµРЅРЅС‹Р№ pkIdx СѓРєР°Р·С‹РІР°РµС‚ РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ PK С„РёР»СЊС‚СЂ-РєРѕРјРїРѕРЅРµРЅС‚ РІ filterComponentArray
 // 			pkIdx = Arrays.asList(filterFieldArray).indexOf(pkFieldName); // (http://stackoverflow.com/questions/6171663/how-to-find-index-of-int-array-in-java-from-a-given-value)
 			pkIdx = ArrayUtils.indexOf(filterFieldArray, pkFieldName.get()); // Returns: the index of the object within the array, INDEX_NOT_FOUND (-1) if not found or null array input
-		} else { // PK не задан
+		} else { // PK РЅРµ Р·Р°РґР°РЅ
 			pkIdx = -1;
 		}
-// PK м.б. int || Integer || String, --но эксклюзивность только для int ! Но PK может отсутствовать...
-// TODO: ПОДУМАТЬ: если наименование уникально, то эксклюзивность хуже, чем поиск по подстроке !! ? отдельный признак эксклюзивности (точного попадания) ?
-// FIXME: плохо по коду завязываться на тип контрола, который может управлять ПК !
+// PK Рј.Р±. int || Integer || String, --РЅРѕ СЌРєСЃРєР»СЋР·РёРІРЅРѕСЃС‚СЊ С‚РѕР»СЊРєРѕ РґР»СЏ int ! РќРѕ PK РјРѕР¶РµС‚ РѕС‚СЃСѓС‚СЃС‚РІРѕРІР°С‚СЊ...
+// TODO: РџРћР”РЈРњРђРўР¬: РµСЃР»Рё РЅР°РёРјРµРЅРѕРІР°РЅРёРµ СѓРЅРёРєР°Р»СЊРЅРѕ, С‚Рѕ СЌРєСЃРєР»СЋР·РёРІРЅРѕСЃС‚СЊ С…СѓР¶Рµ, С‡РµРј РїРѕРёСЃРє РїРѕ РїРѕРґСЃС‚СЂРѕРєРµ !! ? РѕС‚РґРµР»СЊРЅС‹Р№ РїСЂРёР·РЅР°Рє СЌРєСЃРєР»СЋР·РёРІРЅРѕСЃС‚Рё (С‚РѕС‡РЅРѕРіРѕ РїРѕРїР°РґР°РЅРёСЏ) ?
+// FIXME: РїР»РѕС…Рѕ РїРѕ РєРѕРґСѓ Р·Р°РІСЏР·С‹РІР°С‚СЊСЃСЏ РЅР° С‚РёРї РєРѕРЅС‚СЂРѕР»Р°, РєРѕС‚РѕСЂС‹Р№ РјРѕР¶РµС‚ СѓРїСЂР°РІР»СЏС‚СЊ РџРљ !
 		if ( pkIdx >= 0 &&
 			 ( pkCtrlNotEmpty = ( !isComponentEmptyByIndex(pkIdx) &&
 									( filterComponentArray[pkIdx].getClass().getSimpleName().equals("Intbox") ||
@@ -445,12 +445,12 @@ public class GridDataFilter implements Serializable {
 									)
 							    )
 			 ) 
-		   ) { // эксклюзивный фильтр по PK: только полное совпадение и это уникальный ключ (только int, не текст !) => другие поля ничего не значат
-			clear(false); // PK-фильтр-контрол не очищать !!!
-			disableComps(true, false); // запрещаем все ОСТАЛЬНЫЕ контролы до сброса эксклюзивного фильтра
+		   ) { // СЌРєСЃРєР»СЋР·РёРІРЅС‹Р№ С„РёР»СЊС‚СЂ РїРѕ PK: С‚РѕР»СЊРєРѕ РїРѕР»РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ Рё СЌС‚Рѕ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РєР»СЋС‡ (С‚РѕР»СЊРєРѕ int, РЅРµ С‚РµРєСЃС‚ !) => РґСЂСѓРіРёРµ РїРѕР»СЏ РЅРёС‡РµРіРѕ РЅРµ Р·РЅР°С‡Р°С‚
+			clear(false); // PK-С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР» РЅРµ РѕС‡РёС‰Р°С‚СЊ !!!
+			disableComps(true, false); // Р·Р°РїСЂРµС‰Р°РµРј РІСЃРµ РћРЎРўРђР›Р¬РќР«Р• РєРѕРЅС‚СЂРѕР»С‹ РґРѕ СЃР±СЂРѕСЃР° СЌРєСЃРєР»СЋР·РёРІРЅРѕРіРѕ С„РёР»СЊС‚СЂР°
 			logger.trace("prepareToApply: clear&disable filter components (PK exclusive filter)");
-		} else { // PK не установлен или его контрол пуст
-			disableComps(false, true); // сделать доступными все фильтр-контролы (также: дизеблятся при фильтрации по ПервичномуКлючу, разрешаются при очистке фильтра)
+		} else { // PK РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅ РёР»Рё РµРіРѕ РєРѕРЅС‚СЂРѕР» РїСѓСЃС‚
+			disableComps(false, true); // СЃРґРµР»Р°С‚СЊ РґРѕСЃС‚СѓРїРЅС‹РјРё РІСЃРµ С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»С‹ (С‚Р°РєР¶Рµ: РґРёР·РµР±Р»СЏС‚СЃСЏ РїСЂРё С„РёР»СЊС‚СЂР°С†РёРё РїРѕ РџРµСЂРІРёС‡РЅРѕРјСѓРљР»СЋС‡Сѓ, СЂР°Р·СЂРµС€Р°СЋС‚СЃСЏ РїСЂРё РѕС‡РёСЃС‚РєРµ С„РёР»СЊС‚СЂР°)
 			logger.trace("prepareToApply: enable filter components (non-exclusive filter)");
 		}
 
@@ -461,13 +461,13 @@ public class GridDataFilter implements Serializable {
 			Object compVal; // effectively final
 			String compId = ac.getId()
 				  ,fieldName = filterFieldArray[idx]
-				  ,getterName = ""; // иначе выдаёт "may not be initialized"
+				  ,getterName = ""; // РёРЅР°С‡Рµ РІС‹РґР°С‘С‚ "may not be initialized"
 			Method getterMethod = null;
 			
  	 		String compType = ac.getClass().getSimpleName();
 			if ( "Checkbox".equals(compType) ) {
 				try {
-					if ("selFilterCHB".equals(compId)) { // техническое поле GridData.sel
+					if ("selFilterCHB".equals(compId)) { // С‚РµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ GridData.sel
 						getterName = "isSel";
 						//fieldName = "sel";
 						getterMethod = GridData.class.getMethod(getterName);
@@ -480,7 +480,7 @@ public class GridDataFilter implements Serializable {
 					throw new InternalError("prepareToApply. NoSuchMethodException on invoke '"+getterName+"' for fieldName '"+fieldName+"'. See (JavaBean) Rule for control of type '"+compType+"'. beanClass: "+beanClass.getName()+", compId: "+compId, e);
 				}
 			} else {
- 			//if ( getterMethod == null && !StringUtils.isBlank(getterName) ) { // кроме Checkbox
+ 			//if ( getterMethod == null && !StringUtils.isBlank(getterName) ) { // РєСЂРѕРјРµ Checkbox
 				try {
 					getterName = "get" + StringUtils.capitalize(fieldName);
 					getterMethod = beanClass.getMethod(getterName);
@@ -493,7 +493,7 @@ public class GridDataFilter implements Serializable {
  	 		curBehav = behavMap.get(compType);
  	 		if ( curBehav != null ) {
  	 			compVal = curBehav.getValue(ac);
- 	 			if ( pkCtrlNotEmpty && idx == pkIdx /*&& "Textbox".equals(compType)*/ ) { // для текстового PK точное совпадение, для текстового неПК по подстроке; для целочисленного всегда точное совпадение (но разница для null-фильтра(!pkCtrlNotEmpty): все значения колонки проходят пустой фильтр, даже если это ПК колонка) ! 
+ 	 			if ( pkCtrlNotEmpty && idx == pkIdx /*&& "Textbox".equals(compType)*/ ) { // РґР»СЏ С‚РµРєСЃС‚РѕРІРѕРіРѕ PK С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ, РґР»СЏ С‚РµРєСЃС‚РѕРІРѕРіРѕ РЅРµРџРљ РїРѕ РїРѕРґСЃС‚СЂРѕРєРµ; РґР»СЏ С†РµР»РѕС‡РёСЃР»РµРЅРЅРѕРіРѕ РІСЃРµРіРґР° С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ (РЅРѕ СЂР°Р·РЅРёС†Р° РґР»СЏ null-С„РёР»СЊС‚СЂР°(!pkCtrlNotEmpty): РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ РєРѕР»РѕРЅРєРё РїСЂРѕС…РѕРґСЏС‚ РїСѓСЃС‚РѕР№ С„РёР»СЊС‚СЂ, РґР°Р¶Рµ РµСЃР»Рё СЌС‚Рѕ РџРљ РєРѕР»РѕРЅРєР°) ! 
 					//evalPredicate = fieldVal -> ( StringUtils.isEmpty((String)compVal) || fieldVal != null && ((String)fieldVal).equals((String)compVal) );
  	 				evalPredicate = fieldVal -> curBehav.exactMatch(compVal, fieldVal);
  	 			} else {
@@ -507,15 +507,15 @@ public class GridDataFilter implements Serializable {
 			
  			/*switch(ac.getClass().getSimpleName()) {
 				case "Intbox":
-// getValue() == null для пустого Intbox (0 м.б. допустимым значением, а intValue() не различает 0 и null) !!!
+// getValue() == null РґР»СЏ РїСѓСЃС‚РѕРіРѕ Intbox (0 Рј.Р±. РґРѕРїСѓСЃС‚РёРјС‹Рј Р·РЅР°С‡РµРЅРёРµРј, Р° intValue() РЅРµ СЂР°Р·Р»РёС‡Р°РµС‚ 0 Рё null) !!!
 					compVal = ((Intbox)ac).getValue(); // Integer getValue(), might be null; int intValue(): If null, zero is returned
-// поле данных м.б. как int, так и Integer (nullable !)
-					evalPredicate = fieldVal -> ( compVal == null || compVal.equals(fieldVal) ); // точное совпадение
+// РїРѕР»Рµ РґР°РЅРЅС‹С… Рј.Р±. РєР°Рє int, С‚Р°Рє Рё Integer (nullable !)
+					evalPredicate = fieldVal -> ( compVal == null || compVal.equals(fieldVal) ); // С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
 					break;
  				case "Checkbox":
- 					getterName = ""; // не логично, но иначе выдаёт "may not be initialized"
+ 					getterName = ""; // РЅРµ Р»РѕРіРёС‡РЅРѕ, РЅРѕ РёРЅР°С‡Рµ РІС‹РґР°С‘С‚ "may not be initialized"
  					try {
- 						if ("selFilterCHB".equals(compId)) { // техническое поле GridData.sel
+ 						if ("selFilterCHB".equals(compId)) { // С‚РµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ GridData.sel
  							getterName = "isSel";
  							fieldName = "sel";
  							getterMethod = GridData.class.getMethod(getterName);
@@ -534,8 +534,8 @@ public class GridDataFilter implements Serializable {
  					break;
  				case "Textbox":
  					compVal = ((Textbox)ac).getValue(); // String (not null)
-// TODO: (low) реализовать regex вместо contains
- 					if (idx == pkIdx) // для PK точное совпадение ! 
+// TODO: (low) СЂРµР°Р»РёР·РѕРІР°С‚СЊ regex РІРјРµСЃС‚Рѕ contains
+ 					if (idx == pkIdx) // РґР»СЏ PK С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ ! 
  						evalPredicate = fieldVal -> ( StringUtils.isEmpty((String)compVal) || fieldVal != null && ((String)fieldVal).equals((String)compVal) );
  					else evalPredicate = fieldVal -> ( StringUtils.isEmpty((String)compVal) || fieldVal != null && ((String)fieldVal).toUpperCase().contains(((String)compVal).toUpperCase()) );
  					break;
@@ -543,25 +543,25 @@ public class GridDataFilter implements Serializable {
 			  		Set<String> comboSelection = (((Combobox)ac).getModel() == null ? null : ((Selectable<String>)((Combobox)ac).getModel()).getSelection());
 			  		if (comboSelection != null && !comboSelection.isEmpty())
 			  			compVal = comboSelection.iterator().next();
-			  		else compVal = null; // пока множественного выбора нет
+			  		else compVal = null; // РїРѕРєР° РјРЅРѕР¶РµСЃС‚РІРµРЅРЅРѕРіРѕ РІС‹Р±РѕСЂР° РЅРµС‚
 //			  		compVal = ((InputElement)ac).getText(); // nullable ?
  					evalPredicate = fieldVal -> (
  							StringUtils.isEmpty((String)compVal)
  							|| "<all>".equals(compVal)
  							|| compVal.equals(fieldVal)
- 							|| "<null>".equals(compVal) && StringUtils.isBlank((String)fieldVal) // здесь по строго null, а все пустые (whitespace, empty ("") or null) !
+ 							|| "<null>".equals(compVal) && StringUtils.isBlank((String)fieldVal) // Р·РґРµСЃСЊ РїРѕ СЃС‚СЂРѕРіРѕ null, Р° РІСЃРµ РїСѓСЃС‚С‹Рµ (whitespace, empty ("") or null) !
  							|| "<notnull>".equals(compVal) && !StringUtils.isBlank((String)fieldVal)
  					);
  					break;
  				case "BetweenFilterMacro":
- 					// для консистентности нужна offline-версия, т.е. читаем контрол "здесь и сейчас"; иначе во время вызова значение может быть уже другим
+ 					// РґР»СЏ РєРѕРЅСЃРёСЃС‚РµРЅС‚РЅРѕСЃС‚Рё РЅСѓР¶РЅР° offline-РІРµСЂСЃРёСЏ, С‚.Рµ. С‡РёС‚Р°РµРј РєРѕРЅС‚СЂРѕР» "Р·РґРµСЃСЊ Рё СЃРµР№С‡Р°СЃ"; РёРЅР°С‡Рµ РІРѕ РІСЂРµРјСЏ РІС‹Р·РѕРІР° Р·РЅР°С‡РµРЅРёРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ СѓР¶Рµ РґСЂСѓРіРёРј
 					//compVal = ((BetweenFilterMacro<?,?>)ac).getText();
 //					evalPredicate = (Comparable<?> fieldVal) -> ((BetweenFilterMacro<?,?>)ac).isEmpty() || ((BetweenFilterMacro<?,Comparable<?>>)ac).isValBetween(fieldVal); // online read
  					compVal = ((BetweenFilterMacro<?,Comparable<? super Object>>)ac).getValue();
  					//evalPredicate = ((BetweenFilterMacro<?,Comparable<Object>>.PairedValue)compVal)::isValBetween;
  					evalPredicate = fieldVal -> ((BetweenFilterMacro<?,Comparable<? super Object>>.PairedValue)compVal).isValBetween((Comparable<? super Object>)fieldVal);
-// FIXME: ??? как обрабатывать пустые значения доменного объекта [isValBetweenByComponentId(null, ...)] == false ??? добавить параметр метода типа NVL и поле на форму ???
-// FIXME: ??? если хочу отфильтровать только null (например, отсутствие проблемности); добавить крыжик "показывать пустые" на форму ???
+// FIXME: ??? РєР°Рє РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ РїСѓСЃС‚С‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° [isValBetweenByComponentId(null, ...)] == false ??? РґРѕР±Р°РІРёС‚СЊ РїР°СЂР°РјРµС‚СЂ РјРµС‚РѕРґР° С‚РёРїР° NVL Рё РїРѕР»Рµ РЅР° С„РѕСЂРјСѓ ???
+// FIXME: ??? РµСЃР»Рё С…РѕС‡Сѓ РѕС‚С„РёР»СЊС‚СЂРѕРІР°С‚СЊ С‚РѕР»СЊРєРѕ null (РЅР°РїСЂРёРјРµСЂ, РѕС‚СЃСѓС‚СЃС‚РІРёРµ РїСЂРѕР±Р»РµРјРЅРѕСЃС‚Рё); РґРѕР±Р°РІРёС‚СЊ РєСЂС‹Р¶РёРє "РїРѕРєР°Р·С‹РІР°С‚СЊ РїСѓСЃС‚С‹Рµ" РЅР° С„РѕСЂРјСѓ ???
  					break;
  				default:
  					compVal = fieldName = getterName = "";
@@ -570,7 +570,7 @@ public class GridDataFilter implements Serializable {
  			} // switch*/ 			
  			
  			
- 			/*if ( getterMethod == null && !StringUtils.isBlank(getterName) ) { // кроме Checkbox
+ 			/*if ( getterMethod == null && !StringUtils.isBlank(getterName) ) { // РєСЂРѕРјРµ Checkbox
 				try {
 					getterMethod = beanClass.getMethod(getterName);
 				} catch (NoSuchMethodException e) {
@@ -578,7 +578,7 @@ public class GridDataFilter implements Serializable {
 					throw new InternalError("prepareToApply. NoSuchMethodException on invoke '"+getterName+"' for fieldName '"+fieldName+"'. See (JavaBean) Rule for control of type '"+ac.getClass().getSimpleName()+"'. beanClass: "+beanClass.getName()+", compId: "+compId, e);
 				}
  			}*/
-// TODO: сверка типов данных контрола и поля класса доменного объекта
+// TODO: СЃРІРµСЂРєР° С‚РёРїРѕРІ РґР°РЅРЅС‹С… РєРѕРЅС‚СЂРѕР»Р° Рё РїРѕР»СЏ РєР»Р°СЃСЃР° РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
  			Class<?> fieldType = getterMethod.getReturnType();
  			logger.trace("prepareToApply.  filter_control # {}:  compId: '{}', compVal: '{}', control_type: '{}', curBehav: '{}', fieldName: '{}', fieldType: '{}', getterName: '{}', beanClass: '{}', pkFieldName: '{}', pkIdx: {}, pkCtrlNotEmpty: {}", idx, compId, compVal, compType, curBehav.getClass().getName(), fieldName, fieldType.getName(), getterName, beanClass.getName(), (pkFieldName.isPresent() ? pkFieldName.get() : "<PK_undef>"), pkIdx, pkCtrlNotEmpty);
  			filterFields[idx] = /*this.*/new FilterField(compId, fieldName, getterName, compVal, getterMethod, evalPredicate);
@@ -586,16 +586,16 @@ public class GridDataFilter implements Serializable {
 	} // public void prepareToApply()
 	
 	
-	/** True если все (соответствующие) поля GridData удовлетворяют условиям фильтра, считанным из контролов (filterComponentArray).
-	 * При установленном Первичном Ключе (PK) и непустом соответствующем фильтр-контроле фильтрация работает эксклюзивно по этой колонке (остальные фильтры в расчёт не принимаются).
-	 * <p><b>Перед каждым циклом по строкам дата-модели необходимо единожды запустить метод prepareToApply(), который читает
-	 *  контролы, сопоставляет с полями доменного объекта (точнее, с GridData), готовит массив объектов FilterField
-	 *  (Method геттера, логика (пердикат для сравнения значений поля и контрола) и т.п. для оценки прохождения
-	 *  фильтра каждого поля конкретной строки (инстанса GridData).</b>
-     * <p>Изменяет состояние объекта-параметра curGridData (только поля оболочки), в частности, устанавливает битовые флаги прохождения фильтра каждым компонентом.
-     * @param curGridData Строка данных для проверки против фильтра, состояние которого считано в {@link #prepareToApply()}
-     * @return Истина если строка проходит фильтр.
-     * @exception NullPointerException для пустого параметра, IllegalStateException если не был выполнен prepareToApply.
+	/** True РµСЃР»Рё РІСЃРµ (СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ) РїРѕР»СЏ GridData СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‚ СѓСЃР»РѕРІРёСЏРј С„РёР»СЊС‚СЂР°, СЃС‡РёС‚Р°РЅРЅС‹Рј РёР· РєРѕРЅС‚СЂРѕР»РѕРІ (filterComponentArray).
+	 * РџСЂРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРј РџРµСЂРІРёС‡РЅРѕРј РљР»СЋС‡Рµ (PK) Рё РЅРµРїСѓСЃС‚РѕРј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРј С„РёР»СЊС‚СЂ-РєРѕРЅС‚СЂРѕР»Рµ С„РёР»СЊС‚СЂР°С†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЌРєСЃРєР»СЋР·РёРІРЅРѕ РїРѕ СЌС‚РѕР№ РєРѕР»РѕРЅРєРµ (РѕСЃС‚Р°Р»СЊРЅС‹Рµ С„РёР»СЊС‚СЂС‹ РІ СЂР°СЃС‡С‘С‚ РЅРµ РїСЂРёРЅРёРјР°СЋС‚СЃСЏ).
+	 * <p><b>РџРµСЂРµРґ РєР°Р¶РґС‹Рј С†РёРєР»РѕРј РїРѕ СЃС‚СЂРѕРєР°Рј РґР°С‚Р°-РјРѕРґРµР»Рё РЅРµРѕР±С…РѕРґРёРјРѕ РµРґРёРЅРѕР¶РґС‹ Р·Р°РїСѓСЃС‚РёС‚СЊ РјРµС‚РѕРґ prepareToApply(), РєРѕС‚РѕСЂС‹Р№ С‡РёС‚Р°РµС‚
+	 *  РєРѕРЅС‚СЂРѕР»С‹, СЃРѕРїРѕСЃС‚Р°РІР»СЏРµС‚ СЃ РїРѕР»СЏРјРё РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° (С‚РѕС‡РЅРµРµ, СЃ GridData), РіРѕС‚РѕРІРёС‚ РјР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ FilterField
+	 *  (Method РіРµС‚С‚РµСЂР°, Р»РѕРіРёРєР° (РїРµСЂРґРёРєР°С‚ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ Р·РЅР°С‡РµРЅРёР№ РїРѕР»СЏ Рё РєРѕРЅС‚СЂРѕР»Р°) Рё С‚.Рї. РґР»СЏ РѕС†РµРЅРєРё РїСЂРѕС…РѕР¶РґРµРЅРёСЏ
+	 *  С„РёР»СЊС‚СЂР° РєР°Р¶РґРѕРіРѕ РїРѕР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕР№ СЃС‚СЂРѕРєРё (РёРЅСЃС‚Р°РЅСЃР° GridData).</b>
+     * <p>РР·РјРµРЅСЏРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ РѕР±СЉРµРєС‚Р°-РїР°СЂР°РјРµС‚СЂР° curGridData (С‚РѕР»СЊРєРѕ РїРѕР»СЏ РѕР±РѕР»РѕС‡РєРё), РІ С‡Р°СЃС‚РЅРѕСЃС‚Рё, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р±РёС‚РѕРІС‹Рµ С„Р»Р°РіРё РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР° РєР°Р¶РґС‹Рј РєРѕРјРїРѕРЅРµРЅС‚РѕРј.
+     * @param curGridData РЎС‚СЂРѕРєР° РґР°РЅРЅС‹С… РґР»СЏ РїСЂРѕРІРµСЂРєРё РїСЂРѕС‚РёРІ С„РёР»СЊС‚СЂР°, СЃРѕСЃС‚РѕСЏРЅРёРµ РєРѕС‚РѕСЂРѕРіРѕ СЃС‡РёС‚Р°РЅРѕ РІ {@link #prepareToApply()}
+     * @return РСЃС‚РёРЅР° РµСЃР»Рё СЃС‚СЂРѕРєР° РїСЂРѕС…РѕРґРёС‚ С„РёР»СЊС‚СЂ.
+     * @exception NullPointerException РґР»СЏ РїСѓСЃС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР°, IllegalStateException РµСЃР»Рё РЅРµ Р±С‹Р» РІС‹РїРѕР»РЅРµРЅ prepareToApply.
 	 */
 	public boolean evalGridData(GridData<?> curGridData) {
 		if (filterFields == null || filterFields.length != filterComponentArray.length) {
@@ -607,29 +607,29 @@ public class GridDataFilter implements Serializable {
 			throw new NullPointerException("Illegal null parameter in evalGridData");
 		}
 		boolean ret_res = true
-			   ,pk_res = false; // колонка PK проходит фильтр (значимо только при pkCtrlNotEmpty == true) -> эксклюзивный фильтр по PK
+			   ,pk_res = false; // РєРѕР»РѕРЅРєР° PK РїСЂРѕС…РѕРґРёС‚ С„РёР»СЊС‚СЂ (Р·РЅР°С‡РёРјРѕ С‚РѕР»СЊРєРѕ РїСЂРё pkCtrlNotEmpty == true) -> СЌРєСЃРєР»СЋР·РёРІРЅС‹Р№ С„РёР»СЊС‚СЂ РїРѕ PK
 		int idx = -1;
 		Object curSubj = curGridData.getBean();
 		for (FilterField ff : filterFields/*AbstractComponent ac : filterComponentArray*/) {
 			++idx;
 			//String compId = ac.getId();
 			boolean loc_res = false;
-			if ("selFilterCHB".equals(ff.getCompId()/*compId*/)) { // техническое поле GridData.sel
+			if ("selFilterCHB".equals(ff.getCompId()/*compId*/)) { // С‚РµС…РЅРёС‡РµСЃРєРѕРµ РїРѕР»Рµ GridData.sel
 				loc_res = ff.eval(curGridData);
 			} else {
 				loc_res = ff.eval(curSubj);
 			}
 			if (idx == pkIdx) {
 				pk_res = loc_res;
-				//if (pkCtrlNotEmpty) { ret_res = loc_res; } // эксклюзивный фильтр: другие поля ничего не значат
+				//if (pkCtrlNotEmpty) { ret_res = loc_res; } // СЌРєСЃРєР»СЋР·РёРІРЅС‹Р№ С„РёР»СЊС‚СЂ: РґСЂСѓРіРёРµ РїРѕР»СЏ РЅРёС‡РµРіРѕ РЅРµ Р·РЅР°С‡Р°С‚
 			}
- 			curGridData.setFilterFlagsBit(idx, loc_res); // TODO: оптимизировать - закешировать
- 			if (!loc_res && !pkCtrlNotEmpty) ret_res = false; // проверяем все поля фильтра, т.к. нужно проставить битовые флаги
+ 			curGridData.setFilterFlagsBit(idx, loc_res); // TODO: РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ - Р·Р°РєРµС€РёСЂРѕРІР°С‚СЊ
+ 			if (!loc_res && !pkCtrlNotEmpty) ret_res = false; // РїСЂРѕРІРµСЂСЏРµРј РІСЃРµ РїРѕР»СЏ С„РёР»СЊС‚СЂР°, С‚.Рє. РЅСѓР¶РЅРѕ РїСЂРѕСЃС‚Р°РІРёС‚СЊ Р±РёС‚РѕРІС‹Рµ С„Р»Р°РіРё
 			if (logger.isTraceEnabled() && curSubj instanceof SubjSumm && /*( ((SubjSumm)curSubj).getSubj_id() == 1007200 ||*/ ((SubjSumm)curSubj).getSubj_id() == 400 /*)*/ )
 				logger.trace("evalGridData. subj_id = "+((SubjSumm)curSubj).getSubj_id()+", idx = "+idx+", ret_res = "+ret_res+", loc_res = "+loc_res+", compId = '"+ff.getCompId()+"', getterName = '"+ff.getGetterName()+"', compVal = '"+ff.getCompVal()+"', fieldVal = '"+ff.getFieldVal()/*+"', pkFieldName: '"+pkFieldName*/+"', pkIdx = "+pkIdx+", pkCtrlNotEmpty = "+pkCtrlNotEmpty+", pk_res = "+pk_res+", filterFlags = "+Integer.toBinaryString(curGridData.getFilterFlags())+", fieldName = '"+ff.getFieldName()+"', beanClass: "+curSubj.getClass().getName() );
  		} // for
-		if (pkCtrlNotEmpty) {ret_res = pk_res;} // PK может располагаться ниже не прошедшего фильтр поля по циклу !
-// TODO: перенести сюда ?: curGridData.setInFilter(ret_res);
+		if (pkCtrlNotEmpty) {ret_res = pk_res;} // PK РјРѕР¶РµС‚ СЂР°СЃРїРѕР»Р°РіР°С‚СЊСЃСЏ РЅРёР¶Рµ РЅРµ РїСЂРѕС€РµРґС€РµРіРѕ С„РёР»СЊС‚СЂ РїРѕР»СЏ РїРѕ С†РёРєР»Сѓ !
+// TODO: РїРµСЂРµРЅРµСЃС‚Рё СЃСЋРґР° ?: curGridData.setInFilter(ret_res);
 		return ret_res;
 	} // public boolean evalGridData(GridData curGridData)
 	

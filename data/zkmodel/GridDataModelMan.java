@@ -1,4 +1,4 @@
-package basos.data.zkmodel;
+п»їpackage basos.data.zkmodel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import basos.data.dao.GridDataProvider;
 import basos.data.dao.GridDataProviderWPk;
 
 
-/** Менеджер лист-модели {@link ListModelListExt} (грида/листбокса) с (фиксированным) набором строк типа {@link GridData GridData&lt;T&gt;}.
- * Инициализируется дата-провайдером {@link GridDataProvider GridDataProvider&lt;T&gt;}.
- * Создаваемая лист-модель использует список, предоставленный провайдером, вживую (а он fixed-size). Модель доступна по {@link #getGridLML()}.
- * Инкапсулирует тип бина (он определён реализацией провайдера, но также передаётся в конструктор для валидации),
- *  реализует специфичные операции для list model of GridData.
- * Для грида/листбокса с композитным фильтром следует использовать {@link GridDataFilterableModelMan} (наследник).
- * @param <T> Тип бина (доменного класса), который оборачивается классом GridData&lt;T&gt;, представляющим собой строку лист-модели.
+/** РњРµРЅРµРґР¶РµСЂ Р»РёСЃС‚-РјРѕРґРµР»Рё {@link ListModelListExt} (РіСЂРёРґР°/Р»РёСЃС‚Р±РѕРєСЃР°) СЃ (С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹Рј) РЅР°Р±РѕСЂРѕРј СЃС‚СЂРѕРє С‚РёРїР° {@link GridData GridData&lt;T&gt;}.
+ * РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРѕРј {@link GridDataProvider GridDataProvider&lt;T&gt;}.
+ * РЎРѕР·РґР°РІР°РµРјР°СЏ Р»РёСЃС‚-РјРѕРґРµР»СЊ РёСЃРїРѕР»СЊР·СѓРµС‚ СЃРїРёСЃРѕРє, РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅС‹Р№ РїСЂРѕРІР°Р№РґРµСЂРѕРј, РІР¶РёРІСѓСЋ (Р° РѕРЅ fixed-size). РњРѕРґРµР»СЊ РґРѕСЃС‚СѓРїРЅР° РїРѕ {@link #getGridLML()}.
+ * РРЅРєР°РїСЃСѓР»РёСЂСѓРµС‚ С‚РёРї Р±РёРЅР° (РѕРЅ РѕРїСЂРµРґРµР»С‘РЅ СЂРµР°Р»РёР·Р°С†РёРµР№ РїСЂРѕРІР°Р№РґРµСЂР°, РЅРѕ С‚Р°РєР¶Рµ РїРµСЂРµРґР°С‘С‚СЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РІР°Р»РёРґР°С†РёРё),
+ *  СЂРµР°Р»РёР·СѓРµС‚ СЃРїРµС†РёС„РёС‡РЅС‹Рµ РѕРїРµСЂР°С†РёРё РґР»СЏ list model of GridData.
+ * Р”Р»СЏ РіСЂРёРґР°/Р»РёСЃС‚Р±РѕРєСЃР° СЃ РєРѕРјРїРѕР·РёС‚РЅС‹Рј С„РёР»СЊС‚СЂРѕРј СЃР»РµРґСѓРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ {@link GridDataFilterableModelMan} (РЅР°СЃР»РµРґРЅРёРє).
+ * @param <T> РўРёРї Р±РёРЅР° (РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР°), РєРѕС‚РѕСЂС‹Р№ РѕР±РѕСЂР°С‡РёРІР°РµС‚СЃСЏ РєР»Р°СЃСЃРѕРј GridData&lt;T&gt;, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёРј СЃРѕР±РѕР№ СЃС‚СЂРѕРєСѓ Р»РёСЃС‚-РјРѕРґРµР»Рё.
  */
 public class GridDataModelMan<T extends Object & Serializable & Comparable<? super T>> implements Serializable {
 	private static final long serialVersionUID = -2639931301160333891L;
@@ -33,10 +33,10 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
 //	private static final Marker concurMarker = MarkerFactory.getMarker("CONCUR");
 	
 	protected final Class<T> beanClass;
-	protected final GridDataProvider<T> dataProvider; // (интерфейс к данным для грида) ! заполняется из БД в конструкторе !
-	protected /*final*/ List<GridData<T>> entireGridDataList; // массив доменных объектов из dataProvider, основа для лист-модели
-	protected final ListModelListExt<GridData<T>> gridLML; // модель данных грида
-	protected final StampedLock modelRWLock; // RW-замок инкапсулирован в ListModelListExt
+	protected final GridDataProvider<T> dataProvider; // (РёРЅС‚РµСЂС„РµР№СЃ Рє РґР°РЅРЅС‹Рј РґР»СЏ РіСЂРёРґР°) ! Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РёР· Р‘Р” РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ !
+	protected /*final*/ List<GridData<T>> entireGridDataList; // РјР°СЃСЃРёРІ РґРѕРјРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ РёР· dataProvider, РѕСЃРЅРѕРІР° РґР»СЏ Р»РёСЃС‚-РјРѕРґРµР»Рё
+	protected final ListModelListExt<GridData<T>> gridLML; // РјРѕРґРµР»СЊ РґР°РЅРЅС‹С… РіСЂРёРґР°
+	protected final StampedLock modelRWLock; // RW-Р·Р°РјРѕРє РёРЅРєР°РїСЃСѓР»РёСЂРѕРІР°РЅ РІ ListModelListExt
 	
 	/**  */
 	public static enum ModelInitTypes {
@@ -55,21 +55,21 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
 		return modelState;
 	}
 	
-	/** По умолчанию получаем полный список от провайдера сразу и инициализируем им лист модель вживую, считая, что модель будет неизменна.
+	/** РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РїРѕР»СѓС‡Р°РµРј РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє РѕС‚ РїСЂРѕРІР°Р№РґРµСЂР° СЃСЂР°Р·Сѓ Рё РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РёРј Р»РёСЃС‚ РјРѕРґРµР»СЊ РІР¶РёРІСѓСЋ, СЃС‡РёС‚Р°СЏ, С‡С‚Рѕ РјРѕРґРµР»СЊ Р±СѓРґРµС‚ РЅРµРёР·РјРµРЅРЅР°.
 	 * {@link #GridDataModelMan(Class, GridDataProvider, ModelInitTypes) GridDataModelMan(Class, GridDataProvider, GridDataModelMan.ModelInitTypes.INIT_ENTIRE_FIXED_SIZE)}
 	 */
 	public GridDataModelMan(Class<T> beanClass, GridDataProvider<T> dataProvider) {
 		this(beanClass, dataProvider, GridDataModelMan.ModelInitTypes.INIT_ENTIRE_FIXED_SIZE/*live fixed-size entireGridDataList*/);
 	}
 	
- 	/** Создатся лист-модель на базе списка, возвращаемого провайдером ({@link GridDataProvider#getAll()}). Создаётся копия полного списка.
- 	 * Модель далее можно получить методом {@link #getGridLML()}.
- 	 * @param beanClass Класс бина (доменного класса), который оборачивается классом GridData<T>, представляющим собой строку лист-модели.
- 	 * @param dataProvider Провайдер данных для лист-модели.
- 	 * @param live True - используем для модели список провайдера вживую (fixed-size); false - оборачиваем в ArrayList (мутабельный, можно фильтровать).
+ 	/** РЎРѕР·РґР°С‚СЃСЏ Р»РёСЃС‚-РјРѕРґРµР»СЊ РЅР° Р±Р°Р·Рµ СЃРїРёСЃРєР°, РІРѕР·РІСЂР°С‰Р°РµРјРѕРіРѕ РїСЂРѕРІР°Р№РґРµСЂРѕРј ({@link GridDataProvider#getAll()}). РЎРѕР·РґР°С‘С‚СЃСЏ РєРѕРїРёСЏ РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°.
+ 	 * РњРѕРґРµР»СЊ РґР°Р»РµРµ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РјРµС‚РѕРґРѕРј {@link #getGridLML()}.
+ 	 * @param beanClass РљР»Р°СЃСЃ Р±РёРЅР° (РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР°), РєРѕС‚РѕСЂС‹Р№ РѕР±РѕСЂР°С‡РёРІР°РµС‚СЃСЏ РєР»Р°СЃСЃРѕРј GridData<T>, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰РёРј СЃРѕР±РѕР№ СЃС‚СЂРѕРєСѓ Р»РёСЃС‚-РјРѕРґРµР»Рё.
+ 	 * @param dataProvider РџСЂРѕРІР°Р№РґРµСЂ РґР°РЅРЅС‹С… РґР»СЏ Р»РёСЃС‚-РјРѕРґРµР»Рё.
+ 	 * @param live True - РёСЃРїРѕР»СЊР·СѓРµРј РґР»СЏ РјРѕРґРµР»Рё СЃРїРёСЃРѕРє РїСЂРѕРІР°Р№РґРµСЂР° РІР¶РёРІСѓСЋ (fixed-size); false - РѕР±РѕСЂР°С‡РёРІР°РµРј РІ ArrayList (РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№, РјРѕР¶РЅРѕ С„РёР»СЊС‚СЂРѕРІР°С‚СЊ).
  	 */
 	public GridDataModelMan(Class<T> beanClass, GridDataProvider<T> dataProvider, GridDataModelMan.ModelInitTypes initModelType) {
-// ?? убрать beanClass ??
+// ?? СѓР±СЂР°С‚СЊ beanClass ??
 		if (beanClass == null) {
 			logger.error("Null argument 'beanClass' not allowed !");
 			throw new NullPointerException("Null argument 'beanClass' not allowed !");
@@ -86,16 +86,16 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
  		this.beanClass = beanClass;
  		this.dataProvider = dataProvider;
  		
- 		if (initModelType == GridDataModelMan.ModelInitTypes.INIT_ENTIRE_FIXED_SIZE) { // при вызове извне только оборачиваем список провайдера (т.к. список fixed-size)
- 			entireGridDataList = this.dataProvider.getAll(); // !! это исходный список (приватная переменная, возвращённая по ссылке), полученный из БД при создании SubjectListORCL()
+ 		if (initModelType == GridDataModelMan.ModelInitTypes.INIT_ENTIRE_FIXED_SIZE) { // РїСЂРё РІС‹Р·РѕРІРµ РёР·РІРЅРµ С‚РѕР»СЊРєРѕ РѕР±РѕСЂР°С‡РёРІР°РµРј СЃРїРёСЃРѕРє РїСЂРѕРІР°Р№РґРµСЂР° (С‚.Рє. СЃРїРёСЃРѕРє fixed-size)
+ 			entireGridDataList = this.dataProvider.getAll(); // !! СЌС‚Рѕ РёСЃС…РѕРґРЅС‹Р№ СЃРїРёСЃРѕРє (РїСЂРёРІР°С‚РЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ, РІРѕР·РІСЂР°С‰С‘РЅРЅР°СЏ РїРѕ СЃСЃС‹Р»РєРµ), РїРѕР»СѓС‡РµРЅРЅС‹Р№ РёР· Р‘Р” РїСЂРё СЃРѕР·РґР°РЅРёРё SubjectListORCL()
  			gridLML = new ListModelListExt<GridData<T>>(entireGridDataList, true/*live*/);
  			modelState = GridDataModelMan.ModelStates.ENTIRE_FIXED_SIZE_STATE;
- 		} else if (initModelType == GridDataModelMan.ModelInitTypes.INIT_ENTIRE_MUTABLE) { // наследникам позволяем использовать мутабельный список (фильтрация)
- 			entireGridDataList = this.dataProvider.getAll(); // !! это исходный список (приватная переменная, возвращённая по ссылке), полученный из БД при создании SubjectListORCL()
- 			gridLML = new ListModelListExt<GridData<T>>(new ArrayList<GridData<T>>(entireGridDataList), true/*live*/); // в лист-модель передаём копию allSubj !
+ 		} else if (initModelType == GridDataModelMan.ModelInitTypes.INIT_ENTIRE_MUTABLE) { // РЅР°СЃР»РµРґРЅРёРєР°Рј РїРѕР·РІРѕР»СЏРµРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№ СЃРїРёСЃРѕРє (С„РёР»СЊС‚СЂР°С†РёСЏ)
+ 			entireGridDataList = this.dataProvider.getAll(); // !! СЌС‚Рѕ РёСЃС…РѕРґРЅС‹Р№ СЃРїРёСЃРѕРє (РїСЂРёРІР°С‚РЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ, РІРѕР·РІСЂР°С‰С‘РЅРЅР°СЏ РїРѕ СЃСЃС‹Р»РєРµ), РїРѕР»СѓС‡РµРЅРЅС‹Р№ РёР· Р‘Р” РїСЂРё СЃРѕР·РґР°РЅРёРё SubjectListORCL()
+ 			gridLML = new ListModelListExt<GridData<T>>(new ArrayList<GridData<T>>(entireGridDataList), true/*live*/); // РІ Р»РёСЃС‚-РјРѕРґРµР»СЊ РїРµСЂРµРґР°С‘Рј РєРѕРїРёСЋ allSubj !
  			modelState = GridDataModelMan.ModelStates.ENTIRE_MUTABLE_STATE;
  		} else { // GridDataModelMan.ModelInitTypes.INIT_BLANK
-// TODO: есть ещё вариант с резервированием места ListModelListExt(int initialCapacity)
+// TODO: РµСЃС‚СЊ РµС‰С‘ РІР°СЂРёР°РЅС‚ СЃ СЂРµР·РµСЂРІРёСЂРѕРІР°РЅРёРµРј РјРµСЃС‚Р° ListModelListExt(int initialCapacity)
  			gridLML = new ListModelListExt<GridData<T>>();
  			modelState = GridDataModelMan.ModelStates.BLANK_STATE;
  		}
@@ -104,7 +104,7 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
 	} // public GridDataModelMan(Class<T> beanClass, GridDataProvider<T> dataProvider, GridDataModelMan.ModelInitTypes initModelType)
 	
 	
-	/** Задуман для отложенной инициализации лист-модели полным списком от провайдера (после вызова конструктора с INIT_BLANK). Thread-safe. */
+	/** Р—Р°РґСѓРјР°РЅ РґР»СЏ РѕС‚Р»РѕР¶РµРЅРЅРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё Р»РёСЃС‚-РјРѕРґРµР»Рё РїРѕР»РЅС‹Рј СЃРїРёСЃРєРѕРј РѕС‚ РїСЂРѕРІР°Р№РґРµСЂР° (РїРѕСЃР»Рµ РІС‹Р·РѕРІР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° СЃ INIT_BLANK). Thread-safe. */
 	public void reinitModelByEntireList(GridDataModelMan.ModelInitTypes initModelType) {
 		if (entireGridDataList == null) {
 			entireGridDataList = this.dataProvider.getAll();
@@ -118,8 +118,8 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
 		}
 	}
 	
-	/** Подмена списка объектов на полученный от провайдера по значению индекса. Thread-safe.
-	 * @param key Значение ключа, по которому модель заранее должна быть отсортирована.
+	/** РџРѕРґРјРµРЅР° СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ РЅР° РїРѕР»СѓС‡РµРЅРЅС‹Р№ РѕС‚ РїСЂРѕРІР°Р№РґРµСЂР° РїРѕ Р·РЅР°С‡РµРЅРёСЋ РёРЅРґРµРєСЃР°. Thread-safe.
+	 * @param key Р—РЅР°С‡РµРЅРёРµ РєР»СЋС‡Р°, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РјРѕРґРµР»СЊ Р·Р°СЂР°РЅРµРµ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅР°.
 	 */
 	public <U extends Object & Comparable<? super U>> void reinitModelByRange(U key) {
 		List<GridData<T>> l = dataProvider.getRange(key);
@@ -127,57 +127,57 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
 		modelState = GridDataModelMan.ModelStates.PARTIAL_STATE;
 	}
 	
-	/** Очистить модель. */
+	/** РћС‡РёСЃС‚РёС‚СЊ РјРѕРґРµР»СЊ. */
 	public void clearModel() {
 		gridLML.clearSelection();
 		gridLML.clear();
 		modelState = GridDataModelMan.ModelStates.BLANK_STATE;
 	}
 	
-	/** Провайдер списка строк лист-модели. */
+	/** РџСЂРѕРІР°Р№РґРµСЂ СЃРїРёСЃРєР° СЃС‚СЂРѕРє Р»РёСЃС‚-РјРѕРґРµР»Рё. */
 	public GridDataProvider<T> getDataProvider() { return dataProvider; }
 	
- 	/** Вернуть дата-модель грида, созданную из списка, возвращаемого провайдером ({@link GridDataProvider#getAll()}). */
+ 	/** Р’РµСЂРЅСѓС‚СЊ РґР°С‚Р°-РјРѕРґРµР»СЊ РіСЂРёРґР°, СЃРѕР·РґР°РЅРЅСѓСЋ РёР· СЃРїРёСЃРєР°, РІРѕР·РІСЂР°С‰Р°РµРјРѕРіРѕ РїСЂРѕРІР°Р№РґРµСЂРѕРј ({@link GridDataProvider#getAll()}). */
  	protected ListModelListExt<GridData<T>> getGridLML() { return gridLML; }
  	
- 	/** Назначить лист-модель менеджера указанному гриду. Пытаемся скрыть модель, т.к. отслеживаем статус; однако, грид позволяет модель извлечь. */
+ 	/** РќР°Р·РЅР°С‡РёС‚СЊ Р»РёСЃС‚-РјРѕРґРµР»СЊ РјРµРЅРµРґР¶РµСЂР° СѓРєР°Р·Р°РЅРЅРѕРјСѓ РіСЂРёРґСѓ. РџС‹С‚Р°РµРјСЃСЏ СЃРєСЂС‹С‚СЊ РјРѕРґРµР»СЊ, С‚.Рє. РѕС‚СЃР»РµР¶РёРІР°РµРј СЃС‚Р°С‚СѓСЃ; РѕРґРЅР°РєРѕ, РіСЂРёРґ РїРѕР·РІРѕР»СЏРµС‚ РјРѕРґРµР»СЊ РёР·РІР»РµС‡СЊ. */
  	public void setModelFor(Grid mesh) { mesh.setModel(gridLML); }
- 	/** Назначить лист-модель менеджера указанному листбоксу. */
+ 	/** РќР°Р·РЅР°С‡РёС‚СЊ Р»РёСЃС‚-РјРѕРґРµР»СЊ РјРµРЅРµРґР¶РµСЂР° СѓРєР°Р·Р°РЅРЅРѕРјСѓ Р»РёСЃС‚Р±РѕРєСЃСѓ. */
  	public void setModelFor(Listbox mesh) { mesh.setModel(gridLML); }
  	
- 	/** Возвращает (постоянный) размер списка от провайдера, который в основе лист-модели. */
+ 	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ (РїРѕСЃС‚РѕСЏРЅРЅС‹Р№) СЂР°Р·РјРµСЂ СЃРїРёСЃРєР° РѕС‚ РїСЂРѕРІР°Р№РґРµСЂР°, РєРѕС‚РѕСЂС‹Р№ РІ РѕСЃРЅРѕРІРµ Р»РёСЃС‚-РјРѕРґРµР»Рё. */
  	public int getTotalRowCount() { return dataProvider.getTotalRowCount(); }
  	
- 	/** Возвращает текущий размер списка дата-модели (строк под фильтром). */
+ 	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РёР№ СЂР°Р·РјРµСЂ СЃРїРёСЃРєР° РґР°С‚Р°-РјРѕРґРµР»Рё (СЃС‚СЂРѕРє РїРѕРґ С„РёР»СЊС‚СЂРѕРј). */
  	public int getCurRowCount() {return gridLML.size();}
  	
- 	/** Класс бина (доменного класса), определяется реализацией дата-провайдера. */
+ 	/** РљР»Р°СЃСЃ Р±РёРЅР° (РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР°), РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ СЂРµР°Р»РёР·Р°С†РёРµР№ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂР°. */
 	public Class<T> getBeanClass() { return beanClass; }
 	
-	/** Получить RW-замок дата-модели. */
+	/** РџРѕР»СѓС‡РёС‚СЊ RW-Р·Р°РјРѕРє РґР°С‚Р°-РјРѕРґРµР»Рё. */
 	public StampedLock getModelRWLock() { return modelRWLock; }
 	
-	/** Проверка на любой тип блокировки. */
+	/** РџСЂРѕРІРµСЂРєР° РЅР° Р»СЋР±РѕР№ С‚РёРї Р±Р»РѕРєРёСЂРѕРІРєРё. */
 	public boolean isModelLocked() { return modelRWLock.isReadLocked() || modelRWLock.isWriteLocked(); }
 	
 	
- 	/** Установить значение флага выбора ("крыж" - поле GridData.sel) для строки модели с заданным номером.
- 	 * Вызов должен быть совершён в условиях эксклюзивной блокировки модели.
- 	 * @param isChecked Новое значение флага (true/false).
- 	 * @param uid Значение уникального идентификатора GridData.uid объекта-обёртки (ищем по нему строку).
- 	 * @return Индекс элемента в дата-модели (м.б. < 0).
+ 	/** РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° РІС‹Р±РѕСЂР° ("РєСЂС‹Р¶" - РїРѕР»Рµ GridData.sel) РґР»СЏ СЃС‚СЂРѕРєРё РјРѕРґРµР»Рё СЃ Р·Р°РґР°РЅРЅС‹Рј РЅРѕРјРµСЂРѕРј.
+ 	 * Р’С‹Р·РѕРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЃРѕРІРµСЂС€С‘РЅ РІ СѓСЃР»РѕРІРёСЏС… СЌРєСЃРєР»СЋР·РёРІРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРё РјРѕРґРµР»Рё.
+ 	 * @param isChecked РќРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° (true/false).
+ 	 * @param uid Р—РЅР°С‡РµРЅРёРµ СѓРЅРёРєР°Р»СЊРЅРѕРіРѕ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° GridData.uid РѕР±СЉРµРєС‚Р°-РѕР±С‘СЂС‚РєРё (РёС‰РµРј РїРѕ РЅРµРјСѓ СЃС‚СЂРѕРєСѓ).
+ 	 * @return РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° РІ РґР°С‚Р°-РјРѕРґРµР»Рё (Рј.Р±. < 0).
  	 */
-//	 * @param irn Индекс элемента в дата-модели грида.
-// вызывается методом контроллера onCheckSel(), который выполняется защищённо (через диспетчер)
+//	 * @param irn РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° РІ РґР°С‚Р°-РјРѕРґРµР»Рё РіСЂРёРґР°.
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґРѕРј РєРѕРЅС‚СЂРѕР»Р»РµСЂР° onCheckSel(), РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°С‰РёС‰С‘РЅРЅРѕ (С‡РµСЂРµР· РґРёСЃРїРµС‚С‡РµСЂ)
  	public int selectRow(boolean isChecked, /*int irn*//*long uid*/GridData<T> curGridData) {
  		long uid = curGridData.getUid();
-// ---FIXME: оптимизировать поиск (сортировка модели меняется) ? искать в отсортированном полном списке по ПК (если ПК установлен и полный список загружен ИЛИ по uid при отсутствии ПК) !!!
+// ---FIXME: РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РїРѕРёСЃРє (СЃРѕСЂС‚РёСЂРѕРІРєР° РјРѕРґРµР»Рё РјРµРЅСЏРµС‚СЃСЏ) ? РёСЃРєР°С‚СЊ РІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј РїРѕР»РЅРѕРј СЃРїРёСЃРєРµ РїРѕ РџРљ (РµСЃР»Рё РџРљ СѓСЃС‚Р°РЅРѕРІР»РµРЅ Рё РїРѕР»РЅС‹Р№ СЃРїРёСЃРѕРє Р·Р°РіСЂСѓР¶РµРЅ РР›Р РїРѕ uid РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё РџРљ) !!!
  		/*int irn = GridData.searchByUid(gridLML.getInnerList(), uid);
-		if (irn < 0) return irn; // за время ожидания многое могло измениться !
+		if (irn < 0) return irn; // Р·Р° РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РјРЅРѕРіРѕРµ РјРѕРіР»Рѕ РёР·РјРµРЅРёС‚СЊСЃСЏ !
  		GridData<T> curGridData = gridLML.get(irn);*/
  		curGridData.setSel(isChecked);
  		//gridLML.notifyChange(curGridData);
-// в любом случае необходима позиция в текущей лист-модели
+// РІ Р»СЋР±РѕРј СЃР»СѓС‡Р°Рµ РЅРµРѕР±С…РѕРґРёРјР° РїРѕР·РёС†РёСЏ РІ С‚РµРєСѓС‰РµР№ Р»РёСЃС‚-РјРѕРґРµР»Рё
  		int irn = gridLML.indexOf(curGridData);
  		gridLML.notifyChange(irn);
  		String pk = "<provider_wo_pk>";
@@ -194,20 +194,20 @@ public class GridDataModelMan<T extends Object & Serializable & Comparable<? sup
  	} // public int selectRow(boolean isChecked, /*int irn*//*long uid*/GridData<T> curGridData)
  	
  	
- 	/** Для всех строк модели отразить изменение поля GridData.sel (пометили/разметили все строки).
- 	 * Вызов должен быть совершён в условиях эксклюзивной блокировки модели.
- 	 * @param isChecked Новое значение флага (true/false).
+ 	/** Р”Р»СЏ РІСЃРµС… СЃС‚СЂРѕРє РјРѕРґРµР»Рё РѕС‚СЂР°Р·РёС‚СЊ РёР·РјРµРЅРµРЅРёРµ РїРѕР»СЏ GridData.sel (РїРѕРјРµС‚РёР»Рё/СЂР°Р·РјРµС‚РёР»Рё РІСЃРµ СЃС‚СЂРѕРєРё).
+ 	 * Р’С‹Р·РѕРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЃРѕРІРµСЂС€С‘РЅ РІ СѓСЃР»РѕРІРёСЏС… СЌРєСЃРєР»СЋР·РёРІРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРё РјРѕРґРµР»Рё.
+ 	 * @param isChecked РќРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ С„Р»Р°РіР° (true/false).
  	 */
-// вызывается методом контроллера onCheckSelectAllCHB(), который выполняется защищённо (через диспетчер)
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґРѕРј РєРѕРЅС‚СЂРѕР»Р»РµСЂР° onCheckSelectAllCHB(), РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°С‰РёС‰С‘РЅРЅРѕ (С‡РµСЂРµР· РґРёСЃРїРµС‚С‡РµСЂ)
  	public void selectAllRows(boolean isChecked) {
-// HOWTO: чтобы здесь параметризовать, пришлось параметризованную лист-модель вынести в переменную (dataGrid.getModel() не параметризуется)
+// HOWTO: С‡С‚РѕР±С‹ Р·РґРµСЃСЊ РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°С‚СЊ, РїСЂРёС€Р»РѕСЃСЊ РїР°СЂР°РјРµС‚СЂРёР·РѕРІР°РЅРЅСѓСЋ Р»РёСЃС‚-РјРѕРґРµР»СЊ РІС‹РЅРµСЃС‚Рё РІ РїРµСЂРµРјРµРЅРЅСѓСЋ (dataGrid.getModel() РЅРµ РїР°СЂР°РјРµС‚СЂРёР·СѓРµС‚СЃСЏ)
 		gridLML.forEach(
 			(GridData<T> s) -> { s.setSel(isChecked);
 						    } 
 		);
 		gridLML.notifyChangeAll();
 		logger.debug("selectAllRows (after actions). isChecked = {}", isChecked);
-// HOWTO: !!! SubjsPageComposer.onChange() вызывается для каждой строки. Отложить оповещение и одним разом (deferred) ? !!!
+// HOWTO: !!! SubjsPageComposer.onChange() РІС‹Р·С‹РІР°РµС‚СЃСЏ РґР»СЏ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё. РћС‚Р»РѕР¶РёС‚СЊ РѕРїРѕРІРµС‰РµРЅРёРµ Рё РѕРґРЅРёРј СЂР°Р·РѕРј (deferred) ? !!!
 // ? GridDataLoader.doListDataChange(ListDataEvent event) == GridDataLoader.syncModel(-1, -1) ? Grid.getDataLoader() - access-modifiers: empty (package private)
  	} // public void selectAllRows(boolean isChecked)
  	

@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import org.zkoss.zul.Intbox;
 import org.zkoss.zul.impl.InputElement;
 
 
-/** Реализация поумолчательных поведенческих методов интерфейса AbstractComponentBehaveUtil для компонента org.zkoss.zul.Intbox.
+/** Р РµР°Р»РёР·Р°С†РёСЏ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… РїРѕРІРµРґРµРЅС‡РµСЃРєРёС… РјРµС‚РѕРґРѕРІ РёРЅС‚РµСЂС„РµР№СЃР° AbstractComponentBehaveUtil РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р° org.zkoss.zul.Intbox.
  * Singleton, use getInstance().
  * @author basos
 */
@@ -44,7 +44,7 @@ public class IntboxDefBehaveUtil extends AbstractComponentBehaveUtil implements 
 	
 	@Override
 	public void clear(AbstractComponent ac) {
-// null для Intbox (0 м.б. допустимым значением) !!!
+// null РґР»СЏ Intbox (0 Рј.Р±. РґРѕРїСѓСЃС‚РёРјС‹Рј Р·РЅР°С‡РµРЅРёРµРј) !!!
 		((Intbox)ac).setText(""); // .setValue(0)
 	}
 	
@@ -69,24 +69,24 @@ public class IntboxDefBehaveUtil extends AbstractComponentBehaveUtil implements 
 		return ((Intbox)ac).getValue(); // nullable Integer
 	}
 	
-	/** Проверка на равенство двух Integer.
-	 * @return Истина для пустого значения компонента (null) и для точно совпадающих значений (equals).
-     * Отличается от {@link #exactMatch} тем, что пустому фильтру удовлетворяет любое значение колонки.
+	/** РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ РґРІСѓС… Integer.
+	 * @return РСЃС‚РёРЅР° РґР»СЏ РїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° (null) Рё РґР»СЏ С‚РѕС‡РЅРѕ СЃРѕРІРїР°РґР°СЋС‰РёС… Р·РЅР°С‡РµРЅРёР№ (equals).
+     * РћС‚Р»РёС‡Р°РµС‚СЃСЏ РѕС‚ {@link #exactMatch} С‚РµРј, С‡С‚Рѕ РїСѓСЃС‚РѕРјСѓ С„РёР»СЊС‚СЂСѓ СѓРґРѕРІР»РµС‚РІРѕСЂСЏРµС‚ Р»СЋР±РѕРµ Р·РЅР°С‡РµРЅРёРµ РєРѕР»РѕРЅРєРё.
 	 */
 	@Override
 	public boolean theFilter(Object componentValue, Object otherValue) {
-// поле данных м.б. как int, так и Integer (nullable !)
-		return ( componentValue == null /*|| componentValue.equals(0)*/ || componentValue.equals(otherValue) ); // точное совпадение
+// РїРѕР»Рµ РґР°РЅРЅС‹С… Рј.Р±. РєР°Рє int, С‚Р°Рє Рё Integer (nullable !)
+		return ( componentValue == null /*|| componentValue.equals(0)*/ || componentValue.equals(otherValue) ); // С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
 	}
 	
-	/** Проверка на равенство двух непустых Integer.
-	 * @return Ложь если одно из значений пусто (null).
-     * Отличается от {@link theFilter} тем, что пустой фильтр никто не пройдёт.
+	/** РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ РґРІСѓС… РЅРµРїСѓСЃС‚С‹С… Integer.
+	 * @return Р›РѕР¶СЊ РµСЃР»Рё РѕРґРЅРѕ РёР· Р·РЅР°С‡РµРЅРёР№ РїСѓСЃС‚Рѕ (null).
+     * РћС‚Р»РёС‡Р°РµС‚СЃСЏ РѕС‚ {@link theFilter} С‚РµРј, С‡С‚Рѕ РїСѓСЃС‚РѕР№ С„РёР»СЊС‚СЂ РЅРёРєС‚Рѕ РЅРµ РїСЂРѕР№РґС‘С‚.
 	 */
 	@Override
 	public boolean exactMatch(Object componentValue, Object otherValue) {
-// поле данных м.б. как int, так и Integer (nullable !)
-		return ( componentValue != null && componentValue.equals(otherValue) ); // точное совпадение
+// РїРѕР»Рµ РґР°РЅРЅС‹С… Рј.Р±. РєР°Рє int, С‚Р°Рє Рё Integer (nullable !)
+		return ( componentValue != null && componentValue.equals(otherValue) ); // С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ
 	}
 
 } // public class IntboxDefBehaveUtil extends AbstractComponentBehaveUtil

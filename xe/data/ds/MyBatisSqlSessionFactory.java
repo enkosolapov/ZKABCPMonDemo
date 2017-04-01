@@ -1,4 +1,4 @@
-package basos.xe.data.ds;
+п»їpackage basos.xe.data.ds;
 
 import javax.sql.DataSource;
 
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 
 //import basos.xe.data.dao.DealLastStateMapper;
 
-/** SqlSessionFactory на основе Java-конфигурации (Singleton).
- * Регистрируются все мапперы (java+xml) из пакета basos.xe.data.dao.
+/** SqlSessionFactory РЅР° РѕСЃРЅРѕРІРµ Java-РєРѕРЅС„РёРіСѓСЂР°С†РёРё (Singleton).
+ * Р РµРіРёСЃС‚СЂРёСЂСѓСЋС‚СЃСЏ РІСЃРµ РјР°РїРїРµСЂС‹ (java+xml) РёР· РїР°РєРµС‚Р° basos.xe.data.dao.
  */
 public class MyBatisSqlSessionFactory {
 	
@@ -29,8 +29,8 @@ public class MyBatisSqlSessionFactory {
 			Configuration cnf = new Configuration(env);
 			//cnf.getTypeAliasRegistry().registerAlias("deals", DealLastState.class);
 			//cnf.addMapper(DealLastStateMapper.class);
-// !! загружать мапперы по мере использования, а не все оптом !!
-//			cnf.addMappers("basos.xe.data.dao"); // HOWTO: ? как xml хранить отдельно от interface (в XML-конфиге у элемента mapper есть атрибут resource: см. использование XMLMapperBuilder в XMLConfigBuilder.mapperElement) ?
+// !! Р·Р°РіСЂСѓР¶Р°С‚СЊ РјР°РїРїРµСЂС‹ РїРѕ РјРµСЂРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ, Р° РЅРµ РІСЃРµ РѕРїС‚РѕРј !!
+//			cnf.addMappers("basos.xe.data.dao"); // HOWTO: ? РєР°Рє xml С…СЂР°РЅРёС‚СЊ РѕС‚РґРµР»СЊРЅРѕ РѕС‚ interface (РІ XML-РєРѕРЅС„РёРіРµ Сѓ СЌР»РµРјРµРЅС‚Р° mapper РµСЃС‚СЊ Р°С‚СЂРёР±СѓС‚ resource: СЃРј. РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ XMLMapperBuilder РІ XMLConfigBuilder.mapperElement) ?
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(cnf);
 		} catch (Throwable e) {
 			logger.error("Error in MyBatisSqlSessionFactory.getSqlSessionFactory()", e);

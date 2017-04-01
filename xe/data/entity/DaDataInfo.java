@@ -1,4 +1,4 @@
-package basos.xe.data.entity;
+п»їpackage basos.xe.data.entity;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,34 +8,34 @@ import basos.util.DaDataRS;
 //import java.sql.Date;
 
 
-/** Данные по организациям от сервиса https://dadata.ru. Свёрнутые (no bind) и составные (add user input).
- * В полном составе поля нужны только для записи в БД и передачи в форму.
- * Сервис не оперирует комментарием (userComment, userName), saveTime; только json в suggestParty по ИНН.
+/** Р”Р°РЅРЅС‹Рµ РїРѕ РѕСЂРіР°РЅРёР·Р°С†РёСЏРј РѕС‚ СЃРµСЂРІРёСЃР° https://dadata.ru. РЎРІС‘СЂРЅСѓС‚С‹Рµ (no bind) Рё СЃРѕСЃС‚Р°РІРЅС‹Рµ (add user input).
+ * Р’ РїРѕР»РЅРѕРј СЃРѕСЃС‚Р°РІРµ РїРѕР»СЏ РЅСѓР¶РЅС‹ С‚РѕР»СЊРєРѕ РґР»СЏ Р·Р°РїРёСЃРё РІ Р‘Р” Рё РїРµСЂРµРґР°С‡Рё РІ С„РѕСЂРјСѓ.
+ * РЎРµСЂРІРёСЃ РЅРµ РѕРїРµСЂРёСЂСѓРµС‚ РєРѕРјРјРµРЅС‚Р°СЂРёРµРј (userComment, userName), saveTime; С‚РѕР»СЊРєРѕ json РІ suggestParty РїРѕ РРќРќ.
  */
 public final class DaDataInfo {
 	
-	public static enum JsonStates { BLANC // болванка, данные не загружены (suggestParty == null)
-					,FROMDB_LOADED	 	// из БД
-					,FIRST_FROMRS_LOADED // из сервиса, не перегружались и не сохранялись в БД
-					,RELOADED_BEFORE_FORM // загружены из БД, перезагружены из сервиса до поднятия формы (по запросу на перегрузку устаревших)
-					,RELOADED_DURING_FORM  // загружены из БД, перезагружены из сервиса по кнопке на форме
+	public static enum JsonStates { BLANC // Р±РѕР»РІР°РЅРєР°, РґР°РЅРЅС‹Рµ РЅРµ Р·Р°РіСЂСѓР¶РµРЅС‹ (suggestParty == null)
+					,FROMDB_LOADED	 	// РёР· Р‘Р”
+					,FIRST_FROMRS_LOADED // РёР· СЃРµСЂРІРёСЃР°, РЅРµ РїРµСЂРµРіСЂСѓР¶Р°Р»РёСЃСЊ Рё РЅРµ СЃРѕС…СЂР°РЅСЏР»РёСЃСЊ РІ Р‘Р”
+					,RELOADED_BEFORE_FORM // Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· Р‘Р”, РїРµСЂРµР·Р°РіСЂСѓР¶РµРЅС‹ РёР· СЃРµСЂРІРёСЃР° РґРѕ РїРѕРґРЅСЏС‚РёСЏ С„РѕСЂРјС‹ (РїРѕ Р·Р°РїСЂРѕСЃСѓ РЅР° РїРµСЂРµРіСЂСѓР·РєСѓ СѓСЃС‚Р°СЂРµРІС€РёС…)
+					,RELOADED_DURING_FORM  // Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· Р‘Р”, РїРµСЂРµР·Р°РіСЂСѓР¶РµРЅС‹ РёР· СЃРµСЂРІРёСЃР° РїРѕ РєРЅРѕРїРєРµ РЅР° С„РѕСЂРјРµ
 	};
 	
-	private final String inn; // (VARCHAR2(12) NOT NULL) ИНН организации
-	private /*final*/ String suggestParty; // (CLOB) Данные от сервиса в формате JSON
-	private /*final*/ String userComment; // (VARCHAR2(2000) DEFAULT '') Комментарий КО
-	private /*final*/ String userName; // (VARCHAR2(64) DEFAULT 'basos' NOT NULL) Сохранивший пользователь
-	private /*final*/ long partyActDateLong; // (NUMBER(20, 0) NOT NULL) Дата актуальности suggestParty в формате EpochMilli
-	private /*final*/ java.sql.Date partyActDate; // (DATE NOT NULL) Дата актуальности suggestParty
-	private final java.util.Date saveTime; // (TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL) Дата и время сохранения в БД
+	private final String inn; // (VARCHAR2(12) NOT NULL) РРќРќ РѕСЂРіР°РЅРёР·Р°С†РёРё
+	private /*final*/ String suggestParty; // (CLOB) Р”Р°РЅРЅС‹Рµ РѕС‚ СЃРµСЂРІРёСЃР° РІ С„РѕСЂРјР°С‚Рµ JSON
+	private /*final*/ String userComment; // (VARCHAR2(2000) DEFAULT '') РљРѕРјРјРµРЅС‚Р°СЂРёР№ РљРћ
+	private /*final*/ String userName; // (VARCHAR2(64) DEFAULT 'basos' NOT NULL) РЎРѕС…СЂР°РЅРёРІС€РёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
+	private /*final*/ long partyActDateLong; // (NUMBER(20, 0) NOT NULL) Р”Р°С‚Р° Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё suggestParty РІ С„РѕСЂРјР°С‚Рµ EpochMilli
+	private /*final*/ java.sql.Date partyActDate; // (DATE NOT NULL) Р”Р°С‚Р° Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё suggestParty
+	private final java.util.Date saveTime; // (TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL) Р”Р°С‚Р° Рё РІСЂРµРјСЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РІ Р‘Р”
 	
 	private /*final*/ String partyActDateStr; // 'yyyyMMdd'
-	private long partyActDateBeforeLong; // сохраняем ДА инфо из БД для сравнения после перегрузки из сервиса
-	private JsonStates jsonState; // статус (источник) данных
+	private long partyActDateBeforeLong; // СЃРѕС…СЂР°РЅСЏРµРј Р”Рђ РёРЅС„Рѕ РёР· Р‘Р” РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ РїРѕСЃР»Рµ РїРµСЂРµРіСЂСѓР·РєРё РёР· СЃРµСЂРІРёСЃР°
+	private JsonStates jsonState; // СЃС‚Р°С‚СѓСЃ (РёСЃС‚РѕС‡РЅРёРє) РґР°РЅРЅС‹С…
 	
 	
-	/** Конструктор рукописный, не сгенерён, преобразования (e.g. setScale) можно делать в нём.
-	 * Но типы смаппировал через @ConstructorArgs + @Arg в интерфейсе.
+	/** РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЂСѓРєРѕРїРёСЃРЅС‹Р№, РЅРµ СЃРіРµРЅРµСЂС‘РЅ, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ (e.g. setScale) РјРѕР¶РЅРѕ РґРµР»Р°С‚СЊ РІ РЅС‘Рј.
+	 * РќРѕ С‚РёРїС‹ СЃРјР°РїРїРёСЂРѕРІР°Р» С‡РµСЂРµР· @ConstructorArgs + @Arg РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
 	 */
 	public DaDataInfo(String inn, String suggestParty, String userComment, String userName, Long/*long*/ partyActDateLong,
 			java.sql.Date partyActDate, java.util.Date saveTime) {
@@ -50,12 +50,12 @@ public final class DaDataInfo {
 		this.partyActDateStr = SafeFormatter.dateASyyyymmdd(this.partyActDate);
 	}
 	
-	/** Болванка, содержащая только ИНН, для заполнения сервисом. */
+	/** Р‘РѕР»РІР°РЅРєР°, СЃРѕРґРµСЂР¶Р°С‰Р°СЏ С‚РѕР»СЊРєРѕ РРќРќ, РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ СЃРµСЂРІРёСЃРѕРј. */
 	public static DaDataInfo getBlank(String inn) {
-		return new DaDataInfo(inn, null, "", null, null, null, null/*new java.util.Date()*//*, JsonStates.BLANC*/); // RULE: saveTime ВСЕГДА заполняется на стороне БД текущим временем
+		return new DaDataInfo(inn, null, "", null, null, null, null/*new java.util.Date()*//*, JsonStates.BLANC*/); // RULE: saveTime Р’РЎР•Р“Р”Рђ Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р” С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј
 	}
 	
-	/** Ответственность web-сервиса. */
+	/** РћС‚РІРµС‚СЃС‚РІРµРЅРЅРѕСЃС‚СЊ web-СЃРµСЂРІРёСЃР°. */
 	public void setServicePart(String suggestParty, Long/*long*/ partyActDateLong) {
 		this.suggestParty = suggestParty;
 		this.partyActDateLong = partyActDateLong.longValue();
@@ -63,7 +63,7 @@ public final class DaDataInfo {
 		this.partyActDateStr = SafeFormatter.dateASyyyymmdd(this.partyActDate);
 	}
 	
-	/** Ответственность web-сервиса. partyActDate необходимо установить позже. */
+	/** РћС‚РІРµС‚СЃС‚РІРµРЅРЅРѕСЃС‚СЊ web-СЃРµСЂРІРёСЃР°. partyActDate РЅРµРѕР±С…РѕРґРёРјРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕР·Р¶Рµ. */
 	public void setServicePart(String suggestParty) {
 		this.suggestParty = suggestParty;
 		this.partyActDateLong = 0L;
@@ -71,14 +71,14 @@ public final class DaDataInfo {
 		this.partyActDateStr = null;
 	}
 	
-	/** Когда не сразу парсим json. */
+	/** РљРѕРіРґР° РЅРµ СЃСЂР°Р·Сѓ РїР°СЂСЃРёРј json. */
 	public void setActuality(Long/*long*/ partyActDateLong) {
 		this.partyActDateLong = partyActDateLong.longValue();
 		this.partyActDate = new java.sql.Date(this.partyActDateLong);
 		this.partyActDateStr = SafeFormatter.dateASyyyymmdd(this.partyActDate);
 	}
 	
-	/** Ответственность web-сервиса. */
+	/** РћС‚РІРµС‚СЃС‚РІРµРЅРЅРѕСЃС‚СЊ web-СЃРµСЂРІРёСЃР°. */
 	public void setUserInput(String userComment, String userName) {
 		this.userComment = userComment;
 		this.userName = userName;
@@ -139,37 +139,37 @@ public final class DaDataInfo {
 	/**  */
 	// see ru\dadata\api\entity\Address.java
 	public static enum FiasLevel {
-        /** Страна */
+        /** РЎС‚СЂР°РЅР° */
         //@SerializedName("0")
-        COUNTRY(0, "Страна"),
+        COUNTRY(0, "РЎС‚СЂР°РЅР°"),
 
-        /** Регион */
+        /** Р РµРіРёРѕРЅ */
         //@SerializedName("1")
-        REGION(1, "Регион"),
+        REGION(1, "Р РµРіРёРѕРЅ"),
 
-        /** Район */
+        /** Р Р°Р№РѕРЅ */
         //@SerializedName("3")
-        AREA(3, "Район"),
+        AREA(3, "Р Р°Р№РѕРЅ"),
 
-        /** Город */
+        /** Р“РѕСЂРѕРґ */
         //@SerializedName("4")
-        CITY(4, "Город"),
+        CITY(4, "Р“РѕСЂРѕРґ"),
 
-        /** Населенный пункт */
+        /** РќР°СЃРµР»РµРЅРЅС‹Р№ РїСѓРЅРєС‚ */
         //@SerializedName("6")
-        SETTLEMENT(6, "Населенный пункт"),
+        SETTLEMENT(6, "РќР°СЃРµР»РµРЅРЅС‹Р№ РїСѓРЅРєС‚"),
 
-        /** Улица */
+        /** РЈР»РёС†Р° */
         //@SerializedName("7")
-        STREET(7, "Улица"),
+        STREET(7, "РЈР»РёС†Р°"),
 
-        /** Дом */
+        /** Р”РѕРј */
         //@SerializedName("8")
-        HOUSE(8, "Дом"),
+        HOUSE(8, "Р”РѕРј"),
 
-        /** Иностранный или пустой */
+        /** РРЅРѕСЃС‚СЂР°РЅРЅС‹Р№ РёР»Рё РїСѓСЃС‚РѕР№ */
         //@SerializedName("-1")
-        FOREIGN_OR_EMPTY(-1, "Иностранный или пустой");
+        FOREIGN_OR_EMPTY(-1, "РРЅРѕСЃС‚СЂР°РЅРЅС‹Р№ РёР»Рё РїСѓСЃС‚РѕР№");
         
 		private int code;
 		private String desc;
@@ -200,9 +200,9 @@ public final class DaDataInfo {
 	/**  */
 	public static String uncodeStateStatus(String stCode) {
 		switch (stCode) {
-			case "ACTIVE" : return "Действующая";
-			case "LIQUIDATING" : return "Ликвидируется";
-			case "LIQUIDATED" : return "Ликвидирована";
+			case "ACTIVE" : return "Р”РµР№СЃС‚РІСѓСЋС‰Р°СЏ";
+			case "LIQUIDATING" : return "Р›РёРєРІРёРґРёСЂСѓРµС‚СЃСЏ";
+			case "LIQUIDATED" : return "Р›РёРєРІРёРґРёСЂРѕРІР°РЅР°";
 			default: return stCode;
 		}
 	} // public static uncodeStateStatus(String stCode)
@@ -210,15 +210,15 @@ public final class DaDataInfo {
 	/**  */
 	public static String uncodeBranchType(String brtCode) {
 		switch (brtCode) { 
-			case "MAIN" : return "Головная организация";
-			case "BRANCH" : return "Филиал";
+			case "MAIN" : return "Р“РѕР»РѕРІРЅР°СЏ РѕСЂРіР°РЅРёР·Р°С†РёСЏ";
+			case "BRANCH" : return "Р¤РёР»РёР°Р»";
 			default: return brtCode;
 		}
 	} // public static uncodeBranchType(String brtCode)
 	
 	/**  */
 	public static String uncodeQcGeo(int code) {
-		String[] qcGeoArrDict = {"Точные координаты", "Ближайший дом", "Улица", "Населенный пункт", "Город", "Координаты не определены"};
+		String[] qcGeoArrDict = {"РўРѕС‡РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹", "Р‘Р»РёР¶Р°Р№С€РёР№ РґРѕРј", "РЈР»РёС†Р°", "РќР°СЃРµР»РµРЅРЅС‹Р№ РїСѓРЅРєС‚", "Р“РѕСЂРѕРґ", "РљРѕРѕСЂРґРёРЅР°С‚С‹ РЅРµ РѕРїСЂРµРґРµР»РµРЅС‹"};
 		if ( code < 0 || code >= qcGeoArrDict.length ) {
 			return String.valueOf(code);
 		}
@@ -226,11 +226,11 @@ public final class DaDataInfo {
 	} // public static String uncodeQcGeo(int code)
 	
 	
-	/** Перегрузить/загрузить json-данные suggestParty из REST-сервиса dadata.ru ("API Подсказок") по ИНН из поля inn.
-	 * Коммент не трогаем, дату актуальности сбрасываем при успехе (парсить json будем в другом методе, там и
-	 *  запишем в объект, которые сохраняем в БД), saveTime не трогаем.
-	 * При неудачном обращении к сервису (нет содержательного ответа) поля объекта остаются нетронутыми.
-	 * @return true при успешном непустом ответе сервиса (когда json обновился; но он м.б. тем же - не сравниваем).
+	/** РџРµСЂРµРіСЂСѓР·РёС‚СЊ/Р·Р°РіСЂСѓР·РёС‚СЊ json-РґР°РЅРЅС‹Рµ suggestParty РёР· REST-СЃРµСЂРІРёСЃР° dadata.ru ("API РџРѕРґСЃРєР°Р·РѕРє") РїРѕ РРќРќ РёР· РїРѕР»СЏ inn.
+	 * РљРѕРјРјРµРЅС‚ РЅРµ С‚СЂРѕРіР°РµРј, РґР°С‚Сѓ Р°РєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё СЃР±СЂР°СЃС‹РІР°РµРј РїСЂРё СѓСЃРїРµС…Рµ (РїР°СЂСЃРёС‚СЊ json Р±СѓРґРµРј РІ РґСЂСѓРіРѕРј РјРµС‚РѕРґРµ, С‚Р°Рј Рё
+	 *  Р·Р°РїРёС€РµРј РІ РѕР±СЉРµРєС‚, РєРѕС‚РѕСЂС‹Рµ СЃРѕС…СЂР°РЅСЏРµРј РІ Р‘Р”), saveTime РЅРµ С‚СЂРѕРіР°РµРј.
+	 * РџСЂРё РЅРµСѓРґР°С‡РЅРѕРј РѕР±СЂР°С‰РµРЅРёРё Рє СЃРµСЂРІРёСЃСѓ (РЅРµС‚ СЃРѕРґРµСЂР¶Р°С‚РµР»СЊРЅРѕРіРѕ РѕС‚РІРµС‚Р°) РїРѕР»СЏ РѕР±СЉРµРєС‚Р° РѕСЃС‚Р°СЋС‚СЃСЏ РЅРµС‚СЂРѕРЅСѓС‚С‹РјРё.
+	 * @return true РїСЂРё СѓСЃРїРµС€РЅРѕРј РЅРµРїСѓСЃС‚РѕРј РѕС‚РІРµС‚Рµ СЃРµСЂРІРёСЃР° (РєРѕРіРґР° json РѕР±РЅРѕРІРёР»СЃСЏ; РЅРѕ РѕРЅ Рј.Р±. С‚РµРј Р¶Рµ - РЅРµ СЃСЂР°РІРЅРёРІР°РµРј).
 	 */
 	public boolean loadFromRS() {
 		/*if ( StringUtils.isEmpty(inn) ) {

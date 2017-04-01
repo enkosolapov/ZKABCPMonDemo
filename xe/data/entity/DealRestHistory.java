@@ -1,14 +1,14 @@
-package basos.xe.data.entity;
+п»їpackage basos.xe.data.entity;
 
 import java.math.BigDecimal;
 //import java.sql.Date;
 
 
-/** Остатки за дату. ИД может быть сделки, транша. */
+/** РћСЃС‚Р°С‚РєРё Р·Р° РґР°С‚Сѓ. РР” РјРѕР¶РµС‚ Р±С‹С‚СЊ СЃРґРµР»РєРё, С‚СЂР°РЅС€Р°. */
 public final class DealRestHistory {
 	
-	/** Конструктор рукописный, не сгенерён, преобразования (e.g. setScale) можно делать в нём.
-	 * Но типы смаппировал через @ConstructorArgs + @Arg в интерфейсе.
+	/** РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЂСѓРєРѕРїРёСЃРЅС‹Р№, РЅРµ СЃРіРµРЅРµСЂС‘РЅ, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ (e.g. setScale) РјРѕР¶РЅРѕ РґРµР»Р°С‚СЊ РІ РЅС‘Рј.
+	 * РќРѕ С‚РёРїС‹ СЃРјР°РїРїРёСЂРѕРІР°Р» С‡РµСЂРµР· @ConstructorArgs + @Arg РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
 	 */
 	public DealRestHistory(Integer/*BigDecimal*/ id, java.sql.Date/*java.sql.Timestamp*/ dd1, java.sql.Date/*java.sql.Timestamp*/ dd2, BigDecimal avwRestUSD, BigDecimal dd2RestUSD) {
 		this.id = id; //Integer.valueOf(id.intValue());
@@ -41,8 +41,8 @@ public final class DealRestHistory {
 		return dd2RestUSD;
 	}
 	
-	private static final String[] header = {"ИД LM", "Дата с", "Дата по", "Средняя задолженность в периоде, USD", "Задолженность на конец периода, USD"}; 
-	/** Строка заголовка с читабельными названиями полей. */
+	private static final String[] header = {"РР” LM", "Р”Р°С‚Р° СЃ", "Р”Р°С‚Р° РїРѕ", "РЎСЂРµРґРЅСЏСЏ Р·Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚СЊ РІ РїРµСЂРёРѕРґРµ, USD", "Р—Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚СЊ РЅР° РєРѕРЅРµС† РїРµСЂРёРѕРґР°, USD"}; 
+	/** РЎС‚СЂРѕРєР° Р·Р°РіРѕР»РѕРІРєР° СЃ С‡РёС‚Р°Р±РµР»СЊРЅС‹РјРё РЅР°Р·РІР°РЅРёСЏРјРё РїРѕР»РµР№. */
 	public static final String[] getHeader() {
 		return header;
 	}

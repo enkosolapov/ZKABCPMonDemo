@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -14,7 +14,7 @@ import org.zkoss.zul.ext.Selectable;
 import org.zkoss.zul.impl.InputElement;
 
 
-/** Реализация поумолчательных поведенческих методов интерфейса AbstractComponentBehaveUtil для компонента org.zkoss.zul.Combobox.
+/** Р РµР°Р»РёР·Р°С†РёСЏ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… РїРѕРІРµРґРµРЅС‡РµСЃРєРёС… РјРµС‚РѕРґРѕРІ РёРЅС‚РµСЂС„РµР№СЃР° AbstractComponentBehaveUtil РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р° org.zkoss.zul.Combobox.
  * Singleton, use getInstance().
  * @author basos
 */
@@ -54,7 +54,7 @@ public class ComboboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void clear(AbstractComponent ac) {
-		if (((Combobox)ac).getModel() != null) ((Selectable)((Combobox)ac).getModel()).clearSelection(); // value НЕ обнуляется ?!
+		if (((Combobox)ac).getModel() != null) ((Selectable)((Combobox)ac).getModel()).clearSelection(); // value РќР• РѕР±РЅСѓР»СЏРµС‚СЃСЏ ?!
 		((Combobox)ac).setValue(null);
 	}
 	
@@ -63,12 +63,12 @@ public class ComboboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 	 */
 	@Override
 	public boolean isEmpty(AbstractComponent ac) {
-		String val = ((InputElement)ac).getText(); // null не возвращается, вместо него всегда "" !
+		String val = ((InputElement)ac).getText(); // null РЅРµ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ, РІРјРµСЃС‚Рѕ РЅРµРіРѕ РІСЃРµРіРґР° "" !
 		if ("<all>".equals(val)) val = ""; // combobox special value
 		return StringUtils.isEmpty(val);
 	}
 	
-	/** @return {@inheritDoc} Вместо специального значения {@literal <all>} возвращается пустая строка. {@literal <null> и <notnull>} возвращаются без изменений.*/
+	/** @return {@inheritDoc} Р’РјРµСЃС‚Рѕ СЃРїРµС†РёР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ {@literal <all>} РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°. {@literal <null> Рё <notnull>} РІРѕР·РІСЂР°С‰Р°СЋС‚СЃСЏ Р±РµР· РёР·РјРµРЅРµРЅРёР№.*/
 	@Override
 	public String getText(AbstractComponent ac) {
 		String val = ((InputElement)ac).getText();
@@ -85,8 +85,8 @@ public class ComboboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 	
 	/** @return String (nullable ?) representing Combobox value. */
 	@Override
-	public Object getValue(AbstractComponent ac) { // может ли расходиться ((InputElement)ac).getValue() ?
-		String compVal = null; // пока множественного выбора нет
+	public Object getValue(AbstractComponent ac) { // РјРѕР¶РµС‚ Р»Рё СЂР°СЃС…РѕРґРёС‚СЊСЃСЏ ((InputElement)ac).getValue() ?
+		String compVal = null; // РїРѕРєР° РјРЅРѕР¶РµСЃС‚РІРµРЅРЅРѕРіРѕ РІС‹Р±РѕСЂР° РЅРµС‚
   		@SuppressWarnings("unchecked")
 		Set<String> comboSelection = (((Combobox)ac).getModel() == null ? null : ((Selectable<String>)((Combobox)ac).getModel()).getSelection());
   		if (comboSelection != null && !comboSelection.isEmpty()) {
@@ -96,8 +96,8 @@ public class ComboboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 		return compVal;
 	}
 	
-	/** Проверка соответствия строки (поля текстовой колонки) значению комбика с учётом специальных значений последнего: {@literal<all>, <null>, <notnull>}.
-	 * @return Истина для пустого значения компонента ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}), значения {@literal<all>} компонента, равенства строковых значений, значению компонента {@literal<null>} удовлетворяют все пустые строки ({@link StringUtils#isBlank(CharSequence) StringUtils.isBlank()}), значению компонента {@literal<notnull>} удовлетворяют все непустые строки.
+	/** РџСЂРѕРІРµСЂРєР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ СЃС‚СЂРѕРєРё (РїРѕР»СЏ С‚РµРєСЃС‚РѕРІРѕР№ РєРѕР»РѕРЅРєРё) Р·РЅР°С‡РµРЅРёСЋ РєРѕРјР±РёРєР° СЃ СѓС‡С‘С‚РѕРј СЃРїРµС†РёР°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ РїРѕСЃР»РµРґРЅРµРіРѕ: {@literal<all>, <null>, <notnull>}.
+	 * @return РСЃС‚РёРЅР° РґР»СЏ РїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}), Р·РЅР°С‡РµРЅРёСЏ {@literal<all>} РєРѕРјРїРѕРЅРµРЅС‚Р°, СЂР°РІРµРЅСЃС‚РІР° СЃС‚СЂРѕРєРѕРІС‹С… Р·РЅР°С‡РµРЅРёР№, Р·РЅР°С‡РµРЅРёСЋ РєРѕРјРїРѕРЅРµРЅС‚Р° {@literal<null>} СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‚ РІСЃРµ РїСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё ({@link StringUtils#isBlank(CharSequence) StringUtils.isBlank()}), Р·РЅР°С‡РµРЅРёСЋ РєРѕРјРїРѕРЅРµРЅС‚Р° {@literal<notnull>} СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‚ РІСЃРµ РЅРµРїСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё.
 	 * @see StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()
 	 * @see StringUtils#isBlank(CharSequence) StringUtils.isBlank()
 	 */
@@ -106,12 +106,12 @@ public class ComboboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 		return StringUtils.isEmpty((String)componentValue)
 			|| "<all>".equals(componentValue)
 			|| componentValue.equals(otherValue)
-			|| "<null>".equals(componentValue) && StringUtils.isBlank((String)otherValue) // здесь по строго null, а все пустые (whitespace, empty ("") or null) !
+			|| "<null>".equals(componentValue) && StringUtils.isBlank((String)otherValue) // Р·РґРµСЃСЊ РїРѕ СЃС‚СЂРѕРіРѕ null, Р° РІСЃРµ РїСѓСЃС‚С‹Рµ (whitespace, empty ("") or null) !
 			|| "<notnull>".equals(componentValue) && !StringUtils.isBlank((String)otherValue);
 	}
 	
-	/** Проверка соответствия строки (поля текстовой колонки) значению комбика (точное совпадение).
-	 * @return Ложь если одно из значений пусто ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}) и для специальных значений компонента ({@literal <all>, <null>, <notnull>}).
+	/** РџСЂРѕРІРµСЂРєР° СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ СЃС‚СЂРѕРєРё (РїРѕР»СЏ С‚РµРєСЃС‚РѕРІРѕР№ РєРѕР»РѕРЅРєРё) Р·РЅР°С‡РµРЅРёСЋ РєРѕРјР±РёРєР° (С‚РѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ).
+	 * @return Р›РѕР¶СЊ РµСЃР»Рё РѕРґРЅРѕ РёР· Р·РЅР°С‡РµРЅРёР№ РїСѓСЃС‚Рѕ ({@link StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()}) Рё РґР»СЏ СЃРїРµС†РёР°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р° ({@literal <all>, <null>, <notnull>}).
 	 * @see StringUtils#isEmpty(CharSequence) StringUtils.isEmpty()
 	 */
 	@Override

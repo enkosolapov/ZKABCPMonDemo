@@ -1,31 +1,31 @@
-package basos.core;
+п»їpackage basos.core;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
-/* TODO: для очереди (или Map ?) (Collections.synchronizedList(new LinkedList<>()) -ConcurrentLinkedQueue ?): addUITask, pollUITask, clearUIQueue, isEmptyUITask, sizeUIQueue,... */
+/* TODO: РґР»СЏ РѕС‡РµСЂРµРґРё (РёР»Рё Map ?) (Collections.synchronizedList(new LinkedList<>()) -ConcurrentLinkedQueue ?): addUITask, pollUITask, clearUIQueue, isEmptyUITask, sizeUIQueue,... */
 
-/** Задача, передаваемая между потоками в единственном числе (перетираемая). Thread-safe.
- * Задача д.б. представлена в виде Supplier&lt;Integer&gt;.
- * Значение -1 не должно возвращаться продюсером (специальное значение результата выполнения doSharedLogicOnce() означает, что нет расшаренной задачи).
+/** Р—Р°РґР°С‡Р°, РїРµСЂРµРґР°РІР°РµРјР°СЏ РјРµР¶РґСѓ РїРѕС‚РѕРєР°РјРё РІ РµРґРёРЅСЃС‚РІРµРЅРЅРѕРј С‡РёСЃР»Рµ (РїРµСЂРµС‚РёСЂР°РµРјР°СЏ). Thread-safe.
+ * Р—Р°РґР°С‡Р° Рґ.Р±. РїСЂРµРґСЃС‚Р°РІР»РµРЅР° РІ РІРёРґРµ Supplier&lt;Integer&gt;.
+ * Р—РЅР°С‡РµРЅРёРµ -1 РЅРµ РґРѕР»Р¶РЅРѕ РІРѕР·РІСЂР°С‰Р°С‚СЊСЃСЏ РїСЂРѕРґСЋСЃРµСЂРѕРј (СЃРїРµС†РёР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РІС‹РїРѕР»РЅРµРЅРёСЏ doSharedLogicOnce() РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РЅРµС‚ СЂР°СЃС€Р°СЂРµРЅРЅРѕР№ Р·Р°РґР°С‡Рё).
  */
 public class SingleSharedLogic {
 
-	private final AtomicReference<Supplier<Integer>> sharedLogic = new AtomicReference<>(); // RULE: -1 - не должно возвращаться продюсером (специальное значение результата выполнения doSharedLogicOnce() означает, что нет расшаренной задачи)
+	private final AtomicReference<Supplier<Integer>> sharedLogic = new AtomicReference<>(); // RULE: -1 - РЅРµ РґРѕР»Р¶РЅРѕ РІРѕР·РІСЂР°С‰Р°С‚СЊСЃСЏ РїСЂРѕРґСЋСЃРµСЂРѕРј (СЃРїРµС†РёР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЂРµР·СѓР»СЊС‚Р°С‚Р° РІС‹РїРѕР»РЅРµРЅРёСЏ doSharedLogicOnce() РѕР·РЅР°С‡Р°РµС‚, С‡С‚Рѕ РЅРµС‚ СЂР°СЃС€Р°СЂРµРЅРЅРѕР№ Р·Р°РґР°С‡Рё)
 
-	/** Назначить задачу. Перетирает предыдущую без предупреждения.
-	 * @param sharedLogicToSet Not null. Значение -1 не должно возвращаться продюсером.
+	/** РќР°Р·РЅР°С‡РёС‚СЊ Р·Р°РґР°С‡Сѓ. РџРµСЂРµС‚РёСЂР°РµС‚ РїСЂРµРґС‹РґСѓС‰СѓСЋ Р±РµР· РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ.
+	 * @param sharedLogicToSet Not null. Р—РЅР°С‡РµРЅРёРµ -1 РЅРµ РґРѕР»Р¶РЅРѕ РІРѕР·РІСЂР°С‰Р°С‚СЊСЃСЏ РїСЂРѕРґСЋСЃРµСЂРѕРј.
 	 */
 	public void addSharedLogic(Supplier<Integer> sharedLogicToSet) {
-// TODO: инфорировать о том, что перезаписана поверх другой задачи (возвраать предыдущую ?)
+// TODO: РёРЅС„РѕСЂРёСЂРѕРІР°С‚СЊ Рѕ С‚РѕРј, С‡С‚Рѕ РїРµСЂРµР·Р°РїРёСЃР°РЅР° РїРѕРІРµСЂС… РґСЂСѓРіРѕР№ Р·Р°РґР°С‡Рё (РІРѕР·РІСЂР°Р°С‚СЊ РїСЂРµРґС‹РґСѓС‰СѓСЋ ?)
 		if (sharedLogicToSet == null) {
 			throw new NullPointerException("sharedLogic should not be null");
 		}
 		sharedLogic.set(sharedLogicToSet);
 	}
 
-	/** Достать-обнулить и выполнить.
-	 * @return Результат выполнения задачи или -1 при отсутствии назначенной задачи.
+	/** Р”РѕСЃС‚Р°С‚СЊ-РѕР±РЅСѓР»РёС‚СЊ Рё РІС‹РїРѕР»РЅРёС‚СЊ.
+	 * @return Р РµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡Рё РёР»Рё -1 РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё РЅР°Р·РЅР°С‡РµРЅРЅРѕР№ Р·Р°РґР°С‡Рё.
 	 */
 	public int doSharedLogicOnce() {
 		Supplier<Integer> shl = sharedLogic.getAndSet(null);
@@ -35,7 +35,7 @@ public class SingleSharedLogic {
 		return shl.get().intValue();
 	}
 	
-	/** Достать и обнулить. */
+	/** Р”РѕСЃС‚Р°С‚СЊ Рё РѕР±РЅСѓР»РёС‚СЊ. */
 	public Supplier<Integer> pollSharedLogic() {
 		return sharedLogic.getAndSet(null);
 	}

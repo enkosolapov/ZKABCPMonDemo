@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,26 +18,26 @@ import basos.xe.data.dao.TrancheLastStateMapper;
 import basos.xe.data.ds.MyBatisSqlSessionFactory;
 import basos.xe.data.entity.TrancheLastState;
 
-/** Обеспечиваем лист-модель списком из TrancheLastState (все транши в своём последнем состоянии), обёрнутых в GridData.
- * Источник OrclDataSource ("java:jboss/datasources/orcl"), мвью basos.mv_tranches_last_state. Через MyBatis (маппер TrancheLastStateMapper; MyBatisSqlSessionFactory). Список типа ArrayList.
+/** РћР±РµСЃРїРµС‡РёРІР°РµРј Р»РёСЃС‚-РјРѕРґРµР»СЊ СЃРїРёСЃРєРѕРј РёР· TrancheLastState (РІСЃРµ С‚СЂР°РЅС€Рё РІ СЃРІРѕС‘Рј РїРѕСЃР»РµРґРЅРµРј СЃРѕСЃС‚РѕСЏРЅРёРё), РѕР±С‘СЂРЅСѓС‚С‹С… РІ GridData.
+ * РСЃС‚РѕС‡РЅРёРє OrclDataSource ("java:jboss/datasources/orcl"), РјРІСЊСЋ basos.mv_tranches_last_state. Р§РµСЂРµР· MyBatis (РјР°РїРїРµСЂ TrancheLastStateMapper; MyBatisSqlSessionFactory). РЎРїРёСЃРѕРє С‚РёРїР° ArrayList.
  */
 @javax.enterprise.context.Dependent // RequestScoped
-@javax.inject.Named("tranchesProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
+@javax.inject.Named("tranchesProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
 public /*final*/ class GridDataProviderBatisTrancheLastState extends GridDataProviderWPk<TrancheLastState> implements Serializable {
 // <T extends Object & Serializable & Comparable<? super T>>
 	private static final long serialVersionUID = -9157131309867418543L;
 
 	private static final Logger logger = LoggerFactory.getLogger(GridDataProviderBatisTrancheLastState.class);
 	
-	private final boolean depersonalize; // требование обезличивания клиентских данных
+	private final boolean depersonalize; // С‚СЂРµР±РѕРІР°РЅРёРµ РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С…
 	
 	
-	/** Обезличиваем по умолчанию клиентские данные. */
+	/** РћР±РµР·Р»РёС‡РёРІР°РµРј РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РєР»РёРµРЅС‚СЃРєРёРµ РґР°РЅРЅС‹Рµ. */
 	public GridDataProviderBatisTrancheLastState() { this(/*true*/false); }
 	
 	
-	/** Тип бина - TrancheLastState. ПК изначально не устанавливается.
-	 * @param depersonalize Флаг обезличивания клиентских данных.
+	/** РўРёРї Р±РёРЅР° - TrancheLastState. РџРљ РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅРµ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ.
+	 * @param depersonalize Р¤Р»Р°Рі РѕР±РµР·Р»РёС‡РёРІР°РЅРёСЏ РєР»РёРµРЅС‚СЃРєРёС… РґР°РЅРЅС‹С….
 	 */	
 	public GridDataProviderBatisTrancheLastState(boolean depersonalize) {
 		super(TrancheLastState.class);
@@ -45,14 +45,14 @@ public /*final*/ class GridDataProviderBatisTrancheLastState extends GridDataPro
 		logger.trace("instantiate GridDataProviderBatisTrancheLastState.  depersonalize = {}", depersonalize);
 		//setPk("idDeal", TrancheLastState.getCompareByIdDeal());
 		//setPk(null, null);
-		setPk("idParent", TrancheLastState.getCompareByIdParent()); // это не Pk, а Fk на рамки.idDeal; нужна только сортировка для быстрого поиска деталей
+		setPk("idParent", TrancheLastState.getCompareByIdParent()); // СЌС‚Рѕ РЅРµ Pk, Р° Fk РЅР° СЂР°РјРєРё.idDeal; РЅСѓР¶РЅР° С‚РѕР»СЊРєРѕ СЃРѕСЂС‚РёСЂРѕРІРєР° РґР»СЏ Р±С‹СЃС‚СЂРѕРіРѕ РїРѕРёСЃРєР° РґРµС‚Р°Р»РµР№
 	}
 	
 	
-	/** Сделаем здесь со строкой данных то, что не позволяет маппер (или генератор): обезличивание, десятичная точность и т.п. */
+	/** РЎРґРµР»Р°РµРј Р·РґРµСЃСЊ СЃРѕ СЃС‚СЂРѕРєРѕР№ РґР°РЅРЅС‹С… С‚Рѕ, С‡С‚Рѕ РЅРµ РїРѕР·РІРѕР»СЏРµС‚ РјР°РїРїРµСЂ (РёР»Рё РіРµРЅРµСЂР°С‚РѕСЂ): РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ, РґРµСЃСЏС‚РёС‡РЅР°СЏ С‚РѕС‡РЅРѕСЃС‚СЊ Рё С‚.Рї. */
 	private TrancheLastState finishBean(TrancheLastState dataBean) {
 		if (depersonalize) {
-//нечего обезличивать
+//РЅРµС‡РµРіРѕ РѕР±РµР·Р»РёС‡РёРІР°С‚СЊ
 		}
 		BigDecimal tmp;
 		
@@ -68,8 +68,8 @@ public /*final*/ class GridDataProviderBatisTrancheLastState extends GridDataPro
 	}
 	
 	
-	/** Наполняет внутренный список (ArrayList) обёрток GridData бина TrancheLastState содержимым таблицы basos.mv_tranches_last_state
-	 * из источника OrclDataSource ("java:jboss/datasources/orcl") с использованием MyBatis. Вызывается из {@link #getGridDataList}.
+	/** РќР°РїРѕР»РЅСЏРµС‚ РІРЅСѓС‚СЂРµРЅРЅС‹Р№ СЃРїРёСЃРѕРє (ArrayList) РѕР±С‘СЂС‚РѕРє GridData Р±РёРЅР° TrancheLastState СЃРѕРґРµСЂР¶РёРјС‹Рј С‚Р°Р±Р»РёС†С‹ basos.mv_tranches_last_state
+	 * РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl") СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј MyBatis. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getGridDataList}.
 	 */
 	@Override
 	protected final List<GridData<TrancheLastState>> populateGridDataList() {
@@ -79,8 +79,8 @@ public /*final*/ class GridDataProviderBatisTrancheLastState extends GridDataPro
 			if ( !sess.getConfiguration().hasMapper(TrancheLastStateMapper.class) ) {
 				sess.getConfiguration().addMapper(TrancheLastStateMapper.class);
 			}
-// ч/з ResultHandler, т.к. бин нужно заворачивать (лист-модель - список обёрток GridData сущностей TrancheLastState)
-// класс бина мутабельный, чтобы сделать обезличивание и установить scale для BigDecimal
+// С‡/Р· ResultHandler, С‚.Рє. Р±РёРЅ РЅСѓР¶РЅРѕ Р·Р°РІРѕСЂР°С‡РёРІР°С‚СЊ (Р»РёСЃС‚-РјРѕРґРµР»СЊ - СЃРїРёСЃРѕРє РѕР±С‘СЂС‚РѕРє GridData СЃСѓС‰РЅРѕСЃС‚РµР№ TrancheLastState)
+// РєР»Р°СЃСЃ Р±РёРЅР° РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ scale РґР»СЏ BigDecimal
 			sess.select("basos.xe.data.dao.TrancheLastStateMapper.selectAll", new ResultHandler<TrancheLastState>() {
 				@Override
 				public void handleResult(ResultContext<? extends TrancheLastState> resultContext) {
@@ -110,31 +110,31 @@ public /*final*/ class GridDataProviderBatisTrancheLastState extends GridDataPro
 	}
 	
 	
-	/** Наполняет список (ArrayList) обёрток GridData бина TrancheLastState содержимым таблицы basos.mv_tranches_last_state
-	 * по фильтру на значение индекса.
-	 * из источника OrclDataSource ("java:jboss/datasources/orcl") с использованием MyBatis. Вызывается из {@link #getRange(Object)}.
-	 * @param fieldName Название ключевого поля (транши имеют Fk с полей idParent, rsubjId, clnId).
-	 * @param key Значение ключевого поля.
-	 * @return Может вернуть пустой список, но не null.
+	/** РќР°РїРѕР»РЅСЏРµС‚ СЃРїРёСЃРѕРє (ArrayList) РѕР±С‘СЂС‚РѕРє GridData Р±РёРЅР° TrancheLastState СЃРѕРґРµСЂР¶РёРјС‹Рј С‚Р°Р±Р»РёС†С‹ basos.mv_tranches_last_state
+	 * РїРѕ С„РёР»СЊС‚СЂСѓ РЅР° Р·РЅР°С‡РµРЅРёРµ РёРЅРґРµРєСЃР°.
+	 * РёР· РёСЃС‚РѕС‡РЅРёРєР° OrclDataSource ("java:jboss/datasources/orcl") СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј MyBatis. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РёР· {@link #getRange(Object)}.
+	 * @param fieldName РќР°Р·РІР°РЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ (С‚СЂР°РЅС€Рё РёРјРµСЋС‚ Fk СЃ РїРѕР»РµР№ idParent, rsubjId, clnId).
+	 * @param key Р—РЅР°С‡РµРЅРёРµ РєР»СЋС‡РµРІРѕРіРѕ РїРѕР»СЏ.
+	 * @return РњРѕР¶РµС‚ РІРµСЂРЅСѓС‚СЊ РїСѓСЃС‚РѕР№ СЃРїРёСЃРѕРє, РЅРѕ РЅРµ null.
 	 */
 	@Override
 	protected final List<GridData<TrancheLastState>> selectRange(String fieldName, Object key) {
 		List<GridData<TrancheLastState>> locGridDataArrayList = new ArrayList<>();
 		String methodName = "";
-		switch(fieldName) { // pk знаем и так (this.pk), но логикой управляет интерфейс
+		switch(fieldName) { // pk Р·РЅР°РµРј Рё С‚Р°Рє (this.pk), РЅРѕ Р»РѕРіРёРєРѕР№ СѓРїСЂР°РІР»СЏРµС‚ РёРЅС‚РµСЂС„РµР№СЃ
 			case "clnId" : methodName = "basos.xe.data.dao.TrancheLastStateMapper.selectByClnId"; break;
 			case "rsubjId" : methodName = "basos.xe.data.dao.TrancheLastStateMapper.selectByRsubjId"; break;
 			case "idParent" : methodName = "basos.xe.data.dao.TrancheLastStateMapper.selectByIdParent"; break;
-			default : logger.error("Поиск траншей по полю '{}' не поддерживается", fieldName);
-				throw new UnsupportedOperationException("Поиск траншей не поддерживается по полю "+fieldName);
+			default : logger.error("РџРѕРёСЃРє С‚СЂР°РЅС€РµР№ РїРѕ РїРѕР»СЋ '{}' РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ", fieldName);
+				throw new UnsupportedOperationException("РџРѕРёСЃРє С‚СЂР°РЅС€РµР№ РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РїРѕ РїРѕР»СЋ "+fieldName);
 		}
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {
 			if ( !sess.getConfiguration().hasMapper(TrancheLastStateMapper.class) ) {
 				sess.getConfiguration().addMapper(TrancheLastStateMapper.class);
 			}
-// ч/з ResultHandler, т.к. бин нужно заворачивать (лист-модель - список обёрток GridData сущностей TrancheLastState)
-// класс бина мутабельный, чтобы сделать обезличивание и установить scale для BigDecimal
+// С‡/Р· ResultHandler, С‚.Рє. Р±РёРЅ РЅСѓР¶РЅРѕ Р·Р°РІРѕСЂР°С‡РёРІР°С‚СЊ (Р»РёСЃС‚-РјРѕРґРµР»СЊ - СЃРїРёСЃРѕРє РѕР±С‘СЂС‚РѕРє GridData СЃСѓС‰РЅРѕСЃС‚РµР№ TrancheLastState)
+// РєР»Р°СЃСЃ Р±РёРЅР° РјСѓС‚Р°Р±РµР»СЊРЅС‹Р№, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ РѕР±РµР·Р»РёС‡РёРІР°РЅРёРµ Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ scale РґР»СЏ BigDecimal
 			sess.select(methodName, key, new ResultHandler<TrancheLastState>() {
 				@Override
 				public void handleResult(ResultContext<? extends TrancheLastState> resultContext) {

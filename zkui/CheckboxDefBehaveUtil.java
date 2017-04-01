@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.Serializable;
 
@@ -9,11 +9,11 @@ import org.zkoss.zk.ui.AbstractComponent;
 import org.zkoss.zul.Checkbox;
 
 
-/** Реализация поумолчательных поведенческих методов интерфейса AbstractComponentBehaveUtil для компонента org.zkoss.zul.Checkbox.
+/** Р РµР°Р»РёР·Р°С†РёСЏ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… РїРѕРІРµРґРµРЅС‡РµСЃРєРёС… РјРµС‚РѕРґРѕРІ РёРЅС‚РµСЂС„РµР№СЃР° AbstractComponentBehaveUtil РґР»СЏ РєРѕРјРїРѕРЅРµРЅС‚Р° org.zkoss.zul.Checkbox.
  * Singleton, use getInstance().
  * @author basos
 */
-@javax.enterprise.context.ApplicationScoped // не имеет значения, т.к. вайринг не делаю, а ищу через BeanManager и создаю статическим методом AbstractComponentBehaveUtil
+@javax.enterprise.context.ApplicationScoped // РЅРµ РёРјРµРµС‚ Р·РЅР°С‡РµРЅРёСЏ, С‚.Рє. РІР°Р№СЂРёРЅРі РЅРµ РґРµР»Р°СЋ, Р° РёС‰Сѓ С‡РµСЂРµР· BeanManager Рё СЃРѕР·РґР°СЋ СЃС‚Р°С‚РёС‡РµСЃРєРёРј РјРµС‚РѕРґРѕРј AbstractComponentBehaveUtil
 @javax.inject.Named("Checkbox")
 public class CheckboxDefBehaveUtil extends AbstractComponentBehaveUtil implements Serializable {
 	private static final long serialVersionUID = -8488138261420657487L;
@@ -41,13 +41,13 @@ public class CheckboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 		return AbstractComponentBehaveUtil.getCorrespondingFieldNameAsIdWithoutSuffix(ac, "CHB"); // *CHB // StringUtils.removeEnd(compId, "CHB")
 	}
 	
-	/** {@inheritDoc} Для Checkbox clear == uncheck */
+	/** {@inheritDoc} Р”Р»СЏ Checkbox clear == uncheck */
 	@Override
 	public void clear(AbstractComponent ac) {
 		((Checkbox)ac).setChecked(false);
 	}
 	
-	/** {@inheritDoc} Для Checkbox empty == unchecked */
+	/** {@inheritDoc} Р”Р»СЏ Checkbox empty == unchecked */
 	@Override
 	public boolean isEmpty(AbstractComponent ac) {
 		return !((Checkbox)ac).isChecked();
@@ -70,18 +70,18 @@ public class CheckboxDefBehaveUtil extends AbstractComponentBehaveUtil implement
 		return Boolean.valueOf( ((Checkbox)ac).isChecked() ); // Boolean (not null)
 	}
 	
-	/** Проверка на равенство двух Boolean при взведённом чекбоксе (componentValue == Boolean.TRUE). Неотмеченный крыж проходят все, отмеченный только true.
-	 * @return Истина для пустого значения компонента (unchecked) и для точно совпадающих значений (equals) - двух true.
+	/** РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ РґРІСѓС… Boolean РїСЂРё РІР·РІРµРґС‘РЅРЅРѕРј С‡РµРєР±РѕРєСЃРµ (componentValue == Boolean.TRUE). РќРµРѕС‚РјРµС‡РµРЅРЅС‹Р№ РєСЂС‹Р¶ РїСЂРѕС…РѕРґСЏС‚ РІСЃРµ, РѕС‚РјРµС‡РµРЅРЅС‹Р№ С‚РѕР»СЊРєРѕ true.
+	 * @return РСЃС‚РёРЅР° РґР»СЏ РїСѓСЃС‚РѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° (unchecked) Рё РґР»СЏ С‚РѕС‡РЅРѕ СЃРѕРІРїР°РґР°СЋС‰РёС… Р·РЅР°С‡РµРЅРёР№ (equals) - РґРІСѓС… true.
 	 */
 	@Override
 	public boolean theFilter(Object componentValue, Object otherValue) {
-		return ( componentValue.equals(Boolean.FALSE) || componentValue.equals(otherValue) ); // для Checkbox getValue() not null
+		return ( componentValue.equals(Boolean.FALSE) || componentValue.equals(otherValue) ); // РґР»СЏ Checkbox getValue() not null
 	}
 	
-	/** Проверка на равенство двух Boolean. Такой Checkbox всегда делит столбец на два взаимоисключающих множества. */
+	/** РџСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ РґРІСѓС… Boolean. РўР°РєРѕР№ Checkbox РІСЃРµРіРґР° РґРµР»РёС‚ СЃС‚РѕР»Р±РµС† РЅР° РґРІР° РІР·Р°РёРјРѕРёСЃРєР»СЋС‡Р°СЋС‰РёС… РјРЅРѕР¶РµСЃС‚РІР°. */
 	@Override
 	public boolean exactMatch(Object componentValue, Object otherValue) {
-		return componentValue.equals(otherValue); // для Checkbox getValue() not null
+		return componentValue.equals(otherValue); // РґР»СЏ Checkbox getValue() not null
 	}
 	
 } // public class CheckboxDefBehaveUtil extends AbstractComponentBehaveUtil

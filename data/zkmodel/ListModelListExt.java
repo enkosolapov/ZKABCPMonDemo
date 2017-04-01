@@ -1,4 +1,4 @@
-package basos.data.zkmodel;
+п»їpackage basos.data.zkmodel;
 
 import java.util.*;
 import java.util.concurrent.locks.*;
@@ -6,7 +6,7 @@ import java.util.concurrent.locks.*;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.event.ListDataEvent;
 
-/** ListModelList с инкапсулированным RW-замком StampedLock и событиями для обновления UI. */
+/** ListModelList СЃ РёРЅРєР°РїСЃСѓР»РёСЂРѕРІР°РЅРЅС‹Рј RW-Р·Р°РјРєРѕРј StampedLock Рё СЃРѕР±С‹С‚РёСЏРјРё РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ UI. */
 public class ListModelListExt<E> extends ListModelList<E> {
 	private static final long serialVersionUID = -7055467997780509220L;
 	
@@ -27,9 +27,9 @@ public class ListModelListExt<E> extends ListModelList<E> {
 	public ListModelListExt(int initialCapacity) { super(initialCapacity); }
 	
 	/** Notifies a change of the same element to trigger an event of {@link ListDataEvent#CONTENTS_CHANGED}.
-	 * Стандартный вариант {@link #notifyChange(Object)} ищет элемент в модели (indexOf), но скрывает индекс.
-	 * Данная версия полезна, когда индекс нужен в явном виде.
-	 * @param idx индекс изменённой строки модели.
+	 * РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РІР°СЂРёР°РЅС‚ {@link #notifyChange(Object)} РёС‰РµС‚ СЌР»РµРјРµРЅС‚ РІ РјРѕРґРµР»Рё (indexOf), РЅРѕ СЃРєСЂС‹РІР°РµС‚ РёРЅРґРµРєСЃ.
+	 * Р”Р°РЅРЅР°СЏ РІРµСЂСЃРёСЏ РїРѕР»РµР·РЅР°, РєРѕРіРґР° РёРЅРґРµРєСЃ РЅСѓР¶РµРЅ РІ СЏРІРЅРѕРј РІРёРґРµ.
+	 * @param idx РёРЅРґРµРєСЃ РёР·РјРµРЅС‘РЅРЅРѕР№ СЃС‚СЂРѕРєРё РјРѕРґРµР»Рё.
 	 */
 	public void notifyChange(int idx) {
 		if (idx >= 0) {
@@ -37,18 +37,18 @@ public class ListModelListExt<E> extends ListModelList<E> {
 		}
 	}
 
-	/** Обновить грид после массового обновления подлежащих данных - selectAllRows(). */
+	/** РћР±РЅРѕРІРёС‚СЊ РіСЂРёРґ РїРѕСЃР»Рµ РјР°СЃСЃРѕРІРѕРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ РїРѕРґР»РµР¶Р°С‰РёС… РґР°РЅРЅС‹С… - selectAllRows(). */
 	public void notifyChangeAll() {
 		fireEvent(ListDataEvent.CONTENTS_CHANGED, -1, -1);
 	}
 	
-	/** RW-замок для синхронизации модели. */
+	/** RW-Р·Р°РјРѕРє РґР»СЏ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёРё РјРѕРґРµР»Рё. */
 	public StampedLock getModelRWLock() {
 		return modelRWLock;
 	}
 
-	/** Подмена внутреннего списка (вместо clear-addAll).
-	 * <b>RW-блокируется, не использовать внешнюю блокировку.</b>
+	/** РџРѕРґРјРµРЅР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СЃРїРёСЃРєР° (РІРјРµСЃС‚Рѕ clear-addAll).
+	 * <b>RW-Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ, РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РІРЅРµС€РЅСЋСЋ Р±Р»РѕРєРёСЂРѕРІРєСѓ.</b>
 	 */
 	public void safeReplaceInnerList(List<E> list) {
 		long stamp = modelRWLock.writeLock();
@@ -61,8 +61,8 @@ public class ListModelListExt<E> extends ListModelList<E> {
 		notifyChangeAll();
 	}
 	
-	/** Подмена внутреннего списка (вместо clear-addAll).
-	 * В отличие от {@link #safeReplaceInnerList(List)} не используется внутренний замок {@link #getModelRWLock()}. <b>NOT Thread-safe.</b>
+	/** РџРѕРґРјРµРЅР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СЃРїРёСЃРєР° (РІРјРµСЃС‚Рѕ clear-addAll).
+	 * Р’ РѕС‚Р»РёС‡РёРµ РѕС‚ {@link #safeReplaceInnerList(List)} РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІРЅСѓС‚СЂРµРЅРЅРёР№ Р·Р°РјРѕРє {@link #getModelRWLock()}. <b>NOT Thread-safe.</b>
 	 */
 	public void replaceInnerList(List<E> list) {
 		clearSelection();
@@ -70,8 +70,8 @@ public class ListModelListExt<E> extends ListModelList<E> {
 		notifyChangeAll();
 	}
 	
-	/** Очистка внутреннего списка.
-	 * <b>RW-блокируется, не использовать внешнюю блокировку.</b>
+	/** РћС‡РёСЃС‚РєР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ СЃРїРёСЃРєР°.
+	 * <b>RW-Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ, РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РІРЅРµС€РЅСЋСЋ Р±Р»РѕРєРёСЂРѕРІРєСѓ.</b>
 	 */
 	public void safeClear() {
 		long stamp = modelRWLock.writeLock();
@@ -82,6 +82,6 @@ public class ListModelListExt<E> extends ListModelList<E> {
 		}
 	}
 
-// TODO: ??? переписать синхронизированно  public void sort(Comparator<E> cmpr, final boolean ascending) ???
+// TODO: ??? РїРµСЂРµРїРёСЃР°С‚СЊ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°РЅРЅРѕ  public void sort(Comparator<E> cmpr, final boolean ascending) ???
 	
 } // public class ListModelListExt<E> extends ListModelList<E>

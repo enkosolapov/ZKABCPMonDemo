@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,40 +21,40 @@ import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
 
-/** Класс макрокомпонента (композит) between_filter_decimal.zul/between_filter_date.zul (диапазонный фильтр денежных значений / дат).
- * Композиция из двух InputElement, задающих диапазон значений. Включает также элемент (кнопку image) управления окном (в режиме "highlighted").
- * К композиту можно обращаться (что делает фильтр GridDataFilter) как к монолитному элементу наравне с представителями прочих типов виджетов.
- * Значения-ограничители minVal, maxVal (поумолчательные значения) читаются в конструкторе из соответствующих атрибутов макрокомпонента (не должны быть пустыми). Они (пока) неизменны.
+/** РљР»Р°СЃСЃ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° (РєРѕРјРїРѕР·РёС‚) between_filter_decimal.zul/between_filter_date.zul (РґРёР°РїР°Р·РѕРЅРЅС‹Р№ С„РёР»СЊС‚СЂ РґРµРЅРµР¶РЅС‹С… Р·РЅР°С‡РµРЅРёР№ / РґР°С‚).
+ * РљРѕРјРїРѕР·РёС†РёСЏ РёР· РґРІСѓС… InputElement, Р·Р°РґР°СЋС‰РёС… РґРёР°РїР°Р·РѕРЅ Р·РЅР°С‡РµРЅРёР№. Р’РєР»СЋС‡Р°РµС‚ С‚Р°РєР¶Рµ СЌР»РµРјРµРЅС‚ (РєРЅРѕРїРєСѓ image) СѓРїСЂР°РІР»РµРЅРёСЏ РѕРєРЅРѕРј (РІ СЂРµР¶РёРјРµ "highlighted").
+ * Рљ РєРѕРјРїРѕР·РёС‚Сѓ РјРѕР¶РЅРѕ РѕР±СЂР°С‰Р°С‚СЊСЃСЏ (С‡С‚Рѕ РґРµР»Р°РµС‚ С„РёР»СЊС‚СЂ GridDataFilter) РєР°Рє Рє РјРѕРЅРѕР»РёС‚РЅРѕРјСѓ СЌР»РµРјРµРЅС‚Сѓ РЅР°СЂР°РІРЅРµ СЃ РїСЂРµРґСЃС‚Р°РІРёС‚РµР»СЏРјРё РїСЂРѕС‡РёС… С‚РёРїРѕРІ РІРёРґР¶РµС‚РѕРІ.
+ * Р—РЅР°С‡РµРЅРёСЏ-РѕРіСЂР°РЅРёС‡РёС‚РµР»Рё minVal, maxVal (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ) С‡РёС‚Р°СЋС‚СЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ РёР· СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р°С‚СЂРёР±СѓС‚РѕРІ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° (РЅРµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РїСѓСЃС‚С‹РјРё). РћРЅРё (РїРѕРєР°) РЅРµРёР·РјРµРЅРЅС‹.
  * Based on utility class {@link basos.zkui.BetweenFilters}
- * @param <C> Тип базового контрола.
- * @param <T> Тип значения базового контрола.
+ * @param <C> РўРёРї Р±Р°Р·РѕРІРѕРіРѕ РєРѕРЅС‚СЂРѕР»Р°.
+ * @param <T> РўРёРї Р·РЅР°С‡РµРЅРёСЏ Р±Р°Р·РѕРІРѕРіРѕ РєРѕРЅС‚СЂРѕР»Р°.
  */
-// TODO: setMinVal, setMaxVal для установления ограничений во время выполнения (например, реальные границы выборки)
+// TODO: setMinVal, setMaxVal РґР»СЏ СѓСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РѕРіСЂР°РЅРёС‡РµРЅРёР№ РІРѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ (РЅР°РїСЂРёРјРµСЂ, СЂРµР°Р»СЊРЅС‹Рµ РіСЂР°РЅРёС†С‹ РІС‹Р±РѕСЂРєРё)
 public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? super T>> extends HtmlMacroComponent implements Disable {
-// Параметризация абсолютно бесполезна, только как инфо в композере.
+// РџР°СЂР°РјРµС‚СЂРёР·Р°С†РёСЏ Р°Р±СЃРѕР»СЋС‚РЅРѕ Р±РµСЃРїРѕР»РµР·РЅР°, С‚РѕР»СЊРєРѕ РєР°Рє РёРЅС„Рѕ РІ РєРѕРјРїРѕР·РµСЂРµ.
 	
 	private static final long serialVersionUID = 5485542396379205479L;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BetweenFilterMacro.class);
 	
 	@Wire
-	private Image fltrCtrl; // кнопка, открывающая окно макроэлемента
+	private Image fltrCtrl; // РєРЅРѕРїРєР°, РѕС‚РєСЂС‹РІР°СЋС‰Р°СЏ РѕРєРЅРѕ РјР°РєСЂРѕСЌР»РµРјРµРЅС‚Р°
 	@Wire
-	private Window fltrWin; // окно макроэлемента
+	private Window fltrWin; // РѕРєРЅРѕ РјР°РєСЂРѕСЌР»РµРјРµРЅС‚Р°
 	@Wire("#fltrWin #fltrValFrom")
-	private C fltrValFrom; // компонент, задающий левую границу интервала значений компонента
+	private C fltrValFrom; // РєРѕРјРїРѕРЅРµРЅС‚, Р·Р°РґР°СЋС‰РёР№ Р»РµРІСѓСЋ РіСЂР°РЅРёС†Сѓ РёРЅС‚РµСЂРІР°Р»Р° Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р°
 	@Wire("#fltrWin #fltrValTo")
-	private C fltrValTo; // компонент, задающий правую границу интервала значений компонента
+	private C fltrValTo; // РєРѕРјРїРѕРЅРµРЅС‚, Р·Р°РґР°СЋС‰РёР№ РїСЂР°РІСѓСЋ РіСЂР°РЅРёС†Сѓ РёРЅС‚РµСЂРІР°Р»Р° Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р°
 	
-	private final T minVal, maxVal; // граничные значения интервала
-	private T appliedValFrom, appliedValTo; // применённые (отданные вовне при закрытии с подтверждением) значения
+	private final T minVal, maxVal; // РіСЂР°РЅРёС‡РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РёРЅС‚РµСЂРІР°Р»Р°
+	private T appliedValFrom, appliedValTo; // РїСЂРёРјРµРЅС‘РЅРЅС‹Рµ (РѕС‚РґР°РЅРЅС‹Рµ РІРѕРІРЅРµ РїСЂРё Р·Р°РєСЂС‹С‚РёРё СЃ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµРј) Р·РЅР°С‡РµРЅРёСЏ
 	private final String minValStr, maxValStr;
 	private boolean _disabled = false;
 	
-// TODO: добавить класс значения getValClass(), геттеры для отдельных значений getMinVal(), getMaxVal(); в основной класс сеттер из PairedValue	(для хранения и восстановления настроек фильтра)
-	/** Композитное значение макрокомпонента, возвращаемое getValue(). Инкапсулирует логику проверки на пустоту и принадлежность величины к диапазону.
-	 * Полезен для offline-проверки значения.
-	 * (не храним здесь minVal, maxVal (допустумый диапазон значений макрокомпонента) в предположении их неизменности)
+// TODO: РґРѕР±Р°РІРёС‚СЊ РєР»Р°СЃСЃ Р·РЅР°С‡РµРЅРёСЏ getValClass(), РіРµС‚С‚РµСЂС‹ РґР»СЏ РѕС‚РґРµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ getMinVal(), getMaxVal(); РІ РѕСЃРЅРѕРІРЅРѕР№ РєР»Р°СЃСЃ СЃРµС‚С‚РµСЂ РёР· PairedValue	(РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РЅР°СЃС‚СЂРѕРµРє С„РёР»СЊС‚СЂР°)
+	/** РљРѕРјРїРѕР·РёС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р°, РІРѕР·РІСЂР°С‰Р°РµРјРѕРµ getValue(). РРЅРєР°РїСЃСѓР»РёСЂСѓРµС‚ Р»РѕРіРёРєСѓ РїСЂРѕРІРµСЂРєРё РЅР° РїСѓСЃС‚РѕС‚Сѓ Рё РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ РІРµР»РёС‡РёРЅС‹ Рє РґРёР°РїР°Р·РѕРЅСѓ.
+	 * РџРѕР»РµР·РµРЅ РґР»СЏ offline-РїСЂРѕРІРµСЂРєРё Р·РЅР°С‡РµРЅРёСЏ.
+	 * (РЅРµ С…СЂР°РЅРёРј Р·РґРµСЃСЊ minVal, maxVal (РґРѕРїСѓСЃС‚СѓРјС‹Р№ РґРёР°РїР°Р·РѕРЅ Р·РЅР°С‡РµРЅРёР№ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р°) РІ РїСЂРµРґРїРѕР»РѕР¶РµРЅРёРё РёС… РЅРµРёР·РјРµРЅРЅРѕСЃС‚Рё)
 	 */
 	public class PairedValue implements Serializable {
 		private static final long serialVersionUID = -4795772570000095830L;
@@ -67,7 +67,7 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		public boolean isEmpty() {
 			return (valFrom != null && valTo != null && minVal != null && maxVal != null && valFrom.equals(minVal) && valTo.equals(maxVal));
 		}
-// TODO: ??? добавить параметр типа NVL (замена для null) ???
+// TODO: ??? РґРѕР±Р°РІРёС‚СЊ РїР°СЂР°РјРµС‚СЂ С‚РёРїР° NVL (Р·Р°РјРµРЅР° РґР»СЏ null) ???
 		/** @see BetweenFilterMacro#isValBetween(Comparable) BetweenFilterMacro.isValBetween() */
 		public boolean isValBetween(T objValToEval) {
 			boolean ret_res = false;
@@ -96,18 +96,18 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 	} // public class PairedValue
 	
 	
-	/** Считываем значение в виде композита {@link BetweenFilterMacro.PairedValue} */
+	/** РЎС‡РёС‚С‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ РІ РІРёРґРµ РєРѕРјРїРѕР·РёС‚Р° {@link BetweenFilterMacro.PairedValue} */
 	public PairedValue getValue() {
 		return this.new PairedValue(this.getValFrom(), this.getValTo());
 	}
 	
 	
-	/** В конструкторе читаются значения-ограничители minVal, maxVal (поумолчательные значения) из соответствующих атрибутов макрокомпонента (не должны быть пустыми). Они (пока) неизменны. */
+	/** Р’ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ С‡РёС‚Р°СЋС‚СЃСЏ Р·РЅР°С‡РµРЅРёСЏ-РѕРіСЂР°РЅРёС‡РёС‚РµР»Рё minVal, maxVal (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ) РёР· СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р°С‚СЂРёР±СѓС‚РѕРІ РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° (РЅРµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РїСѓСЃС‚С‹РјРё). РћРЅРё (РїРѕРєР°) РЅРµРёР·РјРµРЅРЅС‹. */
 	@SuppressWarnings("unchecked")
 	public BetweenFilterMacro() {
 		compose(); // for the template to be applied, and to wire members automatically
-		// на этом этапе ИД макрокомпоненту ещё не присвоен
-		// получаем и парсим из текста значения кастомных атрибутов с границами диапазона
+		// РЅР° СЌС‚РѕРј СЌС‚Р°РїРµ РР” РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Сѓ РµС‰С‘ РЅРµ РїСЂРёСЃРІРѕРµРЅ
+		// РїРѕР»СѓС‡Р°РµРј Рё РїР°СЂСЃРёРј РёР· С‚РµРєСЃС‚Р° Р·РЅР°С‡РµРЅРёСЏ РєР°СЃС‚РѕРјРЅС‹С… Р°С‚СЂРёР±СѓС‚РѕРІ СЃ РіСЂР°РЅРёС†Р°РјРё РґРёР°РїР°Р·РѕРЅР°
 		minValStr = (String)fltrWin.getAttribute("minVal");
 		maxValStr = (String)fltrWin.getAttribute("maxVal");
 		if ( minValStr == null || maxValStr == null ) {
@@ -141,15 +141,15 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 	} // parametreless constructor BetweenFilterMacro()
 	
 	
-	/** Применить фильтр при положительном (с подтверждением) закрытии макрокомпонента.
-	 * Вызывается контроллером при перехвате события onApply макрокомпонента (закрытие с подтверждением ввода "Применить фильтр" - forward "applIm".onClick).
-	 * Перед закрытием окна макрокомпонента запоминаются текущие значения, которые можно восстановить при последующем открытии с помощью вызова {@link #restore()}.
-	 * Также меняется иконка управляющего контрола и закрывается окно.
-	 * @param applyLogic Вызов применения фильтра (nullable). Не используется.
+	/** РџСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂ РїСЂРё РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРј (СЃ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµРј) Р·Р°РєСЂС‹С‚РёРё РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р°.
+	 * Р’С‹Р·С‹РІР°РµС‚СЃСЏ РєРѕРЅС‚СЂРѕР»Р»РµСЂРѕРј РїСЂРё РїРµСЂРµС…РІР°С‚Рµ СЃРѕР±С‹С‚РёСЏ onApply РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° (Р·Р°РєСЂС‹С‚РёРµ СЃ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµРј РІРІРѕРґР° "РџСЂРёРјРµРЅРёС‚СЊ С„РёР»СЊС‚СЂ" - forward "applIm".onClick).
+	 * РџРµСЂРµРґ Р·Р°РєСЂС‹С‚РёРµРј РѕРєРЅР° РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° Р·Р°РїРѕРјРёРЅР°СЋС‚СЃСЏ С‚РµРєСѓС‰РёРµ Р·РЅР°С‡РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Рµ РјРѕР¶РЅРѕ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РїСЂРё РїРѕСЃР»РµРґСѓСЋС‰РµРј РѕС‚РєСЂС‹С‚РёРё СЃ РїРѕРјРѕС‰СЊСЋ РІС‹Р·РѕРІР° {@link #restore()}.
+	 * РўР°РєР¶Рµ РјРµРЅСЏРµС‚СЃСЏ РёРєРѕРЅРєР° СѓРїСЂР°РІР»СЏСЋС‰РµРіРѕ РєРѕРЅС‚СЂРѕР»Р° Рё Р·Р°РєСЂС‹РІР°РµС‚СЃСЏ РѕРєРЅРѕ.
+	 * @param applyLogic Р’С‹Р·РѕРІ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° (nullable). РќРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ.
 	 */
 	@SuppressWarnings("unchecked")
 	public void onApply(/*Consumer<Void> applyLogic*/) {
-		// запоминаем значения перед применением фильтра для возможности восстановаления
+		// Р·Р°РїРѕРјРёРЅР°РµРј Р·РЅР°С‡РµРЅРёСЏ РїРµСЂРµРґ РїСЂРёРјРµРЅРµРЅРёРµРј С„РёР»СЊС‚СЂР° РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РІРѕСЃСЃС‚Р°РЅРѕРІР°Р»РµРЅРёСЏ
 		if (fltrValFrom instanceof Decimalbox) {
 			appliedValFrom = (T) ((Decimalbox)fltrValFrom).getValue();
 			appliedValTo = (T) ((Decimalbox)fltrValTo).getValue();
@@ -165,24 +165,24 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		logger.debug("apply. ID: {}, minVal = {}, maxVal = {}, appliedValFrom = {}, appliedValTo = {}", this.getId(), minVal, maxVal, appliedValFrom, appliedValTo);
 		if (appliedValFrom != null && !appliedValFrom.equals(minVal) || appliedValTo != null && !appliedValTo.equals(maxVal)) {
 			String clearFiltersIconName = Labels.getLabel("betweenFilters.entryImage.clearIcon", "/img/Data-Clear-Filters-icon_black(24).png");
-			fltrCtrl.setSrc(clearFiltersIconName); // кнопка вызова модального диалога становится после применения фильтра кнопкой быстрой очистки
+			fltrCtrl.setSrc(clearFiltersIconName); // РєРЅРѕРїРєР° РІС‹Р·РѕРІР° РјРѕРґР°Р»СЊРЅРѕРіРѕ РґРёР°Р»РѕРіР° СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РїРѕСЃР»Рµ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° РєРЅРѕРїРєРѕР№ Р±С‹СЃС‚СЂРѕР№ РѕС‡РёСЃС‚РєРё
 		} else {
 			String emptyFiltersIconName = Labels.getLabel("betweenFilters.entryImage.emptyIcon", "/img/Data-Empty-Filter-icon(24).png");
-			fltrCtrl.setSrc(emptyFiltersIconName); // кнопка вызова модального диалога принимает вид пустого фильтра
+			fltrCtrl.setSrc(emptyFiltersIconName); // РєРЅРѕРїРєР° РІС‹Р·РѕРІР° РјРѕРґР°Р»СЊРЅРѕРіРѕ РґРёР°Р»РѕРіР° РїСЂРёРЅРёРјР°РµС‚ РІРёРґ РїСѓСЃС‚РѕРіРѕ С„РёР»СЊС‚СЂР°
 		}
 		fltrWin.setVisible(false);
 		//if (applyLogic != null ) { applyLogic.accept(null);	}
 		//fltrWin.setVisible(false);
-// TODO:HOWTO: разрешить нажатие
+// TODO:HOWTO: СЂР°Р·СЂРµС€РёС‚СЊ РЅР°Р¶Р°С‚РёРµ
 //		entryImage.enable();
 //		BetweenFilters.toggleOnBetweenFilter(fltrCtrl, fltrValFrom, fltrValTo, applyLogic);
 	} // public void apply(Consumer<Object> applyLogic)
 	
-	/** Восстановить значения компонент фильтра из сохранённых при последнем применении фильтра или из поумолчательных значений (т.е. бывших на момент открытия формы фильтра) (используется в шаблоне). */
+	/** Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° РёР· СЃРѕС…СЂР°РЅС‘РЅРЅС‹С… РїСЂРё РїРѕСЃР»РµРґРЅРµРј РїСЂРёРјРµРЅРµРЅРёРё С„РёР»СЊС‚СЂР° РёР»Рё РёР· РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ (С‚.Рµ. Р±С‹РІС€РёС… РЅР° РјРѕРјРµРЅС‚ РѕС‚РєСЂС‹С‚РёСЏ С„РѕСЂРјС‹ С„РёР»СЊС‚СЂР°) (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ С€Р°Р±Р»РѕРЅРµ). */
 	public void restore() {
 		if (appliedValFrom != null && appliedValTo != null) {
 //			fltrValFrom.setRawValue(appliedValFrom); // setText(minValStr)
-//			fltrValTo.setRawValue(appliedValTo); // setText(maxValStr) - теряется точка - срабатывает валидатор !
+//			fltrValTo.setRawValue(appliedValTo); // setText(maxValStr) - С‚РµСЂСЏРµС‚СЃСЏ С‚РѕС‡РєР° - СЃСЂР°Р±Р°С‚С‹РІР°РµС‚ РІР°Р»РёРґР°С‚РѕСЂ !
 			if (fltrValFrom instanceof Decimalbox) {
 				((Decimalbox)fltrValFrom).setValue((BigDecimal)appliedValFrom);
 				((Decimalbox)fltrValTo).setValue((BigDecimal)appliedValTo);
@@ -195,13 +195,13 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 				logger.error("restore.  Unsupported control type: {}", fltrValFrom.getClass().getName());
 				throw new IllegalStateException("Unsupported control type in BetweenFilterMacro.restore(): "+fltrValFrom.getClass().getName()+", this= "+this);
 			}
-		} else { // фактически очистка на поумолчательные значения, т.к. другой логики в restoreBetweenFilter() не реализовано
+		} else { // С„Р°РєС‚РёС‡РµСЃРєРё РѕС‡РёСЃС‚РєР° РЅР° РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ, С‚.Рє. РґСЂСѓРіРѕР№ Р»РѕРіРёРєРё РІ restoreBetweenFilter() РЅРµ СЂРµР°Р»РёР·РѕРІР°РЅРѕ
 			BetweenFilters.restoreBetweenFilter(fltrValFrom, fltrValTo, false);
 		}
 		logger.debug("restore. ID: {}, appliedValFrom = {}, = {}", this.getId(), appliedValFrom, appliedValTo);
 	} // public void restore()
 	
-	/** Восстановление поумолчательных значений (для вызова извне компонента, например из GridDataFilter). */
+	/** Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ (РґР»СЏ РІС‹Р·РѕРІР° РёР·РІРЅРµ РєРѕРјРїРѕРЅРµРЅС‚Р°, РЅР°РїСЂРёРјРµСЂ РёР· GridDataFilter). */
 	public void clear() {
 		BetweenFilters.clearBetweenFilter(fltrCtrl, fltrValFrom, fltrValTo);
 		appliedValFrom = minVal;
@@ -214,25 +214,25 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		fltrWin.setVisible(true);
 	}
 	
-	/** Отмена ввода: восстановить сохранённые значения компонент фильтра и скрыть окно. */
+	/** РћС‚РјРµРЅР° РІРІРѕРґР°: РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° Рё СЃРєСЂС‹С‚СЊ РѕРєРЅРѕ. */
 	@Listen("onClick = #fltrWin #cancelIm")
 	public void onCancel() {
 		restore();
 		fltrWin.setVisible(false);
 	}
 	
-	/** Восстановить сохранённые значения компонент фильтра (внутренний вызов). */
+	/** Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕС…СЂР°РЅС‘РЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° (РІРЅСѓС‚СЂРµРЅРЅРёР№ РІС‹Р·РѕРІ). */
 	@Listen("onClick = #fltrWin #restoreIm")
 	public void onUndo() {
 		restore();
 	}
 	
-	/** Установить поумолчательные значения компонент фильтра ("очистить") (внутренний вызов). */
+	/** РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° ("РѕС‡РёСЃС‚РёС‚СЊ") (РІРЅСѓС‚СЂРµРЅРЅРёР№ РІС‹Р·РѕРІ). */
 	@Listen("onClick = #fltrWin #clearIm")
 	public void onClear() {
 		fltrValFrom.setRawValue(minVal); fltrValTo.setRawValue(maxVal);
-		//BetweenFilters.restoreBetweenFilter(fltrValFrom, fltrValTo, true); // неприменимо в конструкторе, т.к. требуется ИД
-// TODO: (включить после исправления валидатора) неприменимо в конструкторе, т.к. требуется ИД (валидатору BetweenFilters$BetweenValidator при setValue())
+		//BetweenFilters.restoreBetweenFilter(fltrValFrom, fltrValTo, true); // РЅРµРїСЂРёРјРµРЅРёРјРѕ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ, С‚.Рє. С‚СЂРµР±СѓРµС‚СЃСЏ РР”
+// TODO: (РІРєР»СЋС‡РёС‚СЊ РїРѕСЃР»Рµ РёСЃРїСЂР°РІР»РµРЅРёСЏ РІР°Р»РёРґР°С‚РѕСЂР°) РЅРµРїСЂРёРјРµРЅРёРјРѕ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ, С‚.Рє. С‚СЂРµР±СѓРµС‚СЃСЏ РР” (РІР°Р»РёРґР°С‚РѕСЂСѓ BetweenFilters$BetweenValidator РїСЂРё setValue())
 		/*if (fltrValFrom instanceof Decimalbox) {
 			((Decimalbox)fltrValFrom).setValue((BigDecimal)minVal);
 			((Decimalbox)fltrValTo).setValue((BigDecimal)maxVal);
@@ -247,34 +247,34 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		}*/
 	} // public void onClear()
 	
-	/** Пустота = равенство граничным (поумолчательным) значениям. */
+	/** РџСѓСЃС‚РѕС‚Р° = СЂР°РІРµРЅСЃС‚РІРѕ РіСЂР°РЅРёС‡РЅС‹Рј (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рј) Р·РЅР°С‡РµРЅРёСЏРј. */
 	public boolean isEmpty() {
 		boolean ret_res = false;
 		ret_res = BetweenFilters.isEmptyBetweenFilter(fltrValFrom, fltrValTo);
 		logger.trace("isEmpty. ID: {}, res = {}", this.getId(), ret_res);
-		return ret_res; // сравнение с исп-м getValue() значений реальных типов
+		return ret_res; // СЃСЂР°РІРЅРµРЅРёРµ СЃ РёСЃРї-Рј getValue() Р·РЅР°С‡РµРЅРёР№ СЂРµР°Р»СЊРЅС‹С… С‚РёРїРѕРІ
 	} // public boolean isEmpty()
 	
-	/** Возвращает строковое представление диапазона граничных (поумолчательных) значений. */
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚СЂРѕРєРѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР° РіСЂР°РЅРёС‡РЅС‹С… (РїРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹С…) Р·РЅР°С‡РµРЅРёР№. */
 	public String getEmptyValAsString() {
 		logger.trace("getEmptyValAsString. ID: {}, res = {}", this.getId(), minValStr+"-"+maxValStr);
 		return minValStr+"-"+maxValStr;
 	} // public String getEmptyValAsString()
 	
-// TODO: ??? добавить параметр типа NVL (замена для null) ???
-	/** Проверка величины на принадлежность к текущему диапазону значений компонента.
-	 * @param objValToEval Оцениваемая величина.
-	 * @return Ложь для параметра null.
+// TODO: ??? РґРѕР±Р°РІРёС‚СЊ РїР°СЂР°РјРµС‚СЂ С‚РёРїР° NVL (Р·Р°РјРµРЅР° РґР»СЏ null) ???
+	/** РџСЂРѕРІРµСЂРєР° РІРµР»РёС‡РёРЅС‹ РЅР° РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ Рє С‚РµРєСѓС‰РµРјСѓ РґРёР°РїР°Р·РѕРЅСѓ Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р°.
+	 * @param objValToEval РћС†РµРЅРёРІР°РµРјР°СЏ РІРµР»РёС‡РёРЅР°.
+	 * @return Р›РѕР¶СЊ РґР»СЏ РїР°СЂР°РјРµС‚СЂР° null.
 	 * @see BetweenFilters#evalBetweenFilter(Comparable, InputElement, InputElement) BetweenFilters.evalBetweenFilter() 
 	 */
 	public boolean isValBetween(T objValToEval) {
 		boolean ret_res = false;
-		ret_res = BetweenFilters.evalBetweenFilter(objValToEval, fltrValFrom, fltrValTo); // исп-ся вызовы getValue()
+		ret_res = BetweenFilters.evalBetweenFilter(objValToEval, fltrValFrom, fltrValTo); // РёСЃРї-СЃСЏ РІС‹Р·РѕРІС‹ getValue()
 		logger.debug("isValBetween. ID: {}, objValToEval = {}, res = {}", this.getId(), objValToEval, ret_res);
 		return ret_res;
 	} // public boolean isValBetween(T objValToEval)
 	
-	/** Возвращет набор проверок значений компонента (используется в шаблоне).
+	/** Р’РѕР·РІСЂР°С‰РµС‚ РЅР°Р±РѕСЂ РїСЂРѕРІРµСЂРѕРє Р·РЅР°С‡РµРЅРёР№ РєРѕРјРїРѕРЅРµРЅС‚Р° (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІ С€Р°Р±Р»РѕРЅРµ).
 	 * @see BetweenFilters#genBetweenValidator()
 	 */
 	public Constraint genBetweenValidator() {
@@ -283,8 +283,8 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 	
 // '0.00-99999999999.99' - Ok !
 // '1900-11-14-2999-12-31' - Ok !
-	/** Возвращает текстовое представление текущего диапазона значений.
-	 * Для Datebox: "yyyy1-mm1-dd1-yyyy2-mm2-dd2", для Decimalbox: valFrom.toPlainString()+"-"+valTo.toPlainString()
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСЃС‚РѕРІРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РґРёР°РїР°Р·РѕРЅР° Р·РЅР°С‡РµРЅРёР№.
+	 * Р”Р»СЏ Datebox: "yyyy1-mm1-dd1-yyyy2-mm2-dd2", РґР»СЏ Decimalbox: valFrom.toPlainString()+"-"+valTo.toPlainString()
 	 */
 	public String getText() {
 		String retStr = "unknown_type";
@@ -307,7 +307,7 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 	//public String toString() { return getText(); }
 	
 	@SuppressWarnings("unchecked")
-	/** Текущее значение левой границы. */
+	/** РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ Р»РµРІРѕР№ РіСЂР°РЅРёС†С‹. */
 	public T getValFrom() {
 		if (fltrValFrom instanceof Decimalbox) {
 			return (T) ((Decimalbox)fltrValFrom).getValue();
@@ -321,7 +321,7 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		}
 	} // public T getValFrom()
 	
-	/** Текущее значение правой границы. */
+	/** РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РїСЂР°РІРѕР№ РіСЂР°РЅРёС†С‹. */
 	@SuppressWarnings("unchecked")
 	public T getValTo() {
 		if (fltrValTo instanceof Decimalbox) {
@@ -336,24 +336,24 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		}
 	} // public T getValTo()
 	
-	/** Текущее "последнее проверенное" значение левой границы.
+	/** РўРµРєСѓС‰РµРµ "РїРѕСЃР»РµРґРЅРµРµ РїСЂРѕРІРµСЂРµРЅРЅРѕРµ" Р·РЅР°С‡РµРЅРёРµ Р»РµРІРѕР№ РіСЂР°РЅРёС†С‹.
 	 * @see org.zkoss.zul.impl.InputElement#getRawValue()
 	 */
 	@SuppressWarnings("unchecked")
 	public T getRawValFrom() {return (T)fltrValFrom.getRawValue();}
 	
-	/** Текущее "последнее проверенное" значение правой границы.
+	/** РўРµРєСѓС‰РµРµ "РїРѕСЃР»РµРґРЅРµРµ РїСЂРѕРІРµСЂРµРЅРЅРѕРµ" Р·РЅР°С‡РµРЅРёРµ РїСЂР°РІРѕР№ РіСЂР°РЅРёС†С‹.
 	 * @see org.zkoss.zul.impl.InputElement#getRawValue()
 	 */
 	@SuppressWarnings("unchecked")
 	public T getRawValTo() {return (T)fltrValTo.getRawValue();}
 	
-	/** Тип компонента как он поименован при декларировании в ZUL (between_filter_date, between_filter_decimal): getDefinition().getName() */
+	/** РўРёРї РєРѕРјРїРѕРЅРµРЅС‚Р° РєР°Рє РѕРЅ РїРѕРёРјРµРЅРѕРІР°РЅ РїСЂРё РґРµРєР»Р°СЂРёСЂРѕРІР°РЅРёРё РІ ZUL (between_filter_date, between_filter_decimal): getDefinition().getName() */
 	public String getName() {
 		return this.getDefinition().getName(); // "between_filter_date" / "between_filter_decimal"
 	}
 	
-	/** Подтип макрокомпонента в зависимости от типа InputElement: "DecimalBetweenFilterMacro" / "DateBetweenFilterMacro" */
+	/** РџРѕРґС‚РёРї РјР°РєСЂРѕРєРѕРјРїРѕРЅРµРЅС‚Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ С‚РёРїР° InputElement: "DecimalBetweenFilterMacro" / "DateBetweenFilterMacro" */
 	public String getExtMacroType() {
 		if (fltrValFrom instanceof Decimalbox) return "DecimalBetweenFilterMacro";
 		if (fltrValFrom instanceof Datebox) return "DateBetweenFilterMacro";
@@ -361,7 +361,7 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 	} // public String getExtMacroType()
 	
 // FIXME: fltrValFrom.getClass() :))
-	/** Класс контролируемого типа данных: BigDecimal.class / java.util.Date.class */
+	/** РљР»Р°СЃСЃ РєРѕРЅС‚СЂРѕР»РёСЂСѓРµРјРѕРіРѕ С‚РёРїР° РґР°РЅРЅС‹С…: BigDecimal.class / java.util.Date.class */
 	@SuppressWarnings("unchecked")
 	public Class<T> getValClass() {
 		if (fltrValFrom instanceof Decimalbox) return (Class<T>)BigDecimal.class;
@@ -369,16 +369,16 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
 		return null;
 	} // public Class<T> getValClass() 	
 	
-	/** Минимальное левое значение (атрибут minVal, преобразованный к контролируемому типу данных) */
+	/** РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р»РµРІРѕРµ Р·РЅР°С‡РµРЅРёРµ (Р°С‚СЂРёР±СѓС‚ minVal, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅС‹Р№ Рє РєРѕРЅС‚СЂРѕР»РёСЂСѓРµРјРѕРјСѓ С‚РёРїСѓ РґР°РЅРЅС‹С…) */
 	public T getMinVal() { return minVal; }
 	
-	/** Максимальное правое значение (атрибут maxVal, преобразованный к контролируемому типу данных) */
+	/** РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РїСЂР°РІРѕРµ Р·РЅР°С‡РµРЅРёРµ (Р°С‚СЂРёР±СѓС‚ maxVal, РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРЅС‹Р№ Рє РєРѕРЅС‚СЂРѕР»РёСЂСѓРµРјРѕРјСѓ С‚РёРїСѓ РґР°РЅРЅС‹С…) */
 	public T getMaxVal() { return maxVal; }
 	
-	/** Значение атрибута minVal "как есть в шаблоне" */
+	/** Р—РЅР°С‡РµРЅРёРµ Р°С‚СЂРёР±СѓС‚Р° minVal "РєР°Рє РµСЃС‚СЊ РІ С€Р°Р±Р»РѕРЅРµ" */
     public String getMinValStr() { return minValStr; }
     
-    /** Значение атрибута maxVal "как есть в шаблоне" */
+    /** Р—РЅР°С‡РµРЅРёРµ Р°С‚СЂРёР±СѓС‚Р° maxVal "РєР°Рє РµСЃС‚СЊ РІ С€Р°Р±Р»РѕРЅРµ" */
 	public String getMaxValStr() { return maxValStr; }
 		
 	/**
@@ -405,20 +405,20 @@ public class BetweenFilterMacro<C extends InputElement, T extends Comparable<? s
         return new String(buf);
     } // private String dateToString(Date val)
     
-    /** Реализация интерфейса org.zkoss.zk.ui.ext.Disable {@inheritDoc} для управляющего контрола. */
+    /** Р РµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР° org.zkoss.zk.ui.ext.Disable {@inheritDoc} РґР»СЏ СѓРїСЂР°РІР»СЏСЋС‰РµРіРѕ РєРѕРЅС‚СЂРѕР»Р°. */
     @Override
     public boolean isDisabled() {
 		return _disabled;
 	}
     
-    /** Реализация интерфейса org.zkoss.zk.ui.ext.Disable - деактивируем/активируем управляющий контрол.
+    /** Р РµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР° org.zkoss.zk.ui.ext.Disable - РґРµР°РєС‚РёРІРёСЂСѓРµРј/Р°РєС‚РёРІРёСЂСѓРµРј СѓРїСЂР°РІР»СЏСЋС‰РёР№ РєРѕРЅС‚СЂРѕР».
      * @param disabled Disable (true) / enable (false)
      */
     @Override
     public void setDisabled(boolean disabled) {
 		if (_disabled != disabled) {
 			_disabled = disabled;
-			fltrCtrl.setVisible(!disabled); // TODO: сделать красивше
+			fltrCtrl.setVisible(!disabled); // TODO: СЃРґРµР»Р°С‚СЊ РєСЂР°СЃРёРІС€Рµ
 		}
     } // public void setDisabled(boolean disable)
     

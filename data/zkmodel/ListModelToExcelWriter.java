@@ -1,4 +1,4 @@
-package basos.data.zkmodel;
+п»їpackage basos.data.zkmodel;
 
 import org.zkoss.util.media.AMedia;
 import org.zkoss.util.resource.Labels;
@@ -21,9 +21,9 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 
-/** Выгрузка лист-модели с типом строки GridData в Excel (сохранение на клиенте).
- * В методе {@link #exportModelDownloadExcel} методы класса {@link BeanToExcelWriter} применяются к каждой строке списка.
- * Используется асинхронный AsyncTask<AMedia> с поддержкой прерывания процесса и отображением прогресса.
+/** Р’С‹РіСЂСѓР·РєР° Р»РёСЃС‚-РјРѕРґРµР»Рё СЃ С‚РёРїРѕРј СЃС‚СЂРѕРєРё GridData РІ Excel (СЃРѕС…СЂР°РЅРµРЅРёРµ РЅР° РєР»РёРµРЅС‚Рµ).
+ * Р’ РјРµС‚РѕРґРµ {@link #exportModelDownloadExcel} РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР° {@link BeanToExcelWriter} РїСЂРёРјРµРЅСЏСЋС‚СЃСЏ Рє РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРµ СЃРїРёСЃРєР°.
+ * РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ Р°СЃРёРЅС…СЂРѕРЅРЅС‹Р№ AsyncTask<AMedia> СЃ РїРѕРґРґРµСЂР¶РєРѕР№ РїСЂРµСЂС‹РІР°РЅРёСЏ РїСЂРѕС†РµСЃСЃР° Рё РѕС‚РѕР±СЂР°Р¶РµРЅРёРµРј РїСЂРѕРіСЂРµСЃСЃР°.
  */
 public class ListModelToExcelWriter<T extends Object & Serializable & Comparable<? super T>> {
 
@@ -31,11 +31,11 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 	private static final Marker concurMarker = MarkerFactory.getMarker("CONCUR");
 
 	private final Class<T> beanClass;
-	private final ListModelListExt<GridData<T>> gridLML; // модель данных грида
-    private final StampedLock modelRWLock; // RW-замок инкапсулирован в ListModelListExt
+	private final ListModelListExt<GridData<T>> gridLML; // РјРѕРґРµР»СЊ РґР°РЅРЅС‹С… РіСЂРёРґР°
+    private final StampedLock modelRWLock; // RW-Р·Р°РјРѕРє РёРЅРєР°РїСЃСѓР»РёСЂРѕРІР°РЅ РІ ListModelListExt
 	
-    /** @param beanClass Класс бина.
-     * @param gridLML Лист-модель, строки которой будем выгружать.
+    /** @param beanClass РљР»Р°СЃСЃ Р±РёРЅР°.
+     * @param gridLML Р›РёСЃС‚-РјРѕРґРµР»СЊ, СЃС‚СЂРѕРєРё РєРѕС‚РѕСЂРѕР№ Р±СѓРґРµРј РІС‹РіСЂСѓР¶Р°С‚СЊ.
      */
 	public ListModelToExcelWriter(Class<T> beanClass, ListModelListExt<GridData<T>> gridLML) {
 		if (beanClass == null) {
@@ -51,7 +51,7 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 		this.modelRWLock = gridLML.getModelRWLock();
 	}
     
-	/** @param gridLMLX Лист-модель со строками {@link GridData GridData&lt;T&gt;}.
+	/** @param gridLMLX Р›РёСЃС‚-РјРѕРґРµР»СЊ СЃРѕ СЃС‚СЂРѕРєР°РјРё {@link GridData GridData&lt;T&gt;}.
      */
 	public ListModelToExcelWriter(GridDataModelMan<T> gridLMLX) {
 		if (gridLMLX == null) {
@@ -65,43 +65,43 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 	
 	private List<String> secondHead;
 	
-	/** Дополнительный заголовок с читабельными названиями колонок. */
+	/** Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє СЃ С‡РёС‚Р°Р±РµР»СЊРЅС‹РјРё РЅР°Р·РІР°РЅРёСЏРјРё РєРѕР»РѕРЅРѕРє. */
 	public void setHeader(List<String> hdr) {
 		this.secondHead = hdr;
 	}
 	
 	private BeanToExcelWriter.FileTypes fileType = BeanToExcelWriter.FileTypes.SXSSF;
 	
-	/** Формат книги, по умолчанию SXSSF. */
+	/** Р¤РѕСЂРјР°С‚ РєРЅРёРіРё, РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ SXSSF. */
 	public void setFileType(BeanToExcelWriter.FileTypes fileType) {
 		this.fileType = fileType;
 	}
 	
-/* XSSF (xlsx): 6500 падает, 5555 вытянул; при том гораздо (раз в 20) медленнее
-   HSSF (xls): 25 тыс. строк выгружаются лихо, на 33 тыс. пердит и падает на последнем этапе по Out of memory, при 77 тыс. строк падает на этапе формирования ячеек
-   SXSSF (xlsx): 80 тыс. строк зафигачил за 6,6 сек. ! И в режиме пейджирования в гриде всё чётко и шустро !
-     На 100 тыс. строк всё отработало на ура, завалить не удалось !
-     На 105 тыс. строк выгрузка валится, даже если ничего не трогать
-     На 120 тыс. строк удалось получить Out of Memory при стрессировании интерфейса, выгрузка тоже завалилась на этапе формирования файла
-     На 160 тыс. строк Out of Memory при формировании грида
+/* XSSF (xlsx): 6500 РїР°РґР°РµС‚, 5555 РІС‹С‚СЏРЅСѓР»; РїСЂРё С‚РѕРј РіРѕСЂР°Р·РґРѕ (СЂР°Р· РІ 20) РјРµРґР»РµРЅРЅРµРµ
+   HSSF (xls): 25 С‚С‹СЃ. СЃС‚СЂРѕРє РІС‹РіСЂСѓР¶Р°СЋС‚СЃСЏ Р»РёС…Рѕ, РЅР° 33 С‚С‹СЃ. РїРµСЂРґРёС‚ Рё РїР°РґР°РµС‚ РЅР° РїРѕСЃР»РµРґРЅРµРј СЌС‚Р°РїРµ РїРѕ Out of memory, РїСЂРё 77 С‚С‹СЃ. СЃС‚СЂРѕРє РїР°РґР°РµС‚ РЅР° СЌС‚Р°РїРµ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ СЏС‡РµРµРє
+   SXSSF (xlsx): 80 С‚С‹СЃ. СЃС‚СЂРѕРє Р·Р°С„РёРіР°С‡РёР» Р·Р° 6,6 СЃРµРє. ! Р РІ СЂРµР¶РёРјРµ РїРµР№РґР¶РёСЂРѕРІР°РЅРёСЏ РІ РіСЂРёРґРµ РІСЃС‘ С‡С‘С‚РєРѕ Рё С€СѓСЃС‚СЂРѕ !
+     РќР° 100 С‚С‹СЃ. СЃС‚СЂРѕРє РІСЃС‘ РѕС‚СЂР°Р±РѕС‚Р°Р»Рѕ РЅР° СѓСЂР°, Р·Р°РІР°Р»РёС‚СЊ РЅРµ СѓРґР°Р»РѕСЃСЊ !
+     РќР° 105 С‚С‹СЃ. СЃС‚СЂРѕРє РІС‹РіСЂСѓР·РєР° РІР°Р»РёС‚СЃСЏ, РґР°Р¶Рµ РµСЃР»Рё РЅРёС‡РµРіРѕ РЅРµ С‚СЂРѕРіР°С‚СЊ
+     РќР° 120 С‚С‹СЃ. СЃС‚СЂРѕРє СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ Out of Memory РїСЂРё СЃС‚СЂРµСЃСЃРёСЂРѕРІР°РЅРёРё РёРЅС‚РµСЂС„РµР№СЃР°, РІС‹РіСЂСѓР·РєР° С‚РѕР¶Рµ Р·Р°РІР°Р»РёР»Р°СЃСЊ РЅР° СЌС‚Р°РїРµ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ С„Р°Р№Р»Р°
+     РќР° 160 С‚С‹СЃ. СЃС‚СЂРѕРє Out of Memory РїСЂРё С„РѕСЂРјРёСЂРѕРІР°РЅРёРё РіСЂРёРґР°
  */ 
 	
-	/** Выгрузка в формате OOXML (Microsoft Excel XML 2007+, формат выбирается через {@link #setFileType}) всех строк и колонок лист-модели.
-	 * Запускается как длительная задача в WT под управлением AsyncTask<AMedia>, который умеет обрабатывать прерывание и отображать прогресс (слушателям направляются события "indeterm" и "indeterm_progress").
-	 * Apache POI вызывается напрямую (см. класс {@link BeanToExcelWriter}), связанные возможности ZK EE не используются.
-	 * Сформированная книга записывается в ByteArrayOutputStream, тот преобразуется в массив, порождающий AMedia, который записывается в файл на клиенте (Filedownload.save(AMedia(...byte[])) в вызывающем методе).
-	 * Первый заголовок формируется из наименований полей класса бина T, второй (необязательный, см. {@link #setHeader}) - подразумевает читабельные названия.
-	 * Первые две колонки технические - номер по порядку и флаг выбора строки в UI.
-	 * Дата-модель блокируется неэксклюзивно на период перебора строк.
-	 * Формат екселя предварительно можно установить вызовом {@link #setFileType(basos.util.BeanToExcelWriter.FileTypes) setFileType}.
-	 * @param worker Выполняющая этот вызов асинхронная задача (FutureTask), передаём ей прогресс, слушаем статус "отменено" (прерываем по возможности).
-	 * @param hdr Второй заголовок с читабельными названиями полей (необязателен). Его можно предварительно установить вызовом {@link #setHeader(List)}.
+	/** Р’С‹РіСЂСѓР·РєР° РІ С„РѕСЂРјР°С‚Рµ OOXML (Microsoft Excel XML 2007+, С„РѕСЂРјР°С‚ РІС‹Р±РёСЂР°РµС‚СЃСЏ С‡РµСЂРµР· {@link #setFileType}) РІСЃРµС… СЃС‚СЂРѕРє Рё РєРѕР»РѕРЅРѕРє Р»РёСЃС‚-РјРѕРґРµР»Рё.
+	 * Р—Р°РїСѓСЃРєР°РµС‚СЃСЏ РєР°Рє РґР»РёС‚РµР»СЊРЅР°СЏ Р·Р°РґР°С‡Р° РІ WT РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµРј AsyncTask<AMedia>, РєРѕС‚РѕСЂС‹Р№ СѓРјРµРµС‚ РѕР±СЂР°Р±Р°С‚С‹РІР°С‚СЊ РїСЂРµСЂС‹РІР°РЅРёРµ Рё РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РїСЂРѕРіСЂРµСЃСЃ (СЃР»СѓС€Р°С‚РµР»СЏРј РЅР°РїСЂР°РІР»СЏСЋС‚СЃСЏ СЃРѕР±С‹С‚РёСЏ "indeterm" Рё "indeterm_progress").
+	 * Apache POI РІС‹Р·С‹РІР°РµС‚СЃСЏ РЅР°РїСЂСЏРјСѓСЋ (СЃРј. РєР»Р°СЃСЃ {@link BeanToExcelWriter}), СЃРІСЏР·Р°РЅРЅС‹Рµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё ZK EE РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ.
+	 * РЎС„РѕСЂРјРёСЂРѕРІР°РЅРЅР°СЏ РєРЅРёРіР° Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РІ ByteArrayOutputStream, С‚РѕС‚ РїСЂРµРѕР±СЂР°Р·СѓРµС‚СЃСЏ РІ РјР°СЃСЃРёРІ, РїРѕСЂРѕР¶РґР°СЋС‰РёР№ AMedia, РєРѕС‚РѕСЂС‹Р№ Р·Р°РїРёСЃС‹РІР°РµС‚СЃСЏ РІ С„Р°Р№Р» РЅР° РєР»РёРµРЅС‚Рµ (Filedownload.save(AMedia(...byte[])) РІ РІС‹Р·С‹РІР°СЋС‰РµРј РјРµС‚РѕРґРµ).
+	 * РџРµСЂРІС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє С„РѕСЂРјРёСЂСѓРµС‚СЃСЏ РёР· РЅР°РёРјРµРЅРѕРІР°РЅРёР№ РїРѕР»РµР№ РєР»Р°СЃСЃР° Р±РёРЅР° T, РІС‚РѕСЂРѕР№ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹Р№, СЃРј. {@link #setHeader}) - РїРѕРґСЂР°Р·СѓРјРµРІР°РµС‚ С‡РёС‚Р°Р±РµР»СЊРЅС‹Рµ РЅР°Р·РІР°РЅРёСЏ.
+	 * РџРµСЂРІС‹Рµ РґРІРµ РєРѕР»РѕРЅРєРё С‚РµС…РЅРёС‡РµСЃРєРёРµ - РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ Рё С„Р»Р°Рі РІС‹Р±РѕСЂР° СЃС‚СЂРѕРєРё РІ UI.
+	 * Р”Р°С‚Р°-РјРѕРґРµР»СЊ Р±Р»РѕРєРёСЂСѓРµС‚СЃСЏ РЅРµСЌРєСЃРєР»СЋР·РёРІРЅРѕ РЅР° РїРµСЂРёРѕРґ РїРµСЂРµР±РѕСЂР° СЃС‚СЂРѕРє.
+	 * Р¤РѕСЂРјР°С‚ РµРєСЃРµР»СЏ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РјРѕР¶РЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РІС‹Р·РѕРІРѕРј {@link #setFileType(basos.util.BeanToExcelWriter.FileTypes) setFileType}.
+	 * @param worker Р’С‹РїРѕР»РЅСЏСЋС‰Р°СЏ СЌС‚РѕС‚ РІС‹Р·РѕРІ Р°СЃРёРЅС…СЂРѕРЅРЅР°СЏ Р·Р°РґР°С‡Р° (FutureTask), РїРµСЂРµРґР°С‘Рј РµР№ РїСЂРѕРіСЂРµСЃСЃ, СЃР»СѓС€Р°РµРј СЃС‚Р°С‚СѓСЃ "РѕС‚РјРµРЅРµРЅРѕ" (РїСЂРµСЂС‹РІР°РµРј РїРѕ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё).
+	 * @param hdr Р’С‚РѕСЂРѕР№ Р·Р°РіРѕР»РѕРІРѕРє СЃ С‡РёС‚Р°Р±РµР»СЊРЅС‹РјРё РЅР°Р·РІР°РЅРёСЏРјРё РїРѕР»РµР№ (РЅРµРѕР±СЏР·Р°С‚РµР»РµРЅ). Р•РіРѕ РјРѕР¶РЅРѕ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РІС‹Р·РѕРІРѕРј {@link #setHeader(List)}.
 	 */
-	public AMedia exportModelDownloadExcel(AsyncTask<AMedia> worker, List<String> hdr/*nullable*/) { // вызывается из композера в отдельной working thread (а тот из ZUL по нажатию toolbarbutton)
+	public AMedia exportModelDownloadExcel(AsyncTask<AMedia> worker, List<String> hdr/*nullable*/) { // РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РєРѕРјРїРѕР·РµСЂР° РІ РѕС‚РґРµР»СЊРЅРѕР№ working thread (Р° С‚РѕС‚ РёР· ZUL РїРѕ РЅР°Р¶Р°С‚РёСЋ toolbarbutton)
 		if (hdr != null) this.secondHead = hdr;
-// Для создания больших листов (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
+// Р”Р»СЏ СЃРѕР·РґР°РЅРёСЏ Р±РѕР»СЊС€РёС… Р»РёСЃС‚РѕРІ (HugeData): SXSSF (http://poi.apache.org/spreadsheet/how-to.html#sxssf)
 		if (worker == null || worker.isCancelled()) {
-			logger.info("exportModelDownloadExcel worker.isCancelled на входе");
+			logger.info("exportModelDownloadExcel worker.isCancelled РЅР° РІС…РѕРґРµ");
 			return null;
 		}
 		AMedia amedia = null;
@@ -111,21 +111,21 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 		);
 		
 		exporter.setSxssfRowBufferSize( Integer.valueOf(Labels.getLabel("excel.sxssfRowBufferSize", "1000")).intValue() );
-		exporter.setMaxDecimalScale( Integer.valueOf(Labels.getLabel("excel.maxDecimalScale", "10")).intValue() ); // макс. scale для BigDecimal, для которого подготовлен формат
-		exporter.setMaxColumnWidth( Integer.valueOf(Labels.getLabel("excel.maxColumnWidth", "15000")).intValue() ); // макс. ширина колонки (при автоформатировании)
+		exporter.setMaxDecimalScale( Integer.valueOf(Labels.getLabel("excel.maxDecimalScale", "10")).intValue() ); // РјР°РєСЃ. scale РґР»СЏ BigDecimal, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїРѕРґРіРѕС‚РѕРІР»РµРЅ С„РѕСЂРјР°С‚
+		exporter.setMaxColumnWidth( Integer.valueOf(Labels.getLabel("excel.maxColumnWidth", "15000")).intValue() ); // РјР°РєСЃ. С€РёСЂРёРЅР° РєРѕР»РѕРЅРєРё (РїСЂРё Р°РІС‚РѕС„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРё)
 		
 		//String fileName = exporter.autoNameFile();
 	try {
 		//exporter.init();
 		//exporter.createCommonCellStyles();
 		
-		// header; первые две колонки - служебные поля
-		Row row = exporter.createRow(); // чтобы не обманывать внутренний счётчик строк
+		// header; РїРµСЂРІС‹Рµ РґРІРµ РєРѕР»РѕРЅРєРё - СЃР»СѓР¶РµР±РЅС‹Рµ РїРѕР»СЏ
+		Row row = exporter.createRow(); // С‡С‚РѕР±С‹ РЅРµ РѕР±РјР°РЅС‹РІР°С‚СЊ РІРЅСѓС‚СЂРµРЅРЅРёР№ СЃС‡С‘С‚С‡РёРє СЃС‚СЂРѕРє
 		Cell currCell = row.createCell(0);
-		currCell.setCellValue("npp"); // номер по порядку (1+)
+		currCell.setCellValue("npp"); // РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ (1+)
 		currCell.setCellStyle(exporter.getHeaderCS());
 		currCell = row.createCell(1);
-		currCell.setCellValue("selected"); // крыжик (НЕ часть доменного объекта, поле GridData)
+		currCell.setCellValue("selected"); // РєСЂС‹Р¶РёРє (РќР• С‡Р°СЃС‚СЊ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, РїРѕР»Рµ GridData)
 		currCell.setCellStyle(exporter.getHeaderCS());
 /*		currCell = row.createCell(2);
 		currCell.setCellValue("UID");
@@ -134,18 +134,18 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 		currCell.setCellValue("filterFlags");
 		currCell.setCellStyle(exporter.getHeaderCS());*/
 		
-		//exporter.parseBeanFields(); // перенесено в init()
-		exporter.writeFieldNamesToRow(row); // заголовок из наименований полей
+		//exporter.parseBeanFields(); // РїРµСЂРµРЅРµСЃРµРЅРѕ РІ init()
+		exporter.writeFieldNamesToRow(row); // Р·Р°РіРѕР»РѕРІРѕРє РёР· РЅР°РёРјРµРЅРѕРІР°РЅРёР№ РїРѕР»РµР№
 		
-// печать произвольного заголовка (бизнес-наименования полей)
+// РїРµС‡Р°С‚СЊ РїСЂРѕРёР·РІРѕР»СЊРЅРѕРіРѕ Р·Р°РіРѕР»РѕРІРєР° (Р±РёР·РЅРµСЃ-РЅР°РёРјРµРЅРѕРІР°РЅРёСЏ РїРѕР»РµР№)
 		if (secondHead != null) {
 			row = exporter.createRow();
 			row.setRowStyle(exporter.getHeaderCS());
 			currCell = row.createCell(0);
-			currCell.setCellValue("npp"); // номер по порядку (1+)
+			currCell.setCellValue("npp"); // РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ (1+)
 			currCell.setCellStyle(exporter.getHeaderCS());
 			currCell = row.createCell(1);
-			currCell.setCellValue("selected"); // крыжик (НЕ часть доменного объекта, поле GridData)
+			currCell.setCellValue("selected"); // РєСЂС‹Р¶РёРє (РќР• С‡Р°СЃС‚СЊ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, РїРѕР»Рµ GridData)
 			currCell.setCellStyle(exporter.getHeaderCS());
 			int colN = 2;
 			for (ListIterator<String> bfi = secondHead.listIterator(); bfi.hasNext();) {
@@ -155,12 +155,12 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 				currCell.setCellStyle(exporter.getHeaderCS());
 				logger.trace(" curFieldName = {}, colN = {}", curFieldName, colN);
 				++colN;
-			} // for_столбцы_заголовка
-			//exporter.getSheet().getRow(0).setHeightInPoints(0f); // (не получилось) при нормальном заголовке скрываем первую строку с техническими названиями полей
+			} // for_СЃС‚РѕР»Р±С†С‹_Р·Р°РіРѕР»РѕРІРєР°
+			//exporter.getSheet().getRow(0).setHeightInPoints(0f); // (РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ) РїСЂРё РЅРѕСЂРјР°Р»СЊРЅРѕРј Р·Р°РіРѕР»РѕРІРєРµ СЃРєСЂС‹РІР°РµРј РїРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ СЃ С‚РµС…РЅРёС‡РµСЃРєРёРјРё РЅР°Р·РІР°РЅРёСЏРјРё РїРѕР»РµР№
 		}
 
 		if (worker == null || worker.isCancelled()) {
-			logger.info("exportModelDownloadExcel worker.isCancelled перед синхроблоком");
+			logger.info("exportModelDownloadExcel worker.isCancelled РїРµСЂРµРґ СЃРёРЅС…СЂРѕР±Р»РѕРєРѕРј");
 			return null;
 		}
 		
@@ -176,9 +176,9 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 
 			logger.debug("exportModelDownloadExcel before gridLML.listIterator.  workingThread: {}, currentThread: {}, class: {}, progress step = {}, AsyncTask: {}, rowCnt = {}", worker.getWorkingThread(), Thread.currentThread(), Thread.currentThread().getClass().getSimpleName(), Math.min(500, rowCnt/10), worker, rowCnt);
 			int prgr = 0;
-			for (ListIterator<GridData<T>> gmi = gridLML.listIterator(); gmi.hasNext();) { // дата-модель построчно
+			for (ListIterator<GridData<T>> gmi = gridLML.listIterator(); gmi.hasNext();) { // РґР°С‚Р°-РјРѕРґРµР»СЊ РїРѕСЃС‚СЂРѕС‡РЅРѕ
 				++rn; // = gmi.nextIndex() + 1;
-				if (rn%(Math.max(1, Math.min(1000, rowCnt/10))) == 0) { // обновим progressmeter
+				if (rn%(Math.max(1, Math.min(1000, rowCnt/10))) == 0) { // РѕР±РЅРѕРІРёРј progressmeter
 					logger.trace("exportModelDownloadExcel inside gridLML.listIterator.  progress_bef :" + prgr );
 //try { TimeUnit.MILLISECONDS.sleep(500); } catch(InterruptedException e) { logger.trace("sleep() interrupted"); Thread.currentThread().interrupt(); }					
 //					Events.sendEvent(pm, new PropertyChangeEvent(this/*source*/, "progress"/*propertyName*/, prgr/*oldValue*/, (int)((double)rn/rowCnt*100)/*newValue*/));
@@ -187,44 +187,44 @@ public class ListModelToExcelWriter<T extends Object & Serializable & Comparable
 					}
 					prgr = (int)((double)rn/rowCnt*100);
 					logger.trace("exportModelDownloadExcel inside gridLML.listIterator.  progress_aft = {}", prgr );
-				} // if на этой строке отображать прогресс
+				} // if РЅР° СЌС‚РѕР№ СЃС‚СЂРѕРєРµ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РїСЂРѕРіСЂРµСЃСЃ
 				GridData<T> curGridData = gmi.next();
 				T curSubj = curGridData.getBean();
 				
-				row = exporter.createRow(); // чтобы не обманывать внутренний счётчик строк
-				row.createCell(0).setCellValue(rn); // колонка "номер по порядку"
-				row.createCell(1).setCellValue(curGridData.isSel()); // колонка крыжиков
+				row = exporter.createRow(); // С‡С‚РѕР±С‹ РЅРµ РѕР±РјР°РЅС‹РІР°С‚СЊ РІРЅСѓС‚СЂРµРЅРЅРёР№ СЃС‡С‘С‚С‡РёРє СЃС‚СЂРѕРє
+				row.createCell(0).setCellValue(rn); // РєРѕР»РѕРЅРєР° "РЅРѕРјРµСЂ РїРѕ РїРѕСЂСЏРґРєСѓ"
+				row.createCell(1).setCellValue(curGridData.isSel()); // РєРѕР»РѕРЅРєР° РєСЂС‹Р¶РёРєРѕРІ
 /*				row.createCell(2).setCellValue(curGridData.getUid());
 				row.createCell(3).setCellValue(Integer.toBinaryString(curGridData.getFilterFlags()));*/
 	
 				exporter.writeBeanToRow(row, curSubj);
 				
 				if (worker == null || worker.isCancelled()) {
-					logger.info("exportModelDownloadExcel worker.isCancelled в for_строки_дата-модели");
+					logger.info("exportModelDownloadExcel worker.isCancelled РІ for_СЃС‚СЂРѕРєРё_РґР°С‚Р°-РјРѕРґРµР»Рё");
 					return null;
 				}
 
 				//if (rn >= 10 && logger.isTraceEnabled()) break;
-			} // for_строки_дата-модели
+			} // for_СЃС‚СЂРѕРєРё_РґР°С‚Р°-РјРѕРґРµР»Рё
 		} finally {
 			modelRWLock.unlock(stamp);
 			logger.trace(concurMarker, "exportModelDownloadExcel in sync block finally; unlock read_stamp = {}", stamp);
 		} // sync block
 		
-// "indeterm_progress": showBusy() на время формирования файла, потом неявно (при down) clearBusy()
+// "indeterm_progress": showBusy() РЅР° РІСЂРµРјСЏ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ С„Р°Р№Р»Р°, РїРѕС‚РѕРј РЅРµСЏРІРЅРѕ (РїСЂРё down) clearBusy()
 		worker.firePropertyChange("indeterm_progress", false/*oldValue*/, true/*newValue*/);
 		
 		logger.trace(concurMarker, "exportModelDownloadExcel outside sync block");
 		
-//(!) зависимость скорости от кол-ва событий изменения св-ва "progress", на 4776 строках (шаг, строк): 40000(0 событий): 10.18 с; 500 (~ каждые 10%): 22.7 с (с блокировкой - 70-100 с); 20 (по 1%, т.е. 101 обращение) : 157.7 с.
+//(!) Р·Р°РІРёСЃРёРјРѕСЃС‚СЊ СЃРєРѕСЂРѕСЃС‚Рё РѕС‚ РєРѕР»-РІР° СЃРѕР±С‹С‚РёР№ РёР·РјРµРЅРµРЅРёСЏ СЃРІ-РІР° "progress", РЅР° 4776 СЃС‚СЂРѕРєР°С… (С€Р°Рі, СЃС‚СЂРѕРє): 40000(0 СЃРѕР±С‹С‚РёР№): 10.18 СЃ; 500 (~ РєР°Р¶РґС‹Рµ 10%): 22.7 СЃ (СЃ Р±Р»РѕРєРёСЂРѕРІРєРѕР№ - 70-100 СЃ); 20 (РїРѕ 1%, С‚.Рµ. 101 РѕР±СЂР°С‰РµРЅРёРµ) : 157.7 СЃ.
 		logger.info("exportModelDownloadExcel before return. fileName: {}, sheetName='{}', colCnt={}, dataFields.size()={}, rowCnt(rn)={}, curRowNum={}, firstDataRowNum={}, fileType={}, spreadsheetVersion={}, duration: {} sec.", exporter.getFileName(), exporter.getSheetName(), exporter.getColCnt(), exporter.getDataFields().size(), rn, exporter.getCurRowNum(), exporter.getFirstDataRowNum(), exporter.getFileType(), exporter.getSpreadsheetVersion(), (System.nanoTime()-startNanoTime) / 1.0e9d );
 		
 /*		if ( rn > 0 ) {
-// пример условного форматирования
+// РїСЂРёРјРµСЂ СѓСЃР»РѕРІРЅРѕРіРѕ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ
 			SheetConditionalFormatting sheetCF = exporter.getSheet().getSheetConditionalFormatting();
-			ConditionalFormattingRule cfr = sheetCF.createConditionalFormattingRule("$X"+exporter.getFirstDataRowNum()+" < 1000"); // rest_msfo_usd < 1000 - неактивные СПР серым
+			ConditionalFormattingRule cfr = sheetCF.createConditionalFormattingRule("$X"+exporter.getFirstDataRowNum()+" < 1000"); // rest_msfo_usd < 1000 - РЅРµР°РєС‚РёРІРЅС‹Рµ РЎРџР  СЃРµСЂС‹Рј
 			PatternFormatting pf = cfr.createPatternFormatting();
-			//pf.setFillForegroundColor(IndexedColors.GREEN.index); // ? для несплошной заливки ?
+			//pf.setFillForegroundColor(IndexedColors.GREEN.index); // ? РґР»СЏ РЅРµСЃРїР»РѕС€РЅРѕР№ Р·Р°Р»РёРІРєРё ?
 			pf.setFillBackgroundColor(IndexedColors.GREY_25_PERCENT.index);
 			pf.setFillPattern(PatternFormatting.SOLID_FOREGROUND);
 			FontFormatting ff = cfr.createFontFormatting();

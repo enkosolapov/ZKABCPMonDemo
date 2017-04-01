@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import basos.xe.data.dao.DealDopMapper;
 import basos.xe.data.ds.MyBatisSqlSessionFactory;
 import basos.xe.data.entity.DealRestHistory;
 
-/** Специфичные для сделок дата-сервисы. */
+/** РЎРїРµС†РёС„РёС‡РЅС‹Рµ РґР»СЏ СЃРґРµР»РѕРє РґР°С‚Р°-СЃРµСЂРІРёСЃС‹. */
 public class DealDopService {
 //	private static final Logger logger = LoggerFactory.getLogger(DealDopService.class);
 	
-	/** История остатков по ИД LM субъекта. */
+	/** РСЃС‚РѕСЂРёСЏ РѕСЃС‚Р°С‚РєРѕРІ РїРѕ РР” LM СЃСѓР±СЉРµРєС‚Р°. */
 	public static List<DealRestHistory> getRestHistoryByIdDeal(int idDeal) {
 		SqlSession sess = MyBatisSqlSessionFactory.openSession();
 		try {

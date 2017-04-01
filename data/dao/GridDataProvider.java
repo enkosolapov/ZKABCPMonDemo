@@ -1,37 +1,37 @@
-package basos.data.dao;
+п»їpackage basos.data.dao;
 
 import java.io.Serializable;
 import java.util.List;
 
 import basos.data.GridData;
 
-/** Поставщик данных для лист-дата-модели грида.
- * Получает от определённого в реализации провайдера список объектов GridData (содержащих бин - экземпляр доменного класса T).
- * Получение по частям, обновление, запись в БД не предусмотрены.
- * @param T Класс бина.
+/** РџРѕСЃС‚Р°РІС‰РёРє РґР°РЅРЅС‹С… РґР»СЏ Р»РёСЃС‚-РґР°С‚Р°-РјРѕРґРµР»Рё РіСЂРёРґР°.
+ * РџРѕР»СѓС‡Р°РµС‚ РѕС‚ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ РІ СЂРµР°Р»РёР·Р°С†РёРё РїСЂРѕРІР°Р№РґРµСЂР° СЃРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ GridData (СЃРѕРґРµСЂР¶Р°С‰РёС… Р±РёРЅ - СЌРєР·РµРјРїР»СЏСЂ РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР° T).
+ * РџРѕР»СѓС‡РµРЅРёРµ РїРѕ С‡Р°СЃС‚СЏРј, РѕР±РЅРѕРІР»РµРЅРёРµ, Р·Р°РїРёСЃСЊ РІ Р‘Р” РЅРµ РїСЂРµРґСѓСЃРјРѕС‚СЂРµРЅС‹.
+ * @param T РљР»Р°СЃСЃ Р±РёРЅР°.
  */
 public interface GridDataProvider<T extends Object & Serializable & Comparable<? super T>> {
 	
-	/** Класс доменных объектов, заворачиваемых в GridData. */
+	/** РљР»Р°СЃСЃ РґРѕРјРµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ, Р·Р°РІРѕСЂР°С‡РёРІР°РµРјС‹С… РІ GridData. */
 	Class<T> getBeanClass();
 	
-	/** Извлечённый целиком за один раз при первом обращении (lazy), live, fixed-size (but set & sort allowed) list. */
+	/** РР·РІР»РµС‡С‘РЅРЅС‹Р№ С†РµР»РёРєРѕРј Р·Р° РѕРґРёРЅ СЂР°Р· РїСЂРё РїРµСЂРІРѕРј РѕР±СЂР°С‰РµРЅРёРё (lazy), live, fixed-size (but set & sort allowed) list. */
 	List<GridData<T>> getAll();
 	
-	/** Возвращает (фиксированную) размерность списка. */
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ (С„РёРєСЃРёСЂРѕРІР°РЅРЅСѓСЋ) СЂР°Р·РјРµСЂРЅРѕСЃС‚СЊ СЃРїРёСЃРєР°. */
 	int getTotalRowCount();
 	
-	/** Элемент в заданной позиции полного списка.
+	/** Р­Р»РµРјРµРЅС‚ РІ Р·Р°РґР°РЅРЅРѕР№ РїРѕР·РёС†РёРё РїРѕР»РЅРѕРіРѕ СЃРїРёСЃРєР°.
 	 * @see java.util.List#get(int) List.get
 	 */
 	GridData<T> get(int idx);
 	
-	/** Индекс экземпляра GridData в списке.
+	/** РРЅРґРµРєСЃ СЌРєР·РµРјРїР»СЏСЂР° GridData РІ СЃРїРёСЃРєРµ.
 	 * @return The index of the search key, if it is contained in the list; otherwise, (-(insertion point) - 1). 
 	 */
 	int indexOf(GridData<T> subj);
 	
-	/** Вернуть список строк, удовлетворяющих значению (неуникального) индекса. */
+	/** Р’РµСЂРЅСѓС‚СЊ СЃРїРёСЃРѕРє СЃС‚СЂРѕРє, СѓРґРѕРІР»РµС‚РІРѕСЂСЏСЋС‰РёС… Р·РЅР°С‡РµРЅРёСЋ (РЅРµСѓРЅРёРєР°Р»СЊРЅРѕРіРѕ) РёРЅРґРµРєСЃР°. */
 	<U extends Object & Comparable<? super U>> List<GridData<T>> getRange(U key);
 	
 	//void reRead();
@@ -39,7 +39,7 @@ public interface GridDataProvider<T extends Object & Serializable & Comparable<?
 	//boolean[] getColumnBooleanArray(String fieldName);
 	//int[] getColumnIntArray(String fieldName);
 	
-	//int indefOfBean(T subj); // м.б. компаратор, по-любому Comparable
+	//int indefOfBean(T subj); // Рј.Р±. РєРѕРјРїР°СЂР°С‚РѕСЂ, РїРѕ-Р»СЋР±РѕРјСѓ Comparable
 	
 	//List<T> getBeanList();
 

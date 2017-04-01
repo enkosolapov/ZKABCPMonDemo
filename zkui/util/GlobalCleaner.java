@@ -1,4 +1,4 @@
-package basos.zkui.util;
+п»їpackage basos.zkui.util;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -24,33 +24,33 @@ import org.zkoss.zk.ui.util.DesktopCleanup;
 import org.zkoss.zk.ui.util.SessionCleanup;
 import org.zkoss.zk.ui.util.WebAppCleanup;
 
-// FIXME: !!! некоректно при перечтении страницы (сессия та же, задачи дублируются при повторном вызове doAfterCompose()) !!! временно использую clear()
+// FIXME: !!! РЅРµРєРѕСЂРµРєС‚РЅРѕ РїСЂРё РїРµСЂРµС‡С‚РµРЅРёРё СЃС‚СЂР°РЅРёС†С‹ (СЃРµСЃСЃРёСЏ С‚Р° Р¶Рµ, Р·Р°РґР°С‡Рё РґСѓР±Р»РёСЂСѓСЋС‚СЃСЏ РїСЂРё РїРѕРІС‚РѕСЂРЅРѕРј РІС‹Р·РѕРІРµ doAfterCompose()) !!! РІСЂРµРјРµРЅРЅРѕ РёСЃРїРѕР»СЊР·СѓСЋ clear()
 // TESTME
-// TODO: регистрировать в web.xml (see ZK Configuration Reference) ?
+// TODO: СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ РІ web.xml (see ZK Configuration Reference) ?
 
-/** Для каждого скоупа поддерживается реестр финализирующих задач.
- * Приложение одно, для него список. Для сессий, десктопов, executions структуры типа Map<Object, List<Runnable>>.
- * В методах {@link #cleanup} выполняются все задачи, назначенные указанному экземпляру скоупа, список очищается.
+/** Р”Р»СЏ РєР°Р¶РґРѕРіРѕ СЃРєРѕСѓРїР° РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ СЂРµРµСЃС‚СЂ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰РёС… Р·Р°РґР°С‡.
+ * РџСЂРёР»РѕР¶РµРЅРёРµ РѕРґРЅРѕ, РґР»СЏ РЅРµРіРѕ СЃРїРёСЃРѕРє. Р”Р»СЏ СЃРµСЃСЃРёР№, РґРµСЃРєС‚РѕРїРѕРІ, executions СЃС‚СЂСѓРєС‚СѓСЂС‹ С‚РёРїР° Map<Object, List<Runnable>>.
+ * Р’ РјРµС‚РѕРґР°С… {@link #cleanup} РІС‹РїРѕР»РЅСЏСЋС‚СЃСЏ РІСЃРµ Р·Р°РґР°С‡Рё, РЅР°Р·РЅР°С‡РµРЅРЅС‹Рµ СѓРєР°Р·Р°РЅРЅРѕРјСѓ СЌРєР·РµРјРїР»СЏСЂСѓ СЃРєРѕСѓРїР°, СЃРїРёСЃРѕРє РѕС‡РёС‰Р°РµС‚СЃСЏ.
  */
 public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, DesktopCleanup, SessionCleanup, WebAppCleanup/*, ExecutionCleanup*/, Serializable {
-// Для каждого интерфейса (кроме Cleanups.Cleanup ?):
+// Р”Р»СЏ РєР°Р¶РґРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° (РєСЂРѕРјРµ Cleanups.Cleanup ?):
 // An independent instance of the given class is instantiated each time before the method is invoked.
 // It means it is thread safe, and all information stored in non-static members will be lost after called.
 	private static final long serialVersionUID = -2466206638979240406L;
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalCleaner.class);
 	
-// FIXME: здесь нужны WeakReference, чтобы не держать ссылки на протухшие объекты, которые не вызвали Cleanup !!
-	// м.б. несколько команд на сессию
+// FIXME: Р·РґРµСЃСЊ РЅСѓР¶РЅС‹ WeakReference, С‡С‚РѕР±С‹ РЅРµ РґРµСЂР¶Р°С‚СЊ СЃСЃС‹Р»РєРё РЅР° РїСЂРѕС‚СѓС…С€РёРµ РѕР±СЉРµРєС‚С‹, РєРѕС‚РѕСЂС‹Рµ РЅРµ РІС‹Р·РІР°Р»Рё Cleanup !!
+	// Рј.Р±. РЅРµСЃРєРѕР»СЊРєРѕ РєРѕРјР°РЅРґ РЅР° СЃРµСЃСЃРёСЋ
 	private static ConcurrentHashMap<Object, List<Runnable>> sessionCommands = new ConcurrentHashMap<>();
-	// м.б. несколько команд на десктоп
+	// Рј.Р±. РЅРµСЃРєРѕР»СЊРєРѕ РєРѕРјР°РЅРґ РЅР° РґРµСЃРєС‚РѕРї
 	private static ConcurrentHashMap<Object, List<Runnable>> desktopCommands = new ConcurrentHashMap<>();
-	// м.б. несколько команд на приложение, но приложение одно (конкуренция минимальна)
+	// Рј.Р±. РЅРµСЃРєРѕР»СЊРєРѕ РєРѕРјР°РЅРґ РЅР° РїСЂРёР»РѕР¶РµРЅРёРµ, РЅРѕ РїСЂРёР»РѕР¶РµРЅРёРµ РѕРґРЅРѕ (РєРѕРЅРєСѓСЂРµРЅС†РёСЏ РјРёРЅРёРјР°Р»СЊРЅР°)
 	private static List<Runnable> appCommands = new LinkedList<>();
-	// м.б. несколько команд на Execution (HttpServletRequest ?-? Page); запросов много в каждой сессии одного приложения
+	// Рј.Р±. РЅРµСЃРєРѕР»СЊРєРѕ РєРѕРјР°РЅРґ РЅР° Execution (HttpServletRequest ?-? Page); Р·Р°РїСЂРѕСЃРѕРІ РјРЅРѕРіРѕ РІ РєР°Р¶РґРѕР№ СЃРµСЃСЃРёРё РѕРґРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ
 //	private static ConcurrentHashMap<Object, List<Runnable>> executionCommands = new ConcurrentHashMap<>();
 	
-	/** Очистка перечня финализирующих задач текущего экземпляра (current Session, Desktop etc.) указанного скоупа.
+	/** РћС‡РёСЃС‚РєР° РїРµСЂРµС‡РЅСЏ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰РёС… Р·Р°РґР°С‡ С‚РµРєСѓС‰РµРіРѕ СЌРєР·РµРјРїР»СЏСЂР° (current Session, Desktop etc.) СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃРєРѕСѓРїР°.
 	 * @param scope SessionCleanup.class / DesktopCleanup.class / WebAppCleanup.class / ExecutionCleanup.class
 	 */
 	public static void clear(Class<?> scope) {
@@ -67,7 +67,7 @@ public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, 
 		}
 	} // public static void clear(Class<?> scope)
 	
-	/** Зарегистрировать финализирующую задачу для текущего экземпляра (current Session, Desktop etc.) указанного скоупа.
+	/** Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰СѓСЋ Р·Р°РґР°С‡Сѓ РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СЌРєР·РµРјРїР»СЏСЂР° (current Session, Desktop etc.) СѓРєР°Р·Р°РЅРЅРѕРіРѕ СЃРєРѕСѓРїР°.
 	 * @param scope SessionCleanup.class / DesktopCleanup.class / WebAppCleanup.class / ExecutionCleanup.class
 	 */
 	public static void registerCommand(Runnable cmnd, Class<?> scope) {
@@ -140,12 +140,12 @@ public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, 
 	public GlobalCleaner() {}
 	
 	@Override // Cleanups.Cleanup
-	public void cleanup() { // ?? ЗАЧЕМ ??
-    	logger.debug("GlobalCleaner. cleanup()"); // не удалось добиться неявного вызова
+	public void cleanup() { // ?? Р—РђР§Р•Рњ ??
+    	logger.debug("GlobalCleaner. cleanup()"); // РЅРµ СѓРґР°Р»РѕСЃСЊ РґРѕР±РёС‚СЊСЃСЏ РЅРµСЏРІРЅРѕРіРѕ РІС‹Р·РѕРІР°
 	}
 	
 	@Override // WebAppCleanup
-	public void cleanup(WebApp wapp) throws Exception { // не удалось добиться неявного вызова
+	public void cleanup(WebApp wapp) throws Exception { // РЅРµ СѓРґР°Р»РѕСЃСЊ РґРѕР±РёС‚СЊСЃСЏ РЅРµСЏРІРЅРѕРіРѕ РІС‹Р·РѕРІР°
 // HOWTO: (Remove and collect elements with Java streams) http://stackoverflow.com/questions/30042222/remove-and-collect-elements-with-java-streams
 //		appCommands.entrySet().stream().filter((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(wapp);}).forEach(e -> e.getValue().run());
 //		appCommands.entrySet().removeIf((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(wapp);});
@@ -159,7 +159,7 @@ public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, 
 	} // public void cleanup(WebApp wapp) throws Exception
 	
 	@Override // SessionCleanup
-	public void cleanup(Session sess) throws Exception { // вызывается только по таймауту (после ExecutionCleanup и DesktopCleanup), причём дважды из одного потока
+	public void cleanup(Session sess) throws Exception { // РІС‹Р·С‹РІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїРѕ С‚Р°Р№РјР°СѓС‚Сѓ (РїРѕСЃР»Рµ ExecutionCleanup Рё DesktopCleanup), РїСЂРёС‡С‘Рј РґРІР°Р¶РґС‹ РёР· РѕРґРЅРѕРіРѕ РїРѕС‚РѕРєР°
 		//sessionCommands.entrySet().stream().filter((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(sess);}).forEach(e -> e.getValue().run());
 		//sessionCommands.entrySet().removeIf((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(sess);});
 		//logger.debug("GlobalCleaner. SessionCleanup(). sess = {}, sess_map_size_after = {}", sess, sessionCommands.size());
@@ -176,7 +176,7 @@ public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, 
 	
 	/**  */
 	@Override // DesktopCleanup
-	public void cleanup(Desktop desktop) throws Exception { // вызывается при уходе со страницы, таймауте, закрытии вкладки(! в т.ч. timeout.zul) на пару, но после ExecutionCleanup; иногда дважды подряд в одном потоке
+	public void cleanup(Desktop desktop) throws Exception { // РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ СЃРѕ СЃС‚СЂР°РЅРёС†С‹, С‚Р°Р№РјР°СѓС‚Рµ, Р·Р°РєСЂС‹С‚РёРё РІРєР»Р°РґРєРё(! РІ С‚.С‡. timeout.zul) РЅР° РїР°СЂСѓ, РЅРѕ РїРѕСЃР»Рµ ExecutionCleanup; РёРЅРѕРіРґР° РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ РІ РѕРґРЅРѕРј РїРѕС‚РѕРєРµ
 		//desktopCommands.entrySet().stream().filter((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(desktop);}).forEach(e -> e.getValue().run());
 		//desktopCommands.entrySet().removeIf((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(desktop);});
 		//logger.debug("GlobalCleaner. DesktopCleanup(). desktop = {}, desktop_map_size_after = {}", desktop, desktopCommands.size());
@@ -192,7 +192,7 @@ public class GlobalCleaner implements Cleanups.Cleanup/*, EventThreadCleanup*/, 
 	} // public void cleanup(Desktop desktop) throws Exception
 	
 	/*@Override // ExecutionCleanup
-	public void cleanup(Execution exec, Execution parent, List<Throwable> errs) throws Exception { // вызывается при уходе со страницы, таймауте, закрытии(? в т.ч. timeout.zul) на пару, но перед DesktopCleanup, НО ТАКЖЕ ЕЩЁ РЕГУЛЯРНО (?); иногда дважды подряд в одном потоке
+	public void cleanup(Execution exec, Execution parent, List<Throwable> errs) throws Exception { // РІС‹Р·С‹РІР°РµС‚СЃСЏ РїСЂРё СѓС…РѕРґРµ СЃРѕ СЃС‚СЂР°РЅРёС†С‹, С‚Р°Р№РјР°СѓС‚Рµ, Р·Р°РєСЂС‹С‚РёРё(? РІ С‚.С‡. timeout.zul) РЅР° РїР°СЂСѓ, РЅРѕ РїРµСЂРµРґ DesktopCleanup, РќРћ РўРђРљР–Р• Р•Р©РЃ Р Р•Р“РЈР›РЇР РќРћ (?); РёРЅРѕРіРґР° РґРІР°Р¶РґС‹ РїРѕРґСЂСЏРґ РІ РѕРґРЅРѕРј РїРѕС‚РѕРєРµ
 		//executionCommands.entrySet().stream().filter((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(exec);}).forEach(e -> e.getValue().run());
 		//executionCommands.entrySet().removeIf((Map.Entry<Object,Runnable> e)->{return e.getKey().equals(exec);});
 		//logger.debug("GlobalCleaner. ExecutionCleanup(). exec = {}, exec_map_size_after = {}", exec, executionCommands.size());

@@ -1,4 +1,4 @@
-package basos.data; 
+п»їpackage basos.data; 
 
 import java.io.Serializable;
 //import java.util.Collections;
@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 import basos.xe.data.entity.SubjSumm;
 
 
-/** Обёртка объекта доменного класса для использования в гриде.
- * RULE: все приватные нестатические поля доменного объекта класс beanClass должны относиться к полям данных.
- * Thread-UNSAFE (синхронизация обеспечивается на уровне списка объектов).
- * @param <T> Тип бина (класса доменного объекта).
+/** РћР±С‘СЂС‚РєР° РѕР±СЉРµРєС‚Р° РґРѕРјРµРЅРЅРѕРіРѕ РєР»Р°СЃСЃР° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ РіСЂРёРґРµ.
+ * RULE: РІСЃРµ РїСЂРёРІР°С‚РЅС‹Рµ РЅРµСЃС‚Р°С‚РёС‡РµСЃРєРёРµ РїРѕР»СЏ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РєР»Р°СЃСЃ beanClass РґРѕР»Р¶РЅС‹ РѕС‚РЅРѕСЃРёС‚СЊСЃСЏ Рє РїРѕР»СЏРј РґР°РЅРЅС‹С….
+ * Thread-UNSAFE (СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РѕР±РµСЃРїРµС‡РёРІР°РµС‚СЃСЏ РЅР° СѓСЂРѕРІРЅРµ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ).
+ * @param <T> РўРёРї Р±РёРЅР° (РєР»Р°СЃСЃР° РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°).
  */
 public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		implements Serializable, Comparable<GridData<T>> {
@@ -28,26 +28,26 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 
 	private static final Logger logger = LoggerFactory.getLogger(GridData.class);
 	
-	private static AtomicLong throughoutNum = new AtomicLong(0L); // счётчик объектов
-	private final long uid; // порядковый номер созданного GridData
-	private final T bean; // доменный объект
+	private static AtomicLong throughoutNum = new AtomicLong(0L); // СЃС‡С‘С‚С‡РёРє РѕР±СЉРµРєС‚РѕРІ
+	private final long uid; // РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ GridData
+	private final T bean; // РґРѕРјРµРЅРЅС‹Р№ РѕР±СЉРµРєС‚
 	private final Class<T> beanClass;
-	private boolean sel; /** крыжик - признак выбора (чекбокс в первой колонке) (false для нового) */
-    private boolean inFilter; // (true для нового) TODO: inFilter лишний ?
-    private int filterFlags; // проходит по фильтру на уровне компонент фильтра (сортированный массив) (все биты единицы для нового) - max 32 контрола (long не поддерживается классом BitField !)
+	private boolean sel; /** РєСЂС‹Р¶РёРє - РїСЂРёР·РЅР°Рє РІС‹Р±РѕСЂР° (С‡РµРєР±РѕРєСЃ РІ РїРµСЂРІРѕР№ РєРѕР»РѕРЅРєРµ) (false РґР»СЏ РЅРѕРІРѕРіРѕ) */
+    private boolean inFilter; // (true РґР»СЏ РЅРѕРІРѕРіРѕ) TODO: inFilter Р»РёС€РЅРёР№ ?
+    private int filterFlags; // РїСЂРѕС…РѕРґРёС‚ РїРѕ С„РёР»СЊС‚СЂСѓ РЅР° СѓСЂРѕРІРЅРµ РєРѕРјРїРѕРЅРµРЅС‚ С„РёР»СЊС‚СЂР° (СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ РјР°СЃСЃРёРІ) (РІСЃРµ Р±РёС‚С‹ РµРґРёРЅРёС†С‹ РґР»СЏ РЅРѕРІРѕРіРѕ) - max 32 РєРѕРЅС‚СЂРѕР»Р° (long РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РєР»Р°СЃСЃРѕРј BitField !)
 	
-//    private GridData() {} // FIXME: противоречит соглашению JavaBeans !!!
+//    private GridData() {} // FIXME: РїСЂРѕС‚РёРІРѕСЂРµС‡РёС‚ СЃРѕРіР»Р°С€РµРЅРёСЋ JavaBeans !!!
     
-    /** Оборачивает бин типа T для использования в гриде. Поумолчательные значения внутренних полей: sel = false, inFilter = true, filterFlags = 0xFFFFFFFF.
-     * @param bean Экземпляр доменного объекта, который оборачиваем.
-     * @param beanClass Класс бина для runtime-проверки.
+    /** РћР±РѕСЂР°С‡РёРІР°РµС‚ Р±РёРЅ С‚РёРїР° T РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ РіСЂРёРґРµ. РџРѕСѓРјРѕР»С‡Р°С‚РµР»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РІРЅСѓС‚СЂРµРЅРЅРёС… РїРѕР»РµР№: sel = false, inFilter = true, filterFlags = 0xFFFFFFFF.
+     * @param bean Р­РєР·РµРјРїР»СЏСЂ РґРѕРјРµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ РѕР±РѕСЂР°С‡РёРІР°РµРј.
+     * @param beanClass РљР»Р°СЃСЃ Р±РёРЅР° РґР»СЏ runtime-РїСЂРѕРІРµСЂРєРё.
      */
 	public GridData(T bean, Class<T> beanClass) {
 		if (bean == null) {
 			logger.error("Null bean-parameter prohibited in GridData");
 			throw new NullPointerException("Null bean-parameter brohibited in GridData");
 		}
-		if ( !bean.getClass().equals(beanClass) ) { // TODO: ? см. Эккеля !!!
+		if ( !bean.getClass().equals(beanClass) ) { // TODO: ? СЃРј. Р­РєРєРµР»СЏ !!!
 			logger.error("Error on create GridData: bean class '{}' should be same as the parameter beanClass '{}'", bean.getClass().getName(), beanClass.getName());
 			throw new IllegalArgumentException("Error on create GridData: bean class "+bean.getClass().getName()+" should be same as the parameter beanClass "+beanClass.getName());			
 		}
@@ -59,14 +59,14 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		this.uid = throughoutNum.incrementAndGet();
 	}
 	
-	/** Для генерации тестовых данных (RULE: бин должен иметь для этих целей безаргументный конструктор). */
+	/** Р”Р»СЏ РіРµРЅРµСЂР°С†РёРё С‚РµСЃС‚РѕРІС‹С… РґР°РЅРЅС‹С… (RULE: Р±РёРЅ РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ РґР»СЏ СЌС‚РёС… С†РµР»РµР№ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ). */
 	public GridData(Class<T> beanClass) {
 		this.sel = false;
 		this.inFilter = true;
 		this.filterFlags = 0xFFFFFFFF;
 		this.beanClass = beanClass;
 		try {
-			this.bean = beanClass.newInstance(); // так генерируем мок-бины !
+			this.bean = beanClass.newInstance(); // С‚Р°Рє РіРµРЅРµСЂРёСЂСѓРµРј РјРѕРє-Р±РёРЅС‹ !
 		} catch(IllegalAccessException | InstantiationException | ExceptionInInitializerError | SecurityException e) {
 			logger.error("Error on creation TEST instance of {}", beanClass.getSimpleName(), e);
 			throw new InternalError("Error on creation TEST instance of " + beanClass.getSimpleName(), e);
@@ -82,49 +82,49 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		return beanClass;
 	}
 	
-	/** Счётчик созданных объектов класса, из которого инициализируется uid объекта. */
+	/** РЎС‡С‘С‚С‡РёРє СЃРѕР·РґР°РЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ РєР»Р°СЃСЃР°, РёР· РєРѕС‚РѕСЂРѕРіРѕ РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ uid РѕР±СЉРµРєС‚Р°. */
 	public static long getThroughoutNum() {
 		return throughoutNum.get();
 	}
 	
-	/** Сквозной порядковый номер созданного объекта. */
+	/** РЎРєРІРѕР·РЅРѕР№ РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°. */
 	public long getUid() {
 		return uid;
 	}
 	
-	/** Флаг выбора строки ("крыж"). */
+	/** Р¤Р»Р°Рі РІС‹Р±РѕСЂР° СЃС‚СЂРѕРєРё ("РєСЂС‹Р¶"). */
 	public boolean isSel() {
 		return sel;
 	}
 	
-	/** Пометить как выбранный. */
+	/** РџРѕРјРµС‚РёС‚СЊ РєР°Рє РІС‹Р±СЂР°РЅРЅС‹Р№. */
 	public void setSel(boolean sel) {
 		this.sel = sel;
 	}
 	
-	/** Флаг прохождения фильтра. */
+	/** Р¤Р»Р°Рі РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР°. */
 	public boolean isInFilter() {
 		return inFilter;
 	}
 	
-	/** Установить флаг прохождения фильтра. */
+	/** РЈСЃС‚Р°РЅРѕРІРёС‚СЊ С„Р»Р°Рі РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР°. */
 	public void setInFilter(boolean inFilter) {
 		this.inFilter = inFilter;
 	}
 	
-	/** Битовая маска покомпонентного прохождения фильтра. */
+	/** Р‘РёС‚РѕРІР°СЏ РјР°СЃРєР° РїРѕРєРѕРјРїРѕРЅРµРЅС‚РЅРѕРіРѕ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР°. */
 	public int getFilterFlags() {
 		return filterFlags;
 	}
 	
-	/** Установить (целиком) битовую маску прохождения фильтра. */
+	/** РЈСЃС‚Р°РЅРѕРІРёС‚СЊ (С†РµР»РёРєРѕРј) Р±РёС‚РѕРІСѓСЋ РјР°СЃРєСѓ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С„РёР»СЊС‚СЂР°. */
 	public void setFilterFlags(int filterFlags) {
 		this.filterFlags = filterFlags;
 	}
 	
-	/** Устанавливает заданный бит поля filterFlags в указанное значение.
-	 * @param n Бит номер [0, 31]
-	 * @param value Установить в 1 (true) / обнулить (false)
+	/** РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р·Р°РґР°РЅРЅС‹Р№ Р±РёС‚ РїРѕР»СЏ filterFlags РІ СѓРєР°Р·Р°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ.
+	 * @param n Р‘РёС‚ РЅРѕРјРµСЂ [0, 31]
+	 * @param value РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РІ 1 (true) / РѕР±РЅСѓР»РёС‚СЊ (false)
 	 * @return value parameter
 	 */
 	public boolean setFilterFlagsBit(int n, boolean value) {
@@ -143,14 +143,14 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		return serialVersionUID;
 	}
 	
-    /** hashCode() делегирован бину. */
-	// для списка объектов хэшкод идентифицирует состояние фильтра
+    /** hashCode() РґРµР»РµРіРёСЂРѕРІР°РЅ Р±РёРЅСѓ. */
+	// РґР»СЏ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ С…СЌС€РєРѕРґ РёРґРµРЅС‚РёС„РёС†РёСЂСѓРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ С„РёР»СЊС‚СЂР°
 	@Override
 	public int hashCode() { // https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--
 		return bean.hashCode();
 	}
 
-	/** equals(Object obj) делегирован бину. */
+	/** equals(Object obj) РґРµР»РµРіРёСЂРѕРІР°РЅ Р±РёРЅСѓ. */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) { // https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-
@@ -164,7 +164,7 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		return bean.equals(other.bean);
 	}
 	
-	/** compareTo(GridData<T> obj) делегирован бину. */
+	/** compareTo(GridData<T> obj) РґРµР»РµРіРёСЂРѕРІР°РЅ Р±РёРЅСѓ. */
 	// Comparable implementation (https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)
 	@Override
 	public int compareTo(GridData<T> obj) {
@@ -180,8 +180,8 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 	
 	private static Object/*Comparator<GridData<?>>*/ compareByUid = new CompareByUid<GridData<?>>();
 
-	/** Возвращает компаратор по полю uid (порядковый номер созданного объекта).
-	 * При отсутствии PK будет использоваться дата-провайдером при сортировке и бинарном поиске.
+	/** Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕРјРїР°СЂР°С‚РѕСЂ РїРѕ РїРѕР»СЋ uid (РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°).
+	 * РџСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё PK Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РґР°С‚Р°-РїСЂРѕРІР°Р№РґРµСЂРѕРј РїСЂРё СЃРѕСЂС‚РёСЂРѕРІРєРµ Рё Р±РёРЅР°СЂРЅРѕРј РїРѕРёСЃРєРµ.
 	 */
 	@SuppressWarnings("unchecked")
 	public static /*synchronized*/ <T extends Object & Serializable & Comparable<? super T>>
@@ -204,13 +204,13 @@ public class GridData<T extends Object & Serializable & Comparable<? super T>>
 		}
 	}
 
-	/** Получить индекс в неотсортированном списке по сквозному UID объекта GridData.
-	 * Используется при обработке событий для доступа к произвольной строке по номеру из ZUL (onCheckSel()) во внутреннем списке дата-модели.
-	 * -1 если не найден.
+	/** РџРѕР»СѓС‡РёС‚СЊ РёРЅРґРµРєСЃ РІ РЅРµРѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј СЃРїРёСЃРєРµ РїРѕ СЃРєРІРѕР·РЅРѕРјСѓ UID РѕР±СЉРµРєС‚Р° GridData.
+	 * РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ СЃРѕР±С‹С‚РёР№ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ СЃС‚СЂРѕРєРµ РїРѕ РЅРѕРјРµСЂСѓ РёР· ZUL (onCheckSel()) РІРѕ РІРЅСѓС‚СЂРµРЅРЅРµРј СЃРїРёСЃРєРµ РґР°С‚Р°-РјРѕРґРµР»Рё.
+	 * -1 РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅ.
 	 */
 	public static <T extends Object & Serializable & Comparable<? super T>>
 			int searchByUid(List<GridData<T>> a, long uid) {
-/*		if ( sorted_by_Uid && a instanceof RandomAccess ) { // TODO: быстрый поиск на отсортированном по uid списке
+/*		if ( sorted_by_Uid && a instanceof RandomAccess ) { // TODO: Р±С‹СЃС‚СЂС‹Р№ РїРѕРёСЃРє РЅР° РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРј РїРѕ uid СЃРїРёСЃРєРµ
 			return indexedBinarySearchByUid(a, uid);
 		}*/
 		for (ListIterator<GridData<T>> li = a.listIterator(); li.hasNext();) {

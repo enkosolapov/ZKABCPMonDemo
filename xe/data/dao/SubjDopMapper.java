@@ -1,4 +1,4 @@
-package basos.xe.data.dao;
+п»їpackage basos.xe.data.dao;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,20 +19,20 @@ import basos.xe.data.entity.LimitInfo;
 import basos.xe.data.entity.SubjRestHistory;
 
 
-/** Специфичные для субъектов разнородные запросы.
+/** РЎРїРµС†РёС„РёС‡РЅС‹Рµ РґР»СЏ СЃСѓР±СЉРµРєС‚РѕРІ СЂР°Р·РЅРѕСЂРѕРґРЅС‹Рµ Р·Р°РїСЂРѕСЃС‹.
  *
  */
 public interface SubjDopMapper {
 	
-	/** Состав группы лимита по ИД LM одного из участников. */
-	@Select("select subj_name||' (ИНН: '||inn||'; ПИН Eq: '||subj_cod||')' inf from basos.mv_lmcp_cln where gr_id in (select gr_id from basos.mv_lmcp_cln where subj_id = #{subjId}) ORDER BY 1")
+	/** РЎРѕСЃС‚Р°РІ РіСЂСѓРїРїС‹ Р»РёРјРёС‚Р° РїРѕ РР” LM РѕРґРЅРѕРіРѕ РёР· СѓС‡Р°СЃС‚РЅРёРєРѕРІ. */
+	@Select("select subj_name||' (РРќРќ: '||inn||'; РџРРќ Eq: '||subj_cod||')' inf from basos.mv_lmcp_cln where gr_id in (select gr_id from basos.mv_lmcp_cln where subj_id = #{subjId}) ORDER BY 1")
 	@Options(useCache=true)
 	List<String> selectGroupMembersBySubjId(int subjId);
 	
 	
-	/** История задолженности по ОД (средняя за период и на точки; по РСБУ и УО) по ИД субъекта. */
+	/** РСЃС‚РѕСЂРёСЏ Р·Р°РґРѕР»Р¶РµРЅРЅРѕСЃС‚Рё РїРѕ РћР” (СЃСЂРµРґРЅСЏСЏ Р·Р° РїРµСЂРёРѕРґ Рё РЅР° С‚РѕС‡РєРё; РїРѕ Р РЎР‘РЈ Рё РЈРћ) РїРѕ РР” СЃСѓР±СЉРµРєС‚Р°. */
 	@Select("SELECT subj_id \"id\", dd_rest \"ddRest\", s_usd_bal \"restBalUSD\", s_usd_bal_prosr \"pastRestBalUSD\", rest_msfo_usd \"restUpravlUSD\", sum_msfo_chargeoff \"sumChargeoffUSD\", sum_provision_usd \"sumProvisionUSD\", sokball_int \"sokBallInt\" FROM mv_lmcp_cln_rests WHERE subj_id = #{subjId} ORDER BY dd_rest")
-// HOWTO: через конструктор, т.к. entity иммутабельна; важен порядок параметров (а имена рефлективно не определить) !!
+// HOWTO: С‡РµСЂРµР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, С‚.Рє. entity РёРјРјСѓС‚Р°Р±РµР»СЊРЅР°; РІР°Р¶РµРЅ РїРѕСЂСЏРґРѕРє РїР°СЂР°РјРµС‚СЂРѕРІ (Р° РёРјРµРЅР° СЂРµС„Р»РµРєС‚РёРІРЅРѕ РЅРµ РѕРїСЂРµРґРµР»РёС‚СЊ) !!
 	@ConstructorArgs({
 		@Arg(column="id", javaType=Integer.class),
 		@Arg(column="ddRest", javaType=java.sql.Date.class),
@@ -46,11 +46,11 @@ public interface SubjDopMapper {
 	List<SubjRestHistory> selectRestHistoryBySubjId(int subjId);
 	
 	
-	/** Получить ИД лимита кредитования по ИД субъекта. */
+	/** РџРѕР»СѓС‡РёС‚СЊ РР” Р»РёРјРёС‚Р° РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РїРѕ РР” СЃСѓР±СЉРµРєС‚Р°. */
 	@Select("SELECT idLimit \"idLim\" FROM vw_subj_summ WHERE subj_id = #{subjId}")
 	Integer selectIdLimitBySubjId(int subjId);
 	
-	/** История использования (выборки) лимита кредитования по ИД лимита. */
+	/** РСЃС‚РѕСЂРёСЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РІС‹Р±РѕСЂРєРё) Р»РёРјРёС‚Р° РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РїРѕ РР” Р»РёРјРёС‚Р°. */
 	@Select("SELECT idlimit \"idLim\", dd_rest \"ddRest\", limit_sum_usd \"limSumUSD\", exposure \"exposureUSD\", lim_filling \"limFilling\" FROM mv_limits_olap WHERE idLimit = #{idLimit} ORDER BY dd_rest")
 	@ConstructorArgs({
 		@Arg(column="idLim", javaType=Integer.class),
@@ -61,7 +61,7 @@ public interface SubjDopMapper {
 	})
 	List<LimitHistory> selectLimitHistoryByIdLimit(int idLimit);
 	
-	/** Инфо по лимиту кредитования включая историю использования (выборки) по ИД лимита. */
+	/** РРЅС„Рѕ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РІРєР»СЋС‡Р°СЏ РёСЃС‚РѕСЂРёСЋ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РІС‹Р±РѕСЂРєРё) РїРѕ РР” Р»РёРјРёС‚Р°. */
 	@Select("SELECT id_limit \"idLim\", kk_number \"kkNum\", limit_sum \"limSum\", currency \"limCur\", id_owner \"idOwner\", owner \"nameOwner\", first_date \"firstDecisDate\", decision_date \"lastDecisDate\", committee \"committee\", decision_number \"decisNum\", d_confirm \"dconfirm\", d_end \"dend\" FROM lm_limit_report WHERE id_Limit = #{idLimit}")
 	@ConstructorArgs({
 		@Arg(column="idLim", javaType=Integer.class, id=true),
@@ -83,12 +83,12 @@ public interface SubjDopMapper {
 	})*/
 	LimitInfo selectLimitInfoByIdLimit(int idlimit);
 	
-// FIXME: оптимизировать поиск ИД лимита, сделать одним вызовом
-	/** Инфо по лимиту кредитования включая историю использования (выборки) по ИД субъекта. */
+// FIXME: РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РїРѕРёСЃРє РР” Р»РёРјРёС‚Р°, СЃРґРµР»Р°С‚СЊ РѕРґРЅРёРј РІС‹Р·РѕРІРѕРј
+	/** РРЅС„Рѕ РїРѕ Р»РёРјРёС‚Сѓ РєСЂРµРґРёС‚РѕРІР°РЅРёСЏ РІРєР»СЋС‡Р°СЏ РёСЃС‚РѕСЂРёСЋ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РІС‹Р±РѕСЂРєРё) РїРѕ РР” СЃСѓР±СЉРµРєС‚Р°. */
 	//LimitInfo selectLimitInfoBySubjId(int subjId);
 	
 	
-	/** Вернуть последнюю (по дате записи в БД) запись с данными сервиса DaData (+ комментарий) по ИНН. */
+	/** Р’РµСЂРЅСѓС‚СЊ РїРѕСЃР»РµРґРЅСЋСЋ (РїРѕ РґР°С‚Рµ Р·Р°РїРёСЃРё РІ Р‘Р”) Р·Р°РїРёСЃСЊ СЃ РґР°РЅРЅС‹РјРё СЃРµСЂРІРёСЃР° DaData (+ РєРѕРјРјРµРЅС‚Р°СЂРёР№) РїРѕ РРќРќ. */
 	@Select("SELECT ddi.inn \"inn\", ddi.suggestParty \"suggestParty\", ddi.userComment \"userComment\", ddi.userName \"userName\", ddi.partyActDateLong \"partyActDateLong\", ddi.partyActDate \"partyActDate\", ddi.saveTime \"saveTime\" FROM daDataInfo ddi WHERE ddi.inn = #{inn} AND ddi.saveTime = (SELECT MAX(ddi0.saveTime) FROM daDataInfo ddi0 WHERE ddi0.inn = ddi.inn)")
 	@ConstructorArgs({
 		@Arg(column="inn", javaType=String.class),
@@ -102,32 +102,32 @@ public interface SubjDopMapper {
 	DaDataInfo selectDaDataInfoLatestByInn(String inn);
 	
 	
-	/** Добавить новую запись (новый ИНН или новая ДатаАктуальности - partyActDateLong).
-	 * userComment и userName не обязательны; saveTime не используется (заполняется на стороне БД текущим временем).
+	/** Р”РѕР±Р°РІРёС‚СЊ РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ (РЅРѕРІС‹Р№ РРќРќ РёР»Рё РЅРѕРІР°СЏ Р”Р°С‚Р°РђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё - partyActDateLong).
+	 * userComment Рё userName РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹; saveTime РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ (Р·Р°РїРѕР»РЅСЏРµС‚СЃСЏ РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р” С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј).
 	 */
-// RULE: для nullable полей нужно явно указывать jdbcType !!
+// RULE: РґР»СЏ nullable РїРѕР»РµР№ РЅСѓР¶РЅРѕ СЏРІРЅРѕ СѓРєР°Р·С‹РІР°С‚СЊ jdbcType !!
 	@Insert("INSERT INTO basos.daDataInfo (inn, suggestParty, userComment, userName, partyActDateLong, partyActDate) VALUES (#{inn}, #{suggestParty}, #{userComment,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{partyActDateLong}, #{partyActDate})")
 	int insertDaDataInfo(DaDataInfo daDataInfo);
 	
 	
-	/** Обновить по ИНН + штампу_редакции (saveTime).
-	 * Для обновления штамп daDataInfo.saveTime д.б. старый (на стороне БД обновляется текущим временем).
-	 * Обновляем только коммент и юзера (при перегрузке из сервиса с новой ДА (проверка до вызова) всегда INSERT).
+	/** РћР±РЅРѕРІРёС‚СЊ РїРѕ РРќРќ + С€С‚Р°РјРїСѓ_СЂРµРґР°РєС†РёРё (saveTime).
+	 * Р”Р»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ С€С‚Р°РјРї daDataInfo.saveTime Рґ.Р±. СЃС‚Р°СЂС‹Р№ (РЅР° СЃС‚РѕСЂРѕРЅРµ Р‘Р” РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ С‚РµРєСѓС‰РёРј РІСЂРµРјРµРЅРµРј).
+	 * РћР±РЅРѕРІР»СЏРµРј С‚РѕР»СЊРєРѕ РєРѕРјРјРµРЅС‚ Рё СЋР·РµСЂР° (РїСЂРё РїРµСЂРµРіСЂСѓР·РєРµ РёР· СЃРµСЂРІРёСЃР° СЃ РЅРѕРІРѕР№ Р”Рђ (РїСЂРѕРІРµСЂРєР° РґРѕ РІС‹Р·РѕРІР°) РІСЃРµРіРґР° INSERT).
 	 */
-// RULE: для nullable полей нужно явно указывать jdbcType !!
+// RULE: РґР»СЏ nullable РїРѕР»РµР№ РЅСѓР¶РЅРѕ СЏРІРЅРѕ СѓРєР°Р·С‹РІР°С‚СЊ jdbcType !!
 	//@Update("UPDATE basos.daDataInfo SET saveTime = SYSTIMESTAMP, suggestParty = #{suggestParty}, userComment = #{userComment}, userName = #{userName}, partyActDateLong = #{partyActDateLong}, partyActDate = #{partyActDate} WHERE inn = #{inn} AND saveTime = #{saveTime}")
 	@Update("UPDATE basos.daDataInfo SET saveTime = SYSTIMESTAMP, userComment = #{userComment,jdbcType=VARCHAR}, userName = #{userName,jdbcType=VARCHAR} WHERE inn = #{inn} AND saveTime = #{saveTime}")
 	int updateDaDataInfoBySaveTime(DaDataInfo daDataInfo);
 	
-	/** Добавление/обновление записи по inn + ДатеАктуальности - partyActDateLong.
-	 * Новый (по ДА) json всегда INSERT (userComment и userName не обязательны);
-	 * ДА не поменялясь - UPDATE (userComment, userName, которые не проверяем).
-	 * При любой операции обновляем saveTime = SYSTIMESTAMP, в записи поле штампа необязательно.
+	/** Р”РѕР±Р°РІР»РµРЅРёРµ/РѕР±РЅРѕРІР»РµРЅРёРµ Р·Р°РїРёСЃРё РїРѕ inn + Р”Р°С‚РµРђРєС‚СѓР°Р»СЊРЅРѕСЃС‚Рё - partyActDateLong.
+	 * РќРѕРІС‹Р№ (РїРѕ Р”Рђ) json РІСЃРµРіРґР° INSERT (userComment Рё userName РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹);
+	 * Р”Рђ РЅРµ РїРѕРјРµРЅСЏР»СЏСЃСЊ - UPDATE (userComment, userName, РєРѕС‚РѕСЂС‹Рµ РЅРµ РїСЂРѕРІРµСЂСЏРµРј).
+	 * РџСЂРё Р»СЋР±РѕР№ РѕРїРµСЂР°С†РёРё РѕР±РЅРѕРІР»СЏРµРј saveTime = SYSTIMESTAMP, РІ Р·Р°РїРёСЃРё РїРѕР»Рµ С€С‚Р°РјРїР° РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ.
 	 */
 // MERGE statement (http://stackoverflow.com/questions/19593785/how-can-i-use-oracle-merge-statement-using-mybatis)
 // https://docs.oracle.com/database/121/SQLRF/statements_9016.htm#SQLRF01606
 	//#{suggestParty,javaType=String,jdbcType=CLOB}
-	/* !!! INSERT проходит, при UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Данные для считывания из сокета отсутствуют
+	/* !!! INSERT РїСЂРѕС…РѕРґРёС‚, РїСЂРё UPDATE: ### Error updating database.  Cause: java.sql.SQLRecoverableException: Р”Р°РЅРЅС‹Рµ РґР»СЏ СЃС‡РёС‚С‹РІР°РЅРёСЏ РёР· СЃРѕРєРµС‚Р° РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚
 	 * http://stackoverflow.com/questions/11522919/java-sql-sqlrecoverableexception-no-more-data-to-read-from-socket
 	 * http://stackoverflow.com/questions/7839907/no-more-data-to-read-from-socket-error?rq=1
 	 * http://stackoverflow.com/questions/2305973/java-util-date-vs-java-sql-date?noredirect=1&lq=1

@@ -1,4 +1,4 @@
-package basos.xe.data.dao.impl;
+п»їpackage basos.xe.data.dao.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import basos.data.GridData;
 import basos.data.dao.GridDataProviderWPk;
 import basos.xe.data.entity.SubjSumm;
 
-/** Тестовые данные для дата-модели с элементами (строками) типа GridData<SubjSumm>.
- * Список генерится в populateGridDataList() с вызовом конструктора GridData<SubjSumm>(SubjSumm.class) (бин создаётся безаргументным конструктором, который должен обеспечить тестовые данные).
+/** РўРµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ РґР»СЏ РґР°С‚Р°-РјРѕРґРµР»Рё СЃ СЌР»РµРјРµРЅС‚Р°РјРё (СЃС‚СЂРѕРєР°РјРё) С‚РёРїР° GridData<SubjSumm>.
+ * РЎРїРёСЃРѕРє РіРµРЅРµСЂРёС‚СЃСЏ РІ populateGridDataList() СЃ РІС‹Р·РѕРІРѕРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° GridData<SubjSumm>(SubjSumm.class) (Р±РёРЅ СЃРѕР·РґР°С‘С‚СЃСЏ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Рј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРј, РєРѕС‚РѕСЂС‹Р№ РґРѕР»Р¶РµРЅ РѕР±РµСЃРїРµС‡РёС‚СЊ С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ).
  */
 @javax.enterprise.context.Dependent // RequestScoped
-@javax.inject.Named(value = "subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver умеет внедрять только именованные бины, игнорирует аннотированные как альнернативы; в \WebContent\WEB-INF\beans.xml исключаются из сканирования все ненужные альтернативы с таким именем, должен остаться только один аннотированный класс с совпадающим именем как выбранная реализация
+@javax.inject.Named(value = "subjSummProvider") // !!! org.zkoss.zkplus.cdi.DelegatingVariableResolver СѓРјРµРµС‚ РІРЅРµРґСЂСЏС‚СЊ С‚РѕР»СЊРєРѕ РёРјРµРЅРѕРІР°РЅРЅС‹Рµ Р±РёРЅС‹, РёРіРЅРѕСЂРёСЂСѓРµС‚ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Рµ РєР°Рє Р°Р»СЊРЅРµСЂРЅР°С‚РёРІС‹; РІ \WebContent\WEB-INF\beans.xml РёСЃРєР»СЋС‡Р°СЋС‚СЃСЏ РёР· СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РІСЃРµ РЅРµРЅСѓР¶РЅС‹Рµ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІС‹ СЃ С‚Р°РєРёРј РёРјРµРЅРµРј, РґРѕР»Р¶РµРЅ РѕСЃС‚Р°С‚СЊСЃСЏ С‚РѕР»СЊРєРѕ РѕРґРёРЅ Р°РЅРЅРѕС‚РёСЂРѕРІР°РЅРЅС‹Р№ РєР»Р°СЃСЃ СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј РёРјРµРЅРµРј РєР°Рє РІС‹Р±СЂР°РЅРЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
 //@javax.enterprise.inject.Alternative
 public final class TestGridDataProviderMockSubjSumm extends GridDataProviderWPk<SubjSumm> implements Serializable {
 
@@ -23,7 +23,7 @@ public final class TestGridDataProviderMockSubjSumm extends GridDataProviderWPk<
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestGridDataProviderMockSubjSumm.class);
 	
-    /*// не работает...
+    /*// РЅРµ СЂР°Р±РѕС‚Р°РµС‚...
     public void processBeans(@javax.enterprise.event.Observes javax.enterprise.inject.spi.ProcessBean<?> event) {
     	javax.enterprise.inject.spi.AnnotatedMethod<?> info;
         if (event instanceof javax.enterprise.inject.spi.ProcessProducerMethod) {
@@ -33,11 +33,11 @@ public final class TestGridDataProviderMockSubjSumm extends GridDataProviderWPk<
         } else logger.trace("processBeans. other_event: {}", event.getClass().getSimpleName());
     }*/
     
-	/** PK изначально не задан. Тип бина - SubjSumm.
-	 * @param cnt Количество строк в дата-модели.
+	/** PK РёР·РЅР°С‡Р°Р»СЊРЅРѕ РЅРµ Р·Р°РґР°РЅ. РўРёРї Р±РёРЅР° - SubjSumm.
+	 * @param cnt РљРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє РІ РґР°С‚Р°-РјРѕРґРµР»Рё.
 	 */
 	public TestGridDataProviderMockSubjSumm(int cnt) {
-		// FIXME: проверка корректности параметра !!!
+		// FIXME: РїСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РїР°СЂР°РјРµС‚СЂР° !!!
 		super(SubjSumm.class); // http://stackoverflow.com/questions/260666/can-an-abstract-class-have-a-constructor
 		this.totalRowCount = cnt;
 		logger.trace("instantiate TestGridDataProviderMockSubjSumm. cnt  = {}", cnt);
@@ -45,10 +45,10 @@ public final class TestGridDataProviderMockSubjSumm extends GridDataProviderWPk<
 		setPk(null, null);
 	}
 	
-	/** По умолчанию модель содержит 4444 строк. */
+	/** РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РјРѕРґРµР»СЊ СЃРѕРґРµСЂР¶РёС‚ 4444 СЃС‚СЂРѕРє. */
 	public TestGridDataProviderMockSubjSumm() { this(4444); }
 	
-	/** Список генерится с вызовом конструктора GridData<SubjSumm>(SubjSumm.class) (бин создаётся безаргументным конструктором, который должен обеспечить тестовые данные). Кол-во строк задаётся в конструкторе. */
+	/** РЎРїРёСЃРѕРє РіРµРЅРµСЂРёС‚СЃСЏ СЃ РІС‹Р·РѕРІРѕРј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° GridData<SubjSumm>(SubjSumm.class) (Р±РёРЅ СЃРѕР·РґР°С‘С‚СЃСЏ Р±РµР·Р°СЂРіСѓРјРµРЅС‚РЅС‹Рј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРј, РєРѕС‚РѕСЂС‹Р№ РґРѕР»Р¶РµРЅ РѕР±РµСЃРїРµС‡РёС‚СЊ С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ). РљРѕР»-РІРѕ СЃС‚СЂРѕРє Р·Р°РґР°С‘С‚СЃСЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ. */
 	protected final List<GridData<SubjSumm>> populateGridDataList() {
 		List<GridData<SubjSumm>> locGridDataArrayList = new ArrayList<>(this.totalRowCount);
 		for (int i = 0; i < this.totalRowCount; i++) locGridDataArrayList.add(new GridData<SubjSumm>(this.beanClass));

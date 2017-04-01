@@ -1,4 +1,4 @@
-package basos.zkui;
+п»їpackage basos.zkui;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.impl.MeshElement;
 
 
-/** Utility класс для работы с компонентами. */
+/** Utility РєР»Р°СЃСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєРѕРјРїРѕРЅРµРЅС‚Р°РјРё. */
 public final class UIUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UIUtil.class);
@@ -27,20 +27,20 @@ public final class UIUtil {
 	private UIUtil() {}
     
     
-	/** Сохранить названия и текущие ширины колонок заданного грида в файл <gridId>.properties (UTF-8).
-	 * Например: <gridId>+'.col.idDeal.label = ИД LM сделки (idDeal)' & <gridId>+'.col.idDeal.width = 81px'
-	 * Смысл в том, чтобы интерактивно настроить ширины колонок и запомнить их.
-	 * Названия соответствующего колонке поля бина берём из атрибута автосортировки.
-	 * Опираемся на формат описания колонки: '<column label="ИНН (inn)" width="120px" align="center" sort="auto(bean.inn)"/>'
+	/** РЎРѕС…СЂР°РЅРёС‚СЊ РЅР°Р·РІР°РЅРёСЏ Рё С‚РµРєСѓС‰РёРµ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє Р·Р°РґР°РЅРЅРѕРіРѕ РіСЂРёРґР° РІ С„Р°Р№Р» <gridId>.properties (UTF-8).
+	 * РќР°РїСЂРёРјРµСЂ: <gridId>+'.col.idDeal.label = РР” LM СЃРґРµР»РєРё (idDeal)' & <gridId>+'.col.idDeal.width = 81px'
+	 * РЎРјС‹СЃР» РІ С‚РѕРј, С‡С‚РѕР±С‹ РёРЅС‚РµСЂР°РєС‚РёРІРЅРѕ РЅР°СЃС‚СЂРѕРёС‚СЊ С€РёСЂРёРЅС‹ РєРѕР»РѕРЅРѕРє Рё Р·Р°РїРѕРјРЅРёС‚СЊ РёС….
+	 * РќР°Р·РІР°РЅРёСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РµРіРѕ РєРѕР»РѕРЅРєРµ РїРѕР»СЏ Р±РёРЅР° Р±РµСЂС‘Рј РёР· Р°С‚СЂРёР±СѓС‚Р° Р°РІС‚РѕСЃРѕСЂС‚РёСЂРѕРІРєРё.
+	 * РћРїРёСЂР°РµРјСЃСЏ РЅР° С„РѕСЂРјР°С‚ РѕРїРёСЃР°РЅРёСЏ РєРѕР»РѕРЅРєРё: '<column label="РРќРќ (inn)" width="120px" align="center" sort="auto(bean.inn)"/>'
 	 */
 	public static void writeMeshHeaderInfo(MeshElement mesh) {
-// HOWTO: ? как определить папку приложения (хотя бы задать через свойство в zk-label.properties) ?
-// TODO: запоминать для каждого пользователя при завершении сеанса (или по отдельной опции/кнопке)
+// HOWTO: ? РєР°Рє РѕРїСЂРµРґРµР»РёС‚СЊ РїР°РїРєСѓ РїСЂРёР»РѕР¶РµРЅРёСЏ (С…РѕС‚СЏ Р±С‹ Р·Р°РґР°С‚СЊ С‡РµСЂРµР· СЃРІРѕР№СЃС‚РІРѕ РІ zk-label.properties) ?
+// TODO: Р·Р°РїРѕРјРёРЅР°С‚СЊ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїСЂРё Р·Р°РІРµСЂС€РµРЅРёРё СЃРµР°РЅСЃР° (РёР»Рё РїРѕ РѕС‚РґРµР»СЊРЅРѕР№ РѕРїС†РёРё/РєРЅРѕРїРєРµ)
 		String fname = "C:\\Work\\Java\\Eclipse\\ZKOrclReportGrid\\WebContent\\WEB-INF\\"+mesh.getId()+".properties";
     	PrintWriter pw = null; // http://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
     	try {
 	    	pw = new PrintWriter(fname, "UTF-8"); /* \\WebContent\\WEB-INF\\ */ // def: C:\Install\Programming\Java\JBoss WildFly\wildfly1010F\bin\
-// Column и Listheader хоть и наследники HeaderElement, но хреново унаследованы; например, getSortAscending() определены независимо, Grid.getColumns() vs Listbox.getListhead() etc.
+// Column Рё Listheader С…РѕС‚СЊ Рё РЅР°СЃР»РµРґРЅРёРєРё HeaderElement, РЅРѕ С…СЂРµРЅРѕРІРѕ СѓРЅР°СЃР»РµРґРѕРІР°РЅС‹; РЅР°РїСЂРёРјРµСЂ, getSortAscending() РѕРїСЂРµРґРµР»РµРЅС‹ РЅРµР·Р°РІРёСЃРёРјРѕ, Grid.getColumns() vs Listbox.getListhead() etc.
 	    	if (mesh instanceof Grid) {
 	    		Grid grid = (Grid)mesh;
 		    	for(Component comp : grid.getColumns().getChildren()) {
@@ -87,9 +87,9 @@ public final class UIUtil {
 	} // public static void writeMeshHeaderInfo(MeshElement mesh)
 	
 	
-	/** Получить из грида/listbox список наименований его колонок. Для выгрузки второго заголовка в Excel. */
+	/** РџРѕР»СѓС‡РёС‚СЊ РёР· РіСЂРёРґР°/listbox СЃРїРёСЃРѕРє РЅР°РёРјРµРЅРѕРІР°РЅРёР№ РµРіРѕ РєРѕР»РѕРЅРѕРє. Р”Р»СЏ РІС‹РіСЂСѓР·РєРё РІС‚РѕСЂРѕРіРѕ Р·Р°РіРѕР»РѕРІРєР° РІ Excel. */
 	public static List<String> meshHeaderToList(MeshElement mesh) {
-// TODO: сделать через stream
+// TODO: СЃРґРµР»Р°С‚СЊ С‡РµСЂРµР· stream
 		ArrayList<String> hdr = null;
 		if (mesh instanceof Grid) {
     		Grid dataGrid = (Grid)mesh;
@@ -125,10 +125,10 @@ public final class UIUtil {
 		return hdr;
 	} // public static List<String> meshHeaderToList(MeshElement mesh)
 	
-    /** Если в гриде/листбоксе включена автосортировака (атрибут autoSort) и набор строк изменился, то после нужно вручную восстановить порядок.
-     * Требует внешней сихронизации (getModelRWLock().writeLock()) модели (сортировка её меняет).
+    /** Р•СЃР»Рё РІ РіСЂРёРґРµ/Р»РёСЃС‚Р±РѕРєСЃРµ РІРєР»СЋС‡РµРЅР° Р°РІС‚РѕСЃРѕСЂС‚РёСЂРѕРІР°РєР° (Р°С‚СЂРёР±СѓС‚ autoSort) Рё РЅР°Р±РѕСЂ СЃС‚СЂРѕРє РёР·РјРµРЅРёР»СЃСЏ, С‚Рѕ РїРѕСЃР»Рµ РЅСѓР¶РЅРѕ РІСЂСѓС‡РЅСѓСЋ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕСЂСЏРґРѕРє.
+     * РўСЂРµР±СѓРµС‚ РІРЅРµС€РЅРµР№ СЃРёС…СЂРѕРЅРёР·Р°С†РёРё (getModelRWLock().writeLock()) РјРѕРґРµР»Рё (СЃРѕСЂС‚РёСЂРѕРІРєР° РµС‘ РјРµРЅСЏРµС‚).
      */
-// вызывается из refreshAfterDataChange() после изменения набора строк (который вызывается после применения фильтра, всё в рамках одной блокировки); т.о. синхронизация всегда внешняя
+// РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· refreshAfterDataChange() РїРѕСЃР»Рµ РёР·РјРµРЅРµРЅРёСЏ РЅР°Р±РѕСЂР° СЃС‚СЂРѕРє (РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚СЃСЏ РїРѕСЃР»Рµ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°, РІСЃС‘ РІ СЂР°РјРєР°С… РѕРґРЅРѕР№ Р±Р»РѕРєРёСЂРѕРІРєРё); С‚.Рѕ. СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РІСЃРµРіРґР° РІРЅРµС€РЅСЏСЏ
 	public static void provokeAutoSort(MeshElement mesh) {
     	List<Component> cols = null;
     	if (mesh instanceof Grid) {
@@ -138,22 +138,22 @@ public final class UIUtil {
     	} else {
     		return;
     	}
-    	for(Component comp : cols) { // сортированная колонка определяется перебором
+    	for(Component comp : cols) { // СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅР°СЏ РєРѕР»РѕРЅРєР° РѕРїСЂРµРґРµР»СЏРµС‚СЃСЏ РїРµСЂРµР±РѕСЂРѕРј
     		if ( comp instanceof Column ) {
 	    		Column col = (Column)comp;
 	    		String sortDir = col.getSortDirection();
 	    		if ( !"natural".equals(sortDir) ) {
-	// ! принудительно сортируем (включил кастомный атрибут autoSort - не сортируется само после setSortDirection() !)
+	// ! РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ СЃРѕСЂС‚РёСЂСѓРµРј (РІРєР»СЋС‡РёР» РєР°СЃС‚РѕРјРЅС‹Р№ Р°С‚СЂРёР±СѓС‚ autoSort - РЅРµ СЃРѕСЂС‚РёСЂСѓРµС‚СЃСЏ СЃР°РјРѕ РїРѕСЃР»Рµ setSortDirection() !)
 	//    			((Column)col).setSortDirection("natural");
 	//    			((Column)col).setSortDirection(sortDir);
 					logger.debug(concurMarker, "setSortDirection (provokeAutoSort) on {} to {}.  Before sort.", col.getLabel(), sortDir);
-					col.sort("ascending".equals(sortDir), true); // только с force заработало !
+					col.sort("ascending".equals(sortDir), true); // С‚РѕР»СЊРєРѕ СЃ force Р·Р°СЂР°Р±РѕС‚Р°Р»Рѕ !
 	/*				String msg = "setSortDirection (provokeAutoSort) on "+col.getLabel()+" to "+sortDir;
 	    			Consumer<Long> taskToRun = (stamp) -> {
 						//long stamp = subjSummModel.getModelRWLock().writeLock();
 		    			try {
 		    				logger.debug(concurMarker, "{} (UI)...taskToRun. Before sort, stamp: {}", msg, stamp);
-		    				col.sort("ascending".equals(sortDir), true); // только с force заработало !
+		    				col.sort("ascending".equals(sortDir), true); // С‚РѕР»СЊРєРѕ СЃ force Р·Р°СЂР°Р±РѕС‚Р°Р»Рѕ !
 		    			} finally {
 		    				if ( stamp != 0L ) {
 		    					subjSummModel.getModelRWLock().unlock(stamp);
@@ -162,20 +162,20 @@ public final class UIUtil {
 		    			}					
 					};
 					taskToRun.accept(0L);
-					//dispatchGridModelLockingTask(subjSummModel, taskToRun, msg, null, null); // FIXME: не нужно откладывать, он уже вызывается из потокобезопасного метода (ждёт своего вызывающего) !!!
+					//dispatchGridModelLockingTask(subjSummModel, taskToRun, msg, null, null); // FIXME: РЅРµ РЅСѓР¶РЅРѕ РѕС‚РєР»Р°РґС‹РІР°С‚СЊ, РѕРЅ СѓР¶Рµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РїРѕС‚РѕРєРѕР±РµР·РѕРїР°СЃРЅРѕРіРѕ РјРµС‚РѕРґР° (Р¶РґС‘С‚ СЃРІРѕРµРіРѕ РІС‹Р·С‹РІР°СЋС‰РµРіРѕ) !!!
 					
 	*/    			break;
-	    		} // if (сортированная колонка)
+	    		} // if (СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅР°СЏ РєРѕР»РѕРЅРєР°)
     		} else if (comp instanceof Listheader) {
     			Listheader col = (Listheader)comp;
 	    		String sortDir = col.getSortDirection();
 	    		if ( !"natural".equals(sortDir) ) {
 					logger.debug(concurMarker, "setSortDirection (provokeAutoSort) on {} to {}.  Before sort.", col.getLabel(), sortDir);
-					col.sort("ascending".equals(sortDir), true); // только с force заработало !
+					col.sort("ascending".equals(sortDir), true); // С‚РѕР»СЊРєРѕ СЃ force Р·Р°СЂР°Р±РѕС‚Р°Р»Рѕ !
 					break;
-	    		} // if (сортированная колонка)
+	    		} // if (СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅР°СЏ РєРѕР»РѕРЅРєР°)
     		} // Listheader
-    	} // for (поиск колонки с включенной автосортировкой)
+    	} // for (РїРѕРёСЃРє РєРѕР»РѕРЅРєРё СЃ РІРєР»СЋС‡РµРЅРЅРѕР№ Р°РІС‚РѕСЃРѕСЂС‚РёСЂРѕРІРєРѕР№)
     } // public void provokeAutoSort(MeshElement mesh)
     
 } // public final class UIUtil

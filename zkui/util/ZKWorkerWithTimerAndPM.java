@@ -1,4 +1,4 @@
-package basos.zkui.util;
+п»їpackage basos.zkui.util;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -27,14 +27,14 @@ import basos.core.SingleSharedLogic;
 import basos.util.AsyncTask;
 
 
-/** Для выполнения длительной операции в working (not UI) thread с визуализацией прогресса.
- * Прогресс слушает сам экземпляр класса и выводит в создаваемый Progressmeter.
- * Опубликовать прогресс: worker.firePropertyChange("progress", oldValue, newValue, false). Также слушается событие "indeterm_progress" -> showBusy.
- * Обращение к UI происходит из отдельного UI-потока, в котором обрабатываются события onTimer (таймер создаётся и
- *  запускается в начале run()), также через Server Push (когда недоступен Timer).
- * Тик таймера задаётся в файле настроек проекта в переменной по имени "worker.timerDelay".
- * Задача пользователя передаётся через первый параметр конструктора типа Supplier<V>; вторым также обязательным
- *  параметром типа Runnable идёт логика, которая выполняется в done() (обычно из неё вызывается worker.get()).
+/** Р”Р»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР»РёС‚РµР»СЊРЅРѕР№ РѕРїРµСЂР°С†РёРё РІ working (not UI) thread СЃ РІРёР·СѓР°Р»РёР·Р°С†РёРµР№ РїСЂРѕРіСЂРµСЃСЃР°.
+ * РџСЂРѕРіСЂРµСЃСЃ СЃР»СѓС€Р°РµС‚ СЃР°Рј СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° Рё РІС‹РІРѕРґРёС‚ РІ СЃРѕР·РґР°РІР°РµРјС‹Р№ Progressmeter.
+ * РћРїСѓР±Р»РёРєРѕРІР°С‚СЊ РїСЂРѕРіСЂРµСЃСЃ: worker.firePropertyChange("progress", oldValue, newValue, false). РўР°РєР¶Рµ СЃР»СѓС€Р°РµС‚СЃСЏ СЃРѕР±С‹С‚РёРµ "indeterm_progress" -> showBusy.
+ * РћР±СЂР°С‰РµРЅРёРµ Рє UI РїСЂРѕРёСЃС…РѕРґРёС‚ РёР· РѕС‚РґРµР»СЊРЅРѕРіРѕ UI-РїРѕС‚РѕРєР°, РІ РєРѕС‚РѕСЂРѕРј РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚СЃСЏ СЃРѕР±С‹С‚РёСЏ onTimer (С‚Р°Р№РјРµСЂ СЃРѕР·РґР°С‘С‚СЃСЏ Рё
+ *  Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ РІ РЅР°С‡Р°Р»Рµ run()), С‚Р°РєР¶Рµ С‡РµСЂРµР· Server Push (РєРѕРіРґР° РЅРµРґРѕСЃС‚СѓРїРµРЅ Timer).
+ * РўРёРє С‚Р°Р№РјРµСЂР° Р·Р°РґР°С‘С‚СЃСЏ РІ С„Р°Р№Р»Рµ РЅР°СЃС‚СЂРѕРµРє РїСЂРѕРµРєС‚Р° РІ РїРµСЂРµРјРµРЅРЅРѕР№ РїРѕ РёРјРµРЅРё "worker.timerDelay".
+ * Р—Р°РґР°С‡Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРµСЂРµРґР°С‘С‚СЃСЏ С‡РµСЂРµР· РїРµСЂРІС‹Р№ РїР°СЂР°РјРµС‚СЂ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° С‚РёРїР° Supplier<V>; РІС‚РѕСЂС‹Рј С‚Р°РєР¶Рµ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рј
+ *  РїР°СЂР°РјРµС‚СЂРѕРј С‚РёРїР° Runnable РёРґС‘С‚ Р»РѕРіРёРєР°, РєРѕС‚РѕСЂР°СЏ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РІ done() (РѕР±С‹С‡РЅРѕ РёР· РЅРµС‘ РІС‹Р·С‹РІР°РµС‚СЃСЏ worker.get()).
  */
 public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements PropertyChangeListener, Serializable/*for enableServerPush()*/ {
 	private static final long serialVersionUID = -4732700088811439005L;
@@ -51,7 +51,7 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 	
 	private final Supplier<V> userMainWTask;
 	private final Runnable userDoneUITask;
-	private final Component pmParent; // здесь создаётся таймер, прогрессметр, выводятся оповещения
+	private final Component pmParent; // Р·РґРµСЃСЊ СЃРѕР·РґР°С‘С‚СЃСЏ С‚Р°Р№РјРµСЂ, РїСЂРѕРіСЂРµСЃСЃРјРµС‚СЂ, РІС‹РІРѕРґСЏС‚СЃСЏ РѕРїРѕРІРµС‰РµРЅРёСЏ
 	
 	private /*transient*/ volatile Timer workerTimer;
 	private Progressmeter workerPM; // for long operations in working threads; operating by mean of JavaBeans events model
@@ -59,13 +59,13 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 	private int timerDelay;
 	
 	private static final ThreadLocalRandom rnd = ThreadLocalRandom.current();
-	private final /*transient*/ SingleSharedLogic workerSharedUILogic = new SingleSharedLogic(); // WT расшаривает задчу для выполнения в UI-Thread (перетирается, если не успела выполниться)
+	private final /*transient*/ SingleSharedLogic workerSharedUILogic = new SingleSharedLogic(); // WT СЂР°СЃС€Р°СЂРёРІР°РµС‚ Р·Р°РґС‡Сѓ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РІ UI-Thread (РїРµСЂРµС‚РёСЂР°РµС‚СЃСЏ, РµСЃР»Рё РЅРµ СѓСЃРїРµР»Р° РІС‹РїРѕР»РЅРёС‚СЊСЃСЏ)
 	//private final String workerTimerId = UUID.randomUUID().toString();
 	
 	/** Should be executed in UI Thead.
-	 @param userMainWTask Задача пользователя (mandatory). Вызывается в doInBackground(), который вызывается из корневого run().
-	 @param userDoneUITask Логика, которая выполняется в done() (обычно из неё вызывается worker.get()) (mandatory)
-	 @param pmParent Родительский компонент, в котором создаётся таймер, прогрессметр, выводятся оповещения (mandatory)
+	 @param userMainWTask Р—Р°РґР°С‡Р° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (mandatory). Р’С‹Р·С‹РІР°РµС‚СЃСЏ РІ doInBackground(), РєРѕС‚РѕСЂС‹Р№ РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РєРѕСЂРЅРµРІРѕРіРѕ run().
+	 @param userDoneUITask Р›РѕРіРёРєР°, РєРѕС‚РѕСЂР°СЏ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РІ done() (РѕР±С‹С‡РЅРѕ РёР· РЅРµС‘ РІС‹Р·С‹РІР°РµС‚СЃСЏ worker.get()) (mandatory)
+	 @param pmParent Р РѕРґРёС‚РµР»СЊСЃРєРёР№ РєРѕРјРїРѕРЅРµРЅС‚, РІ РєРѕС‚РѕСЂРѕРј СЃРѕР·РґР°С‘С‚СЃСЏ С‚Р°Р№РјРµСЂ, РїСЂРѕРіСЂРµСЃСЃРјРµС‚СЂ, РІС‹РІРѕРґСЏС‚СЃСЏ РѕРїРѕРІРµС‰РµРЅРёСЏ (mandatory)
     */
 	public ZKWorkerWithTimerAndPM(Supplier<V> userMainWTask, Runnable userDoneUITask, Component pmParent) {
 		super();
@@ -84,26 +84,26 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 			throw new NullPointerException("Null argument 'pmParent' not allowed !");
 		}
 		this.pmParent = pmParent;
-		// в ui-thread разрешаем SP, который потребуется при инициализации в run() !!!
+		// РІ ui-thread СЂР°Р·СЂРµС€Р°РµРј SP, РєРѕС‚РѕСЂС‹Р№ РїРѕС‚СЂРµР±СѓРµС‚СЃСЏ РїСЂРё РёРЅРёС†РёР°Р»РёР·Р°С†РёРё РІ run() !!!
 		if ( !EventProcessor.inEventListener() ) {
 			logger.error("Should be executed in UI Thead !");
 			throw new IllegalStateException("Should be executed in UI Thead !");
 		}
 		pmDesktop = pmParent.getDesktop();
-		((DesktopCtrl)pmDesktop).enableServerPush(true, this/*иначе выключается EventQueue*/); // TODO: параметры (https://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/sys/DesktopCtrl.html#enableServerPush(org.zkoss.zk.ui.sys.ServerPush)) ?
+		((DesktopCtrl)pmDesktop).enableServerPush(true, this/*РёРЅР°С‡Рµ РІС‹РєР»СЋС‡Р°РµС‚СЃСЏ EventQueue*/); // TODO: РїР°СЂР°РјРµС‚СЂС‹ (https://www.zkoss.org/javadoc/latest/zk/org/zkoss/zk/ui/sys/DesktopCtrl.html#enableServerPush(org.zkoss.zk.ui.sys.ServerPush)) ?
 		timerDelay = Integer.valueOf(Labels.getLabel("worker.timerDelay", "100")).intValue();
 	} // constr
 	
 	
 	/** {@inheritDoc}
-	 * <p/> До выполнения основной пользовательской задачи при вызове родительского метода, инициализируется UI:
-	 *  создаются progressmeter, таймер (как дочерние компоненты к заданному в конструкторе) и слушатель таймера (WT расшаривает для него задачу визуализации прогресса).
-	 * Тик таймера задаётся в файле настроек проекта в переменной по имени "worker.timerDelay".
+	 * <p/> Р”Рѕ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕСЃРЅРѕРІРЅРѕР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕР№ Р·Р°РґР°С‡Рё РїСЂРё РІС‹Р·РѕРІРµ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РјРµС‚РѕРґР°, РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚СЃСЏ UI:
+	 *  СЃРѕР·РґР°СЋС‚СЃСЏ progressmeter, С‚Р°Р№РјРµСЂ (РєР°Рє РґРѕС‡РµСЂРЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ Рє Р·Р°РґР°РЅРЅРѕРјСѓ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ) Рё СЃР»СѓС€Р°С‚РµР»СЊ С‚Р°Р№РјРµСЂР° (WT СЂР°СЃС€Р°СЂРёРІР°РµС‚ РґР»СЏ РЅРµРіРѕ Р·Р°РґР°С‡Сѓ РІРёР·СѓР°Р»РёР·Р°С†РёРё РїСЂРѕРіСЂРµСЃСЃР°).
+	 * РўРёРє С‚Р°Р№РјРµСЂР° Р·Р°РґР°С‘С‚СЃСЏ РІ С„Р°Р№Р»Рµ РЅР°СЃС‚СЂРѕРµРє РїСЂРѕРµРєС‚Р° РІ РїРµСЂРµРјРµРЅРЅРѕР№ РїРѕ РёРјРµРЅРё "worker.timerDelay".
 	 */
 	@Override
 	public final void run() {
 		addPropertyChangeListener("progress", this);
-		//worker.addPropertyChangeListener("progress_down", worker); // перенесено в worker.done()
+		//worker.addPropertyChangeListener("progress_down", worker); // РїРµСЂРµРЅРµСЃРµРЅРѕ РІ worker.done()
 		addPropertyChangeListener("indeterm_progress", this);
 		// we are in a working thread !!!
 		Supplier<Integer> initUIOnRun = () -> {
@@ -138,27 +138,27 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 			logger.error("run. Unable to prepare ZKWorkerWithTimerAndPM !");
 			throw new InternalError("run. Unable to prepare ZKWorkerWithTimerAndPM !");
 		}
-		logger.trace("Техническая UI-часть ZKWorkerWithTimerAndPM.run() завершена успешно (назначили себя слушателем 'progress' и 'indeterm_progress'; создан PM, запущен Timer и его EventListener), далее последует вызов super.run()");
+		logger.trace("РўРµС…РЅРёС‡РµСЃРєР°СЏ UI-С‡Р°СЃС‚СЊ ZKWorkerWithTimerAndPM.run() Р·Р°РІРµСЂС€РµРЅР° СѓСЃРїРµС€РЅРѕ (РЅР°Р·РЅР°С‡РёР»Рё СЃРµР±СЏ СЃР»СѓС€Р°С‚РµР»РµРј 'progress' Рё 'indeterm_progress'; СЃРѕР·РґР°РЅ PM, Р·Р°РїСѓС‰РµРЅ Timer Рё РµРіРѕ EventListener), РґР°Р»РµРµ РїРѕСЃР»РµРґСѓРµС‚ РІС‹Р·РѕРІ super.run()");
 		super.run();
 	} // public void run()
 	
-	/** Выполняется задача, назначенная в конструкторе. Вызывается в {@link AsyncTask#run()} */
+	/** Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ Р·Р°РґР°С‡Р°, РЅР°Р·РЅР°С‡РµРЅРЅР°СЏ РІ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ. Р’С‹Р·С‹РІР°РµС‚СЃСЏ РІ {@link AsyncTask#run()} */
 	@Override
-	protected final V doInBackground() throws Exception { // не делаем abstract чтобы была возможность исп-ть унаследованные конструкторы
-		logger.trace("ZKWorkerWithTimerAndPM.doInBackground() перед userMainWTask.get()");
+	protected final V doInBackground() throws Exception { // РЅРµ РґРµР»Р°РµРј abstract С‡С‚РѕР±С‹ Р±С‹Р»Р° РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РёСЃРї-С‚СЊ СѓРЅР°СЃР»РµРґРѕРІР°РЅРЅС‹Рµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+		logger.trace("ZKWorkerWithTimerAndPM.doInBackground() РїРµСЂРµРґ userMainWTask.get()");
     	return userMainWTask.get();
     }
 
 	/** {@inheritDoc}
-	 * <p/> Сначала выполняется необязательная пользовательская финализирующая задача, установленная через конструктор.
-	 * Потом разбирается UI.
+	 * <p/> РЎРЅР°С‡Р°Р»Р° РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ С„РёРЅР°Р»РёР·РёСЂСѓСЋС‰Р°СЏ Р·Р°РґР°С‡Р°, СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµСЂРµР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
+	 * РџРѕС‚РѕРј СЂР°Р·Р±РёСЂР°РµС‚СЃСЏ UI.
 	 */
 	@Override
 	protected final void done() {
 		Supplier<Integer> finishUITask = () -> {
 			if ( userDoneUITask != null ) userDoneUITask.run();
 			workerPM.setValue(100);
-			workerSharedUILogic.clearSharedLogic(); // считая, что задачи относятся к одной выгрузке и эта всегда завершающая !!
+			workerSharedUILogic.clearSharedLogic(); // СЃС‡РёС‚Р°СЏ, С‡С‚Рѕ Р·Р°РґР°С‡Рё РѕС‚РЅРѕСЃСЏС‚СЃСЏ Рє РѕРґРЅРѕР№ РІС‹РіСЂСѓР·РєРµ Рё СЌС‚Р° РІСЃРµРіРґР° Р·Р°РІРµСЂС€Р°СЋС‰Р°СЏ !!
 			workerTimer.stop();
 			workerTimer.detach();
 			workerTimer = null;
@@ -171,26 +171,26 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 		};
 		
 		if ( doOrShareUITaskFromWT(finishUITask, true, null) != 1 ) { // only through SP !
-			logger.error("Ошибка выполнения завершающей логики (finishUITask) в ZKWorkerWithTimerAndPM.done() !");
+			logger.error("РћС€РёР±РєР° РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РІРµСЂС€Р°СЋС‰РµР№ Р»РѕРіРёРєРё (finishUITask) РІ ZKWorkerWithTimerAndPM.done() !");
 			Clients.showNotification("Unable to complete task in ZKWorkerWithTimerAndPM.done() !", Clients.NOTIFICATION_TYPE_ERROR, null, null, 2000);
 		} else {
-			logger.trace("ZKWorkerWithTimerAndPM.done() успешно завершён (вначале родителем послано 'progress_down', выполнены userDoneUITask.run(), завершающая UI-логика (clearSharedLogic, удалены таймер и PM; clearBusy))");
+			logger.trace("ZKWorkerWithTimerAndPM.done() СѓСЃРїРµС€РЅРѕ Р·Р°РІРµСЂС€С‘РЅ (РІРЅР°С‡Р°Р»Рµ СЂРѕРґРёС‚РµР»РµРј РїРѕСЃР»Р°РЅРѕ 'progress_down', РІС‹РїРѕР»РЅРµРЅС‹ userDoneUITask.run(), Р·Р°РІРµСЂС€Р°СЋС‰Р°СЏ UI-Р»РѕРіРёРєР° (clearSharedLogic, СѓРґР°Р»РµРЅС‹ С‚Р°Р№РјРµСЂ Рё PM; clearBusy))");
 		}
 	} // protected final void done()
 
-	/** Выполнить (по событию таймера) расшаренную рабочим потоком UI-задачу (например, визуализация прогресса). */
-	private void applySharedLogicOnTimer(Event ev) { // вызывается из обработчика событий onTimer таймера workerTimer
+	/** Р’С‹РїРѕР»РЅРёС‚СЊ (РїРѕ СЃРѕР±С‹С‚РёСЋ С‚Р°Р№РјРµСЂР°) СЂР°СЃС€Р°СЂРµРЅРЅСѓСЋ СЂР°Р±РѕС‡РёРј РїРѕС‚РѕРєРѕРј UI-Р·Р°РґР°С‡Сѓ (РЅР°РїСЂРёРјРµСЂ, РІРёР·СѓР°Р»РёР·Р°С†РёСЏ РїСЂРѕРіСЂРµСЃСЃР°). */
+	private void applySharedLogicOnTimer(Event ev) { // РІС‹Р·С‹РІР°РµС‚СЃСЏ РёР· РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРѕР±С‹С‚РёР№ onTimer С‚Р°Р№РјРµСЂР° workerTimer
 		int res = -1;
 		if ( !isCancelled() ) {
-			res = workerSharedUILogic.doSharedLogicOnce(); // возвращает -1 при отсутствии расшаренной задачи
+			res = workerSharedUILogic.doSharedLogicOnce(); // РІРѕР·РІСЂР°С‰Р°РµС‚ -1 РїСЂРё РѕС‚СЃСѓС‚СЃС‚РІРёРё СЂР°СЃС€Р°СЂРµРЅРЅРѕР№ Р·Р°РґР°С‡Рё
 		}
 		if (res != -1) logger.trace("ZKWorkerWithTimerAndPM.applySharedLogicOnTimer.  res = ", res); // "ev_class:"+ev.getClass().getName()
 	} // public void applySharedLogicOnTimer(Event ev)
 
 	
-	/** Реализация интерфейса java.beans.PropertyChangeListener, слушающая и отображающая прогресс (события
-	 * "progress" и "indeterm_progress" -> showBusy) на progressmeter. (нет вызовов извне: сами посылаем - сами слушаем).
-	 * Визуализация выполняется либо посредством SP, либо расшариванием задачи для слушателя внутреннего таймера.
+	/** Р РµР°Р»РёР·Р°С†РёСЏ РёРЅС‚РµСЂС„РµР№СЃР° java.beans.PropertyChangeListener, СЃР»СѓС€Р°СЋС‰Р°СЏ Рё РѕС‚РѕР±СЂР°Р¶Р°СЋС‰Р°СЏ РїСЂРѕРіСЂРµСЃСЃ (СЃРѕР±С‹С‚РёСЏ
+	 * "progress" Рё "indeterm_progress" -> showBusy) РЅР° progressmeter. (РЅРµС‚ РІС‹Р·РѕРІРѕРІ РёР·РІРЅРµ: СЃР°РјРё РїРѕСЃС‹Р»Р°РµРј - СЃР°РјРё СЃР»СѓС€Р°РµРј).
+	 * Р’РёР·СѓР°Р»РёР·Р°С†РёСЏ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р»РёР±Рѕ РїРѕСЃСЂРµРґСЃС‚РІРѕРј SP, Р»РёР±Рѕ СЂР°СЃС€Р°СЂРёРІР°РЅРёРµРј Р·Р°РґР°С‡Рё РґР»СЏ СЃР»СѓС€Р°С‚РµР»СЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С‚Р°Р№РјРµСЂР°.
 	 */
 	@Override
 	public final void propertyChange(PropertyChangeEvent pce) {
@@ -206,14 +206,14 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
         	onEvent = () -> {
         		if ( !isCancelled() ) {
         			workerPM.setValue(pr);
-// ищу немедленного обновления UI, но обновляется разом после завершения потока и потоки выполняются последовательно
-					//Clients.response(new AuSetAttribute(workerPM, "value", pr)); // так накапливается и применяется (последовательно - плавно, параллельно с формированием книги) после завершения applyFilter()
+// РёС‰Сѓ РЅРµРјРµРґР»РµРЅРЅРѕРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ UI, РЅРѕ РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ СЂР°Р·РѕРј РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ РїРѕС‚РѕРєР° Рё РїРѕС‚РѕРєРё РІС‹РїРѕР»РЅСЏСЋС‚СЃСЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ
+					//Clients.response(new AuSetAttribute(workerPM, "value", pr)); // С‚Р°Рє РЅР°РєР°РїР»РёРІР°РµС‚СЃСЏ Рё РїСЂРёРјРµРЅСЏРµС‚СЃСЏ (РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ - РїР»Р°РІРЅРѕ, РїР°СЂР°Р»Р»РµР»СЊРЅРѕ СЃ С„РѕСЂРјРёСЂРѕРІР°РЅРёРµРј РєРЅРёРіРё) РїРѕСЃР»Рµ Р·Р°РІРµСЂС€РµРЅРёСЏ applyFilter()
 					return Integer.valueOf(workerPM.getValue());
         		} else return 0;
 			};
 
         } else if ( pname == "indeterm_progress" && !isCancelled() ) {
-// "indeterm_progress": showBusy() на время формирования файла, потом неявно (при down) clearBusy() !!
+// "indeterm_progress": showBusy() РЅР° РІСЂРµРјСЏ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ С„Р°Р№Р»Р°, РїРѕС‚РѕРј РЅРµСЏРІРЅРѕ (РїСЂРё down) clearBusy() !!
         	onEvent = () -> {
         		if (  !isCancelled() ) {
         			Clients.showBusy(pmParent, "Please wait while downloading Workbook...");
@@ -222,13 +222,13 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
         	};
     		useSP = true;
 /*
-        } else if ( pname == "progress_down" ) { // ! завершение (on "progress_down") даже при отмене !
+        } else if ( pname == "progress_down" ) { // ! Р·Р°РІРµСЂС€РµРЅРёРµ (on "progress_down") РґР°Р¶Рµ РїСЂРё РѕС‚РјРµРЅРµ !
     		onEvent = downloadFile;
     		useSP = true;
 */    		
         }
         else return;
-        // далее выполняем задачу в зависимости от доступности UI
+        // РґР°Р»РµРµ РІС‹РїРѕР»РЅСЏРµРј Р·Р°РґР°С‡Сѓ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё UI
         int dfRes = doOrShareUITaskFromWT(onEvent, useSP, workerSharedUILogic);
         logger.trace("ZKWorkerWithTimerAndPM.propertyChange. '{}' new_value = {}, dfRes = {}", pname, pce.getNewValue(), dfRes);
 	} // public void propertyChange(PropertyChangeEvent pce)
@@ -247,13 +247,13 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 		return doOrShareUITaskFromWT(onEvent, useSP, workerSharedUILogic);
 	}
 */	
-	/** Выполнить UI-задачу посредством SP и расшарить для слушателя внутреннего таймера.
-	 * Вызывать можно из любого потока.
-	 * SP пытаемся включить в цикле с разной задержкой (есть с этим проблемы).
-	 * @param onEvent UI-задача.
-	 * @param useSP Разрешение использовать Server Push.
-	 * @param sharedLogic Thread-safe-контейнер для расшаривания задачи (опционально).
-	 * @return Результат выполнения задачи. -1 если не выполнена, -2 если расшарена.
+	/** Р’С‹РїРѕР»РЅРёС‚СЊ UI-Р·Р°РґР°С‡Сѓ РїРѕСЃСЂРµРґСЃС‚РІРѕРј SP Рё СЂР°СЃС€Р°СЂРёС‚СЊ РґР»СЏ СЃР»СѓС€Р°С‚РµР»СЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ С‚Р°Р№РјРµСЂР°.
+	 * Р’С‹Р·С‹РІР°С‚СЊ РјРѕР¶РЅРѕ РёР· Р»СЋР±РѕРіРѕ РїРѕС‚РѕРєР°.
+	 * SP РїС‹С‚Р°РµРјСЃСЏ РІРєР»СЋС‡РёС‚СЊ РІ С†РёРєР»Рµ СЃ СЂР°Р·РЅРѕР№ Р·Р°РґРµСЂР¶РєРѕР№ (РµСЃС‚СЊ СЃ СЌС‚РёРј РїСЂРѕР±Р»РµРјС‹).
+	 * @param onEvent UI-Р·Р°РґР°С‡Р°.
+	 * @param useSP Р Р°Р·СЂРµС€РµРЅРёРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Server Push.
+	 * @param sharedLogic Thread-safe-РєРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ СЂР°СЃС€Р°СЂРёРІР°РЅРёСЏ Р·Р°РґР°С‡Рё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ).
+	 * @return Р РµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РґР°С‡Рё. -1 РµСЃР»Рё РЅРµ РІС‹РїРѕР»РЅРµРЅР°, -2 РµСЃР»Рё СЂР°СЃС€Р°СЂРµРЅР°.
 	 */
 	private int doOrShareUITaskFromWT(Supplier<Integer> onEvent, boolean useSP, SingleSharedLogic sharedLogic/*nullable-optional*/) {
         boolean activated = false;
@@ -261,7 +261,7 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
         int dfRes = -1;
 		long startTime = System.nanoTime(), endTime = startTime;
 		try {
-			if ( !isUIThread && useSP ) { // включать SP только если не в UI thread
+			if ( !isUIThread && useSP ) { // РІРєР»СЋС‡Р°С‚СЊ SP С‚РѕР»СЊРєРѕ РµСЃР»Рё РЅРµ РІ UI thread
 				logger.trace("ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT. before desktop activation... pmDesktop = {}, rnd = {}", pmDesktop, rnd);
 				for (int round = 5; round-- > 0; ) {
 					activated = Executions.activate(pmDesktop, rnd.nextInt(1100, 1800)); // DR p.339
@@ -270,7 +270,7 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 					Thread.sleep(rnd.nextInt(500, 1000));
 				}
 			}
-			endTime = System.nanoTime(); // обычное время активации - 1-1,5 сек.
+			endTime = System.nanoTime(); // РѕР±С‹С‡РЅРѕРµ РІСЂРµРјСЏ Р°РєС‚РёРІР°С†РёРё - 1-1,5 СЃРµРє.
 			if ( activated ) { // to Update UI in a Working Thread (p.339)
 				try {
 					dfRes = onEvent.get().intValue();
@@ -281,13 +281,13 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 				dfRes = onEvent.get().intValue();
 			} else if ( !isUIThread && sharedLogic != null/*gridDM.getModelLock().isLocked()*//*isHeldByCurrentThread()*/ ) { // working thread & desktop not activated & hold modelLock -> share task
 				logger.trace("ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT. Share logic.");
-				sharedLogic.addSharedLogic(onEvent); // сейчас не накапливается, а перетирает невыполненную задачу; а таймер или ждущий блокировки интерфейсный поток попробует вывести прогресс (выполнить расшаренную задачу)
+				sharedLogic.addSharedLogic(onEvent); // СЃРµР№С‡Р°СЃ РЅРµ РЅР°РєР°РїР»РёРІР°РµС‚СЃСЏ, Р° РїРµСЂРµС‚РёСЂР°РµС‚ РЅРµРІС‹РїРѕР»РЅРµРЅРЅСѓСЋ Р·Р°РґР°С‡Сѓ; Р° С‚Р°Р№РјРµСЂ РёР»Рё Р¶РґСѓС‰РёР№ Р±Р»РѕРєРёСЂРѕРІРєРё РёРЅС‚РµСЂС„РµР№СЃРЅС‹Р№ РїРѕС‚РѕРє РїРѕРїСЂРѕР±СѓРµС‚ РІС‹РІРµСЃС‚Рё РїСЂРѕРіСЂРµСЃСЃ (РІС‹РїРѕР»РЅРёС‚СЊ СЂР°СЃС€Р°СЂРµРЅРЅСѓСЋ Р·Р°РґР°С‡Сѓ)
 				dfRes = -2;
 			} else {
-				logger.error("Невозможно выполнить задачу в ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT");
+				logger.error("РќРµРІРѕР·РјРѕР¶РЅРѕ РІС‹РїРѕР»РЅРёС‚СЊ Р·Р°РґР°С‡Сѓ РІ ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT");
    			}
    		} catch (InterruptedException e) {
-   			logger.warn("InterruptedException in ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT (при активации рабочего стола)");
+   			logger.warn("InterruptedException in ZKWorkerWithTimerAndPM.doOrShareUITaskFromWT (РїСЂРё Р°РєС‚РёРІР°С†РёРё СЂР°Р±РѕС‡РµРіРѕ СЃС‚РѕР»Р°)");
    			//Executions.deactivate(pmDesktop);
    			//Thread.currentThread().interrupt();
    		} catch(Throwable e) {
@@ -299,7 +299,7 @@ public final class ZKWorkerWithTimerAndPM<V> extends AsyncTask<V> implements Pro
 	} // private int doOrShareUITaskFromWT(Supplier<Integer> onEvent, boolean useSP, SingleSharedLogic sharedLogic)
 	
 	
-	/** Проверить наличие задачи, расшаренной от WT к UI-thread. */
+	/** РџСЂРѕРІРµСЂРёС‚СЊ РЅР°Р»РёС‡РёРµ Р·Р°РґР°С‡Рё, СЂР°СЃС€Р°СЂРµРЅРЅРѕР№ РѕС‚ WT Рє UI-thread. */
 	public final int sizeSharedLogic() {
 		return workerSharedUILogic == null ? 0 : workerSharedUILogic.sizeSharedLogic();
 	}

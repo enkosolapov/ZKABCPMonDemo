@@ -1,4 +1,4 @@
-package basos.xe.data.dao;
+п»їpackage basos.xe.data.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 
 import basos.xe.data.entity.DealLastState;
 
-/** Маппинг сделок из мвью MV_DEALS_LAST_STATE на сущность DealLastState. */
+/** РњР°РїРїРёРЅРі СЃРґРµР»РѕРє РёР· РјРІСЊСЋ MV_DEALS_LAST_STATE РЅР° СЃСѓС‰РЅРѕСЃС‚СЊ DealLastState. */
 public interface DealLastStateMapper {
 
 	/**
@@ -21,14 +21,14 @@ public interface DealLastStateMapper {
 	List<DealLastState> selectAll();
 	
     
-// TODO: сделать пейджирование и RowBound
-	/** Поиск сделок по заёмщику (FK). */
+// TODO: СЃРґРµР»Р°С‚СЊ РїРµР№РґР¶РёСЂРѕРІР°РЅРёРµ Рё RowBound
+	/** РџРѕРёСЃРє СЃРґРµР»РѕРє РїРѕ Р·Р°С‘РјС‰РёРєСѓ (FK). */
     List<DealLastState> selectByClnId(Integer clnId);
     
-    /** Поиск сделок по СПР (FK) */
+    /** РџРѕРёСЃРє СЃРґРµР»РѕРє РїРѕ РЎРџР  (FK) */
     List<DealLastState> selectByRsubjId(Integer rsubjId);
     
-    /** Общее количество строк (сделок) в таблице. */
+    /** РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє (СЃРґРµР»РѕРє) РІ С‚Р°Р±Р»РёС†Рµ. */
     @Select("select count(*) cnt from MV_DEALS_LAST_STATE")
     int rowCount();
 }
